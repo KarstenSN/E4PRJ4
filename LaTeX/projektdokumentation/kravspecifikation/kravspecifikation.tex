@@ -24,17 +24,16 @@ Systemet\ldots
 \begin{enumerate}\itemsep1pt \parskip0pt \parsep0pt
 	\item \ldots  \emph{Skal} kunne køre frem og tilbage.
 	\item \ldots  \emph{Skal} kunne dreje.
-	\item \ldots  \emph{Skal} have hastighedsregulering.
+	\item \ldots  \emph{Skal} kunne regulere hastigheden på bilen.
 	\item \ldots  \emph{Skal} give Bruger mulighed for at begrænse maksimumshastighed.
-	\item \ldots  \emph{Skal} give Bruger mulighed for manuel styring.
-	\item \ldots  \emph{Skal} via Wi-Fi kommunikere mellem bil og computer.
+	\item \ldots  \emph{Skal} give Bruger mulighed for manuel styring af hastighed og retning.
+	\item \ldots  \emph{Skal} via Wi-Fi kunne kommunikere mellem bil og computer.
 	\item \ldots  \emph{Skal} kunne identificere forhindringer foran og bag bilen.
-	\item \ldots  \emph{Skal} indholde et anti-kollisionssystem bestående af afstandssensorer.
+	\item \ldots  \emph{Skal} indholde et anti-kollisionssystem baseret på afstandssensorer.
 	\item \ldots  \emph{Skal} via. anti-kollisionssystemet kunne undvige og/eller stoppe før kollision.
+	\item \ldots  \emph{Skal} indeholde et kamera til at streame video.
 	\item \ldots  \emph{Bør} give Bruger mulighed for at aktivere/deaktivere anti-kollisionssystemet på bilen.
-	\item \ldots  \emph{Bør} indeholde en batteriniveau-indikator.
-	\item \ldots  \emph{Bør} give Bruger mulighed for valg af indstillinger for anti-kollisionssystemet.
-	\item \ldots  \emph{Kan} indeholde et kamera til at streame video.
+	\item \ldots  \emph{Kan} indeholde en batteriniveau-indikator.
 \end{enumerate}
 
 \section{Ikke-funktionelle krav}
@@ -43,8 +42,10 @@ Systemet\ldots
 	\item Bilens bremselængde ved maksimumshastighed uden begrænsning må ikke overstige 1 m. %TODO Passer denne?
 	\item Bilen skal kunne accelerere fra 0 km/t til maksimumshastighed uden begrænsning på højest 6 s. %TODO Passer denne?
 	\item Forsinkelse fra brugerinput til at bilen reagerer må ikke overstige 50ms. %TODO Passer denne?
-	\item Afstandssensorerne skal kunne identificere en forhindring på en maksimal afstand af 6 m. %TODO Passer denne?
-	%TODO EMC?? Spørg vejleder.
-	\item Mister bilen kommunikationen med computeren i mere end 50ms, stopper bilen automatisk. %#namepun
-	
+	\item Afstandssensorerne skal kunne identificere en forhindring på mindst $(30cm \times 30cm)$ på en maksimal afstand af 6 m. %TODO Passer denne, EMC - spørg vejleder?
+	\item Mister bilen forbindelsen med computeren i mere end 50ms, standser bilen automatisk. 
+	\item Kameraet skal minimum have en opdateringshastighed på 15 billeder i sekundet. %TODO undersøg!
+	\item Systemet skal vise video-feed med en opløsning på $640 \times 480$ pixels.
+	\item Computeren skal som minimum sende kommandoer til bilen 60 gange i sekundet. 
+	\item HID skal bestå af en XBOX360 controller og tastatur.
 \end{enumerate}
