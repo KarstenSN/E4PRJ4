@@ -1,5 +1,5 @@
 \makeatletter
-\def\input@path{{../Projektdokumentation/}}
+\def\input@path{{../projektdokumentation/}}
 \makeatother
 
 \input{../preamble/preamble}
@@ -7,8 +7,8 @@
 %Debugging
 %\overfullrule=2cm
 
-\title{Projektdokumentation \\ AutoGreen \\ Gruppe 9}
-\author{3. Semesterprojekt E3PRJ3-02 \\ Ingeniørhøjskolen, Aarhus Universitet\\ Vejleder: Tore Arne Skogberg}
+\title{Projektdokumentation \\ AU2 \\ Gruppe 1}
+\author{4. Semesterprojekt E4PRJ4 \\ Ingeniørhøjskolen, Aarhus Universitet\\ Vejleder: Arne Justesen}
 \date{\today}
 
 \begin{document}
@@ -22,14 +22,13 @@
 	\begin{tabular}{|l|r|l|}
 	\hline 
 	\textbf{Navn} & \textbf{Studienummer} & \textbf{Underskrift~~~~~~~~~~~~~~~~~~~~} \\ \hline
-	Morten Hasseriis Gormsen & 201370948 & \\ && \\ \hline
 	Kristian Thomsen & 201311478 & \\ && \\ \hline
 	Philip Krogh-Pedersen & 201311473 & \\ && \\ \hline
 	Lasse Barner Sivertsen & 201371048 & \\ && \\ \hline
 	Henrik Bagger Jensen & 201304157 & \\ && \\ \hline
-	David Erik Jensen & 11229 & \\ && \\ \hline
-	Kasper Torp Samuelsen & 201311498 & \\ && \\ \hline
-	Kristian Søgaard Sørensen & 20115255 & \\ && \\ \hline
+	Kenn Hedegaard Eskildsen & 201370904 & \\ && \\ \hline
+	Karsten Schou Nielsen & 201370045 & \\ && \\ \hline
+	Jesper Pedersen & 201370530 & \\ && \\ \hline
 	\end{tabular}
 \end{table}
 
@@ -39,25 +38,26 @@
 \tableofcontents
 
 \vfill
-\input{Arbejdsopgaver/arbejdsopgaver}
+%\input{Arbejdsopgaver/arbejdsopgaver}
 
 \mainmatter
 \pagestyle{fancy}
 \fancyhf{} %Clear all header/footers
-\fancyhead[RO,LE]{Gruppe 9 - AutoGreen}
+\fancyhead[RO,LE]{Gruppe 1 - AU2}
 \fancyhead[CE,CO]{\nouppercase{\leftmark}}
 \fancyhead[LO,RE]{IHA, AU}
 \fancyfoot[CO,CE]{\nouppercase{\rightmark}}
 \fancyfoot[LE,RO]{\thepage}
-\include{Projektformulering/projektformulering} \cleartorightpage
-\include{Kravspecifikation/kravspecifikation} \cleartorightpage
-\include{Systemarkitektur/systemarkitektur} \cleartorightpage
-\include{HardwareDesign/HardwareDesign} \cleartorightpage
-\include{SoftwareDesign/SoftwareDesign} \cleartorightpage
-\include{HardwareImplementering/HardwareImplementering} \cleartorightpage
-\include{SoftwareImplementering/swimplementering} \cleartorightpage
-\include{AcceptTest/accepttest}
-\include{Litteraturliste/litteraturliste}
+%\include{projektformulering/projektformulering} \cleartorightpage
+\include{ordforklaring/ordforklaring} \cleartorightpage
+\include{kravspecifikation/kravspecifikation} \cleartorightpage
+%\include{systemarkitektur/systemarkitektur} \cleartorightpage
+%\include{hardwareDesign/HardwareDesign} \cleartorightpage
+%\include{softwareDesign/SoftwareDesign} \cleartorightpage
+%\include{hardwareImplementering/HardwareImplementering} \cleartorightpage
+%\include{softwareImplementering/swimplementering} \cleartorightpage
+%\include{acceptTest/accepttest}
+%\include{litteraturliste/litteraturliste}
 %etc...
 
 \end{document}
