@@ -1,0 +1,35 @@
+%-------------------- UC1 --------------------
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
+
+\textbf{Navn:} 						 & UC3: Overvåg sensorer				\\ \hline
+\textbf{Mål:}						 & At overvåge sensorer 				\\ \hline
+\textbf{Initiering:}				 & UC1 									\\ \hline
+\textbf{Aktører:} 					 & ~ 									\\ \hline
+\textbf{Reference:} 				 & UC1: Aktiver system					\\ \hline
+\textbf{Antal samtidige forekomster:}& Én 									\\ \hline
+\textbf{Forudsætning:} 				 & UC1 fuldført 						\\ \hline
+\textbf{Resultat:}					 & Sensoerer overvåges løbende  		\\ \hline
+\textbf{Hovedscenarie:}				 & 
+
+\begin{packed_enum}
+\item System initierer sensorer.
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+		\item {[}Ext 1.a: Initiering af sensorer fejler{]}
+	\end{packed_item}
+
+\item System overvåger sensorer.
+
+\end{packed_enum} 															\\ \hline
+
+\textbf{Udvidelser:}				&  
+\textbf{{[}Ext 1.a : Initiering af sensorer fejler{]}}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+	\item Systemet prompter PC med "sensor-initiering fejlet".
+	\item UC2 afsluttes.
+	\end{packed_enum}														\\ \hline
+
+\end{tabularx}
+\caption{UC3: Overvåg sensorer}
+\label{tbl:UC1}
+\end{table}

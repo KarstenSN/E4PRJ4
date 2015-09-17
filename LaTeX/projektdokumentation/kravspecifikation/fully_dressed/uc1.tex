@@ -1,0 +1,73 @@
+%-------------------- UC1 --------------------
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
+
+\textbf{Navn:} 						 & UC1: Aktiver system						\\ \hline
+\textbf{Mål:}						 & At aktivere systemet 					\\ \hline
+\textbf{Initiering:}				 & Bruger 									\\ \hline
+\textbf{Aktører:} 					 & Bruger (primær) 							\\ \hline
+\textbf{Reference:} 				 & UC2: Stream video, UC3: Overvåg sensor 	\\ \hline
+\textbf{Antal samtidige forekomster:}& Én 										\\ \hline
+\textbf{Forudsætning:} 				 & Netforbindelse er opsat og fungerende 	\\ \hline
+\textbf{Resultat:}					 & Bil er initieret, PC viser Hovedmenu, 															   UC2 og UC3 er initieret 					\\ \hline
+\textbf{Hovedscenarie:}				 & 
+
+\begin{packed_enum}
+\item Bilens "ON/OFF"-switch sættes til "ON".
+\item Bruger starter software på PC. 
+\item Hovedmenu fremkommer på skærmen.
+\item Bruger klikker på "Opret forbindelse" i Hovedmenu. 
+\item "Indtast bilens IP-adresse" promptes på skærmen.
+\item Bruger indtaster bilens IP-adresse.
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+		\item {[}Ext 6.a : Bruger indtaster forkert IP-adresse{]}
+	\end{packed_item}
+	
+\item PC opretter forbindelse til bilen.
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+		\item {[}Ext 7.a : Forbindelse kan ikke oprettes{]}
+	\end{packed_item}
+	
+\item UC2: Stream video initieres af System.
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+		\item {[}Ext 8.a : Initiering af UC2 fejler{]}
+	\end{packed_item}
+
+\item UC3: Overvåg sensorer initieres af System.
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+		\item {[}Ext 9.a : Initiering af UC3 fejler{]}
+	\end{packed_item}
+
+\item PC prompter "Forbindelse oprettet"
+\end{packed_enum} 																\\ \hline
+
+\textbf{Udvidelser:}				&  
+\textbf{{[}Ext 6.a : Bruger indtaster forkert IP-adresse{]}}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+	\item System prompter "Forkert IP-adresse".
+	\item UC1 fortsætter fra punkt 5.
+	\end{packed_enum}
+						
+\textbf{{[}Ext 7.a : Forbindelse kan ikke oprettes{]}}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+	\item System prompter "Forbindelse kan ikke oprettes".
+	\item UC1 fortsætter fra punkt 3. %TODO fejlhåndtering
+	\end{packed_enum}
+	
+\textbf{{[}Ext 8.a : Initiering af UC2 fejler{]}}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+	\item System prompter "Videostream kan ikke oprettes".
+	\item UC1 fortsætter fra punkt 3. %TODO fejlhåndtering
+	\end{packed_enum}
+
+\textbf{{[}Ext 9.a : Initiering af UC3 fejler{]}}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+	\item System prompter "Initiering af sensorer fejlet".
+	\item UC1 fortsætter fra punkt 3. %TODO fejlhåndtering
+	\end{packed_enum}
+																				\\ \hline
+
+\end{tabularx}
+\caption{UC1: Aktiver system}
+\label{tbl:UC1}
+\end{table}

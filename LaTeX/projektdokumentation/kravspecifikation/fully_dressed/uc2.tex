@@ -1,0 +1,35 @@
+%-------------------- UC1 --------------------
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
+
+\textbf{Navn:} 						 & UC2: Stream video						\\ \hline
+\textbf{Mål:}						 & At starte videostream 					\\ \hline
+\textbf{Initiering:}				 & UC1 										\\ \hline
+\textbf{Aktører:} 					 & ~ 										\\ \hline
+\textbf{Reference:} 				 & UC1: Aktiver system						\\ \hline
+\textbf{Antal samtidige forekomster:}& Én 										\\ \hline
+\textbf{Forudsætning:} 				 & UC1 fuldført 							\\ \hline
+\textbf{Resultat:}					 & Videostream er initieret og kørende  	\\ \hline
+\textbf{Hovedscenarie:}				 & 
+
+\begin{packed_enum}
+\item System initierer kamera.
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+		\item {[}Ext 1.a: Initiering af kamera fejler{]}
+	\end{packed_item}
+
+\item Kamera sender videostream via bilen, over netværk til PC.
+
+\end{packed_enum} 																\\ \hline
+
+\textbf{Udvidelser:}				&  
+\textbf{{[}Ext 1.a : Initiering af kamera fejler{]}}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+	\item System prompter PC med "Kamera-initiering fejlet".
+	\item UC2 afsluttes.
+	\end{packed_enum}															\\ \hline
+
+\end{tabularx}
+\caption{UC2: Stream video}
+\label{tbl:UC1}
+\end{table}
