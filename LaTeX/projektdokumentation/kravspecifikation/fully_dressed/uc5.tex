@@ -1,0 +1,34 @@
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{3.3 cm} | Z |} \hline
+
+\textbf{Navn:} 						& UC5: Kør bil frem/tilbage\\ \hline
+\textbf{Mål:}						& At få bilen til at køre frem eller tilbage. \\ \hline
+\textbf{Initiering:}				& Bruger \\ \hline
+\textbf{Aktører:} 					& Bruger \\ \hline
+\textbf{Reference:} 				& \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
+\textbf{Forudsætning:} 				& UC1 er gennemført og systemet er operationelt. \\ \hline
+\textbf{Resultat:}					& Bilens hastighed er ændret. \\ \hline
+\textbf{Hovedscenarie:}				& 
+
+\begin{packed_enum}
+\item Bruger ændrer position af RT på HID controlleren.
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+	\item {[}Ext 1.a: Bruger ændrer position af LT.{]}
+	\end{packed_item}
+\item Controllerens input streames til bilen.
+\item Bilen ændrer fremadgående hastighed i henhold til brugerens input. Et hårdere tryk resulterer i en højere hastighed og et lettere tryk resulterer i en lavere hastighed.
+\item UC5 afsluttes.
+\end{packed_enum} \\ \hline
+\textbf{Udvidelser:}				&  
+\textbf{{[}Ext 1.a : Bruger ændrer position af LT.{]}}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+		\item Controllerens input streames til bilen.
+		\item Bilen ændrer bagudgående hastighed i henhold til brugerens input. Et hårdere tryk resulterer i en højere hastighed og et lettere tryk resulterer i en lavere hastighed.
+		\item Systemet fortsætter fra punkt 4 i hovedscenariet.
+	\end{packed_enum}
+\\ \hline
+\end{tabularx}
+\caption{UC5: Kør bil frem/tilbage}
+\label{tbl:UC5}
+\end{table}

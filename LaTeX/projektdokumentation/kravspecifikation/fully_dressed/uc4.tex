@@ -1,0 +1,31 @@
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{3.3 cm} | Z |} \hline
+
+\textbf{Navn:} 						& UC4: Aktiver AKS\\ \hline
+\textbf{Mål:}						& At bilen undviger en evt. kollision med en forhindring. \\ \hline
+\textbf{Initering:}					& UC3: Overvåg sensor \\ \hline
+\textbf{Aktører:} 					& Forhindring \\ \hline
+\textbf{Reference:} 				& UC3: Overvåg sensor, UC6: Drej bil til højre/Venstre, UC7: Brems bil \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
+\textbf{Forudsætning:} 				& UC1 er gennemført, UC3 er gennemført, bilen er på vej mod en forhindring. \\ \hline
+\textbf{Resultat:}					& UC5, UC6 og/eller UC7 gennemføres og UC3 fortsætter. \\ \hline
+\textbf{Hovedscenarie:}				& 
+
+\begin{packed_enum}
+\item Bilen analyserer indsamlet data fra afstandssensorer.
+\item Bilen forhindrer styring af brugeren midlertidigt.
+\item 
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+	\item {[}ALT a: UC6: Drej bil til højre/venstre aktiveres.{]}
+	\item {[}ALT b: UC7: Brems bil aktiveres.{]}
+	\end{packed_item}
+\item Bilen giver igen styring tilbage til brugeren.
+\item UC4 afsluttes.
+\end{packed_enum} \\ \hline
+\textbf{Udvidelser:}				&  
+
+\\ \hline
+\end{tabularx}
+\caption{UC4: Aktiver AKS}
+\label{tbl:UC4}
+\end{table}
