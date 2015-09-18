@@ -1,0 +1,35 @@
+%-------------------- UC1 --------------------
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
+
+\textbf{Navn:} 						& UC8.3: Indstil makshastighed\\ \hline
+\textbf{Mål:}						& At konfigurere bilens makshastighed\\ \hline
+\textbf{Initering:}					& Bruger \\ \hline
+\textbf{Aktører:} 					& Bruger (primær) \\ \hline
+\textbf{Reference:} 					& \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
+\textbf{Forudsætning:} 				& At bruger befinder sig i "Hovedmenu" og at der er forbindelse til bilen\\ \hline
+\textbf{Resultat:}					&  \\ \hline
+\textbf{Hovedscenarie:}				& 
+
+\begin{packed_enum}
+\item Bruger trykker på ''Indstil makshastighed'' 
+\item Menuen for makshastighed kommer frem og der er mulighed for at indstaste en makshastighed mellem 1 og 20km/h
+\item Menuen indikerer bilens nuværende makshastighed
+\item Bruger indtaster bilens nye makshastighed
+\item Bruger trykker på ''Opdater'' 
+\item Menuen viser den nye værdi som makshastighed
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+	\item {[}Ext 1. Menuen indikerer ikke den nye makshastighed{]}
+	\end{packed_item}
+\end{packed_enum} \\ \hline
+\textbf{Udvidelser:}				&  
+\textbf{[}Ext 1. Menuen indikerer ikke den nye makshastighed{]}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+	\item Bruger går til UC8.1 
+	\end{packed_enum}
+\\ \hline
+\end{tabularx}
+\caption{UC8: Start}
+\label{tbl:UC8}
+\end{table}

@@ -1,0 +1,29 @@
+%-------------------- UC1 --------------------
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
+
+\textbf{Navn:} 						& UC9: Kalibrer system\\ \hline
+\textbf{Mål:}						& At kalibrere systemet så bilen kører lige ved en drejevinkel på 0\% \\ \hline
+\textbf{Initering:}					& Bruger \\ \hline
+\textbf{Aktører:} 					& Bruger (primær) \\ \hline
+\textbf{Reference:} 			    & \\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
+\textbf{Forudsætning:} 				& Systemet er startet op og bilen holder stille\\ \hline
+\textbf{Resultat:}					& Bilens styretøj er kalibreret \\ \hline
+\textbf{Hovedscenarie:}				& 
+
+\begin{packed_enum}
+\item Bruger vælger "Kalibrer system" i "Hovedmenuen" 
+\item Menuen skifter til "Kalibreringsmenu" hvor det er muligt at indtaste et nummer mellem -50 og 50 
+\item Bruger indtaster et nummer 
+\item Bruger trykker på "Save"
+\item Systemet gemmer værdien 
+\item "Kalibreringsmenu" retunerer til "Hovedmenu"
+\end{packed_enum} \\ \hline
+\textbf{Udvidelser:}				&  
+\textbf{}
+\\ \hline
+\end{tabularx}
+\caption{UC1: Start}
+\label{tbl:UC1}
+\end{table}
