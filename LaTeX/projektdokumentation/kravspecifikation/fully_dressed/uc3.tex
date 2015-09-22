@@ -15,23 +15,42 @@
 \textbf{Hovedscenarie:}				 & 
 
 \begin{packed_enum}
-\item Bilen initierer sensorer.
+\item Bilen initierer tachometer
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-		\item {[}Ext 1.a: Initiering af sensorer fejler{]}
+		\item {[}Ext 1.a: Initiering af tachometer fejler{]}
+	\end{packed_item}
+\item Bilen initierer accelerometer
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+		\item {[}Ext 2.a: Initiering af accelerometer fejler{]}
+	\end{packed_item}
+\item Bilen initierer afstandssensorer.
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+		\item {[}Ext 3.a: Initiering af afstandssensorer fejler{]}
 	\end{packed_item}
 	
-%TODO husk at tilføje hver sensor explicit
-
 \item Bilen overvåger sensorer.
 
 \end{packed_enum} 															\\ \hline
 
 \textbf{Udvidelser:}				&  
-\textbf{{[}Ext 1.a : Initiering af sensorer fejler{]}}
+\textbf{{[}Ext 1.a : Initiering af tachometer fejler{]}}
 	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
-	\item Systemet prompter PC med ''sensor-initiering fejlet''.
+	\item Systemet prompter PC med ''tachometer-initiering fejlet''.
 	\item UC2 afsluttes.
-	\end{packed_enum}														\\ \hline
+	\end{packed_enum}	
+														
+\textbf{{[}Ext 2.a : Initiering af accelerometer fejler{]}}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+	\item Systemet prompter PC med ''accelerometer-initiering fejlet''.
+	\item UC2 afsluttes.
+	\end{packed_enum}
+	
+\textbf{{[}Ext 3.a : Initiering af afstandssensorer fejler{]}}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+	\item Systemet prompter PC med ''afstandssensor-initiering fejlet''.
+	\item UC2 afsluttes.
+	\end{packed_enum}				
+	\\\hline
 
 \end{tabularx}
 \caption{UC3: Overvåg sensorer}
