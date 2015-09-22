@@ -8,6 +8,7 @@
 \label{fig:aktor_kontekst}
 \end{figure}
 
+
 \section{Aktørbeskrivelser}
 \subsubsection{Bruger - Primær Aktør}
 Bruger kan:
@@ -18,6 +19,69 @@ Bruger kan:
 \item (Vælge forskellige grader af anti-kollisionssystem??)
 % Der menes her, at det skal være muligt at vælge imellem bremse- og styreting skal være aktivt eller ej.
 \end{itemize}
+\clearpage
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth - 1 cm]{../fig/diagrammer/uc_au2.pdf}
+\caption{Use Case diagram for AU2.}
+\label{fig:UC_au2}
+\end{figure}
+\clearpage
+
+% --------------------------------------------------------------------
+%							USE CASES
+% --------------------------------------------------------------------
+\section{Use Cases}
+
+% UC1:  Aktiver system
+\input{Kravspecifikation/fully_dressed/uc1}
+\clearpage
+
+% UC2: Stream Videofeed
+\input{Kravspecifikation/fully_dressed/uc2}
+\clearpage
+
+% UC3: Overvåg sensor
+\input{Kravspecifikation/fully_dressed/uc3}
+\clearpage
+
+% UC4: Aktiver AKS
+\input{Kravspecifikation/fully_dressed/uc4}
+\clearpage
+
+% UC5: Kør bil frem/tilbage
+\input{Kravspecifikation/fully_dressed/uc5}
+\clearpage
+
+% UC6: Drej bil til højre/Venstre
+\input{Kravspecifikation/fully_dressed/uc6}
+\clearpage
+
+% UC7: Brems bil
+\input{Kravspecifikation/fully_dressed/uc7}
+\clearpage
+
+% UC8: Konfigurer system
+\input{Kravspecifikation/fully_dressed/uc8}
+\clearpage
+
+% UC9: Tænd/sluk AKS
+\input{Kravspecifikation/fully_dressed/uc9}
+\clearpage
+
+% UC10: Indstil maks. hastighed
+\input{Kravspecifikation/fully_dressed/uc10}
+
+% UC11: Kalibrer system
+\clearpage
+\input{Kravspecifikation/fully_dressed/uc11}
+
+% UC12: Afbryd system
+\clearpage
+\input{Kravspecifikation/fully_dressed/uc12}
+
+
 
 \section{Funktionelle krav}
 Systemet\ldots
@@ -35,9 +99,10 @@ Systemet\ldots
 	\item \ldots  \emph{Bør} give Bruger mulighed for at aktivere/deaktivere anti-kollisionssystemet på bilen.
 	\item \ldots  \emph{Kan} indeholde en batteriniveau-indikator.
 \end{enumerate}
+\clearpage
 
 \section{Ikke-funktionelle krav}
-\begin{enumerate}
+\begin{enumerate}\itemsep1pt \parskip0pt \parsep0pt
 	\item Bilens maksimumshastighed uden begrænsning er 20km/t $\pm$ 5\% %TODO Passer denne?
 	\item Bilens bremselængde ved maksimumshastighed uden begrænsning må ikke overstige 1 m. %TODO Passer denne?
 	\item Bilen skal kunne accelerere fra 0 km/t til maksimumshastighed uden begrænsning på højest 6 s. %TODO Passer denne?
@@ -49,54 +114,4 @@ Systemet\ldots
 	\item Computeren skal som minimum sende kommandoer til bilen 60 gange i sekundet. 
 	\item HID skal bestå af en XBOX360 controller og tastatur.
 \end{enumerate}
-
-\newpage
-\section{Use Cases}
-
-
-
-% UC1:  Aktiver system
-\newpage
-\input{Kravspecifikation/fully_dressed/uc1}
-
-% UC2: Stream Videofeed
-\newpage
-\input{Kravspecifikation/fully_dressed/uc2}
-
-% UC3: Overvåg sensor
-\newpage
-\input{Kravspecifikation/fully_dressed/uc3}
-
-% UC4: Aktiver AKS
-\newpage
-\input{Kravspecifikation/fully_dressed/uc4}
-
-% UC5: Kør bil frem/tilbage
-\newpage
-\input{Kravspecifikation/fully_dressed/uc5}
-
-% UC6: Drej bil til højre/Venstre
-\newpage
-\input{Kravspecifikation/fully_dressed/uc6}
-
-% UC7: Brems bil %TODO
-\newpage
-\input{Kravspecifikation/fully_dressed/uc7}
-
-% UC8: Konfigurer system
-\newpage
-\input{Kravspecifikation/fully_dressed/uc8}
-
-\newpage
-\input{Kravspecifikation/fully_dressed/uc9}
-
-\newpage
-\input{Kravspecifikation/fully_dressed/uc10}
-
-% UC11: Kalibrer system
-\newpage
-\input{Kravspecifikation/fully_dressed/uc11}
-
-% UC12: Afbryd system
-\newpage 
-\input{Kravspecifikation/fully_dressed/uc12}
+\clearpage

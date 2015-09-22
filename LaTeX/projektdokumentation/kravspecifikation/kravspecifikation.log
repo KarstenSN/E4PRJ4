@@ -1,9 +1,20 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.4.26)  22 SEP 2015 12:18
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2015.9.17)  22 SEP 2015 16:09
 entering extended mode
 **kravspecifikation.tex
-(kravspecifikation.tex
-LaTeX2e <2015/01/01>
-Babel <3.9l> and hyphenation patterns for 69 languages loaded.
+
+("C:\Users\KennHedegaard\Dropbox\IHA\4. Semester\E4PRJ4\E4PRJ4\LaTeX\projektdok
+umentation\Kravspecifikation\kravspecifikation.tex"
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2012-05-30, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
+ lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
+german-x-2012-05-30, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
+ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
+an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
+ishmax, welsh, loaded.
 ! Undefined control sequence.
 l.1 \chapter
             {Kravspecifikation}
@@ -445,8 +456,137 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no ? in font nullfont!
 Missing character: There is no ? in font nullfont!
 Missing character: There is no ) in font nullfont!
+
+! LaTeX Error: Environment figure undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.22 \begin{figure}
+                   [h]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no ] in font nullfont!
 ! Undefined control sequence.
-l.22 \section
+l.24 \includegraphics
+                     [width=\textwidth - 3 cm]{../fig/diagrammer/uc_au2.pdf}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no c in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.24 ...h=\textwidth - 3 cm]{../fig/diagrammer/uc_
+                                                  au2.pdf}
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+l.24 ...idth - 3 cm]{../fig/diagrammer/uc_au2.pdf}
+                                                  
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+
+! LaTeX Error: \caption outside float.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.25 \caption
+             {Akt√∏r kontekst diagram for AU2.}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: \begin{document} ended by \end{figure}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.27 \end{figure}
+                 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.27 \end{figure}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+Missing character: There is no √ in font cmr10!
+Missing character: There is no ∏ in font cmr10!
+! Missing } inserted.
+<inserted text> 
+                }
+l.27 \end{figure}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 22--28
+[]
+ []
+
+
+Overfull \hbox (169.48477pt too wide) in paragraph at lines 22--28
+$[]\OML/cmm/m/it/10 u\OT1/cmr/m/n/10 2\OML/cmm/m/it/10 :pdf[][]$ 
+ []
+
+! Undefined control sequence.
+l.29 \section
              {Funktionelle krav}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -482,7 +622,7 @@ Missing character: There is no . in font nullfont!
 Missing character: There is no . in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 22--24
+Overfull \hbox (20.0pt too wide) in paragraph at lines 29--31
 []
  []
 
@@ -514,7 +654,7 @@ Missing character: There is no g in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (17.88878pt too wide) in paragraph at lines 25--26
+Overfull \hbox (17.88878pt too wide) in paragraph at lines 32--33
 \OT1/cmr/m/it/10 Skal
  []
 
@@ -533,7 +673,7 @@ Missing character: There is no j in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (18.92212pt too wide) in paragraph at lines 26--27
+Overfull \hbox (18.92212pt too wide) in paragraph at lines 33--34
 \OT1/cmr/m/it/10 Skal 
  []
 
@@ -574,7 +714,7 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (17.88878pt too wide) in paragraph at lines 27--28
+Overfull \hbox (17.88878pt too wide) in paragraph at lines 34--35
 \OT1/cmr/m/it/10 Skal
  []
 
@@ -633,7 +773,7 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no d in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (17.88878pt too wide) in paragraph at lines 28--29
+Overfull \hbox (17.88878pt too wide) in paragraph at lines 35--36
 \OT1/cmr/m/it/10 Skal
  []
 
@@ -696,7 +836,7 @@ Missing character: There is no n in font nullfont!
 Missing character: There is no g in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (17.88878pt too wide) in paragraph at lines 29--30
+Overfull \hbox (17.88878pt too wide) in paragraph at lines 36--37
 \OT1/cmr/m/it/10 Skal
  []
 
@@ -748,7 +888,7 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (17.88878pt too wide) in paragraph at lines 30--31
+Overfull \hbox (17.88878pt too wide) in paragraph at lines 37--38
 \OT1/cmr/m/it/10 Skal
  []
 
@@ -802,7 +942,7 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (17.88878pt too wide) in paragraph at lines 31--32
+Overfull \hbox (17.88878pt too wide) in paragraph at lines 38--39
 \OT1/cmr/m/it/10 Skal
  []
 
@@ -868,7 +1008,7 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (17.88878pt too wide) in paragraph at lines 32--33
+Overfull \hbox (17.88878pt too wide) in paragraph at lines 39--40
 \OT1/cmr/m/it/10 Skal
  []
 
@@ -943,7 +1083,7 @@ Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (17.88878pt too wide) in paragraph at lines 33--34
+Overfull \hbox (17.88878pt too wide) in paragraph at lines 40--41
 \OT1/cmr/m/it/10 Skal
  []
 
@@ -986,7 +1126,7 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (17.88878pt too wide) in paragraph at lines 34--35
+Overfull \hbox (17.88878pt too wide) in paragraph at lines 41--42
 \OT1/cmr/m/it/10 Skal
  []
 
@@ -1070,7 +1210,7 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (11.25548pt too wide) in paragraph at lines 35--36
+Overfull \hbox (11.25548pt too wide) in paragraph at lines 42--43
 \OT1/cmr/m/it/10 Br
  []
 
@@ -1113,12 +1253,12 @@ Missing character: There is no o in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (18.42212pt too wide) in paragraph at lines 36--37
+Overfull \hbox (18.42212pt too wide) in paragraph at lines 43--44
 \OT1/cmr/m/it/10 Kan
  []
 
 ! Undefined control sequence.
-l.39 \section
+l.46 \section
              {Ikke-funktionelle krav}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1148,7 +1288,7 @@ Missing character: There is no r in font nullfont!
 Missing character: There is no a in font nullfont!
 Missing character: There is no v in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 39--40
+Overfull \hbox (20.0pt too wide) in paragraph at lines 46--47
 [] 
  []
 
@@ -1203,7 +1343,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no 5 in font nullfont!
 Missing character: There is no % in font nullfont!
 
-Overfull \hbox (7.7778pt too wide) in paragraph at lines 41--42
+Overfull \hbox (7.7778pt too wide) in paragraph at lines 48--49
 $\OMS/cmsy/m/n/10 $ 
  []
 
@@ -1515,12 +1655,12 @@ Missing character: There is no 6 in font nullfont!
 Missing character: There is no m in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (34.77443pt too wide) in paragraph at lines 45--46
+Overfull \hbox (34.77443pt too wide) in paragraph at lines 52--53
 $\OT1/cmr/m/n/10 (30\OML/cmm/m/it/10 cm \OMS/cmsy/m/n/10 $
  []
 
 
-Overfull \hbox (26.99663pt too wide) in paragraph at lines 45--46
+Overfull \hbox (26.99663pt too wide) in paragraph at lines 52--53
 $\OT1/cmr/m/n/10 30\OML/cmm/m/it/10 cm\OT1/cmr/m/n/10 )$
  []
 
@@ -1717,12 +1857,12 @@ Missing character: There is no l in font nullfont!
 Missing character: There is no s in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (22.77785pt too wide) in paragraph at lines 48--49
+Overfull \hbox (22.77785pt too wide) in paragraph at lines 55--56
 $\OT1/cmr/m/n/10 640 \OMS/cmsy/m/n/10 $
  []
 
 
-Overfull \hbox (15.00005pt too wide) in paragraph at lines 48--49
+Overfull \hbox (15.00005pt too wide) in paragraph at lines 55--56
 $\OT1/cmr/m/n/10 480$ 
  []
 
@@ -1843,7 +1983,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.53 \newpage
+l.60 \newpage
              
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1853,7 +1993,19 @@ or  <return>  to continue without it.
 ! Undefined control sequence.
 <write> \newlabel{fig:aktor_kontekst}{{}{\thepage 
                                                   }}
-l.53 \newpage
+l.60 \newpage
+             
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+\newlabel{fig:aktor_kontekst}{{}{}}
+! Undefined control sequence.
+<write> \newlabel{fig:aktor_kontekst}{{}{\thepage 
+                                                  }}
+l.60 \newpage
              
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1864,7 +2016,7 @@ and I'll forget about whatever was undefined.
 \newlabel{fig:aktor_kontekst}{{}{}}
 ]
 ! Undefined control sequence.
-l.54 \section
+l.61 \section
              {Use Cases}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1881,7 +2033,7 @@ Missing character: There is no s in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no s in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 54--55
+Overfull \hbox (20.0pt too wide) in paragraph at lines 61--62
 []
  []
 
@@ -1893,44 +2045,13 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.59 \newpage
+l.66 \newpage
              
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 [2]
-! Undefined control sequence.
-l.60 \subsection
-                {Use Case 1: Aktiver system}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no U in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no C in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no 1 in font nullfont!
-Missing character: There is no : in font nullfont!
-Missing character: There is no A in font nullfont!
-Missing character: There is no k in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no v in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no y in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no m in font nullfont!
 
 ! LaTeX Error: File `Kravspecifikation/fully_dressed/uc1.tex' not found.
 
@@ -1941,17 +2062,17 @@ Enter file name:
 ! Emergency stop.
 <read *> 
          
-l.61 \input{Kravspecifikation/fully_dressed/uc1}
+l.67 \input{Kravspecifikation/fully_dressed/uc1}
                                                 
 *** (cannot \read from terminal in nonstop modes)
 
  
 Here is how much of TeX's memory you used:
- 21 strings out of 493671
- 310 string characters out of 3143856
- 57427 words of memory out of 3000000
- 3463 multiletter control sequences out of 15000+200000
+ 22 strings out of 493921
+ 628 string characters out of 3144852
+ 54031 words of memory out of 3000000
+ 3410 multiletter control sequences out of 15000+200000
  3986 words of font info for 15 fonts, out of 3000000 for 9000
- 1025 hyphenation exceptions out of 8191
+ 841 hyphenation exceptions out of 8191
  18i,4n,12p,204b,120s stack positions out of 5000i,500n,10000p,200000b,50000s
 !  ==> Fatal error occurred, no output PDF file produced!
