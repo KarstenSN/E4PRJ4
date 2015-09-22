@@ -1,0 +1,34 @@
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{3.3 cm} | Z |} \hline
+
+\textbf{Navn:} 							& UC7: Brems bil												\\ \hline
+\textbf{Mål:}							& At få bilen til at bremse 									\\ \hline
+\textbf{Initiering:}					& Bruger 														\\ \hline
+\textbf{Aktører:} 						& Bruger eller AKS 												\\ \hline
+\textbf{Reference:} 					& Ingen															\\ \hline
+\textbf{Antal samtidige forekomster:} 	& Én 															\\ \hline
+\textbf{Forudsætning:} 					& UC1: Aktiver system er fuldført og systemet er operationelt 	\\ \hline
+\textbf{Resultat:}						& hastigheden på bilen er sænket 								\\ \hline
+\textbf{Hovedscenarie:}					& 
+
+\begin{packed_enum}
+\item Bruger trykker på "X" knappen på HID controlleren.
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+	\item {[}Ext 1.a: AKS er aktiveret.{]}
+	\end{packed_item}
+\item Controllerens input streames til bilen.
+\item Bilen tjekker input, hvis bremsekommando modtages sænker bilen hastigheden.
+\item UC7 afsluttes.
+\end{packed_enum} \\ \hline
+\textbf{Udvidelser:}					&  
+\textbf{{[}Ext 1.a : AKS er aktiveret.{]}}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+		\item Bil analyserer input fra UC3. %TODO Finpuds extension
+		\item AKS overtager kontrol af bilen. %TODO
+		\item Systemet fortsætter fra punkt 3 i hovedscenariet.
+	\end{packed_enum}
+\\ \hline
+\end{tabularx}
+\caption{UC7: Brems bil}
+\label{tbl:UC7}
+\end{table}
