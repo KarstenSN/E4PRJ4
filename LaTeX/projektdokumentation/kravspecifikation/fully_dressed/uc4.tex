@@ -13,12 +13,12 @@
 \textbf{Hovedscenarie:}				& 
 
 \begin{packed_enum}
-\item Bilen analyserer indsamlet data fra afstandssensorer.
-\item Bilen forhindrer styring af brugeren midlertidigt.
+\item Bilen analyserer indsamlet data fra afstandssensorer, kører den fremad analyseres de forreste sensorer ditto bagud.
+\item Bilen forhindrer styring fra brugeren midlertidigt.
 \item 
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-	\item {[}ALT a: UC6: Drej bil til højre/venstre aktiveres.{]}
-	\item {[}ALT b: UC7: Brems bil aktiveres.{]}
+	\item {[}ALT a: UC6: Drej bil til højre/venstre aktiveres, hvis en enkelt sensor registrerer en forhindring{]}
+	\item {[}ALT b: UC7: Brems bil aktiveres hvis begge sensorer registrer en forhindring{]}
 	\end{packed_item}
 \item Bilen giver igen styring tilbage til brugeren.
 \item UC4 afsluttes.
