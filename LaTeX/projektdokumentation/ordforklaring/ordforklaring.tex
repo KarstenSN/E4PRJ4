@@ -2,10 +2,10 @@
 
 \section{Ordforklaring}
 
-\textbf{System}
+\subsubsection{System}
 Det totale system, indeholdende både bil, software på PC og netværkskommunikation mellem Bil og PC. 
 
-\textbf{Human Interface Device (HID)}
+\subsubsection{Human Interface Device (HID)}
 En måde at kommunikere med en computer fx et tastatur, eller for dette projekts tilfælde, en XBOX360 controller.
 
 \begin{itemize}
@@ -13,16 +13,24 @@ En måde at kommunikere med en computer fx et tastatur, eller for dette projekts
 	%TODO list alle knapper på XBOX controller
 \end{itemize}
 
-\textbf{Hovedmenu}
+\subsubsection{Hovedmenu}
 Hovedmenuen i software på PC, indeholder menupunkter, som brugeren kan navigere efter behov.
 
-\textbf{Bil}
+\subsubsection{Bil}
 Køretøjet samt controller som udfører alle relevante opgaver for bilen. Alt kommunikation med PC, foregår gennem denne.
 
-\textbf{Wi-Fi}
+\subsubsection{Wi-Fi}
 Trådløst netværk af specifikationerne ''IEEE 802.11'', som Bil og PC kommunikerer over.
 
-\textbf{Anti-kollitionssystem (AKS)}
-Et system på bilen bestående af fire ultralydssensorer, som er i stand til at forhindre en kollision ved at overtage styringen fra Bruger i tilfælde af en kollisionskurs.
+\subsubsection{Anti-kollitionssystem (AKS)}
+Et system på bilen bestående af fire ultralydssensorer, som er i stand til at forhindre en kollision ved at overtage styringen fra Bruger i tilfælde af en kollisionskurs. Der gøres forskel mellem "Aktiver AKS" og "Tænd/Sluk AKS".
+
+\begin{itemize}
+	\item Tænd/Sluk bruges i forbindelse med at slå AKS fra eller til, således bilen ikke vil undgå en kollision hvis slukket, men vil undgå en kollsion hvis tændt. 
+	\item AKS aktiveres ifm. at bilen er på vej til at kollidere med en forhindring, hvorefter bilen vil forhindre en kollision (AKS tændt) eller ej (AKS slukket).
+\end{itemize}
+
+\subsubsection{Ultralydssensorer}
+Ultralydssensorerne benævnes herefter som hhv. Front Left (FL), Front Right (FR), Rear Left (RL) og Rear Right (RR). 
 
 \clearpage
