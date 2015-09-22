@@ -1,0 +1,39 @@
+\subsection{Use Case 11: Kalibrer system}
+%-------------------- UC11 --------------------
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
+
+\textbf{Navn:} 						& UC11: Kalibrer system\\ \hline
+\textbf{Mål:}						& At kalibrere systemet så bilen kører lige ud når brugeren slipper styrepinden på HID controlleren \\ \hline
+\textbf{Initering:}					& Bruger \\ \hline
+\textbf{Aktører:} 					& Bruger (primær) \\ \hline
+\textbf{Reference:} 			    & Ingen\\ \hline
+\textbf{Antal samtidige forekomster:} & Én \\ \hline
+\textbf{Forudsætning:} 				& UC1: Aktiver system er udført, bilen og PC er på samme netværk, at systemet viser ''Hovedmenu'', at systemet er operationelt samt bilen holder stille\\ \hline
+\textbf{Resultat:}					& Bilens styretøj er kalibreret \\ \hline
+\textbf{Hovedscenarie:}				& 
+
+\begin{packed_enum}
+\item Bruger vælger ''Kalibrer styretøj''
+\item Systemet viser menu for Kalibrering med mulighed for indtastning af enværdi mellem -50 og 50 %TODO dette tal skal evt. rettes
+\item Bruger indtaster en værdi 
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+	\item {[}Ext 3.a : Bruger indtaster en ugyldig værdi{]} %TODO mellemrum mellem bogstav og :? Husk at rette i alle UC
+	\end{packed_item}
+\item Bruger trykker på ''Gem''
+\item Systemet gemmer værdien på bilen.
+
+\item Forhjulene på bilen drejer enten til højre eller vil venstre, er værdien blevet mere positiv end før drejer hjulene mere mod højre.
+\item Systemet returnerer til ''Hovedmenu''
+\end{packed_enum} \\ \hline
+\textbf{Udvidelser:}					&  
+\textbf{[}Ext 3.a : Bruger indtaster en ugyldig værdi{]}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+	\item Systemet prompter: "Ugyldig værdi, indtast en gyldig værdi."
+	\item Systemet fortsætter fra punkt 2 i hovedscenariet.
+	\end{packed_enum}
+\\ \hline
+\end{tabularx}
+\caption{UC11: Start}
+\label{tbl:UC11}
+\end{table}

@@ -1,29 +1,30 @@
-%-------------------- UC1 --------------------
+\subsection{Use Case 9: Tænd/sluk AKS}
+%-------------------- UC9 --------------------
 \begin{table}[h]
-\begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
+\begin{tabularx}{\textwidth}{| L{3.3 cm} | Z |} \hline
 
-\textbf{Navn:} 						& UC9: Kalibrer system\\ \hline
-\textbf{Mål:}						& At kalibrere systemet så bilen kører lige ved en drejevinkel på 0\% \\ \hline
+\textbf{Navn:} 						& UC9: Tænd/sluk AKS \\ \hline
+\textbf{Mål:}						& At tænde eller slukke for AKS på bilen \\ \hline
 \textbf{Initering:}					& Bruger \\ \hline
-\textbf{Aktører:} 					& Bruger (primær) \\ \hline
-\textbf{Reference:} 			    & \\ \hline
+\textbf{Aktører:} 					& Bruger (primær) \\ \hline %TODO 
+\textbf{Reference:} 					& UC11: Kalibrer system\\ \hline
 \textbf{Antal samtidige forekomster:} & Én \\ \hline
-\textbf{Forudsætning:} 				& Systemet er startet op og bilen holder stille\\ \hline
-\textbf{Resultat:}					& Bilens styretøj er kalibreret \\ \hline
+\textbf{Forudsætning:} 				& UC1: Aktiver system er udført, bilen og PC er på samme netværk, at systemet viser ''Hovedmenu'' samt at systemet er operationelt\\ \hline
+\textbf{Resultat:}					&  \\ \hline
 \textbf{Hovedscenarie:}				& 
 
 \begin{packed_enum}
-\item Bruger vælger "Kalibrer system" i "Hovedmenuen" 
-\item Menuen skifter til "Kalibreringsmenu" hvor det er muligt at indtaste et nummer mellem -50 og 50 
-\item Bruger indtaster et nummer 
-\item Bruger trykker på "Save"
-\item Systemet gemmer værdien 
-\item "Kalibreringsmenu" retunerer til "Hovedmenu"
+\item Bruger trykker på ''AKS'' 
+\item Menuen for AKS kommer frem og der er mulighed for at tænde/slukke for AKS 
+\item Menuen indikerer om der er tændt/slukket for AKS
+\item Bruger trykker tænd/sluk efter ønske
+\item Bilen tænder/slukker for AKS systemet efter brugerens ønske
+\item Menuen indikerer nuværende status af AKS
 \end{packed_enum} \\ \hline
 \textbf{Udvidelser:}				&  
-\textbf{}
+~
 \\ \hline
 \end{tabularx}
-\caption{UC1: Start}
-\label{tbl:UC1}
+\caption{UC9: Tænd/sluk AKS}
+\label{tbl:UC9}
 \end{table}

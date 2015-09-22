@@ -1,26 +1,36 @@
-%-------------------- UC1 --------------------
+\subsection{Use Case 10: Indstil makshastighed}
+%-------------------- UC10 --------------------
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| >{\raggedright\arraybackslash}p{3.3 cm} | >{\raggedright\arraybackslash}X |} \hline
 
-\textbf{Navn:} 						& UC10: Afbryd system\\ \hline
-\textbf{Mål:}						& At lukke systemet ned \\ \hline
+\textbf{Navn:} 						& UC10: Indstil makshastighed\\ \hline
+\textbf{Mål:}						& At konfigurere bilens makshastighed\\ \hline
 \textbf{Initering:}					& Bruger \\ \hline
 \textbf{Aktører:} 					& Bruger (primær) \\ \hline
-\textbf{Reference:} 				&  \\ \hline
+\textbf{Reference:} 					& Ingen \\ \hline
 \textbf{Antal samtidige forekomster:} & Én \\ \hline
-\textbf{Forudsætning:} 				& Systemet er startet op\\ \hline
-\textbf{Resultat:}					& Forsyning til batteriet er afbrudt \\ \hline
+\textbf{Forudsætning:} 				& UC1: Aktiver system er udført, bilen og PC er på samme netværk, at systemet viser ''Hovedmenu'' samt at systemet er operationelt \\ \hline
+\textbf{Resultat:}					&  \\ \hline
 \textbf{Hovedscenarie:}				& 
 
 \begin{packed_enum}
-\item Bruger lukker ned for softwaren på PC'en
-\item Bruger skubber kontakten "ON/OFF" på undersiden af bilen til position "OFF"
-\item Strømmen til bilen afbrydes 
+\item Bruger trykker på ''Indstil makshastighed'' 
+\item Systemet præsenterer menu makshastighed med mulighed for indtastning af makshastighed fra 1-20 km/h
+\item Menuen indikerer bilens nuværende makshastighed
+\item Bruger indtaster bilens nye makshastighed
+\item Bruger trykker på ''Opdater'' 
+\item Menuen viser den nye værdi som makshastighed
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+	\item {[}Ext 1. Menuen indikerer ikke den nye makshastighed{]}
+	\end{packed_item}
 \end{packed_enum} \\ \hline
 \textbf{Udvidelser:}				&  
-\textbf{}
+\textbf{[}Ext 1. Menuen indikerer ikke den nye makshastighed{]}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+	\item Bruger går til UC8
+	\end{packed_enum}
 \\ \hline
 \end{tabularx}
-\caption{UC1: Start}
-\label{tbl:UC1}
+\caption{UC10: Indstil makshastighed}
+\label{tbl:UC10}
 \end{table}

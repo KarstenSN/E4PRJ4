@@ -1,3 +1,4 @@
+\subsection{Use Case 1: Aktiver system}
 %-------------------- UC1 --------------------
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| L{3.3 cm} | Z |} \hline
@@ -16,40 +17,39 @@
 \item Bilens ''ON/OFF''-switch sættes til ''ON''.
 \item Bruger starter software på PC. 
 \item Hovedmenu fremkommer på skærmen.
-\item Bruger klikker på ''Opret forbindelse'' i Hovedmenu. 
-\item PC opretter forbindelse til bilen.
+\item PC opretter automatisk forbindelse til bilen.
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-		\item {[}Ext 5.a : Forbindelse kan ikke oprettes{]}
+		\item {[}Ext 4.a : Forbindelse kan ikke oprettes{]}
 	\end{packed_item}
 	
 \item UC2: Stream video initieres af System.
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-		\item {[}Ext 6.a : Initiering af UC2 fejler{]}
+		\item {[}Ext 5.a : Initiering af UC2 fejler{]}
 	\end{packed_item}
 
 \item UC3: Overvåg sensorer initieres af System.
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-		\item {[}Ext 7.a : Initiering af UC3 fejler{]}
+		\item {[}Ext 6.a : Initiering af UC3 fejler{]}
 	\end{packed_item}
 
 \item PC prompter ''Forbindelse oprettet''
 \end{packed_enum} 																\\ \hline
 
 \textbf{Udvidelser:}				&  
-\textbf{{[}Ext 5.a : Bruger indtaster forkert IP-adresse{]}}
+\textbf{{[}Ext 4.a : Forbindelse kan ikke oprettes{]}}
 	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
 	\item System prompter ''Forbindelse kan ikke oprettes''.
 	\item UC8: Konfigurer system igangsættes.
 	\item Systemet fortsætter fra punk 4 i hovedscenariet.
 	\end{packed_enum}
 						
-\textbf{{[}Ext 6.a : Initiering af UC2 fejler{]}}
+\textbf{{[}Ext 5.a : Initiering af UC2 fejler{]}}
 	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
 	\item System prompter ''Videostream kan ikke oprettes''.
 	\item UC1 fortsætter fra punkt 3. %TODO fejlhåndtering
 	\end{packed_enum}
 
-\textbf{{[}Ext 7.a : Initiering af UC3 fejler{]}}
+\textbf{{[}Ext 6.a : Initiering af UC3 fejler{]}}
 	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
 	\item System prompter ''Initiering af sensorer fejlet''.
 	\item UC1 fortsætter fra punkt 3. %TODO fejlhåndtering
