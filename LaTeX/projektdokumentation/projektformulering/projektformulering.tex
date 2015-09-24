@@ -1,0 +1,77 @@
+\chapter{Projektformulering} \label{ch:projektformulering}
+
+%---------------------------------------------------------------------------------------
+%											PROJEKTBESKRIVELSE
+%---------------------------------------------------------------------------------------
+
+\section{Beskrivelse} \label{sec:beskrivelse}
+Dette semesterprojekt går ud på at lave en intelligent fjernstyret bil, kaldet ”AU2”. Den intelligente del består af sensorer samt en kommunikationsenhed, som gør det muligt at styre bilen over et netværk. Formålet er, at brugeren fra sin computer kan styre bilen på afstand. Bruger navigerer sker ved hjælp af et kamera på bilen, eller ved at se direkte på den i det tilfælde at den er inden for synsafstand. For at undvige forhindringer på kørebanen, implementeres et anti-kollisionssystem bestående af afstandssensorer på bilen. Således kan bilen selv standse eller undvige, hvis bilen nærmer sig en forhindring hastigt. Projektet er tiltænkt som underholdning til børn såvel som voksne, der ved de nævnte egenskaber undgår at skade bilen og omgivelserne. 
+
+På punkt opstilling ser funktionerne således ud:
+
+\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
+	\item Netværksbaseret fjernstyring (Wi-Fi) giver mulighed for kontrol over større afstande og fleksibilitet i form af Human Interface Devices (HID).
+	\item Anti-kollisionssystemet består af automatiseret styringshjælp i form af
+afstandsmåling, regulering af hastighed og retning.
+	\item Kamera til live-feed video.
+\end{itemize}
+
+Som sensorer anvendes:
+
+\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
+	\item Fire ultralydssensorer til afstandsmåling.
+	\item Et accelerometer til g-måling.
+	\item Et tachometer til hastighedsmåling.
+	\item Et kamera til live-feed.
+	\item En XBOX-360 controller til styring af bilen.
+\end{itemize}
+
+Som aktuatorer anvendes:
+
+\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
+	\item En DC-motor til fremdrift.
+	\item En servo-motor til styring af retning.
+\end{itemize}
+
+Målet med projektet vil være at implementere  kollisionssystemet, motorstyringen og -regulering, drejemekanismen samt den trådløse kommunikation til bilen.
+
+\clearpage
+
+%---------------------------------------------------------------------------------------
+%										MOSCOW PRIORITERING	
+%---------------------------------------------------------------------------------------
+
+\section*{MoSCoW prioritering} \label{sec:moscow_prioritering}
+
+Ambitionen for dette projekt er som absolut minimum at realisere nedenstående punkter under \textit{''skal''}. 
+Det forventes desuden at punkterne under \textit{''bør''} realiseres, men de har lavere prioritet.
+Punkterne under \textit{''kan''} forventes ikke realiseret, og punkterne under \textit{''vil ikke...''} realiseres med sikkerhed ikke. 
+Sidstnævnte punkter kan ses som udviklingsmuligheder i forhold til senere versioner af systemet. 
+
+\begin{itemize}
+	\item \textbf{Skal:}
+		\begin{itemize}
+			\item Bilen skal være i stand til at køre frem og tilbage.
+			\item Bilen skal være i stand til at dreje.
+			\item Systemet skal monitorere hastighed og acceleration med sensorer.
+			\item Systemet skal regulere hastigheden med feedback fra sensorer.
+			\item Systemet skal regulere drejemekanismen med feedback fra sensorer.
+			\item Systemet skal kommunikere internt mellem Bil og PC over Wi-Fi.
+			\item Systemet skal undvige identificerede forhindringer. 
+			\item Bilen skal styres vha. en XBOX-360 controller tilkoblet PC.
+			\item Systemet skal sende video live-feed fra bilen til PC.
+		\end{itemize}
+	\item \textbf{Bør:}
+		\begin{itemize}
+			\item Systemet bør ikke have større forsinkelse på kommunikation end 50ms fra indtastning til reaktion.
+			\item Systemet bør 
+		\end{itemize}
+	\item \textbf{Kan:}
+		\begin{itemize}
+			\item Systemet kan indeholde en batteriniveau indikator.
+		\end{itemize}
+	\item \textbf{Vil ikke i denne version:}	
+		\begin{itemize}
+			\item Bum4
+		\end{itemize}
+\end{itemize}
