@@ -21,6 +21,11 @@ Bruger kan:
 \end{itemize}
 \clearpage
 
+% --------------------------------------------------------------------
+%							USE CASES
+% --------------------------------------------------------------------
+\section{Use Cases}
+
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth - 1 cm]{../fig/diagrammer/uc_au2.pdf}
@@ -29,10 +34,77 @@ Bruger kan:
 \end{figure}
 \clearpage
 
-% --------------------------------------------------------------------
-%							USE CASES
-% --------------------------------------------------------------------
-\section{Use Cases}
+
+%-----------------------------------------------------------------
+%		Use Case beskrivelser - Initiering og Formål
+%-----------------------------------------------------------------
+
+\subsection{Use Case beskrivelser - Initiering og Formål} 
+\subsubsection{UC1: Aktiver system}
+Initieres af: Bruger
+
+Denne UC giver Bruger mulighed for at aktiver systemet. Herunder opsættes bilen, UC2 + UC3 initieres og PC'en fremkommer med hovedmenuen. 
+
+\subsubsection{UC2: Stream Video}
+Initieres af: UC1: Aktiver system
+
+Denne UC initierer videostream fra kameraet, og kommunikation over Wi-Fi netværket oprettes.
+
+\subsubsection{UC3: Overvåg sensorer}
+Initieres af: UC1: Aktiver system
+
+Denne UC initierer overvågning af bilens sensorer, herunder, de 4 afstandssensorer, tachometer, samt accelerometer. 
+
+\subsubsection{UC4: Aktiver AKS}
+Initieres af: UC3: Overvåg sensorer
+
+Denne UC har til formål at lade AKS overtage styring af bilen under kørsel hvis en forhindring detekteres enten foran eller bagved bilen.
+Når forhindringen er undveget overgives styringen igen til Bruger.
+
+\subsubsection{UC5: Kør bil frem/tilbage}
+Initieres af: Bruger
+
+Denne UC har til formål at give Bruger mulighed for at ændre hastighed på bilen via  de trykfølsomme ''LT'' og ''RT''-knapper på HID controlleren. Bruger trykker på LT og bilen kører fremad, eller Bruger trykker på ''RT'' og bilen bakker.
+
+\subsubsection{UC6: Drej bil til højre/venstre}
+Initieres af: Bruger
+
+Denne UC har til formål at lade Bruger ændre bilens retning. Bruger benytter venstre styrepind på HID controlleren. Føres styrepinden til venstre, drejer bilen til ligeledes til venstre. Føres styrepinden til højre, drejer bilen ligeledes til højre. 
+
+\subsubsection{UC7: Brems bil}
+Initieres af: Bruger
+
+Denne UC har til formål at lade Bruger sænke bilens hastighed. Bruger trykker ''X''-knappen på HID controlleren, jo længere tid knappen holdes nede jo mere bremser bilen. 
+
+\subsubsection{UC8: Konfigurer IP}
+Initieres af: Bruger
+
+Denne UC har til formål at lade Bruger konfigurere PC'ens IP-adresse således at der kan opnås forbindelse til bilen.  
+
+\subsubsection{UC9: Tænd/sluk AKS}
+Initieres af: Bruger
+
+Denne UC har til formål at give Bruger mulighed for at vælge om AKS skal være til- eller afkoblet. bruger kan via ''Hovedmenu'' på PC'en vælge status for AKS. 
+
+\subsubsection{UC10: Indstil makshastighed}
+Initieres af: Bruger
+
+Denne UC har til formål at give Bruger mulighed for at indstille en maksimumhastighed på bilen. Hastigheden indstilles via PC'ens ''Hovedmenu''.
+
+\subsubsection{UC11: Kalibrer system}
+Initieres af: Bruger
+
+Denne UC har til formål at give Bruger mulighed for at kalibrere bilens styretøj. Bruger indtaster via menuen ''Kalibrer styretøj'' en passende ''center''-værdi i intervallet -50 til 50.  
+
+\subsubsection{UC12: Afbryd system}
+Initieres af: Bruger
+
+Denne UC har til formål at lade Bruger afbryde hele systemet. Bruger afslutter software på PC, og sætte bilen ''ON/OFF''-knap til 'OFF' for at afbryde forbindelse til batteriet. 
+\clearpage
+
+%-----------------------------------------------------------------
+%					Use Case fully dressed
+%-----------------------------------------------------------------
 
 % UC1:  Aktiver system
 \input{Kravspecifikation/fully_dressed/uc1}
