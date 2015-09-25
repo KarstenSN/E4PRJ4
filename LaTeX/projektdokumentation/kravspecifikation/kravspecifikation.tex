@@ -1,6 +1,50 @@
 \chapter{Kravspecifikation} \label{ch:kravspecifikation}
 
 %---------------------------------------------------------------------------------------
+%											SYSTEMOVERSIGT
+%---------------------------------------------------------------------------------------
+
+
+\section{Systemoversigt} \label{sec:systemoversigt}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth - 2 cm]{../fig/diagrammer/systemoversigt.pdf}
+\caption{Overordnet systemoversigt}
+\label{fig:systemoversigt}
+\end{figure}
+\clearpage
+
+\subsubsection{Pi}
+Systemets kerne er et Raspberry Pi 2 board der kører linux-distributionen XXX %TODO
+Pi'en står for at processere data fra afstandsensorene, og håndtere streaming af video. Derudover afvikles regulering til motor, samt styring af servo også fra Pi'en. 
+
+\subsubsection{Servo}
+Servo'en har til opgave at omsætte data fra Pi'en til mekanisk styring af bilens forhjul. 
+
+\subsubsection{Afstandssensor}
+Bilen har påmonteret 4 afstandssensorer, 2 fremadrettet og 2 bagudrettet. Disse har til formål at indsamle data om eventuelle forhindringer i bilen bane. 
+
+\subsubsection{Accelerometer}
+Der er ligeledes påmonteret et accelerometer, til brug ved ændring af hastighed og ????? %TODO
+
+\subsubsection{kamera}
+Bilen har påmonteret et kamera som ''realtime'' streamer video til PC'ens skærm så Bruger har mulighed for at navigere på baggrund af visuel feedback. 
+
+\subsubsection{Computer}
+''Computeren'' afvikler den software hvorigennem bilen kontrolleres, konfigureres og kalibreres. det er ligeledes igennem computeren at Bruger får visuel feedback fra bilens kamera. 
+
+\subsubsection{Xbox 360 Controller}
+Til at kontrollere bilen, benyttes en Xbox 360 controller. vhj. en række trykknapper og styrepinde kan bilens hastighed, såvel som retning bestemmes. 
+
+\subsubsection{Motor}
+Motoren omsætter data, herunder regulering fra Pi'en til mekanisk styring af bilens hastighed.
+
+\subsubsection{Tachometer}
+Motoren omdrejningshastighed kan via tecometeret aflæses og herefter benyttes til databehandling og regulering. 
+\clearpage
+
+%---------------------------------------------------------------------------------------
 %											AKTØR-KONTEKSTDIAGRAM
 %---------------------------------------------------------------------------------------
 
@@ -8,7 +52,7 @@
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth - 3 cm]{../fig/diagrammer/ac_au2.pdf}
+\includegraphics[width=0.7\textwidth]{../fig/diagrammer/ac_au2.pdf}
 \caption{Aktør kontekst diagram for AU2.}
 \label{fig:aktor_kontekst}
 \end{figure}
@@ -29,14 +73,14 @@ Bruger kan:
 \end{itemize}
 \clearpage
 
-% --------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------
 %												USE CASES
-% --------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------
 \section{Use Cases}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth - 1 cm]{../fig/diagrammer/uc_au2.pdf}
+\includegraphics[width=\textwidth - 1 cm]{../fig/diagrammer/uc_au2.pdf} %TODO rettelser ift. Vejledermøde
 \caption{Use Case diagram for AU2.}
 \label{fig:UC_au2}
 \end{figure}
@@ -109,12 +153,9 @@ Initieres af: Bruger
 Denne UC har til formål at lade Bruger afbryde hele systemet. Bruger afslutter software på PC, og sætte bilen ''ON/OFF''-knap til 'OFF' for at afbryde forbindelse til batteriet. 
 \clearpage
 
-%-----------------------------------------------------------------
-%					Use Case fully dressed
-%-----------------------------------------------------------------
-
-\section{Use Cases} \label{sec:use_cases}
->>>>>>> 4f301fe617769cd5291bd6a2cf549e213732459b
+%----------------------------------------------------------------------------------------
+%									Use Case fully dressed
+%----------------------------------------------------------------------------------------
 
 % UC1:  Aktiver system
 \input{Kravspecifikation/fully_dressed/uc1}
@@ -164,7 +205,7 @@ Denne UC har til formål at lade Bruger afbryde hele systemet. Bruger afslutter 
 \input{Kravspecifikation/fully_dressed/uc12}
 \clearpage
 %---------------------------------------------------------------------------------------
-%											FUNKTIONELLE KRAV
+%									FUNKTIONELLE KRAV
 %---------------------------------------------------------------------------------------
 
 \section{Funktionelle krav} \label{sec:funktionelle_krav}
@@ -203,3 +244,10 @@ Systemet\ldots
 	\item HID skal bestå af en XBOX360 controller og tastatur.
 \end{enumerate}
 \clearpage
+
+
+%---------------------------------------------------------------------------------------
+%											ACCEPTTESTS
+%---------------------------------------------------------------------------------------
+
+%TODO accepttests
