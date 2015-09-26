@@ -24,60 +24,28 @@ Det forventes desuden at punkterne under \textit{''bør''} realiseres, men de ha
 Punkterne under \textit{''kan''} forventes ikke realiseret, og punkterne under \textit{''vil ikke...''} realiseres med sikkerhed ikke. 
 Sidstnævnte punkter kan ses som udviklingsmuligheder i forhold til senere versioner af systemet. 
 
-\begin{itemize}
+\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
 	\item \textbf{Skal:}
-		\begin{itemize}
+		\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
 			\item Bilen skal være i stand til at køre frem og tilbage.
 			\item Bilen skal være i stand til at dreje.
-			\item Systemet skal monitorere hastighed og acceleration med sensorer.
+			\item Systemet skal monitorere hastighed med et tachometer.
+			\item Systemet skal monitorere acceleration med et accelerometer.
 			\item Systemet skal regulere hastigheden med feedback fra sensorer.
 			\item Systemet skal regulere drejemekanismen med feedback fra sensorer.
 			\item Systemet skal kommunikere internt mellem Bil og PC over Wi-Fi.
-			\item Systemet skal undvige identificerede forhindringer. 
-			\item Bilen skal styres vha. en XBOX-360 controller tilkoblet PC.
-			\item Systemet skal sende video live-feed fra bilen til PC.
+			\item Systemet skal undvige identificerede forhindringer vha. et anti-kollisionssytem. 
+			\item Bilen skal styres vha. en XBOX-360 controller tilkoblet PC, med kommunikation over Wi-Fi.
+			\item Systemet skal sende video live-feed fra et kamera på bilen til PC.
+			\item 
 		\end{itemize}
 	\item \textbf{Bør:}
-		\begin{itemize}
+		\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
 			\item Systemet bør ikke have større forsinkelse på kommunikation end 50ms fra indtastning til reaktion.
-			\item Systemet bør 
+			\item Systemet bør have en servo-motor til styring, således bilen kan dreje kontrolleret.
 		\end{itemize}
-	\item \textbf{Kan:}
-		\begin{itemize}
-			\item Systemet kan indeholde en batteriniveau indikator. %TODO NEJ! -Philip :)
-		\end{itemize}
-	\item \textbf{Vil ikke i denne version:}	
-		\begin{itemize}
-			\item Bum4 %TODO Skal vist laves færdig
+	\item \textbf{Ikke i denne version:}	
+		\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
+			\item Systemet kan indeholde en batteriniveau-indikator.
 		\end{itemize}
 \end{itemize}
-
-
-%TODO nedenstående inkorporeres i MOSCOW
-På punkt opstilling ser funktionerne således ud:
-
-\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
-	\item Netværksbaseret fjernstyring (Wi-Fi) giver mulighed for kontrol over større afstande og fleksibilitet i form af Human Interface Devices (HID).
-	\item Anti-kollisionssystemet består af automatiseret styringshjælp i form af
-afstandsmåling, regulering af hastighed og retning.
-	\item Kamera til live-feed video.
-\end{itemize}
-
-Som sensorer anvendes:
-
-\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
-	\item Fire ultralydssensorer til afstandsmåling.
-	\item Et accelerometer til g-måling.
-	\item Et tachometer til hastighedsmåling.
-	\item Et kamera til live-feed.
-	\item En XBOX-360 controller til styring af bilen.
-\end{itemize}
-
-Som aktuatorer anvendes:
-
-\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
-	\item En DC-motor til fremdrift.
-	\item En servo-motor til styring af retning.
-\end{itemize}
-
-Målet med projektet vil være at implementere  kollisionssystemet, motorstyringen og -regulering, drejemekanismen samt den trådløse kommunikation til bilen.
