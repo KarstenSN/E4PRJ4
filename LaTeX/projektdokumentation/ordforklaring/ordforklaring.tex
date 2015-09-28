@@ -3,36 +3,48 @@
 \section{Ordforklaring}
 
 \subsubsection{System}
-Det totale system, indeholdende både bil, software på PC og netværkskommunikation mellem Bil og PC. 
+Det totale system indeholder bil, software på PC og kommunikation mellem Bil og PC.
 
-\subsubsection{Human Interface Device (HID)}
-En måde at kommunikere med en computer fx et tastatur, eller for dette projekts tilfælde, en XBOX360 controller.
+\subsubsection{HID (Human Interface Device)}
+Et interface som en bruger anvender til at interagere med en computer fx. tastetur og mus. I dette projekt anvendes desuden en Xbox-360 controller, med følgende funktionalitet: 
+%TODO henvisning til billede af controller (i design/impl. )
 
 \begin{itemize}
-	\item Right Trigger (RT) - ??
-	\item Left Trigger (LT) - ??
+	\item Right Trigger (RT)
+	\item Left Trigger (LT)
 	\item Flere knapper her.
 	%TODO list alle knapper på XBOX controller
 \end{itemize}
 
-\subsubsection{Hovedmenu}
-Hovedmenuen i software på PC, indeholder menupunkter, som brugeren kan navigere efter behov.
+
+\subsubsection{Hovedvindue}
+Hovedvinduet i software på PC indeholder videostream, status på bilen samt muligheder for at konfigurere og kalibrere systemet.
 
 \subsubsection{Bil}
-Køretøjet samt controller som udfører alle relevante opgaver for bilen. Alt kommunikation med PC, foregår gennem denne.
+Med bil menes den hardware der fysisk er placeret på bilen, dette være sig bla. bilens controllerenhed, her et Raspberry Pi 2 board, afstandsensorer, tachometer samt accelerometer.
 
-\subsubsection{Wi-Fi}
-Trådløst netværk af specifikationerne ''IEEE 802.11'', som Bil og PC kommunikerer over.
+\subsubsection{Pi (Raspberry Pi 2)}
+indsæt forklaring
+%TODO indsæt forklaring
 
-\subsubsection{Anti-kollitionssystem (AKS)}
-Et system på bilen bestående af fire ultralydssensorer, som er i stand til at forhindre en kollision ved at overtage styringen fra Bruger i tilfælde af en kollisionskurs. Der gøres forskel mellem "Aktiver AKS" og "Tænd/Sluk AKS".
+\subsubsection{Wi-Fi netværk}
+Trådløst netværk af standarden ''IEEE 802.11'', som Bil og PC kommunikerer over. Dette netværk sættes op lokalt til brug udelukkende for kommunikationen imellem Bil og PC. 
+
+\subsubsection{AKS (Anti-kollitionssystem)}
+Et system på bilen bestående af fire afstandssensorer, samt signalbehandling- og reguleringssoftware som er i stand til at forhindre en kollision ved at overtage styring fra Bruger i tilfælde af forestående kollision. Der differentieres mellem "Anvend AKS" og "Tænd/Sluk AKS".
 
 \begin{itemize}
-	\item Tænd/Sluk bruges i forbindelse med at slå AKS fra eller til, således bilen ikke vil undgå en kollision hvis slukket, men vil undgå en kollsion hvis tændt. 
-	\item AKS aktiveres ifm. at bilen er på vej til at kollidere med en forhindring, hvorefter bilen vil forhindre en kollision (AKS tændt) eller ej (AKS slukket).
+	\item Tænd/Sluk bruges i forbindelse med at koble AKS til eller fra, således at bilen ikke vil undgå en kollision hvis AKS er slukket, men vil undgå en kollision hvis AKS er tændt. 
+	\item Anvend AKS bruges i forbindelse med en forestående kollision. Her overtager AKS styring af bilen indtil forhindringen er undveget. 
 \end{itemize}
 
-\subsubsection{Ultralydssensorer}
-Ultralydssensorerne benævnes herefter som hhv. Front Left (FL), Front Right (FR), Rear Left (RL) og Rear Right (RR). 
+\subsubsection{Afstandssensorer}
+Afstandssensorerne er de 4 ultralydssensorer der er påmonteret bilen. Disse kan herefter benævnes som følgende:
+\begin{itemize}
+	\item Front Left (FL)
+	\item Front Right (FR)
+	\item Rear Left (RL)
+	\item Rear Right (RR)	
+\end{itemize}
 
 \clearpage

@@ -6,42 +6,44 @@
 
 
 \section{Systemoversigt} \label{sec:systemoversigt}
+På figur \ref{fig:systemoversigt} ses den overordnede systemoversigt med kommunikationsveje og mekaniske forbindelser. Diagrammet skal give læseren et hurtigt overblik over det samlede system. I afsnittet %TODO henvisning
+beskrives blokke og kommunikationsveje mere detaljeret. Under figur \ref{fig:systemoversigt} er blokkene kort beskrevet. 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth - 2 cm]{../fig/diagrammer/systemoversigt.pdf}
+\includegraphics[scale=0.9]{../fig/diagrammer/systemoversigt.pdf}
 \caption{Overordnet systemoversigt}
 \label{fig:systemoversigt}
 \end{figure}
 \clearpage
 
 \subsubsection{Pi}
-Systemets kerne er et Raspberry Pi 2 board der kører linux-distributionen XXX %TODO
+Systemets kerne er et Raspberry Pi 2 board.
 Pi'en står for at processere data fra afstandsensorene, og håndtere streaming af video. Derudover afvikles regulering til motor, samt styring af servo også fra Pi'en. 
 
-\subsubsection{Servo}
-Servo'en har til opgave at omsætte data fra Pi'en til mekanisk styring af bilens forhjul. 
+\subsubsection{Servomotor}
+Servomotor har til opgave at omsætte signal fra Pi'en til mekanisk styring af bilens forhjul. 
 
 \subsubsection{Afstandssensor}
-Bilen har påmonteret 4 afstandssensorer, 2 fremadrettet og 2 bagudrettet. Disse har til formål at indsamle data om eventuelle forhindringer i bilen bane. 
+Bilens 2 fremadrettet og 2 bagudrettet afstandssensorer har til formål at indsamle data om eventuelle forhindringer i bilen kørebane. 
 
 \subsubsection{Accelerometer}
-Der er ligeledes påmonteret et accelerometer, til brug ved ændring af hastighed og ????? %TODO
+Der er ligeledes påmonteret et accelerometer der anvendes til regulering af hastighed.
 
-\subsubsection{kamera}
-Bilen har påmonteret et kamera som ''realtime'' streamer video til PC'ens skærm så Bruger har mulighed for at navigere på baggrund af visuel feedback. 
+\subsubsection{Kamera}
+Bilens kamera streamer video til PC'ens skærm så Bruger har mulighed for at navigere på baggrund af visuel feedback
 
-\subsubsection{Computer}
-''Computeren'' afvikler den software hvorigennem bilen kontrolleres, konfigureres og kalibreres. det er ligeledes igennem computeren at Bruger får visuel feedback fra bilens kamera. 
+\subsubsection{PC}
+PC afvikler den software hvorigennem bilen kontrolleres, konfigureres og kalibreres. Det er ligeledes via computeren at Bruger får visuel feedback fra bilens kamera. 
 
-\subsubsection{Xbox 360 Controller}
-Til at kontrollere bilen, benyttes en Xbox 360 controller. vhj. en række trykknapper og styrepinde kan bilens hastighed, såvel som retning bestemmes. 
+\subsubsection{Xbox-360 Controller}
+Til at kontrollere bilen, benyttes en Xbox-360 controller. vha. en række trykknapper og styrepinde kan bilens hastighed, såvel som retning bestemmes. 
 
 \subsubsection{Motor}
 Motoren omsætter data, herunder regulering fra Pi'en til mekanisk styring af bilens hastighed.
 
 \subsubsection{Tachometer}
-Motoren omdrejningshastighed kan via tecometeret aflæses og herefter benyttes til databehandling og regulering. 
+Motorens omdrejningshastighed kan via tachometeret aflæses og herefter benyttes til databehandling og regulering. 
 \clearpage
 
 %---------------------------------------------------------------------------------------
@@ -49,10 +51,11 @@ Motoren omdrejningshastighed kan via tecometeret aflæses og herefter benyttes t
 %---------------------------------------------------------------------------------------
 
 \section{Aktør-kontekstdiagram} \label{sec:aktor-kontekstdiagram}
+På figur \ref{fig:aktor_kontekst} ses aktørkontekstdiagram over systemet. 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7\textwidth]{../fig/diagrammer/ac_au2.pdf}
+\includegraphics[scale=1.1]{../fig/diagrammer/ac_au2.pdf}
 \caption{Aktør kontekst diagram for AU2.}
 \label{fig:aktor_kontekst}
 \end{figure}
@@ -62,26 +65,71 @@ Motoren omdrejningshastighed kan via tecometeret aflæses og herefter benyttes t
 %---------------------------------------------------------------------------------------
 
 \section{Aktørbeskrivelser} \label{sec:aktorbeskrivelser}
+Som figur \ref{fig:aktor_kontekst} viser, er der 2 aktører til systemet.
+\textit{Bruger} og \textit{Forhindring}.
+
 \subsubsection{Bruger - Primær Aktør}
 Bruger kan:
 \begin{itemize}
-\item Starte og stoppe systemet 
-\item Styre bilen over et netværk.
-\item Deaktivere og aktivere anti-kollisionssystem.
-\item (Vælge forskellige grader af anti-kollisionssystem??)
-% Der menes her, at det skal være muligt at vælge imellem bremse- og styreting skal være aktivt eller ej.
+	\item Starte og stoppe systemet 
+	\item Styre bilen over et netværk.
+	\item Konfigure og kalibrere system.
 \end{itemize}
+
+\subsubsection{Forhindring - Sekundær Aktør}
+\textit{Forhindring} er objekter i det miljø bilen kører i, og som der dermed er risiko for at bilen kan kollidere med.  
+\clearpage
+
+%---------------------------------------------------------------------------------------
+%									FUNKTIONELLE KRAV
+%---------------------------------------------------------------------------------------
+
+\section{Funktionelle krav} \label{sec:funktionelle_krav}
+Systemet\ldots
+\begin{enumerate}\itemsep1pt \parskip0pt \parsep0pt
+	\item \ldots  \emph{Skal} kunne køre frem og tilbage.
+	\item \ldots  \emph{Skal} kunne dreje.
+	\item \ldots  \emph{Skal} kunne regulere hastigheden på bilen.
+	\item \ldots  \emph{Skal} give Bruger mulighed for at begrænse maksimumshastighed.
+	\item \ldots  \emph{Skal} give Bruger mulighed for manuel styring via Xbox-360 controller af hastighed og retning.
+	\item \ldots  \emph{Skal} via Wi-Fi netværk kunne kommunikere mellem bil og PC.
+	\item \ldots  \emph{Skal} kunne identificere forhindringer foran og bag bilen.
+	\item \ldots  \emph{Skal} indeholde et anti-kollisionssystem baseret på afstandssensorer.
+	\item \ldots  \emph{Skal} via. anti-kollisionssystem kunne undvige og/eller stoppe før kollision.
+	\item \ldots  \emph{Skal} indeholde et kamera til at streame video.
+	\item \ldots  \emph{Bør} give Bruger mulighed for at aktivere/deaktivere anti-kollisionssystemet på bilen.
+	\item \ldots  \emph{Kan} indeholde en batteriniveau-indikator.
+\end{enumerate}
+
+%---------------------------------------------------------------------------------------
+%											IKKE-FUNKTIONELLE KRAV
+%---------------------------------------------------------------------------------------
+
+\section{Ikke-funktionelle krav} \label{sec:ikke-funktionelle_krav}
+\begin{enumerate}\itemsep1pt \parskip0pt \parsep0pt
+	\item Bilens maksimumshastighed uden begrænsning er 10km/t $\pm$ 1km/t %TODO Passer denne?
+	\item Bilens bremselængde ved maksimumshastighed uden begrænsning må ikke overstige 1 m. %TODO Passer denne?
+	\item Bilen skal kunne accelerere fra 0 km/t til maksimumshastighed uden begrænsning på højest 6 s. %TODO Passer denne?
+	\item Forsinkelse fra brugerinput til at bilen reagerer må ikke overstige 50ms. %TODO Passer denne?
+	\item Afstandssensorerne skal kunne identificere en forhindring på mindst $(30cm \times 30cm)$ vinkelret mod bilen, på en maksimal afstand af 6 m. På afstande over 6 m er det ikke et krav at systemet kan detektere forhindringen. %TODO Passer afstand
+	\item Mister bilen forbindelsen med PC i mere end 50ms, standser bilen automatisk. 
+	\item Kameraet skal minimum have en opdateringshastighed på 15 billeder i sekundet. %TODO undersøg!
+	\item Systemet skal vise video-stream med en opløsning på $640 \times 480$ pixels i hovedvinduet.
+	\item PC skal som minimum sende kommandoer til bilen 60 gange i sekundet. 
+	\item HID skal bestå af en Xbox-360 controller, tastatur og mus.
+\end{enumerate}
 \clearpage
 
 %--------------------------------------------------------------------------------------
 %												USE CASES
 %--------------------------------------------------------------------------------------
 \section{Use Cases}
+På figur \ref{fig:UC_au2} ses use case diagram over de funktionelle krav. 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth - 1 cm]{../fig/diagrammer/uc_au2.pdf} %TODO rettelser ift. Vejledermøde
-\caption{Use Case diagram for AU2.}
+\includegraphics[width=\textwidth - 1 cm]{../fig/diagrammer/uc_au2.pdf}
+\caption{Use case diagram for AU2.}
 \label{fig:UC_au2}
 \end{figure}
 \clearpage
@@ -94,19 +142,19 @@ Bruger kan:
 \subsubsection{UC1: Aktiver system}
 Initieres af: Bruger
 
-Denne UC giver Bruger mulighed for at aktiver systemet. Herunder opsættes bilen, UC2 + UC3 initieres og PC'en fremkommer med hovedmenuen. 
+Denne UC giver Bruger mulighed for at aktivere systemet. Herunder konfigureres bilen, UC2 + UC3 initieres og PC'en viser hovedvinduet. 
 
 \subsubsection{UC2: Stream Video}
 Initieres af: UC1: Aktiver system
 
-Denne UC initierer videostream fra kameraet, og kommunikation over Wi-Fi netværket oprettes.
+Denne UC initierer videostream fra kameraet, og forbindelsen over Wi-Fi netværket oprettes.
 
 \subsubsection{UC3: Overvåg sensorer}
 Initieres af: UC1: Aktiver system
 
-Denne UC initierer overvågning af bilens sensorer, herunder, de 4 afstandssensorer, tachometer, samt accelerometer. 
+Denne UC initierer overvågning af bilens sensorer, herunder, de 4 afstandssensorer, tachometer, samt accelerometer. Use casen kører kontinuerligt og henter løbende data fra sensorerne.
 
-\subsubsection{UC4: Aktiver AKS}
+\subsubsection{UC4: Anvend AKS}
 Initieres af: UC3: Overvåg sensorer
 
 Denne UC har til formål at lade AKS overtage styring af bilen under kørsel hvis en forhindring detekteres enten foran eller bagved bilen.
@@ -115,19 +163,19 @@ Når forhindringen er undveget overgives styringen igen til Bruger.
 \subsubsection{UC5: Kør bil frem/tilbage}
 Initieres af: Bruger
 
-Denne UC har til formål at give Bruger mulighed for at ændre hastighed på bilen via  de trykfølsomme ''LT'' og ''RT''-knapper på HID controlleren. Bruger trykker på LT og bilen kører fremad, eller Bruger trykker på ''RT'' og bilen bakker.
+Denne UC har til formål at give Bruger mulighed for at ændre hastighed på bilen via  de trykfølsomme ''LT'' og ''RT''-knapper på Xbox-360 controlleren. Bruger trykker på ''LT'' og bilen kører fremad, eller Bruger trykker på ''RT'' og bilen bakker.
 
 \subsubsection{UC6: Drej bil til højre/venstre}
 Initieres af: Bruger
 
-Denne UC har til formål at lade Bruger ændre bilens retning. Bruger benytter venstre styrepind på HID controlleren. Føres styrepinden til venstre, drejer bilen til ligeledes til venstre. Føres styrepinden til højre, drejer bilen ligeledes til højre. 
+Denne UC har til formål at lade Bruger ændre bilens retning. Bruger benytter venstre styrepind på Xbox-360 controlleren. Føres styrepinden til venstre, drejer bilen til venstre. Føres styrepinden til højre, drejer bilen ligeledes til højre.
 
 \subsubsection{UC7: Brems bil}
 Initieres af: Bruger
 
-Denne UC har til formål at lade Bruger sænke bilens hastighed. Bruger trykker ''X''-knappen på HID controlleren, jo længere tid knappen holdes nede jo mere bremser bilen. 
+Denne UC har til formål at lade Bruger sænke bilens hastighed. Bruger trykker ''X'' på Xbox-360 controlleren, jo længere tid knappen holdes nede jo mere sænkes bilens hastighed.
 
-\subsubsection{UC8: Konfigurer IP}
+\subsubsection{UC8: Konfigurer IP-adresse}
 Initieres af: Bruger
 
 Denne UC har til formål at lade Bruger konfigurere PC'ens IP-adresse således at der kan opnås forbindelse til bilen.  
@@ -135,22 +183,22 @@ Denne UC har til formål at lade Bruger konfigurere PC'ens IP-adresse således a
 \subsubsection{UC9: Tænd/sluk AKS}
 Initieres af: Bruger
 
-Denne UC har til formål at give Bruger mulighed for at vælge om AKS skal være til- eller afkoblet. bruger kan via ''Hovedmenu'' på PC'en vælge status for AKS. 
+Denne UC har til formål at give Bruger mulighed for at vælge om AKS skal være tændt eller slukket. Bruger kan via ''Hovedvindue'' på PC'en vælge status for AKS. 
 
 \subsubsection{UC10: Indstil makshastighed}
 Initieres af: Bruger
 
-Denne UC har til formål at give Bruger mulighed for at indstille en maksimumhastighed på bilen. Hastigheden indstilles via PC'ens ''Hovedmenu''.
+Denne UC har til formål at give Bruger mulighed for at indstille en maksimumhastighed på bilen. Hastigheden indstilles via PC'ens ''Hovedvindue''.
 
-\subsubsection{UC11: Kalibrer system}
+\subsubsection{UC11: Kalibrer styretøj}
 Initieres af: Bruger
 
-Denne UC har til formål at give Bruger mulighed for at kalibrere bilens styretøj. Bruger indtaster via menuen ''Kalibrer styretøj'' en passende ''center''-værdi i intervallet -50 til 50.  
+Denne UC har til formål at give Bruger mulighed for at kalibrere bilens styretøj. Bruger indtaster via menuen ''Kalibrer styretøj'' en centerværdi i intervallet -50 til 50.  
 
 \subsubsection{UC12: Afbryd system}
 Initieres af: Bruger
 
-Denne UC har til formål at lade Bruger afbryde hele systemet. Bruger afslutter software på PC, og sætte bilen ''ON/OFF''-knap til 'OFF' for at afbryde forbindelse til batteriet. 
+Denne UC har til formål at lade Bruger afbryde hele systemet. Bruger afslutter software på PC, og sætte bilen ''ON/OFF''-knap til ''OFF'' for at afbryde forbindelse til batteriet. 
 \clearpage
 
 %----------------------------------------------------------------------------------------
@@ -169,7 +217,7 @@ Denne UC har til formål at lade Bruger afbryde hele systemet. Bruger afslutter 
 \input{Kravspecifikation/fully_dressed/uc3}
 \clearpage
 
-% UC4: Aktiver AKS
+% UC4: Anvend AKS
 \input{Kravspecifikation/fully_dressed/uc4}
 \clearpage
 
@@ -185,7 +233,7 @@ Denne UC har til formål at lade Bruger afbryde hele systemet. Bruger afslutter 
 \input{Kravspecifikation/fully_dressed/uc7}
 \clearpage
 
-% UC8: Konfigurer system
+% UC8: Konfigurer IP-adresse
 \input{Kravspecifikation/fully_dressed/uc8}
 \clearpage
 
@@ -197,54 +245,13 @@ Denne UC har til formål at lade Bruger afbryde hele systemet. Bruger afslutter 
 \input{Kravspecifikation/fully_dressed/uc10}
 \clearpage
 
-% UC11: Kalibrer system
+% UC11: Kalibrer styretøj
 \input{Kravspecifikation/fully_dressed/uc11}
 \clearpage
 
 % UC12: Afbryd system
 \input{Kravspecifikation/fully_dressed/uc12}
 \clearpage
-%---------------------------------------------------------------------------------------
-%									FUNKTIONELLE KRAV
-%---------------------------------------------------------------------------------------
-
-\section{Funktionelle krav} \label{sec:funktionelle_krav}
-Systemet\ldots
-\begin{enumerate}\itemsep1pt \parskip0pt \parsep0pt
-	\item \ldots  \emph{Skal} kunne køre frem og tilbage.
-	\item \ldots  \emph{Skal} kunne dreje.
-	\item \ldots  \emph{Skal} kunne regulere hastigheden på bilen.
-	\item \ldots  \emph{Skal} give Bruger mulighed for at begrænse maksimumshastighed.
-	\item \ldots  \emph{Skal} give Bruger mulighed for manuel styring af hastighed og retning.
-	\item \ldots  \emph{Skal} via Wi-Fi kunne kommunikere mellem bil og computer.
-	\item \ldots  \emph{Skal} kunne identificere forhindringer foran og bag bilen.
-	\item \ldots  \emph{Skal} indholde et anti-kollisionssystem baseret på afstandssensorer.
-	\item \ldots  \emph{Skal} via. anti-kollisionssystemet kunne undvige og/eller stoppe før kollision.
-	\item \ldots  \emph{Skal} indeholde et kamera til at streame video.
-	\item \ldots  \emph{Bør} give Bruger mulighed for at aktivere/deaktivere anti-kollisionssystemet på bilen.
-	\item \ldots  \emph{Kan} indeholde en batteriniveau-indikator.
-\end{enumerate}
-\clearpage
-
-%---------------------------------------------------------------------------------------
-%											IKKE-FUNKTIONELLE KRAV
-%---------------------------------------------------------------------------------------
-
-\section{Ikke-funktionelle krav} \label{sec:ikke-funktionelle_krav}
-\begin{enumerate}\itemsep1pt \parskip0pt \parsep0pt
-	\item Bilens maksimumshastighed uden begrænsning er 20km/t $\pm$ 5\% %TODO Passer denne?
-	\item Bilens bremselængde ved maksimumshastighed uden begrænsning må ikke overstige 1 m. %TODO Passer denne?
-	\item Bilen skal kunne accelerere fra 0 km/t til maksimumshastighed uden begrænsning på højest 6 s. %TODO Passer denne?
-	\item Forsinkelse fra brugerinput til at bilen reagerer må ikke overstige 50ms. %TODO Passer denne?
-	\item Afstandssensorerne skal kunne identificere en forhindring på mindst $(30cm \times 30cm)$ på en maksimal afstand af 6 m. %TODO Passer denne, EMC - spørg vejleder?
-	\item Mister bilen forbindelsen med computeren i mere end 50ms, standser bilen automatisk. 
-	\item Kameraet skal minimum have en opdateringshastighed på 15 billeder i sekundet. %TODO undersøg!
-	\item Systemet skal vise video-feed med en opløsning på $640 \times 480$ pixels.
-	\item Computeren skal som minimum sende kommandoer til bilen 60 gange i sekundet. 
-	\item HID skal bestå af en XBOX360 controller og tastatur.
-\end{enumerate}
-\clearpage
-
 
 %---------------------------------------------------------------------------------------
 %											ACCEPTTESTS
