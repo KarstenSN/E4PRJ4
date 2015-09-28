@@ -1,35 +1,34 @@
 \subsection{Use Case 6: Drej bil til højre/venstre}
 \begin{table}[h]
-\begin{tabularx}{\textwidth}{| L{3.3 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| L{3.3 cm} | Z |} 													   \hline
 
-\textbf{Navn:} 						& UC6: Drej til højre/venstre\\ \hline
-\textbf{Mål:}						& At få bilen til at dreje mod højre eller venstre. \\ \hline
-\textbf{Initiering:}				& Bruger \\ \hline
-\textbf{Aktører:} 					& Bruger eller AKS \\ \hline
-\textbf{Reference:} 				& Ingen\\ \hline
-\textbf{Antal samtidige forekomster:} & Én \\ \hline
-\textbf{Forudsætning:} 				& UC1: Aktiver system er fuldført og systemet er operationelt. \\ \hline
-\textbf{Resultat:}					& Retningen på bilens forhjul er ændret. \\ \hline
+\textbf{Navn:} 						& UC6: Drej til højre/venstre									\\ \hline
+\textbf{Mål:}						& At få bilen til at dreje mod højre eller venstre				\\ \hline
+\textbf{Initiering:}				& Bruger 														\\ \hline
+\textbf{Aktører:} 					& Bruger	 													\\ \hline
+\textbf{Reference:} 				& UC3 															\\ \hline
+\textbf{Antal samtidige forekomster:} & Én 															\\ \hline
+\textbf{Forudsætning:} 				& UC1: Aktiver system er fuldført og systemet er operationelt   \\ \hline
+\textbf{Resultat:}					& Retningen på bilens forhjul er ændret 						\\ \hline
 \textbf{Hovedscenarie:}				& 
 
 \begin{packed_enum}
-\item Bruger ændrer position på den venstre styrepind på HID controlleren.
+\item Bruger ændrer position på den venstre styrepind på xbox-360 controlleren.
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-	\item {[}Ext 1.a: AKS er aktiveret.{]}
+		\item {[}Ext 1.a: AKS bliver anvendt.{]}
 	\end{packed_item}
-\item Controllerens input streames til bilen.
-\item Bilen tjekker input, hvis den er mere mod venstre drejer hjulet mere til venstre og omvendt. %TODO dette skal lige finpudses lidt.
-\item UC6 afsluttes.
+	\item Controllerens input streames til bilen.
+	\item Bilen behandler input fra Bruger, hvis styrepinden føres til venstre drejes forhjulene til venstre, hvis styrepinden føres til højre drejes forhjulene ligeledes til højre.
+	\item UC6 afsluttes.
 \end{packed_enum} \\ \hline
 \textbf{Udvidelser:}				&  
-\textbf{{[}Ext 1.a : AKS er aktiveret.{]}}
+\textbf{{[}Ext 1.a : AKS bliver anvendt.{]}}
 	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
 		\item Bilen analyserer input fra UC3.
 		\item Bilen drejer til højre, hvis sensor FL registrerer en forhindrer, ditto venstre og FR.
 		\item Bilen undviger forhindringen. %TODO Skal eventuelt lige finpudses
 		\item Systemet fortsætter fra punkt 3 i hovedscenariet.
-	\end{packed_enum}
-\\ \hline
+	\end{packed_enum}																				\\ \hline
 \end{tabularx}
 \caption{UC6: Drej til højre/venstre}
 \label{tbl:UC6}
