@@ -28,7 +28,7 @@ Servomotor har til opgave at omsætte signal fra Pi'en til mekanisk styring af b
 Bilens 2 fremadrettet og 2 bagudrettet afstandssensorer har til formål at indsamle data om eventuelle forhindringer i bilen kørebane. 
 
 \subsubsection{Accelerometer}
-Der er ligeledes påmonteret et accelerometer der anvendes til regulering af hastighed.
+Der er påmonteret et accelerometer der anvendes til regulering af hastighed.
 
 \subsubsection{Kamera}
 Bilens kamera streamer video til PC'ens skærm så Bruger har mulighed for at navigere på baggrund af visuel feedback
@@ -69,10 +69,12 @@ Som figur \ref{fig:aktor_kontekst} viser, er der 2 aktører til systemet.
 \textit{Bruger} og \textit{Forhindring}.
 
 \subsubsection{Bruger - Primær Aktør}
+Brugeren vil typisk være et barn med alder over 8 år, men kan også være en voksen med interesse for fjernstyrede biler.
+\\ %TODO Indsæt linjeskift
 Bruger kan:
 \begin{itemize}
 	\item Starte og stoppe systemet 
-	\item Styre bilen over et netværk.
+	\item Styre bilen over et Wi-Fi netværk.
 	\item Konfigure og kalibrere system.
 \end{itemize}
 
@@ -98,7 +100,6 @@ Systemet\ldots
 	\item \ldots  \emph{Skal} via. anti-kollisionssystem kunne undvige og/eller stoppe før kollision.
 	\item \ldots  \emph{Skal} indeholde et kamera til at streame video.
 	\item \ldots  \emph{Bør} give Bruger mulighed for at aktivere/deaktivere anti-kollisionssystemet på bilen.
-	\item \ldots  \emph{Kan} indeholde en batteriniveau-indikator.
 \end{enumerate}
 
 %---------------------------------------------------------------------------------------
@@ -107,12 +108,12 @@ Systemet\ldots
 
 \section{Ikke-funktionelle krav} \label{sec:ikke-funktionelle_krav}
 \begin{enumerate}\itemsep1pt \parskip0pt \parsep0pt
-	\item Bilens maksimumshastighed uden begrænsning er 10km/t $\pm$ 1km/t %TODO Passer denne?
+	\item Bilens maksimumshastighed uden begrænsning er $10km/t$ $\pm$ $1km/t$ %TODO Passer denne?
 	\item Bilens bremselængde ved maksimumshastighed uden begrænsning må ikke overstige 1 m. %TODO Passer denne?
-	\item Bilen skal kunne accelerere fra 0 km/t til maksimumshastighed uden begrænsning på højest 6 s. %TODO Passer denne?
+	\item Bilen skal kunne accelerere fra $0 km/t$ til maksimumshastighed uden begrænsning på højest 6 s. %TODO Passer denne?
 	\item Forsinkelse fra brugerinput til at bilen reagerer må ikke overstige 50ms. %TODO Passer denne?
-	\item Afstandssensorerne skal kunne identificere en forhindring på mindst $(30cm \times 30cm)$ vinkelret mod bilen, på en maksimal afstand af 6 m. På afstande over 6 m er det ikke et krav at systemet kan detektere forhindringen. %TODO Passer afstand
-	\item Mister bilen forbindelsen med PC i mere end 50ms, standser bilen automatisk. 
+	\item Afstandssensorerne skal kunne identificere en forhindring i form af et kvadrat med en sidelængede på $S = \sqrt{K \times L}$, hvor $K = 0.015m$ og $L$ er afstanden og det gælder at $0.20m<L<6.00m$. Kvadratet skal være vinkelret på bilen, således at fladen på kvadratet vender direkte mod bilen. På afstande over $6 m$ er det ikke et krav at systemet kan detektere forhindringen. %TODO Passer afstand
+	\item Mister bilen forbindelsen med PC i mere end $50ms$, standser bilen automatisk. 
 	\item Kameraet skal minimum have en opdateringshastighed på 15 billeder i sekundet. %TODO undersøg!
 	\item Systemet skal vise video-stream med en opløsning på $640 \times 480$ pixels i hovedvinduet.
 	\item PC skal som minimum sende kommandoer til bilen 60 gange i sekundet. 
