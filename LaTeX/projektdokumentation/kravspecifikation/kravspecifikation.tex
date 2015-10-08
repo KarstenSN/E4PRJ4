@@ -82,6 +82,9 @@ Bruger kan:
 \textit{Forhindring} er objekter i det miljø bilen kører i, og som der dermed er risiko for at bilen kan kollidere med.  
 \clearpage
 
+%TODO GUI indsættes her
+
+\clearpage
 %---------------------------------------------------------------------------------------
 %									FUNKTIONELLE KRAV
 %---------------------------------------------------------------------------------------
@@ -143,7 +146,7 @@ På figur \ref{fig:UC_au2} ses use case diagram over de funktionelle krav.
 \subsubsection{UC1: Aktiver system}
 Initieres af: Bruger
 
-Denne UC giver Bruger mulighed for at aktivere systemet. Herunder konfigureres bilen, UC2 + UC3 initieres og PC'en viser hovedvinduet. 
+Denne UC giver Bruger mulighed for at aktivere systemet. Bruger åbner software på PC, og sætter bilens ''ON/OFF''-knap til ''ON'' for at tilslutte batteriet. Herefter konfigureres bilen, UC2 + UC3 initieres og PC'en viser hovedvinduet. 
 
 \subsubsection{UC2: Stream Video}
 Initieres af: UC1: Aktiver system
@@ -155,7 +158,7 @@ Initieres af: UC1: Aktiver system
 
 Denne UC initierer overvågning af bilens sensorer, herunder, de 4 afstandssensorer, tachometer, samt accelerometer. Use casen kører kontinuerligt og henter løbende data fra sensorerne.
 
-\subsubsection{UC4: Anvend AKS}
+\subsubsection{UC4: Undvig forhindring}
 Initieres af: UC3: Overvåg sensorer
 
 Denne UC har til formål at lade AKS overtage styring af bilen under kørsel hvis en forhindring detekteres enten foran eller bagved bilen.
@@ -169,7 +172,7 @@ Denne UC har til formål at give Bruger mulighed for at ændre hastighed på bil
 \subsubsection{UC6: Drej bil til højre/venstre}
 Initieres af: Bruger
 
-Denne UC har til formål at lade Bruger ændre bilens retning. Bruger benytter venstre styrepind på Xbox-360 controlleren. Føres styrepinden til venstre, drejer bilen til venstre. Føres styrepinden til højre, drejer bilen ligeledes til højre.
+Denne UC har til formål at lade Bruger ændre bilens retning. Bruger benytter venstre styrepind på Xbox-360 controlleren. Føres styrepinden til venstre, drejer bilens forhjul til venstre. Føres styrepinden til højre, drejer bilens forhjul til højre. Det har ingen betydning hvis styrepinden samtidig føres lidt opad eller nedad.
 
 \subsubsection{UC7: Brems bil}
 Initieres af: Bruger
@@ -253,9 +256,3 @@ Denne UC har til formål at lade Bruger afbryde hele systemet. Bruger afslutter 
 % UC12: Afbryd system
 \input{Kravspecifikation/fully_dressed/uc12}
 \clearpage
-
-%---------------------------------------------------------------------------------------
-%											ACCEPTTESTS
-%---------------------------------------------------------------------------------------
-
-%TODO accepttests
