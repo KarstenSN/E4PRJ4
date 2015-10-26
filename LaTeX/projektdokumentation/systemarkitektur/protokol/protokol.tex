@@ -1,6 +1,6 @@
-\subsection{PC Protokolbeskrivelse}
+\section{Protokolbeskrivelse}
 
-\subsubsection{Kamera}
+\subsection{Kamera}
 
 Kameraet er påmonteret bilen og er tilsluttet til Pi'en hvor programmet motion er blevet installeret. Motion har den fordel at det kan lave en socketforbindelse hvorved Pi’en kan streame videodata den vej igennem. På PC'en modtages videoen igennem GUI'en ved hjælp af opensource biblioteker fra VLC media player. Herved laves der også en socket til at modtage videoen i.
 
@@ -25,7 +25,7 @@ UDP socket forbindelse					\\ \hline
 Motion streamer video ligeså snart der er tændt for bilen. Der er derfor ikke nogen direkte kommunikation mellem PC'en og Pi'en igennem Kameraprotokollen.
 
 
-\subsubsection{GUI}
+\subsection{GUI}
 
 GUI'en kommunikerer mellem PC'en og bilen igennem to TCP forbindelser. Controlleren har sin egen hvor data bliver sendt kontinuert. updataData og shutDown har også den samme forbindelse updateData opdateres kontinuert. shutDown sendes kun når brugeren trykker på ''Lukned'' på GUI'en. 
 
