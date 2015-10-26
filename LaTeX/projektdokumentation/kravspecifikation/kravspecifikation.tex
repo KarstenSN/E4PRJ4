@@ -11,7 +11,7 @@ beskrives blokke og kommunikationsveje mere detaljeret. Under figur \ref{fig:sys
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.9]{../fig/diagrammer/systemoversigt.pdf}
+\includegraphics[width=\textwidth]{../fig/diagrammer/systemoversigt.pdf}
 \caption{Overordnet systemoversigt}
 \label{fig:systemoversigt}
 \end{figure}
@@ -46,6 +46,16 @@ Motoren omsætter data, herunder regulering fra Pi'en til mekanisk styring af bi
 Motorens omdrejningshastighed kan via tachometeret aflæses og herefter benyttes til databehandling og regulering. 
 \clearpage
 
+I figur \ref{fig:main_menu} vises en skitse af hovedmenuen i softwaren på PC. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{../fig/gui/hovedmenu}
+\caption{Skitse af hovedmenu}
+\label{fig:main_menu}
+\end{figure}
+
+\clearpage 
 %---------------------------------------------------------------------------------------
 %											AKTØR-KONTEKSTDIAGRAM
 %---------------------------------------------------------------------------------------
@@ -82,7 +92,6 @@ Bruger kan:
 \textit{Forhindring} er objekter i det miljø bilen kører i, og som der dermed er risiko for at bilen kan kollidere med.  
 \clearpage
 
-%TODO GUI indsættes her
 
 \clearpage
 %---------------------------------------------------------------------------------------
@@ -90,6 +99,11 @@ Bruger kan:
 %---------------------------------------------------------------------------------------
 
 \section{Funktionelle krav} \label{sec:funktionelle_krav}
+Ambitionen for dette projekt er som absolut minimum at realisere nedenstående punkter under \textit{''skal''}. 
+Det forventes desuden at punkterne under \textit{''bør''} realiseres, men de har lavere prioritet.
+Punkterne under \textit{''kan''} forventes ikke realiseret, og punkterne under \textit{''vil ikke...''} realiseres med sikkerhed ikke. 
+Sidstnævnte punkter kan ses som udviklingsmuligheder i forhold til senere versioner af systemet. 
+
 Systemet\ldots
 \begin{enumerate}\itemsep1pt \parskip0pt \parsep0pt
 	\item \ldots  \emph{Skal} kunne køre frem og tilbage.

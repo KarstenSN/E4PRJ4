@@ -1,61 +1,26 @@
 \chapter{Projektformulering} \label{ch:projektformulering}
+\section{Problemformulering} \label{sec:problemformulering}
+Ifølge Niklas Alexander Chimirri, forsker inden for områder som barndom, psykologi og teknologi ved Roskilde Universitet, er leg en vigtig del af børns opvækst.   
+Det er essentielt for deres fremtid da det gør børnene sociale, robuste, kreative og ikke mindst nysgerrige. Med til at skabe rammerne for børns leg er legetøj, og i dag er det vigtigt at børn har mulighed for at anvende den teknologi der er til rådighed i dagens Danmark. 
+Dette bekræftes i en artikel der er udgivet på Roskilde Universitets hjemmeside i november 2014.
+Han konkluderer at der er for stor forskel imellem den virkelighed børnene møder i, og uden for børnehaven ift. den teknologi der i dag er til rådighed. 
+
+%TODO Indsæt kildehenvisning: https://www.ruc.dk/om-universitetet/nyhedsportal/rubrik-forskningsmagasin/rubrik-nr-6/voksne-skal-forstaa-boerns-leg-med-teknik/
 
 %---------------------------------------------------------------------------------------
 %											PROJEKTBESKRIVELSE
 %---------------------------------------------------------------------------------------
 
-\section{Beskrivelse} \label{sec:beskrivelse}
-Ifølge Niklas Alexander Chimirri, forsker inden for områder som barndom, psykologi og teknologi ved Roskilde Universitet, er leg en vigtig del af børns opvækst.   
-Det er essentielt for deres fremtid da det gør børnene sociale, robuste, kreative og ikke mindst nysgerrige. Med til at skabe rammerne for børns leg er legetøj, og i dag er det vigtigt at børn har mulighed for at anvende den teknologi der er til rådighed i dagens Danmark. 
-Dette bekræftes i en artikel der er udgivet på Roskilde Universitets hjemmeside i november 2014.
-Han konkluderer at der er for stor forskel imellem den virkelighed børnene møder i, og uden for børnehaven ift. den teknologi der i dag er til rådighed. 
-%TODO Indsæt kildehenvisning: https://www.ruc.dk/om-universitetet/nyhedsportal/rubrik-forskningsmagasin/rubrik-nr-6/voksne-skal-forstaa-boerns-leg-med-teknik/
+\section{Projektbeskrivelse} \label{sec:beskrivelse}
 
-Projektgruppen vil gerne bidrage til eller i det mindste sætte fokus på, at det er vigtigt at børn har muligheden for at lege... og gerne med moderne teknologi. Derfor vil projektgruppen lave en fjernstyret bil. Det skal ikke være en almindelig fjernstyret bil - den skal være intelligent og den får navnet ’’AU2’’.
 
-Den intelligente del består af sensorer samt en kommunikationsenheder, som gør det muligt at styre bilen over et trådløst netværk. Brugeren har hermed mulighed for at navigere bilen ved at betragte en computerskærm, der viser et live-stream med video fra et kamera monteret på bilen. Er bilen inden for synsfeltet kan den selvfølgelig også styres ved at se direkte på den. For at undvige forhindringer på kørebanen, implementeres et anti-kollisionssystem bestående af afstandssensorer på bilen, placeret sådan at de kan detektere om bilen nærmer sig en forhindring. Således kan bilen selv kan standse eller undvige, hvis den nærmer sig en forhindring hastigt. Anti-kollisionssystemet vil forhindre evt. beskadigelse af bilen, eller at brugeren kommer til at skade de omgivelser omgivelserne med den.
-\clearpage
+Projektet skal bidrage til eller i det mindste sætte fokus på, at det er vigtigt at børn har muligheden for at lege... og gerne med moderne teknologi. Derfor omhandler projektet design og implementering af en fjernstyret bil. Det skal ikke være en almindelig fjernstyret bil - den skal være intelligent og den får navnet ’’AU2’’. En skitse af bilen er vist på figur \ref{fig:rigbillede}.
 
-%---------------------------------------------------------------------------------------
-%										MOSCOW PRIORITERING	
-%---------------------------------------------------------------------------------------
+Den intelligente del består af sensorer samt en kommunikationsenheder, som gør det muligt at styre bilen over et trådløst netværk. Brugeren har hermed mulighed for at navigere bilen ved at betragte en computerskærm, der viser et live-stream med video fra et kamera monteret på bilen. Er bilen inden for synsfeltet kan den selvfølgelig også styres ved at se direkte på den. For at undvige forhindringer på kørebanen, implementeres et anti-kollisionssystem bestående af afstandssensorer på bilen, placeret sådan at de kan detektere om bilen nærmer sig en forhindring. Således kan bilen selv kan standse eller undvige, hvis den nærmer sig en forhindring hastigt. Anti-kollisionssystemet har til formål at  forhindre en evt. kollision og derved beskadigelse af bilen eller dens omgivelser.
 
-\section*{MoSCoW prioritering} \label{sec:moscow_prioritering}
-
-Ambitionen for dette projekt er som absolut minimum at realisere nedenstående punkter under \textit{''skal''}. 
-Det forventes desuden at punkterne under \textit{''bør''} realiseres, men de har lavere prioritet.
-Punkterne under \textit{''kan''} forventes ikke realiseret, og punkterne under \textit{''vil ikke...''} realiseres med sikkerhed ikke. 
-Sidstnævnte punkter kan ses som udviklingsmuligheder i forhold til senere versioner af systemet. 
-
-\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
-	\item \textbf{Skal:}
-		\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
-			\item Bilen skal være i stand til at køre frem og tilbage.
-			\item Bilen skal være i stand til at dreje.
-			\item Systemet skal kunne måle hastighed med et tachometer.
-			\item Systemet skal kunne måle acceleration med et accelerometer.
-			\item Systemet skal regulere hastigheden med feedback fra tachometer.
-			\item Systemet skal have en servomotor til kontrollering af bilens styretøj.
-			\item Systemet skal regulere styretøjet.
-			\item Systemet skal kommunikere internt mellem Bil og PC over Wi-Fi netværk.
-			\item Systemet skal kunne undvige identificerede forhindringer vha. et anti-kollisionssytem. 
-			\item Bilen skal styres vha. en XBOX-360 controller tilkoblet PC, med kommunikation over Wi-Fi netværk.
-			\item Systemet skal streame video fra et kamera, monteret på bilen, til PC.
-			\item 
-		\end{itemize}
-	\item \textbf{Bør:}
-		\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
-			\item Systemet bør ikke have større kommunikationsforsinkelse end 50ms fra brugerinput til bilens reaktion.
-			\item %TODO flere inputs
-		\end{itemize}
-	\item \textbf{Kan:}	
-		\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
-			\item ...
-			\item %TODO flere inputs
-		\end{itemize}
-	\item \textbf{Vil ikke (i denne version):}	
-		\begin{itemize}\itemsep1pt \parskip0pt \parsep0pt
-			\item Systemet kan indeholde en batteriniveau-indikator.
-			\item %TODO flere inputs
-		\end{itemize}
-\end{itemize}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth - 7.38 cm]{../fig/billeder/rigbillede}
+\caption{Rigt billede af systemet i sin helhed}
+\label{fig:rigbillede}
+\end{figure}
