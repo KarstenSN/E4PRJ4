@@ -1,0 +1,103 @@
+\subsection{PC Protokolbeskrivelse}
+
+\subsubsection{Kamera}
+
+Kameraet er påmonteret bilen og er tilsluttet til Pi'en hvor programmet motion er blevet installeret. Motion har den fordel at det kan lave en socketforbindelse hvorved Pi’en kan streame videodata den vej igennem. På PC'en modtages videoen igennem GUI'en ved hjælp af opensource biblioteker fra VLC media player. Herved laves der også en socket til at modtage videoen i.
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| Z | Z | Z | Z |} \hline
+
+\textbf{Kommando} 						&
+\textbf{Svar}							&
+\textbf{Beskrivelse}					&
+\textbf{Bitmønstre}						\\ \hline
+
+openPlayer								&
+Kontinuert stream fra motion			&
+Motion streamer video data til PC'en	&
+UDP socket forbindelse					\\ \hline
+
+\end{tabularx}
+\caption{Kamera Protokol}
+\label{tbl:prt_cam}
+\end{table}
+
+Motion streamer video ligeså snart der er tændt for bilen. Der er derfor ikke nogen direkte kommunikation mellem PC'en og Pi'en igennem Kameraprotokollen.
+
+
+\subsubsection{GUI}
+
+GUI'en kommunikerer mellem PC'en og bilen igennem to TCP forbindelser. Controlleren har sin egen hvor data bliver sendt kontinuert. updataData og shutDown har også den samme forbindelse updateData opdateres kontinuert. shutDown sendes kun når brugeren trykker på ''Lukned'' på GUI'en. 
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| Z | Z | Z | Z |} \hline
+
+\textbf{Kommando} 						&
+\textbf{Svar}							&
+\textbf{Beskrivelse}					&
+\textbf{Bitmønstre}						\\ \hline
+
+updateData &
+
+sendStatus &
+
+GUI'en sender makshastighed, status på AKS og kalibrering af styretøj til bilen. Bilen svarer tilbage med hastighed, afstand til forhindring og acceleration &
+
+Ved updateData sendes data som char i rækkefølgen: status, AKS, kalibrering. \
+Ved sendStatus sendes data også som char i rækkefølgen: hastighed, afstand, acceleration \\ \hline
+
+
+
+shutDown &
+
+shuttingDown &
+
+GUI'en sender besked til bilen om at den skal lukke dens software ned &
+
+shutDown sendes som en string ''shutdown'' \
+shuttingDown sender det samme tilbage \\ \hline
+
+
+
+controllerFrem &
+
+\textit{Intet svar} &
+
+Bruger har trykket på RT på controlleren &
+
+Char fra 0-255 afhængig af hvor hårdt der trykkes på knappen \\ \hline
+
+
+
+controllerTilbage &
+
+\textit{Intet svar} &
+
+Bruger har trykket på LT på controlleren &
+
+Char fra 0-255 afhængig af hvor hårdt der trykkes på knappen \\ \hline
+
+
+
+controllerVenstre &
+
+\textit{Intet svar} &
+
+Bruger har ændret positionen af venstre styrepind, til venstre, på controlleren &
+
+Char ''V'' \\ \hline
+
+
+
+controllerHøjre &
+
+\textit{Intet svar} &
+
+Bruger har ændret positionen af venstre styrepind, til højre, på controlleren &
+
+Char ''H'' \\ \hline
+
+\end{tabularx}
+\caption{GUI Protokol}
+\label{tbl:prt_gui}
+\end{table}
