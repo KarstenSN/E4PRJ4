@@ -5,8 +5,8 @@
 	\begin{tabularx}{\textwidth - 2cm}{|l|l|l|X|}
 	\hline
 	Dato			& Version			& Initialer 		& Ændring										\\ \hline
-	29 September 	& 1 				& Alle				& Første udkast. 								\\ \hline
-	 				& 2 				&  					& 						 						\\ \hline
+	29. september 	& 1 				& Alle				& Første udkast. 								\\ \hline
+	26. oktober		& 2 				& PKP, KT og JEP	& Mindre rettelser efter review						 						\\ \hline
 			 		& 3 				&  					& 												\\ \hline
 					& 4 				&  					& 												\\ \hline
 	\end{tabularx}
@@ -14,29 +14,66 @@
 \clearpage
 
 \section{Funktionelle Krav}
+
+Fremgangsmåden for test af funktionelle krav er generelt taget udgangspunkt i Use Cases. I tabel \ref{tbl:kravucmatrise} er vist en matrise der sammenholder Use Cases med funktionelle krav, der sikrer at alle krav bliver testet ved test af Use Cases. Der henvises til kravnumre i afsnit \ref{sec:funktionelle_krav} på side \pageref{sec:funktionelle_krav}.
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth-5cm}{| L{1 cm} | X | X | X | X | X | X | X | X | X | X | X | X |}
+\hline
+Krav&1&2&3&4&5&6&7&8&9&10&11&12 \\ \hline
+UC1 & & & & & &X& & & &X &  &   \\ \hline
+UC2 & & & & & & & & & &X &  &   \\ \hline
+UC3 & & & & & & &X& & &  &  &   \\ \hline
+UC4 &X&X&X& & & &X&X&X&  &  &   \\ \hline
+UC5 &X& &X& &X& & & & &  &  &   \\ \hline
+UC6 & &X& & &X& & & & &  &  &   \\ \hline
+UC7 & & &X& & & & & & &  &  &X  \\ \hline
+UC8 & & & & & &X& & & &  &  &   \\ \hline
+UC9 & & & & & & & & & &  &X &   \\ \hline
+UC10& & &X&X& & & & & &  &  &   \\ \hline
+UC11& &X& & & & & & & &  &  &   \\ \hline
+UC12& & & & & & & & & &  &  &   \\ \hline
+\end{tabularx}
+\caption{Use Case-krav matrise}
+\label{tbl:kravucmatrise}
+\end{table}
+
 %Her vælges bredde på hele tabellen samt hvilken FIL selve tabellen defineres i.
+\subsubsection{Use Case 1: Aktiver system}
 \LTXtable{\textwidth}{accepttest/uc1}
 \clearpage
+\subsubsection{Use Case 2: Stream Video}
 \LTXtable{\textwidth}{accepttest/uc2}
 \clearpage
+\subsubsection{Use Case 3: Overvåg sensorer}
 \LTXtable{\textwidth}{accepttest/uc3} 
 \clearpage
+\subsubsection{Use Case 4: Undvig forhindring}
 \LTXtable{\textwidth}{accepttest/uc4}
 \clearpage
+\subsubsection{Use Case 5: Kør bil frem/tilbage}
 \LTXtable{\textwidth}{accepttest/uc5} 
 \clearpage
+\subsubsection{Use Case 6: Drej bil til højre/venstre}
 \LTXtable{\textwidth}{accepttest/uc6}
 \clearpage
+\subsubsection{Use Case 7: Brems bil}
 \LTXtable{\textwidth}{accepttest/uc7}
 \clearpage
+\subsubsection{Use Case 8: Konfigurer IP-adresse}
 \LTXtable{\textwidth}{accepttest/uc8}
 \clearpage
+\subsubsection{Use Case 9: Tænd/Sluk AKS}
 \LTXtable{\textwidth}{accepttest/uc9}
 \clearpage
+\subsubsection{Use Case 10: Indstil maksimalhastighed}
 \LTXtable{\textwidth}{accepttest/uc10}
 \clearpage
+\subsubsection{Use Case 11: Kalibrer styrtøj}
 \LTXtable{\textwidth}{accepttest/uc11}
 \clearpage
+\subsubsection{Use Case 12: Afbryd system}
 \LTXtable{\textwidth}{accepttest/uc12}
 
 \clearpage
