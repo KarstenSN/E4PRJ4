@@ -12,6 +12,7 @@ Dette diagram viser blokken bil fra figur \ref{fig:bdd_au2}. Blokken 'bil' skal 
 \caption{BDD for bil}
 \label{fig:bdd_bil}
 \end{figure}
+\clearpage
 
 \subsubsection{IBD for signaler i bil}
 
@@ -25,6 +26,101 @@ På figur \ref{fig:ibd_bil} ses de interne forbindelser for figur \ref{fig:bdd_b
 \end{figure}
 
 \subsubsection{Signalbeskrivelser for bilens signaler}
+
+\begin{table}[h]
+	\centering
+	\begin{tabularx}{\textwidth}{|l|X|X|X|} \hline
+	\textbf{Signal (navn: type)} & \textbf{Funktion} & \textbf{Tolerancer} & \textbf{Kommentarer} \\ \hline
+
+Propulsion: torque
+	& Baghjulenes torque til underlaget.
+	& - 
+	& ~
+	\\ \hline
+
+motorSpeed: PWM
+	& Et PWM signal der bestemmer motorhastigheden. 
+	& Frekvens: 30kHz +/- 1kHz 0-5V +/- 0.2V
+ 	& Logisk signal: \newline
+		Lav = 0V +/- 0.2V \newline
+		Høj = 5V +/- 0.2V
+	\\ \hline
+
+forward: bool
+	& Kontrolsignal til H-bro.
+	& 0-5V $\pm$ 0.2V
+	& Lav = 0V +/- 0.2V  ’idle’ \newline
+		Høj =  5V +/- 0.2V  ’frem’
+	\\ \hline
+	
+reverse: bool
+	& Kontrolsignal til H-bro.
+	& 0-5V $\pm$ 0.2V
+	& Lav = 0V +/- 0.2V ’idle’ \newline
+		Høj =  5V +/- 0.2V  ’tilbage’
+	\\ \hline
+	
+tachoSpeed: freq
+	& Digitalt signal med varierende frekvens afhængig af baghjulenes 					omdrejningshastighed.
+	& - 
+	& Vejledende: \newline
+		64Hz = 10Km/t \newline
+		Logisk signal: \newline
+		Lav = 0V +/- 0.2V \newline
+		Høj = 5V +/- 0.2V
+
+	\\ \hline
+	
+Inout SDA: bool
+	& \IIC dataline til sensorer herunder accelerometer og afstandssensorer. 
+	& 0-5V $\pm$ 0.5V
+ 	& Logisk signal: \newline
+		Lav = 0V $\pm$ 0.5V \newline
+		Høj = 7.2V $\pm$ 0.5V
+	\\ \hline
+
+Inout SCL: bool
+	& \IIC clockline  til sensorer herunder accelerometer og afstandssensorer. 
+	& 0-5V $\pm$ 0.5V
+ 	& Logisk signal: \newline
+		Lav = 0V $\pm$ 0.5V \newline
+		Høj = 7.2V $\pm$ 0.5V
+	\\ \hline
+
+Pulses: sound
+	& Ultralydsbølger afsendt af sensor. 
+	& Jfv. Datablad (henvisning kommer senere) %TODO henvsining
+ 	& ~
+	\\ \hline
+	
+reflection: sound
+	& Refleksionsbølge af udsendte ultralydsbølger. 
+	& Jfv. Datablad (henvisning kommer senere) %TODO henvsining
+ 	& ~
+	\\ \hline
+	
+retning: PWM 
+	& PWM signal der vha pulsbredden angiver hvilken retning servomotoren skal 				dreje og dermed hvilken retning bilen skal dreje. 
+	& Pulsbredde: 0.5ms – 2.5ms \newline
+		Freq = 360Hz \newline
+		0.5ms = 18\% Duty cycle (Venstre)\newline
+		2.5ms = 90\% Duty cycle (Højre)
+	& ~
+	\\ \hline
+
+retning: rotation
+	& Får bilen til at dreje.
+	& 30 grader til hhv. venstre og højre $\pm$ 5 grader
+	& ~
+	\\ \hline
+	
+	
+%TODO mangler Wi-fi
+	
+
+	\end{tabularx}
+\end{table}
+\clearpage
 
 \subsubsection{Forsyninger} % ibd_bil_forsyning.pdf
 
@@ -92,7 +188,7 @@ motor: 7.2V DC
 	\\ \hline
 	\end{tabularx}
 \end{table}
-
+\clearpage
 \input{systemarkitektur/bil/ibdfremdrift/ibdfremdrift}
 \clearpage
 \input{systemarkitektur/bil/ibdstyretoej/ibdstyretoej}
