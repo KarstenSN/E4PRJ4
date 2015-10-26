@@ -1,11 +1,98 @@
 \section{Bil}
 
-\input{systemarkitektur/bil/bddau2/bddau2}
-\clearpage
-\input{systemarkitektur/bil/bddbil/bddbil}
-\input{systemarkitektur/bil/ibdbil/ibdbil}
-\input{systemarkitektur/bil/ibdbilforsyning/ibdbilforsyning}
-\clearpage
+\subsection{Diagrammer for bil}
+
+\subsubsection{BDD for bil} % bdd_bil.pdf
+
+Dette diagram viser blokken bil fra figur \ref{fig:bdd_au2}. Blokken 'bil' skal forstås som alle mekaniske og elektriske som er fastgjort på køretøjet. Således er 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{../fig/diagrammer/bil/bdd_bil.pdf}
+\caption{BDD for bil}
+\label{fig:bdd_bil}
+\end{figure}
+
+\subsubsection{IBD for signaler i bil}
+
+På figur \ref{fig:ibd_bil} ses de interne forbindelser for figur \ref{fig:bdd_bil}. Diagrammet skaber et overblik over hvilke signaler der sendes og modtages. Signalerne bliver beskrevet yderligere i signalbeskrivelsen på side \pageref{sec:signalbeskrivelse}. Bemærk at alle forsyningerne ikke er taget med på diagrammet, men istedet er lavet i et diagram for sig. Forsyningerne kan ses på figur \ref{fig:ibd_bil_forsyning}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=1]{../fig/diagrammer/bil/ibd_bil.pdf}
+\caption{IBD for bil}
+\label{fig:ibd_bil}
+\end{figure}
+
+\subsubsection{Signalbeskrivelser for bilens signaler}
+
+\subsubsection{Forsyninger} % ibd_bil_forsyning.pdf
+
+Diagrammet på figur \ref{fig:ibd_bil_forsyning} tilsvarer direkte figur \ref{fig:ibd_bil}, blot med beskrivelsen af forsyning. Dette giver forbedret overblik da de to diagrammer sat sammen bliver uoverskueligt.  
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{../fig/diagrammer/bil/ibd_bil_forsyning.pdf}
+\caption{IBD for bilens forsyninger}
+\label{fig:ibd_bil_forsyning}
+\end{figure}
+
+\subsubsection{Signalbeskrivelse for bilens forsyning}
+
+\begin{table}[h]
+	\centering
+	\begin{tabularx}{\textwidth}{|l|X|X|X|} \hline
+	\textbf{Signal (navn: type)} & \textbf{Funktion} & \textbf{Tolerancer} & \textbf{Kommentarer} \\ \hline
+forsyning: VCC
+	& Forsyningsspænding fra det tilkoblede batteri. 
+	& 7.2V DC +/- 1V max. 20A
+ 	& ~
+	\\ \hline
+	
+GND: GND
+	& Reference. 
+	& 0V
+ 	& ~
+	\\ \hline
+	
+styrtøj: 7.2V DC
+	& Forsyningsspænding til styrtøj herunder servomotor. 
+	& 7.2V DC $\pm$ 0,5V %TODO [A]
+ 	& ~
+	\\ \hline
+	
+accelerometer: 3.3V DC
+	& Forsyningsspænding til accelerometeret.
+	& 3,3V DC +/- 0,2V %TODO [A]
+ 	& ~
+	\\ \hline
+	
+afstandssensor: 5V DC
+	& Individuel forsyningsspænding til afstandssensorerne.
+	& 5V DC +/- 0,5V %TODO [A]
+ 	& ~
+	\\ \hline
+	
+PI: 5V DC
+	& Individuel forsyningsspænding til PI.
+	& 5V DC +/- 0,5V %TODO [A]
+ 	& ~
+	\\ \hline
+	
+Tacho: 5V DC
+	& Individuel forsyningsspænding til tachometeret.
+	& 5V DC +/- 0,5V %TODO [A]
+ 	& ~
+	\\ \hline
+	
+motor: 7.2V DC
+	& Individuel forsyningsspænding til motoren.
+	& 5V DC +/- 0,5V %TODO [A]
+ 	& ~
+	\\ \hline
+	\end{tabularx}
+\end{table}
+
 \input{systemarkitektur/bil/ibdfremdrift/ibdfremdrift}
 \clearpage
 \input{systemarkitektur/bil/ibdstyretoej/ibdstyretoej}
