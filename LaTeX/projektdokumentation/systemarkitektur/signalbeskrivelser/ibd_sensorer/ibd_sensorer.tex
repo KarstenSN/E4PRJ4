@@ -1,0 +1,35 @@
+\subsection{signalbeskrivelse for sensorer}
+
+\begin{table}[h]
+	\centering
+	\begin{tabularx}{\textwidth}{|l|X|X|X|} \hline
+	\textbf{Signal (navn: type)} & \textbf{Funktion} & \textbf{Tolerancer} & \textbf{Kommentarer} \\ \hline
+Inout SDA: bool
+	& \IIC dataline til sensorer herunder accelerometer og afstandssensorer. 
+	& 0-5V $\pm$ 0.5V
+ 	& Logisk signal: \newline
+		Lav = 0V $\pm$ 0.5V \newline
+		Høj = 7.2V $\pm$ 0.5V
+	\\ \hline
+
+Inout SCL: bool
+	& \IIC clockline  til sensorer herunder accelerometer og afstandssensorer. 
+	& 0-5V $\pm$ 0.5V
+ 	& Logisk signal: \newline
+		Lav = 0V $\pm$ 0.5V \newline
+		Høj = 7.2V $\pm$ 0.5V
+	\\ \hline
+
+Pulses: sound
+	& Ultralydsbølger afsendt af sensor. 
+	& Jfv. Datablad (henvisning kommer senere) %TODO henvsining
+ 	& ~
+	\\ \hline
+	
+reflection: sound
+	& Refleksionsbølge af udsendte ultralydsbølger. 
+	& Jfv. Datablad (henvisning kommer senere) %TODO henvsining
+ 	& ~
+	\\ \hline
+	\end{tabularx}
+\end{table}
