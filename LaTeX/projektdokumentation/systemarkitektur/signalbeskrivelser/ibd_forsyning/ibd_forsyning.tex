@@ -6,12 +6,50 @@
 	\textbf{Signal (navn: type)} & \textbf{Funktion} & \textbf{Tolerancer} & \textbf{Kommentarer} \\ \hline
 forsyning: VCC
 	& Forsyningsspænding fra det tilkoblede batteri. 
-	& 7,2V DC +/- 1V max. 20A
-
- 	& Logisk signal: \newline
-		Lav = 0V +/- 0.2V \newline
-		Høj = 5V +/- 0.2V
+	& 7.2V DC +/- 1V max. 20A
+ 	& ~
 	\\ \hline
 	
+GND: GND
+	& Reference. 
+	& 0V
+ 	& ~
+	\\ \hline
+	
+styrtøj: 7.2V DC
+	& Forsyningsspænding til styrtøj herunder servomotor. 
+	& 7.2V DC $\pm$ 0,5V %TODO [A]
+ 	& ~
+	\\ \hline
+	
+accelerometer: 3.3V DC
+	& Forsyningsspænding til accelerometeret.
+	& 3,3V DC +/- 0,2V %TODO [A]
+ 	& ~
+	\\ \hline
+	
+afstandssensor: 5V DC
+	& Individuel forsyningsspænding til afstandssensorerne.
+	& 5V DC +/- 0,5V %TODO [A]
+ 	& ~
+	\\ \hline
+	
+PI: 5V DC
+	& Individuel forsyningsspænding til PI.
+	& 5V DC +/- 0,5V %TODO [A]
+ 	& ~
+	\\ \hline
+	
+Tacho: 5V DC
+	& Individuel forsyningsspænding til tachometeret.
+	& 5V DC +/- 0,5V %TODO [A]
+ 	& ~
+	\\ \hline
+	
+motor: 7.2V DC
+	& Individuel forsyningsspænding til motoren.
+	& 5V DC +/- 0,5V %TODO [A]
+ 	& ~
+	\\ \hline
 	\end{tabularx}
 \end{table}
