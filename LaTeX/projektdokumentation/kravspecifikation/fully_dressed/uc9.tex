@@ -1,32 +1,19 @@
-\subsubsection{Use Case 9: Tænd/sluk AKS}
-%-------------------- UC9 --------------------
-\begin{table}[h]
-\begin{tabularx}{\textwidth}{| L{3.3 cm} | Z |} 																			   \hline
+\begin{longtable}{| l | >{\raggedright}X | >{\raggedright}X | >{\raggedright}X | >{\raggedright\arraybackslash}p{2.3cm} |} \hline
+	\multicolumn{2}{|l|}{\textbf{Use case under test}} & \multicolumn{3}{l|}{UC9: Tænd/sluk AKS} \\ \hline
+	\multicolumn{2}{|l|}{\textbf{Scenarie}} & \multicolumn{3}{l|}{Hovedscenarie} \\ \hline
+	\multicolumn{2}{|l|}{\textbf{Forudsætning}} & \multicolumn{3}{p{10.2cm}|}{UC1: Aktiver system er udført, bilen og PC er på samme netværk, at systemet viser ”Hovedvindue” samt at systemet er operationelt.\hfill} \\ \hline
+	%\multicolumn{5}{|l|}{}\\ \hline
+	\textbf{Step} & \textbf{Handling} & \textbf{Forventet Resultat} & \textbf{Resultat} & \textbf{Godkendt / Kommentar} \\ \hline
+	
+	9.1 & Bruger trykker på ''AKS-On''. 
+		& Visuel test: \\ Knappen ændres til ''AKS-Off''. 
+		&   
+		&  \\ \hline
+	9.2 & Bruger trykker på "AKS-Off". 
+		& Visuel test: \\Knappen ændres til ''AKS-On'' . 
+		&  
+		&  \\ \hline
 
-\textbf{Navn:} 						& UC9: Tænd/sluk AKS 																	\\ \hline
-\textbf{Mål:}						& At tænde eller slukke for AKS på bilen 												\\ \hline
-\textbf{Initering:}					& Bruger 																				\\ \hline
-\textbf{Aktører:} 					& Bruger 																				\\ \hline  
-\textbf{Reference:} 				& UC11: Kalibrer styretøj																\\ \hline
-\textbf{Antal samtidige forekomster:} & Én 																					\\ \hline
-\textbf{Forudsætning:} 				& UC1: Aktiver system er udført, bilen og PC er på samme netværk, 
-									   at systemet viser ''Hovedvindue'' samt at systemet er operationelt					\\ \hline
-\textbf{Resultat:}					&  																						\\ \hline
-\textbf{Hovedscenarie:}				& 
 
-\begin{packed_enum}
-\item Bruger trykker på ''AKS''.
-\item System viser ''AKS-menu''.
-\item AKS-menu giver Bruger mulighed for at tænde/slukke for AKS .
-\item AKS-menu viser status for AKS.
-\item Bruger trykker tænd/sluk efter ønske.
-\item Bilen tænder/slukker for AKS systemet efter brugerens ønske.
-\item ''Hovedvindue'' indikerer nuværende status af AKS.
-\end{packed_enum} 																											\\ \hline
-\textbf{Udvidelser:}				&  
-~
-																															\\ \hline
-\end{tabularx}
-\caption{UC9: Tænd/sluk AKS}
-\label{tbl:UC9}
-\end{table}
+\caption{Accepttest for UC9: Tænd/sluk AKS}\label{tbl:acceptuc9}
+\end{longtable}
