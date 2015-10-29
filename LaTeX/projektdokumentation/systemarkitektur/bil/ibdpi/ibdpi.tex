@@ -38,22 +38,6 @@ Image: light
 	& -
 	\\ \hline
 
-SDA: bool
-	& I2C dataline til sensorer herunder accelerometer og afstandssensorer   
-	& 0-5V$\pm$0.5V 
- 	& Logisk signal: 			\newline
-		Lav= 0V$\pm$0.5V  	\newline
-		Høj= 7.2V $\pm$0.5V
-	\\ \hline
-	
-SCL: bool
-	& I2C clockline  til sensorer herunder accelerometer og afstandssensorer
-	& 0-5V$\pm$0.5V
-	& Logisk signal:			\newline 
-		Lav= 0V$\pm$0.5V 	\newline
-		Høj= 7.2V$\pm$0.5V
-	\\ \hline
-
 motorSpeed: PWM	
 	& Et PWM signal der bestemmer motorhastigheden.	
 	& Frekvens: 30kHz$\pm$1kHz \newline
@@ -95,5 +79,21 @@ reverse: bool
 		og D$-$>VIH (min)					\newline
 	\\ \hline	
 	
+imagestr: IPcam
+	& Karsten... Dette er dit job %TODO Karsten 
+	& - 
+	& -	
+	\\ \hline
+
+carControl: au2proto
+	& Få fingeren ud Karsten. %TODO Karsten
+	& -
+	& -
+	\\ \hline
+	
+: MIPI CSI-2
+	& Camera serial interface
+	& -
+	& Se reference: \cite{lib:MIPICSI-2}
 	\end{tabularx}
 \end{table}
