@@ -10,18 +10,18 @@
 	%\multicolumn{5}{|l|}{}\\ \hline
 	\textbf{Step} & \textbf{Handling} & \textbf{Forventet Resultat} & \textbf{Resultat} & \textbf{Godkendt / Kommentar} \\ \hline
 
-	3.1 & Bruger observerer terminalen i Raspberry Pi 2en, igennem en SSH forbindelse.
-		& Visuel test:\\ Terminalen udskriver ''Tachometer initializing... Done''.
+	3.1 & Bruger åbner programmet PUTTY.EXE og indtaster ssh -l pi IP\_ADRESS -p 8080. 
+		& Visuel test:\\ Terminalen spørger om et password''.
 		& 
 		& \\ \hline
 
-	3.2 & Bruger observerer terminalen i Raspberry Pi 2en, igennem en SSH forbindelse.
-		& Visuel test:\\ Terminalen udskriver ''Accelerometer initializing... Done''.
+	3.2 & Bruger indtaster 1234.
+		& Visuel test:\\ Terminalen viser pi@raspberry \$.
 		& 
 		& \\ \hline
 		
-	3.3 & Bruger observerer terminalen i Raspberry Pi 2en, igennem en SSH forbindelse.
-		& Visuel test:\\Terminalen udskriver ''Distancesensors initializing... Done''.
+	3.3 & Bruger indtaster nano /etc/var/log/au2log %TODO opdater filnavnet til det rigtige
+		& Visuel test:\\ Log filen viser Accelerometer initialisering.. Done. Tachometer initialisering.. Done. Distancesensors initialisering.. Done.
 		& 
 		& \\ \hline
 		
