@@ -1,4 +1,4 @@
-\subsection{Tachometer}
+\subsection{Tachometer} \label{sub:systemarkitektur_tachometer}
 
 For at måle hastigheden af bilen, er det nødvendigt at designe en form for tachometer. Kravene til komponenten er at det skal være kompakt, være strømbesparende og være inden for rimelige grænser prismæssigt. Da DC-motoren som driver bilen er præfabrikeret, og der er gearing før momentet når til hjulene, bliver det hurtigt besværligt at skulle konstruere noget inde ved motoren. Alternativt er der plads ved bilens baghjul, hvilket der vælges at gå frem efter. Gruppen forslog tre muligheder, hvoraf en blev valgt til design/realiseringsfasen.
 
@@ -10,6 +10,23 @@ Her ses de 3 foreslåede muligheder:
 	\item Hall-switch/Reed rør, der fungerer på tilnærmelsesvist samme måde som den induktive føler, men med små magneter monteret på indersiden af hjulet. 
 \end{enumerate}
 
-Gruppen valgte at fortsætte med metode 3 - Hall-switch. 
+Gruppen valgte at fortsætte med metode 3 - Hall-switch af typen TLE4905L \cite{lib:TLE4905L}. 
 
-En Hall switch kan detektere ændring i magnetfelt og vil via en schmittrigger enten udsende en høj puls, når der er en magnet i nærheden eller omvendt hvis ej. På bilens hjul er fem akser, som hver især er ligeligt fordelt over hjulets omkreds, derved kan der måles en masse data, som derved kan omregnes til en tilsvarende hastighed. 
+En Hall switch kan detektere ændring i magnetfelt og via en schmittrigger trækker den signalet til ground, når der er en magnet tilstede og en høj puls hvis der ikke er. På bilens hjul er fem akser, som er ligeligt fordelt over hjulets omkreds. Ved at montere en magnet på hver af akserne, kan der opnås en stor mængde data, som kan omregnes til en hastighed. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=1]{../fig/billeder/tle4905L_application_circuit.png}
+\caption{Anbefalet applikations kredsløb for TLE4905L}
+\label{fig:tle4905L_app_circuit}
+\end{figure}
+
+På figur \ref{fig:tle4905L_app_circuit} ses det anbefalede applikations kredsløb for hall-switchen. I databladet kan aflæses at forsyningsstrøm ligger mellem 4mA og 8mA, da vi ønsker at trække strømmen fra et batteri, forsøges det at lægge strømmen så lavt som muligt - 4mA. Via ohms lov kan vi udregne R1 til at give ca. $1.2k\Omega$
+
+\begin{equation}
+R1 = \dfrac{5V}{4mA} = 1.25\cdot 10^3 \Omega
+\end{equation}
+
+Derved kan vi sætte $R1 = 1.25k\Omega \approx 1.2k\Omega$
+
+TLE4905L forventes at blive monteret på bilens højre baghjul, på en måde, så kredsløbet ikke bliver forstyrret for meget af rystelser osv. 
