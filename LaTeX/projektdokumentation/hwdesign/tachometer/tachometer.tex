@@ -1,0 +1,15 @@
+\subsection{Tachometer}
+
+For at måle hastigheden af bilen, er det nødvendigt at designe en form for tachometer. Kravene til komponenten er at det skal være kompakt, være strømbesparende og være inden for rimelige grænser prismæssigt. Da DC-motoren som driver bilen er præfabrikeret, og der er gearing før momentet når til hjulene, bliver det hurtigt besværligt at skulle konstruere noget inde ved motoren. Alternativt er der plads ved bilens baghjul, hvilket der vælges at gå frem efter. Gruppen forslog tre muligheder, hvoraf en blev valgt til design/realiseringsfasen.
+
+Her ses de 3 foreslåede muligheder:
+
+\begin{enumerate}
+	\item Lys-modtager/sender, som, via en skive med et prædefineret antal huller, kan detektere lys sendt fra senderen ind på skiven og detektere lyset, når det kommer igennem et af hullerne. Derved vil der kunne omregnes fra hvert hul detekteres til en konkret hastighed.
+	\item Induktiv føler, som via nogle metalstykker monteret på indersiden af hjulet og en føler skulle detektere en ændring i magnetfelt, når metalstykkerne passerede føleren. På samme måde kunne dette omregnes til en konkret hastighed.
+	\item Hall-switch/Reed rør, der fungerer på tilnærmelsesvist samme måde som den induktive føler, men med små magneter monteret på indersiden af hjulet. 
+\end{enumerate}
+
+Gruppen valgte at fortsætte med metode 3 - Hall-switch. 
+
+En Hall switch kan detektere ændring i magnetfelt og vil via en schmittrigger enten udsende en høj puls, når der er en magnet i nærheden eller omvendt hvis ej. På bilens hjul er fem akser, som hver især er ligeligt fordelt over hjulets omkreds, derved kan der måles en masse data, som derved kan omregnes til en tilsvarende hastighed. 
