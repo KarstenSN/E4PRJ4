@@ -16,7 +16,7 @@ Dette diagram viser blokken bil fra figur \ref{fig:bdd_au2}. Blokken 'bil' skal 
 
 \subsubsection{IBD for signaler i bil}
 
-På figur \ref{fig:ibd_bil} ses de interne forbindelser for figur \ref{fig:bdd_bil}. Diagrammet skaber et overblik over hvilke signaler der sendes og modtages. Signalerne bliver beskrevet yderligere i signalbeskrivelsen på side \pageref{sec:signalbeskrivelse}. Bemærk at alle forsyningerne ikke er taget med på diagrammet, men istedet er lavet i et diagram for sig. Forsyningerne kan ses på figur \ref{fig:ibd_bil_forsyning}.
+På figur \ref{fig:ibd_bil} ses de interne forbindelser for figur \ref{fig:bdd_bil}. Diagrammet skaber et overblik over hvilke signaler der sendes og modtages. Bemærk at alle forsyningerne ikke er taget med på diagrammet, men istedet er lavet i et diagram for sig. Forsyningerne kan ses på figur \ref{fig:ibd_bil_forsyning}.
 
 \begin{figure}[h]
 \centering
@@ -25,16 +25,17 @@ På figur \ref{fig:ibd_bil} ses de interne forbindelser for figur \ref{fig:bdd_b
 \label{fig:ibd_bil}
 \end{figure}
 
+\clearpage
 \subsubsection{Signalbeskrivelser for bilens signaler}
 
 \begin{table}[h]
 	\centering
-	\begin{tabularx}{\textwidth}{|l|X|X|X|} \hline
+	\begin{tabularx}{\textwidth}{|l|Z|Z|Z|} \hline
 	\textbf{Signal (navn: type)} & \textbf{Funktion} & \textbf{Tolerancer} & \textbf{Kommentarer} \\ \hline
 
 Propulsion: torque
 	& Baghjulenes torque til underlaget.
-	& - 
+	& ~
 	& ~
 	\\ \hline
 
@@ -62,14 +63,12 @@ reverse: bool
 	
 tachoSpeed: freq
 	& Digitalt signal med varierende frekvens afhængig af baghjulenes 					omdrejningshastighed.
-	& - 
+	& ~
 	& Vejledende: \newline
 		64Hz = 10Km/t \newline
 		Logisk signal: \newline
 		Lav = 0V +/- 0.2V \newline
-		Høj = 5V +/- 0.2V
-
-	\\ \hline
+		Høj = 5V +/- 0.2V	\\ \hline
 	
 Inout SDA: bool
 	& \IIC dataline til sensorer herunder accelerometer og afstandssensorer. 
@@ -115,20 +114,21 @@ retning: rotation
 	\\ \hline
 	
 imagestr: IPcam
-	& Karsten... Dette er dit job %TODO Karsten 
-	& - 
-	& -	
+	& Karsten... Hej%TODO Karsten 
+	& ~ 
+	& ~
 	\\ \hline
 
 carControl: au2proto
-	& Få fingeren ud Karsten. %TODO Karsten
-	& -
-	& -
+	& Få fingeren ud. %TODO Karsten
+	& ~
+	& ~
 	\\ \hline
-	
+
 	\end{tabularx}
 	\label{tbl:bil_signaler}
 \end{table}
+
 \clearpage
 
 \subsubsection{Forsyninger} % ibd_bil_forsyning.pdf
@@ -142,16 +142,18 @@ Diagrammet på figur \ref{fig:ibd_bil_forsyning} tilsvarer direkte figur \ref{fi
 \label{fig:ibd_bil_forsyning}
 \end{figure}
 
+\clearpage
+
 \subsubsection{Signalbeskrivelse for bilens forsyning}
 
 \begin{table}[h]
 	\centering
-	\begin{tabularx}{\textwidth}{|l|X|X|X|} \hline
+	\begin{tabularx}{\textwidth}{|l|Z|Z|Z|} \hline
 	\textbf{Signal (navn: type)} & \textbf{Funktion} & \textbf{Tolerancer} & \textbf{Kommentarer} \\ \hline
 forsyning: VCC
 	& Forsyningsspænding fra det tilkoblede batteri. 
 	& 7.2V DC $\pm$ 1V max. 20A
- 	& ~
+ 	& Aflæst på batteriet.
 	\\ \hline
 	
 GND: GND
@@ -162,32 +164,32 @@ GND: GND
 	
 styrtøj: 7.2V DC
 	& Forsyningsspænding til styrtøj herunder servomotor. 
-	& 7.2V DC $\pm$ 0,5V max 400 mA\cite{lib:servo}
- 	& ~
+	& 7.2V DC $\pm$ 0,5V max 400 mA
+ 	& Fundet i databladet for servoen \cite{lib:servo}.
 	\\ \hline
 	
 accelerometer: 3.3V DC
 	& Forsyningsspænding til accelerometeret.
-	& 3.3V DC $\pm$ 0.2V max 8 mA\cite{lib:accel}
- 	& ~
+	& 3.3V DC $\pm$ 0.2V max 8 mA
+ 	& Fundet i databladet for servoen \cite{lib:accel}.
 	\\ \hline
 	
 afstandssensor: 5V DC
 	& Individuel forsyningsspænding til afstandssensorerne.
-	& 5V DC $\pm$ 0.5V max 400 mA\cite{lib:maxsonar}
- 	& ~
+	& 5V DC $\pm$ 0.5V max 400 mA
+ 	& Fundet i databladet for sensorerne \cite{lib:maxsonar}.
 	\\ \hline
 	
 PI: 5V DC
 	& Individuel forsyningsspænding til Pi.
-	& 5V DC $\pm$ 0.5V max 1.8A\cite{lib:PIPSU}
- 	& ~
+	& 5V DC $\pm$ 0.5V max 1.8A
+ 	& Aflæst i FAQ for Pi \cite{lib:PI2PSU}.
 	\\ \hline
 	
 Tacho: 5V DC
 	& Individuel forsyningsspænding til tachometeret.
-	& 5V DC $\pm$ 0.5V max 8 mA\cite{lib:tacho}
- 	& ~
+	& 5V DC $\pm$ 0.5V max 8 mA
+ 	& Aflæst i datablad for sensor \cite{lib:tacho}.
 	\\ \hline
 	
 motor: 7.2V DC
