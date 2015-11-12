@@ -16,16 +16,26 @@
 \begin{packed_enum}
 \item Bruger lukker ned for softwaren på PC'en.
 	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
-		\item {[}Ext 1. Bilen er løbet tør før strøm{]}
+		\item {[}Ext 1.a Bilen er løbet tør før strøm{]}
+	\end{packed_item}
+\item GUI'en sender shutdown kommando til bilen.
+\item GUI'en modtager ACK fra bilen.
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+		\item {[}Ext 3.a GUI'en modtager NACK{]}
 	\end{packed_item}
 \item Bruger skubber kontakten ''ON/OFF'' på undersiden af bilen til position ''OFF''.
 \item Strømmen til bilen afbrydes.
 \end{packed_enum} 																											\\ \hline
 \textbf{Udvidelser:}				&  
-\textbf{[}Ext 1. Bilen er løbet tør før strøm{]}
+\textbf{[}Ext 1.a Bilen er løbet tør før strøm{]}
 	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
-		\item Systemet lukker korrekt ned og forbindelse afbrydes til softwaren på PC'en.
+		\item GUI'en lukker korrekt ned.
 		\item Uce Case 12 fortsætter fra punkt 3 i hovedscenariet.
+	\end{packed_enum}   
+\textbf{[}Ext 3.a GUI'en modtager NACK{]}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+		\item GUI'en viser en advarsel med at bilen ikke kunne lukkes sikkert ned.
+		\item Usecasen gentages fra punkt 1.
 	\end{packed_enum} \\ \hline
 \end{tabularx}
 \caption{UC12: Afbryd system}
