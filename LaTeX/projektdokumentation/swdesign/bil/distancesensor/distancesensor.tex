@@ -1,0 +1,33 @@
+%++++++++++++ Controller PSoC Master klassen ++++++++++++++
+\subsubsection{Boundary-klasse: Distancesensor}
+
+%TODO Dette er bare en template
+
+\textbf{Attributter}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| Z | Z | L{10cm} |} \hline
+Navn & Type & Beskrivelse \\\hline
+\texttt{tempTemp} & \texttt{int32} & Midlertidig variabel til opbevaring af temperatur. \\\hline
+\texttt{x} & \texttt{x} & x \\\hline
+\texttt{x} & \texttt{x} & x \\\hline
+\texttt{x} & \texttt{x} & x \\\hline
+\end{tabularx}
+\caption{x}
+\label{table:x}
+\end{table}
+
+\textbf{Metoder}
+
+%========================= CY_ISR(timer_ISR) ==============
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void CY\_ISR(timer\_ISR)} \\\hline
+Parametre & \texttt{timer\_ISR} \newline Vector for den givne interrupt servicerutine. \\\hline
+Returværdi & - \\\hline
+Beskrivelse & Denne interrupt service rutine bliver kaldt, når en ønsket tidsperiode er forløbet. Rutinen kalder metoder i boundaryklassen \IIC, der varetager indhentning af data fra sensorer.  \\\hline
+\end{tabularx}
+\caption{CY\_ISR(timer\_ISR)}
+\label{table:CY_ISR(timer_ISR)}
+\end{table}

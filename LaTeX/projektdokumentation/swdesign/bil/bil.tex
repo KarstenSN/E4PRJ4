@@ -34,7 +34,7 @@ I denne klasse styres bilens aktautorer. Dette er altså en driver til både mot
 \subsubsection{Boundary-klasse: Tachometer}
 Denne klasse håndterer kommunikationen til bilens tachometer og konverterer sensordata til brugbar hastighedsmåling.
 
-\subsubsection{Boundary-klasse: Distancesensor}
+\subsubsection{Boundary-klasse: DistanceSensor}
 Denne klasse håndterer kommunikationen til bilens afstandssensorer og konverterer sensordata til brugbar distancemålinger. Klasen håndterer alle fire sensorer.
 
 \subsubsection{Boundary-klasse: Accelerometer}
@@ -125,3 +125,7 @@ Herunder er udarbejdet sekvensdiagrammer for den funktionalitet som Pi blokken p
 \caption{Sekvensdiagram over  bilens funktionalitet i UC11: Kalibrer styretøj}
 \label{fig:sd_uc11_bil}
 \end{figure}
+
+\clearpage
+\subsection{Klassebeskrivelser}
+\input{swdesign/bil/distancesensor/distancesensor}
