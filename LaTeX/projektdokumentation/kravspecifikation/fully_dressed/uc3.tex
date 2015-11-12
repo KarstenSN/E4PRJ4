@@ -8,7 +8,7 @@
 \textbf{Mål:}						 & At overvåge sensorer 				\\ \hline
 \textbf{Initiering:}				 & UC1: Aktiver system 					\\ \hline
 \textbf{Aktører:} 					 & Ingen 								\\ \hline
-\textbf{Reference:} 				 & UC1									\\ \hline
+\textbf{Reference:} 				 & UC1, UC4: Undvig forhindring,UC9: Tænd/sluk AKS	\\ \hline
 \textbf{Antal samtidige forekomster:}& Én 									\\ \hline
 \textbf{Forudsætning:} 				 & UC1 frem til punkt 7 er fuldført		\\ \hline
 \textbf{Resultat:}					 & Sensorer overvåges løbende  			\\ \hline
@@ -28,6 +28,10 @@
 			\item {[}Ext 3.a: Initiering af afstandssensorer fejler{]}
 		\end{packed_item}
 	\item Bilen overvåger sensorer.
+	\item UC4: Undvig forhindring initieres af System
+	\begin{packed_item}\itemsep1pt \parskip0pt \parsep0pt
+			\item {[}Ext 5.a: AKS er slukket via UC9: Tænd/sluk AKS{]}
+		\end{packed_item}
 	\item Sensordata sendes til softwaren på PC'en.
 \end{packed_enum} 															\\ \hline
 
@@ -48,6 +52,11 @@
 	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
 		\item Systemet prompter PC med ''afstandssensor-initiering fejlet''.
 		\item UC2 afsluttes.
+	\end{packed_enum}
+	
+	\textbf{{[}Ext 5.a : AKS er slukket via UC9: Tænd/sluk AKS{]}}
+	\begin{packed_enum}\itemsep1pt \parskip0pt \parsep0pt
+		\item Use casen fortsætter fra punkt 6.
 	\end{packed_enum}														\\\hline
 
 \end{tabularx}
