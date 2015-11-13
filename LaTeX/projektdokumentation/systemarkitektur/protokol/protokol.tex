@@ -2,7 +2,7 @@
 
 \subsection{Kamera}
 
-Kameraet er påmonteret Pi'en og der er installeret en virtuel driver kaldet uv4l. uv4l er en overbygning på den generelle driver således programmet motion kan finde kamaret i /dev/video0. Motion har den fordel at det kan sætte et IP videostream op hvorved Pi’en kan streame videodata den vej igennem. På PC'en modtages videoen igennem GUI'en ved hjælp af opensource biblioteker fra VLC media player. Herved laves der en socket til at modtage videoen i.
+Kameraet er påmonteret Pi'en og der er installeret en virtuel driver kaldet uv4l. uv4l er en overbygning på den generelle driver således programmet motion kan finde kamaret i /dev/video0. Motion har den fordel at det kan sætte et IP videostream op hvorved Pi’en kan streame videodata den vej igennem. På PC'en modtages videoen igennem GUI'en ved hjælp af opensource biblioteker fra VLC media player. Herved laves der en socket til at modtage videoen i. Adressen hvor i video stream modtages er Pi'ens Ip-adresse port 8081.
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| Z | Z | Z | Z |} \hline
@@ -27,7 +27,7 @@ Motion streamer video ligeså snart der er tændt for bilen. Der er derfor ikke 
 
 \subsection{GUI}
 
-PC'en og bilen kommunikerer igennem to TCP forbindelser. Xbox360 Controlleren har en TCP forbindelse hvor controller data bliver sendt kontinuert. GUI'en har en anden TCP forbindelse hvor data også udveksles kontinuert. Data består af makshastighed, afstand til forhindring, AKS-status,  styretøj, acceleration og hastighed på bilen. 
+PC'en og bilen kommunikerer igennem to TCP forbindelser. Xbox360 Controlleren har en TCP forbindelse hvor controller data bliver sendt kontinuert. GUI'en har en anden TCP forbindelse hvor data også udveksles kontinuert. Data består af makshastighed, afstand til forhindring, AKS-status,  styretøj, acceleration og hastighed på bilen. TCP forbindelse til GUI'en sker på Pi'ens Ip-adresse port 1234 og controlleren har port 1235.
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| Z | Z | Z | Z |} \hline
@@ -43,7 +43,7 @@ sendStatus &
 
 GUI'en udveksler dens data med bilens &
 
-Ved getData sendes data som char array i rækkefølgen: makshastighed, hastighed, afstand, acceleration, AKS-status og styretøj. \\ \hline
+Ved getData sendes data som char array i rækkefølgen: makshastighed(km/h), hastighed((km/h)$\times$10), afstand(m$\times$10), acceleration(g$\times$10), AKS-status(1/0) og styretøj(-50..50). \\ \hline
 
 
 
