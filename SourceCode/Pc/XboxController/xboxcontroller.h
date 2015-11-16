@@ -28,7 +28,7 @@ public:
         return this->_controllerState;
     }
 
-    bool IsConnected()
+    bool connect()
     {
         // Zeroise the state
         ZeroMemory(&_controllerState, sizeof(XINPUT_STATE));
@@ -46,7 +46,7 @@ public:
         }
     }
 
-    void Vibrate(int leftVal = 0, int rightVal = 0)
+    void vibrate(int leftVal = 0, int rightVal = 0)
     {
         // Create a Vibraton State
         XINPUT_VIBRATION Vibration;
@@ -62,6 +62,24 @@ public:
         XInputSetState(_controllerNum, &Vibration);
 
         return;
+    }
+
+    void getCtrData(short &leftStick, byte &rightTrigger, bool &buttonX)
+    {
+        // Zeroise the state
+        ZeroMemory(&_controllerState, sizeof(XINPUT_STATE));
+
+        // Get the state
+        XInputGetState(_controllerNum, &_controllerState);
+
+        // Send the Right Trigger [RT] state
+        rightTrigger = this->_controllerState.Gamepad.bRightTrigger;
+
+        // Send the Left Stick [LS] state
+        leftStick = this->_controllerState.Gamepad.sThumbLX;
+
+        // Send the X Button [X] state
+        buttonX = this->_controllerState.Gamepad.wButtons & XINPUT_GAMEPAD_X;
     }
 
 private:
