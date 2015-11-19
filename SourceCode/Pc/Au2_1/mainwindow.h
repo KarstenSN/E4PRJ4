@@ -5,6 +5,7 @@
 #include <QTcpSocket>
 #include <pthread.h>
 #include <QMutex>
+#include "xboxcontroller.h"
 
 namespace Ui {
 class MainWindow;
@@ -35,19 +36,26 @@ private slots:
     void connected();
     void kalibrerStyretoj();
     void shutDown();
+    void controllerIsConnected();
+    void controllerLostConnection();
 
 private: 
-    void* getData(void);
-    static void* getDataHelper(void *context);
+    void controller();
+    void *controllerStream();
+    void *getData(void);
+    static void *getDataHelper(void *context);
+    static void *controllerStreamHelper(void *context);
     void openPlayer();
     void writeDataToFile();
     void readDataFromFile();
     void updateData();
     bool isConnected;
+    bool controllerConnected;
     int socketDescriptor;
     char data[6];
     QMutex mutex;
     QTcpSocket *socket;
+    QTcpSocket *controllerSocket;
     QString IP;
     QString videoUrl;
     Ui::MainWindow *ui;
@@ -55,6 +63,8 @@ private:
     VlcMedia *media;
     VlcMediaPlayer *player;
     pthread_t dataThread;
+    pthread_t controllerThread;
+    XboxController *XboxController_;
 };
 
 #endif
