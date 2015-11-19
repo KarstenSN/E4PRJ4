@@ -11,6 +11,7 @@
 #include <vlc-qt/MediaPlayer.h>
 #include <windows.h>
 
+
 /*
  data[0] = makshastighed
  data[1] = hastighed
@@ -24,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow),media(0)
 {
     isConnected=false;
+    controllerConnected=false;
     ui->setupUi(this);
     this->setWindowTitle("Au2");
 
@@ -50,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->LukNed, SIGNAL(clicked()), this, SLOT(shutDown()));
     connect(this, SIGNAL(sig_getData()), this, SLOT(readSocket()));
 }
+
 void MainWindow::readSocket()
 {
     mutex.lock();
@@ -91,6 +94,7 @@ void MainWindow::Au2connect()
         }
         else
         {
+            controller();
             int error = pthread_create(&dataThread, NULL, this->getDataHelper ,this);
                if(error !=0)
               {
@@ -98,7 +102,7 @@ void MainWindow::Au2connect()
                 return;
               }
 
-        openPlayer();
+            openPlayer();
          }
      }
 }
@@ -199,6 +203,82 @@ void MainWindow::kalibrerStyretoj()
         data[5] = (char)copy;
 }
 
+void MainWindow::controllerIsConnected()
+{
+    controllerConnected = true;
+}
+void MainWindow::controllerLostConnection()
+{
+    controllerConnected = false;
+}
+
+void MainWindow::controller()
+{
+
+    XboxController_ = new XboxController(1);
+
+    if(!XboxController_->connect())
+    {
+        QMessageBox messageBox;
+        messageBox.critical(0,"Fejl","Controlleren er ikke tilsluttet");
+        messageBox.setFixedSize(500,200);
+        delete XboxController_;
+        return;
+    }
+
+    controllerSocket = new QTcpSocket;
+
+    connect(controllerSocket,SIGNAL(connected()),this,SLOT(controllerIsConnected()),Qt::AutoConnection);
+    connect(controllerSocket,SIGNAL(disconnected()),this,SLOT(controllerLostConnection()),Qt::AutoConnection);
+
+    controllerSocket->connectToHost(IP,1235);
+
+    if(!controllerSocket->waitForConnected(1000))
+    {
+        QMessageBox messageBox;
+        messageBox.critical(0,"Fejl","Controlleren kunne ikke oprette forbindelse til bilen");
+        messageBox.setFixedSize(500,200);
+        delete controllerSocket;
+        delete XboxController_;
+    }
+    else
+    {
+        int error = pthread_create(&controllerThread, NULL, this->controllerStreamHelper ,this);
+           if(error !=0)
+          {
+            qDebug()<<"Error on pthread_create controller"<<endl;
+            return;
+          }
+
+     }
+
+}
+
+void* MainWindow::controllerStream(void)
+{
+    char controllerData[3]={0};
+    short turn;
+    unsigned char speed;
+    bool brake;
+    while (controllerConnected)
+    {
+        XboxController_->getCtrData(turn, speed, brake);
+        controllerData[0]=(char)(turn/256);
+        controllerData[1]=speed;
+        controllerData[2]=(char)brake;
+        controllerSocket->write(controllerData,3);
+        controllerSocket->waitForBytesWritten();
+        QThread::msleep(10);
+    }
+
+    return NULL;
+}
+
+void* MainWindow::controllerStreamHelper(void* context)
+{
+    return ((MainWindow *)context)->controllerStream();
+}
+
 void* MainWindow::getData(void)
 {
     while(isConnected)
@@ -245,6 +325,9 @@ void MainWindow::shutDown()
 MainWindow::~MainWindow()
 {
     writeDataToFile();
+
+    if(controllerSocket != NULL)
+        delete controllerSocket;
 
     if(socket != NULL)
         delete socket;

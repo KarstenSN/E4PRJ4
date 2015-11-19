@@ -15,11 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    xboxcontroller.h
 
 FORMS    += mainwindow.ui
 
-LIBS     += -LC:\Qt\libvlc-qt\lib -lvlc-qt -lvlc-qt-widgets -pthread
+LIBS     += -LC:\Qt\libvlc-qt\lib -lvlc-qt -lvlc-qt-widgets -pthread -lXinput9_1_0
 INCLUDEPATH += C:\Qt\libvlc-qt\include\
 
 win32: RC_FILE = Au2.rc
