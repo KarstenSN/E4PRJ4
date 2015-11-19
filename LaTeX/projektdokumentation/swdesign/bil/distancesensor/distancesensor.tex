@@ -1,4 +1,4 @@
-%++++++++++++ Controller PSoC Master klassen ++++++++++++++
+% ++++++++++++ Controller PSoC Master klassen ++++++++++++++
 \subsubsection{Boundary-klasse: Distancesensor}
 
 \begin{figure}[h]
@@ -40,3 +40,31 @@ Beskrivelse & Metoden læser afstanden som en afstandssensor befinder sig fra en
 \caption{Metodebeskrivelse for \texttt{getDistance}}
 \label{table:met_getdistance}
 \end{table}
+\clearpage
+
+
+Afstandssensorene leveres formonteret på chip hvor benene fra IC'en er trukket til harwinpins som let kan tilgås. Til kommunikationen benyttes følgende linjer: 
+
+\begin{itemize}
+	\item pin 7: VCC: Forsyning
+	\item pin 6: GND: Reference
+	\item pin 5: SCL: Clock
+	\item pin 4: SDA: Data
+	\item pin 3: Benyttes ikke
+	\item pin 2: Status
+	\item pin 1: Temp adresse 
+\end{itemize}
+
+Data kommunikeres på SDA-linjen med reference til clock'en. ''Status'' benyttes til at angive om sensoren er i gang med at performe en ''range reading''. 
+Pin'en holdes højt så længe sensoren scanner, og trækkes lavt når operationen er fuldført og data kan leveres. Når pin'en er høj ignoreres al I2C-kommunikation.
+
+For at initiere sensoren, ''Temp-adresse''-pin'en hvor der sendes en unik 7-bit adresse til sensoren.
+   
+Afstandssensorene benytter sig af I2C-bussen til kommunikation med Pi'en. Hertil benyttes I2C-tools biblioteket.
+Dette bibliotek skal derfor hentes og aktiveres i linux-distrubutionen.
+
+I2C device filer er CDD med major-nummer 89, og hver enkelt adaptor der er tilkoblet systemet får vedhæftet et minor-nummer, 
+disse device filer findes i /dev/i2c-X, hvor X er et unik minor-nummer fra 0-256. Herfter er hver enkelt i2c-adaptor nu identificerbar og kan tilgås enkeltvis. 
+
+Herefter skrives en klasse der kan håndtere de ønskede kald til de 4 afstandssensorer. 
+I dette tilfælde ønskes der at implementere initDistance() og en getDistance() og i disse funktioner benyttes systemkald til at tilgå Hardwaren direkte, og aflæse de 4 sensorer via I2C-bussen.
