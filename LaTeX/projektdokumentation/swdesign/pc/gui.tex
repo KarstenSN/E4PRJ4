@@ -173,7 +173,8 @@ dataSocket beder bilen om at lukke ned og bilen svarer med et ACK. Modtages der 
 \end{figure}
 
 
-\subsection{Klassediagram}
+\subsection{Klassebeskrivelse}
+I denne sektion vil der blive beskrevet klassen MainWindow og XboxController. MainWindow er GUI'ens hoved klasse hvor i alt styres fra. XboxController er controllerens klasse som MainWindow bruger til at streame controllerdata fra.
 
 \begin{figure}[H]
 \centering
@@ -181,3 +182,32 @@ dataSocket beder bilen om at lukke ned og bilen svarer med et ACK. Modtages der 
 \caption{Klasse diagram over GUI}
 \label{fig:cd_gui}
 \end{figure}
+
+\textbf{Attributter for MainWindow}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| Z | Z | L{10cm} |} \hline
+Navn & Type & Beskrivelse \\\hline
+\texttt{isConnected}         & \texttt{bool}           &Bliver brugt til at angive om socket har forbindelse til bilen eller ej \\\hline
+\texttt{data}                & \texttt{char[6]}        &Char array som indeholder: Hastighed, Makshastighed, AKS-status, Styretøj, Acceleration og Afstand\\\hline
+\texttt{controller -Connected} & \texttt{bool}           &Bruges til at angive om Xbox360-controlleren er forbundet eller ej\\\hline
+\texttt{mutex}               & \texttt{QMutex*}        &Bruges til at låse således data kun kan tilgås af en tråd af gangen\\\hline
+\texttt{socket}              & \texttt{QTcpSocket*}    &Er selve datasocket instancen\\\hline
+\texttt{controller -Socket}    & \texttt{QTcpSocket*}    &Er selve controllerSocket instansen\\\hline
+\texttt{IP}                  & \texttt{QString}        &Indeholder IP-adressen på bilen\\\hline
+\texttt{videoURL}            & \texttt{QString}        &Indeholder adressen på videostreamet fra bilen\\\hline
+\texttt{ui::Ui}              & \texttt{MainWindow*}    &Selve GUI'en\\\hline
+\texttt{instance}            & \texttt{VlcInstance*}   &Bruges til at afspille videostream\\\hline
+\texttt{media}               & \texttt{VlcMedia*}      &Bruges til at afspille videostream\\\hline
+\texttt{player}              & \texttt{VlcMediaPlay -er*}&Bruges til at afspille videostream\\\hline
+\texttt{dataThread}          & \texttt{p\_thread\_t}     &Er selve data tråden\\\hline
+\texttt{controller -Thread}    & \texttt{p\_thread\_t}     &Er selve controller tråden\\\hline
+\texttt{XboxControl -ler\_}     & \texttt{XboxControl -ler*}&En instance af Xbox360-controlleren\\\hline
+
+\end{tabularx}
+\caption{Attributter for klassen MainWindow}
+\label{table:attr_distancesensor}
+\end{table}
+
+
+
