@@ -4,7 +4,7 @@
 
 Kameraet er påmonteret Pi'en og der er installeret en virtuel driver kaldet uv4l. uv4l er en overbygning på den generelle driver således programmet motion kan finde kamaret i /dev/video0. Motion har den fordel at det kan sætte et IP videostream op hvorved Pi’en kan streame videodata den vej igennem. På PC'en modtages videoen igennem GUI'en ved hjælp af opensource biblioteker fra VLC media player. Herved laves der en socket til at modtage videoen i. Adressen hvor i video stream modtages er Pi'ens Ip-adresse port 8081.
 
-\begin{table}[h]
+\begin{table}[ht]
 \begin{tabularx}{\textwidth}{| Z | Z | Z | Z |} \hline
 
 \textbf{Kommando} 						&
@@ -28,8 +28,9 @@ Motion streamer video ligeså snart der er tændt for bilen. Der er derfor ikke 
 \subsection{GUI}
 
 PC'en og bilen kommunikerer igennem to TCP forbindelser. Xbox360 Controlleren har en TCP forbindelse hvor controller data bliver sendt kontinuert. GUI'en har en anden TCP forbindelse hvor data også udveksles kontinuert. Data består af makshastighed, afstand til forhindring, AKS-status,  styretøj, acceleration og hastighed på bilen. TCP forbindelse til GUI'en sker på Pi'ens Ip-adresse port 1234 og controlleren har port 1235.
+I tabel \ref{tbl:prt_gui_byte} ses sekvensen over hver byte i GUI protokollen. Her er beskrevet hvilket bytenummer hver data byte har, samt hvad enheden er. DB1 er fx. Hastighed som sendes i enheden (km/h)$\times$10. Dette gøres for at vi derfor på PC siden kan modtage hastigheden fra 0-25.5 km/h. Når kommandoen shutDown sendes benytter den sig af samme protokol. Indholdet at bytes er i rækkefølgen ''dwnnow''
 
-\begin{table}[h]
+\begin{table}[ht]
 \begin{tabularx}{\textwidth}{| Z | Z | Z | Z |} \hline
 
 \textbf{Kommando} 						&
@@ -56,6 +57,61 @@ GUI'en sender besked til bilen om at den skal lukke dens software ned &
 shutDown sendes som en string ''dwnnow'' \
 bilen sender ''dwnnow'' tilbage som ACK. Alt andet tolkes som NACK \\ \hline
 
+\end{tabularx}
+\caption{GUI Protokol}
+\label{tbl:prt_gui}
+\end{table}
+
+
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| Z | Z | Z | Z | Z | Z | Z | Z | Z |} \hline
+
+\textbf{}	&
+\textbf{DB0}	&
+\textbf{DB1}	&
+\textbf{DB2}	&
+\textbf{DB3}	&
+\textbf{DB4}	&
+\textbf{DB5}	\\ \hline
+
+\textbf{Datatype} & Makshastig hed & Hastighed & Afstand & Acceleration & AKS-status & Styretøj \\ \hline
+\textbf{Enhed} & km/h & (km/h)$\times$10 & m & G$\times$10 & 0..1 & -50..50 \\ \hline
+
+\end{tabularx}
+\caption{GUI byte protokol}
+\label{tbl:prt_gui_byte}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| Z | Z | Z | Z | Z | Z | Z | Z | Z |} \hline
+
+\textbf{}	&
+\textbf{DB0}	&
+\textbf{DB1}	&
+\textbf{DB2}	&
+\textbf{DB3}	&
+\textbf{DB4}	&
+\textbf{DB5}	\\ \hline
+
+\textbf{Datatype} & Shutdown & Shutdown & Shutdown & Shutdown & Shutdown & Shutdown \\ \hline
+\textbf{Enhed} & 'd' & 'w' & 'n' & 'n' & 'o' & 'w' \\ \hline
+
+\end{tabularx}
+\caption{GUI shutdown protokol}
+\label{tbl:prt_gui_shutdown}
+\end{table}
+
+På tabel \ref{tbl:prt_controller} ses protokollen over Xbox360-controlleren. 
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| Z | Z | Z | Z |} \hline
+
+\textbf{Kommando} 						&
+\textbf{Svar}							&
+\textbf{Beskrivelse}					&
+\textbf{Bitmønstre}						\\ \hline
+
 
 
 controllerFrem &
@@ -64,7 +120,7 @@ controllerFrem &
 
 Bruger har trykket på RT på controlleren &
 
-Char fra 0-255 afhængig af hvor hårdt der trykkes på knappen \\ \hline
+Unsigned char fra 0-255 afhængig af hvor hårdt der trykkes på knappen \\ \hline
 
 
 
@@ -74,29 +130,47 @@ controllerTilbage &
 
 Bruger har trykket på LT på controlleren &
 
-Char fra 0-255 afhængig af hvor hårdt der trykkes på knappen \\ \hline
+Unsigned char fra 0-255 afhængig af hvor hårdt der trykkes på knappen \\ \hline
 
 
 
-controllerVenstre &
-
-\textit{Intet svar} &
-
-Bruger har ændret positionen af venstre styrepind, til venstre, på controlleren &
-
-Char ''V'' \\ \hline
-
-
-
-controllerHøjre &
+controllerDrej &
 
 \textit{Intet svar} &
 
-Bruger har ændret positionen af venstre styrepind, til højre, på controlleren &
+Bruger har ændret positionen af venstre styrepind, til højre eller venstre, på controlleren &
 
-Char ''H'' \\ \hline
+Char fra -127 til 127 afhængig af positionen af styrepinden \\ \hline
+
+
+
+controllerStop &
+
+\textit{Intet svar} &
+
+Bruger har trykket på X på controlleren &
+
+Char værdi 1 \\ \hline
+
 
 \end{tabularx}
-\caption{GUI Protokol}
-\label{tbl:prt_gui}
+\caption{Xbox360-controller Protokol}
+\label{tbl:prt_controller}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabularx}{\textwidth}{| Z | Z | Z | Z | Z | Z | Z | Z | Z |} \hline
+
+\textbf{}	&
+\textbf{DB0}	&
+\textbf{DB1}	&
+\textbf{DB2}	&
+\textbf{DB3}	\\ \hline
+
+\textbf{Datatype} & Frem & Tilbage & Drej & Stop \\ \hline
+\textbf{Enhed} & 0-255 unsigned char & 0-255 unsigned char & (-127)-127 char & 0..1 char\\ \hline
+
+\end{tabularx}
+\caption{Xbox360-controller Protokol byte mønster}
+\label{tbl:prt_controller_byte}
 \end{table}
