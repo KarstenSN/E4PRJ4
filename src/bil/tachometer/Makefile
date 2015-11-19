@@ -1,8 +1,8 @@
-SRC=tachometer.cpp tachometerTest.cpp
+SRC=Tachometer.cpp TachometerTest.cpp Log.cpp
 OBJ=$(addprefix ${BUILD_DIR}/,$(SRC:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SRC:.cpp=.d))
-EXE=prog
-CXXFLAGS=-I.
+EXE=DistanceSensor
+CXXFLAGS= -I../inc -std=c++11
 
 ARCH ?= host
 
