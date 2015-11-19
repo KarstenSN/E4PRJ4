@@ -1,4 +1,4 @@
-SRC=main.cpp DistanceSensor.cpp
+SRC=DistanceSensor.cpp
 OBJ=$(addprefix ${BUILD_DIR}/,$(SRC:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SRC:.cpp=.d))
 EXE=prog
