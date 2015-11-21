@@ -1,0 +1,42 @@
+% ++++++++++++ Controller PSoC Master klassen ++++++++++++++
+\subsubsection{Domain-klasse: Data}
+
+\begin{figure}[h]
+\centering
+\includegraphics[]{../fig/diagrammer/bil/cd_data.pdf}
+\caption{Klassebeskrivelse for domain-klassen Data}
+\label{fig:cd_data}
+\end{figure}
+
+\textbf{Attributter}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| Z | Z | L{10cm} |} \hline
+Navn & Type & Beskrivelse \\\hline
+\texttt{distanceFL} & \texttt{int} &Variabel der indeholder afstanden til en evt. forhindring ved forreste venstre hjørne af bilen i cm.\\\hline
+\texttt{distanceFR} & \texttt{int} &Variabel der indeholder afstanden til en evt. forhindring ved forreste højre hjørne af bilen i cm.\\\hline
+\texttt{distanceRL} & \texttt{int} &Variabel der indeholder afstanden til en evt. forhindring ved bageste venstre hjørne af bilen i cm.\\\hline
+\texttt{distanceRR} & \texttt{int} &Variabel der indeholder afstanden til en evt. forhindring ved bageste højre hjørne af bilen i cm.\\\hline
+\texttt{acceleration} & \texttt{int} &Variabel der indeholder bilens aktuelle acceleration i G.\\\hline
+\texttt{velocity} & \texttt{int} &Variabel der indeholder bilens aktuelle hastighed i km/t.\\\hline
+\end{tabularx}
+\caption{Attributter for klassen Data}
+\label{table:attr_data}
+\end{table}
+%TODO ret enheder
+
+\textbf{Metoder}
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void writeVelocity(int velocity)} \\\hline
+Parametre & \texttt{velocity} \newline Den hastighed der skal indlæses. \\\hline
+Returværdi &  \texttt{void} \newline \\\hline
+Beskrivelse & Metoden indlæser den nyeste værdi af hastigheden i datastrukturen. \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{writeVelocity}}
+\label{table:met_writeVelocity}
+\end{table}
+\clearpage
+
+%TODO Lav resten af metoderne
