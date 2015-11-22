@@ -64,7 +64,7 @@ public:
         return;
     }
 
-    void getCtrData(short &leftStick, byte &rightTrigger, bool &buttonX)
+    void getCtrData(short &leftStick, byte &rightTrigger, byte &leftTrigger, bool &buttonX)
     {
         // Zeroise the state
         ZeroMemory(&_controllerState, sizeof(XINPUT_STATE));
@@ -72,11 +72,14 @@ public:
         // Get the state
         XInputGetState(_controllerNum, &_controllerState);
 
+        // Send the Left Stick [LS] state
+        leftStick = this->_controllerState.Gamepad.sThumbLX;
+
         // Send the Right Trigger [RT] state
         rightTrigger = this->_controllerState.Gamepad.bRightTrigger;
 
-        // Send the Left Stick [LS] state
-        leftStick = this->_controllerState.Gamepad.sThumbLX;
+        // Send the Left Trigger [LT] state
+        leftTrigger = this->_controllerState.Gamepad.bLeftTrigger;
 
         // Send the X Button [X] state
         buttonX = this->_controllerState.Gamepad.wButtons & XINPUT_GAMEPAD_X;

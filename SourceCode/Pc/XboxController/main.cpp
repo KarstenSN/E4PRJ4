@@ -11,7 +11,7 @@ int main()
     COORD LS_Cursor = {30, 5};
 
     short leftStick = 0;
-    byte rightTrigger = 0;
+    byte rightTrigger = 0, leftTrigger = 0;
     bool buttonX = 0;
 
 
@@ -68,8 +68,8 @@ int main()
 
             if(Controller1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START)
             {
-                Controller1->getCtrData(leftStick, rightTrigger, buttonX);
-                std::cout << "LS: " << leftStick << " RS: " << rightTrigger << " X: " << buttonX << std::endl;
+                Controller1->getCtrData(leftStick, rightTrigger, leftTrigger, buttonX);
+                std::cout << "LS: " << leftStick << " RS: " << rightTrigger << " LS: " << leftTrigger << " X: " << buttonX << std::endl;
             }
 
             if(Controller1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
