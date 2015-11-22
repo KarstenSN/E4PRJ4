@@ -10,9 +10,8 @@ int main()
     COORD RT_Cursor = {30, 4};
     COORD LS_Cursor = {30, 5};
 
-    short leftStick = 0;
-    byte rightTrigger = 0, leftTrigger = 0;
-    bool buttonX = 0;
+    char leftStick = 0, buttonX = 0;
+    unsigned char rightTrigger = 0, leftTrigger = 0;
 
 
     Controller1 = new XboxController(1);

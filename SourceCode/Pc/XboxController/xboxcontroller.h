@@ -9,21 +9,21 @@ class XboxController
 public:
     XboxController(int number)
     {
-        _controllerNum = number - 1;
+        this->_controllerNum = number - 1;
     }
 
     int GetNumber()
     {
-        return _controllerNum;
+        return this->_controllerNum;
     }
 
     XINPUT_STATE GetState()
     {
         // Zeroise the state
-        ZeroMemory(&_controllerState, sizeof(XINPUT_STATE));
+        ZeroMemory(&this->_controllerState, sizeof(XINPUT_STATE));
 
         // Get the state
-        XInputGetState(_controllerNum, &_controllerState);
+        XInputGetState(this->_controllerNum, &this->_controllerState);
 
         return this->_controllerState;
     }
@@ -31,10 +31,10 @@ public:
     bool connect()
     {
         // Zeroise the state
-        ZeroMemory(&_controllerState, sizeof(XINPUT_STATE));
+        ZeroMemory(&this->_controllerState, sizeof(XINPUT_STATE));
 
         // Get the state
-        this->_dwResult = XInputGetState(_controllerNum, &_controllerState);
+        this->_dwResult = XInputGetState(this->_controllerNum, &this->_controllerState);
 
         if(_dwResult == ERROR_SUCCESS)
         {
@@ -64,7 +64,7 @@ public:
         return;
     }
 
-    void getCtrData(short &leftStick, byte &rightTrigger, byte &leftTrigger, bool &buttonX)
+    void getCtrData(char &leftStick, unsigned char &rightTrigger, unsigned char &leftTrigger, char &buttonX)
     {
         // Zeroise the state
         ZeroMemory(&_controllerState, sizeof(XINPUT_STATE));
@@ -73,16 +73,16 @@ public:
         XInputGetState(_controllerNum, &_controllerState);
 
         // Send the Left Stick [LS] state
-        leftStick = this->_controllerState.Gamepad.sThumbLX;
+        leftStick = static_cast<char>(this->_controllerState.Gamepad.sThumbLX >> 8);
 
         // Send the Right Trigger [RT] state
-        rightTrigger = this->_controllerState.Gamepad.bRightTrigger;
+        rightTrigger = static_cast<unsigned char>(this->_controllerState.Gamepad.bRightTrigger);
 
         // Send the Left Trigger [LT] state
-        leftTrigger = this->_controllerState.Gamepad.bLeftTrigger;
+        leftTrigger = static_cast<unsigned char>(this->_controllerState.Gamepad.bLeftTrigger);
 
         // Send the X Button [X] state
-        buttonX = this->_controllerState.Gamepad.wButtons & XINPUT_GAMEPAD_X;
+        buttonX = static_cast<char>(this->_controllerState.Gamepad.wButtons & XINPUT_GAMEPAD_X);
     }
 
 private:
