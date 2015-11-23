@@ -1,14 +1,14 @@
 #include <iostream>
-#include "PcCom.h"
-#include "Data.h"
-#include "Settings.h"
+#include "PcCom.hpp"
+#include "Data.hpp"
+#include "Settings.hpp"
 
 int main(int argc, char *argv[]) {
 
     settingsTest setTest;
     dataTest datTest;
 
-    pcCom pcTest(&datTest, &setTest);
+    PcCom pcTest(&datTest, &setTest);
 
     pcTest.dataStream();
     return 0;

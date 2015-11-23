@@ -1,5 +1,5 @@
-#ifndef DATA_H
-#define DATA_H
+#ifndef DATA_HPP
+#define DATA_HPP
 
 #include <iostream>
 #include <string>
@@ -35,4 +35,4 @@ private:
     int distance_;
 };
 
-#endif // DATA_H
+#endif // DATA_HPP
