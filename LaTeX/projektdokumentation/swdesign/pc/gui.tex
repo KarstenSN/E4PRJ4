@@ -1,5 +1,5 @@
 \clearpage
-\section{GUI} \label{sec:GUI}
+\section{PC} \label{sec:PC}
 
 \begin{figure}[H]
 \centering
@@ -10,7 +10,7 @@
 
 \subsection{Sekvensdiagrammer}
 
-I denne sektion beskrives usecasene for GUI'en. Der er valgt at lave i alt 4 scenarier af UC1 hvor 3 af dem inkluderer fejl. Dette er gjort for at gøre det mere overskueligt, da et sekvensdiagram med en masse undtagelser hurtigt bliver forvirrende.På figur
+I denne sektion beskrives sekvensdiagrammer over usecasene for GUI'en. Der er valgt at lave i alt 4 scenarier af UC1 hvor 3 af dem inkluderer fejl. Dette er gjort for at gøre det mere overskueligt, da et sekvensdiagram med en masse undtagelser hurtigt bliver forvirrende.På figur
 \ref{fig:cd_uc1_succes_gui} ses sekvensdiagrammet over UC1 scenarie: succes.
 
 \subsubsection{UC1 Succes}
@@ -22,7 +22,7 @@ I denne sektion beskrives usecasene for GUI'en. Der er valgt at lave i alt 4 sce
 \label{fig:cd_uc1_succes_gui}
 \end{figure}
 
-Når usecasen startes klikker brugeren på ''Opret forbindelse'' på GUI'en. Herefter vil MainWindow starte Xbox360ControllerThread, som vil oprette en socketforbindelse mellem bilen og PC'en, til at streame controllerdata. Efterfølgende vil MainWindow læse indtastet data, som blev gemt i en fil sidste gang programmet lukkede ned og derefter opdatere vinduet. Nu vil MainWindow oprette en socket til at sende og modtage data fra og til bilen. Når socketforbindelsen er oprettet vil dataSocket sende et signal til MainWindow, som derved vil promte brugeren at forbindelsen er oprettet. Se figur \ref{fig:GUI_uc1_success}. Når brugeren lukker vinduet ved at klikke ''Ok'' venter MainWindow på at der er forbindelse for at derefter oprette dataThread som efterfølgende vil stå for at opdatere vinduet med hastig, afstand, acceleration osv. Det virker måske lidt dumt at vente på at der er forbindelse efter at der er givet signal om der er forbindelse. Dette skyldes at når brugeren trykker på ''Ok'' sættes en variabel til 1. Hvis forbindelsen senere mistes sættes denne variabel til 0, således dataThread ikke skriver til en socketforbindelse som ikke længere er aktiv. Kommer signalet om at forbindelsen ikke er oprettet inden for en given tid, vil programmet lave en fejl som det ses i figur....... Når dataThread har opdateret dataen, vil den give et signal til MainWindow om at der skal hentes nye data fra bilen. Det er derfor MainWindow som henter og sender data, men dataThread som opdatere selve dataen på GUI'en. Dette skyldes at QTcpsocket ikke kan køres i en seperat tråd som det gøres med Xbox360ControllerThread når der skal gives signaler. Der sker derfor en fejl i programmet når Xbox360 controlleren er forbundet og TCP forbindelsen mistes. Dette har der dog ikke været tid til at kigge nærmere på.  
+Når usecasen startes klikker brugeren på ''Opret forbindelse'' på GUI'en. Herefter vil MainWindow starte Xbox360ControllerThread, som vil oprette en socketforbindelse mellem bilen og PC til at sende controllerdata. Efterfølgende vil MainWindow indlæse data, som blev gemt i en fil sidste gang programmet lukkede ned og derefter opdatere vinduet. Nu vil MainWindow oprette en socket mere til at sende og modtage data fra og til bilen. Når socketforbindelsen er oprettet vil dataSocket sende et signal til MainWindow, som derved vil promte brugeren at forbindelsen er oprettet. Se figur \ref{fig:GUI_uc1_success}. Når brugeren lukker vinduet ved at klikke ''Ok'' venter MainWindow på at der er forbindelse for at derefter oprette dataThread som efterfølgende vil stå for at opdatere vinduet med hastig, afstand, acceleration osv. Det virker måske lidt dumt at vente på at der er forbindelse efter at der er givet signal om der er forbindelse. Dette skyldes at når brugeren trykker på ''Ok'' sættes en variabel til 1. Hvis forbindelsen senere mistes sættes denne variabel til 0, således dataThread ikke skriver til en socketforbindelse som ikke længere er aktiv. Ventetiden er for at sikre at signalet kommer inden for en given tid. Defor: Kommer signalet om at forbindelsen ikke er oprettet inden for en given tid, vil programmet lave en fejl som det ses i figur \ref{fig:GUI_uc1_error_1}. Når dataThread har opdateret dataen, vil den give et signal til MainWindow om at der skal hentes nye data fra bilen. Det er derfor MainWindow som henter og sender data, men dataThread som opdatere selve dataen på GUI'en. Dette skyldes at QTcpsocket ikke kan køres i en separat tråd som det gøres med Xbox360ControllerThread hvis der skal gives signaler. Der sker derfor en fejl i programmet når Xbox360 controlleren er forbundet og TCP forbindelsen mistes. Der har desværre ikke været tid til at finde en løsning på dette problem.  
 
 \begin{figure}[H]
 \centering
@@ -209,5 +209,182 @@ Navn & Type & Beskrivelse \\\hline
 \label{table:attr_distancesensor}
 \end{table}
 
+\textbf{Metoder for MainWindow}
 
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{explicit void MainWindow()} \\\hline
+Parametre &  QWidget \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Er MainWindows constructor. Bruges til at indlæse data fra log filen så bruger kan se gamle indtastede værdier, samt opdatere hovedvinduet.   \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{MainWindow}}
+\label{table:met_MainWindow}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void \~MainWindow()} \\\hline
+Parametre &  \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Er MainWindows destructor. Bruges til at slette oprettede instanser. \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{\~MainWindow}}
+\label{table:met_sMainWindow}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{signal sig\_getData()} \\\hline
+Parametre &  \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Bliver kaldt af dataThread når MainWindow skal opdatere data arrayet. \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{sig\_getData}}
+\label{table:met_siggetData}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{slot Au2connect()} \\\hline
+Parametre &   \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Kaldes når bruger trykker på ''Opret forbindelse''. Bruges til at skabe forbindelse mellem bil og Pc samt oprette dataThread og Xbox360ControllerThread. \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{Au2connect}}
+\label{table:met_Au2connect}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{slot konfigurerIp()} \\\hline
+Parametre &   \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Kaldes når bruger trykker på ''Konfigurer IP''. Bruges til at opdatere variablen IP med brugerinput. \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{konfigurerIp}}
+\label{table:met_konfigurerIp}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{slot AKSstatus()} \\\hline
+Parametre &   \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Kaldes når bruger trykker på ''AKS-On'' eller ''AKS-Off''. Bruges til at ændre status på AKS. \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{AKSstatus}}
+\label{table:met_AKSstatus}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{slot AKSstatus()} \\\hline
+Parametre &   \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Kaldes når bruger trykker på ''Indstil makshastighed''. Bruges til at ændre makshastigheden på bilen. \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{AKSstatus}}
+\label{table:met_AKSstatus}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{slot readSocket()} \\\hline
+Parametre &   \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Kaldes når dataThread vil have opdateret data fra bilen. dataThread giver signalet sig\_getData(). Funktionen kører i MainWindow og opdaterer data arrayet.\\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{readSocket}}
+\label{table:met_readSocket}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{slot connectionLost()} \\\hline
+Parametre &   \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Kaldes når dataSocket mister forbindelsen til bilen. Variablen isConnected sættes til false. \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{connectionLost}}
+\label{table:met_connectionLost}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{slot connected()} \\\hline
+Parametre &   \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Kaldes når dataSocket har oprettet forbindelsen til bilen. Variablen isConnected sættes til true. \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{connected}}
+\label{table:met_connected}
+\end{table}
+
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{slot kalibrerStyretoj()} \\\hline
+Parametre &   \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Kaldes når bruger trykker på ''Kalibrer styretøj''. Bruges til at kalibrere styretøjet på bilen. Funktionen opdaterer den respektive plads i data arrayet. \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{kalibrerStyretoj}}
+\label{table:met_kalibrerStyretoj}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{slot shutDown()} \\\hline
+Parametre &   \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Kaldes når bruger trykker på ''Luk ned'' eller klikker i det røde kryds i hovedvinduet. Sørger for at sende besked til bilen om at lukke dens software sikkert ned, samt skrive data arrayet til log-filen.  \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{shutDown}}
+\label{table:met_shutDown}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{slot controllerIsConnected()} \\\hline
+Parametre &   \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Kaldes når der er forbindelse mellem Xbox360 controlleren og bilen. controllerConnected sættes til true.   \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{controllerIsConnected}}
+\label{table:met_controllerIsConnected}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{slot controllerLostConnection()} \\\hline
+Parametre &   \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Kaldes når forbindelse mellem Xbox360 controlleren og bilen afbrydes. controllerConnected sættes til false.   \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{controllerLostConnection}}
+\label{table:met_ccontrollerLostConnection}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void controller()} \\\hline
+Parametre &   \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Kaldes når Au2Connect()vil oprette controllerThread. Funktionen sørger for at oprette controllerThread samt skabe controllerSocket. Funktionen retunerer hvis Xbox360 controlleren ikke er tilsluttet Pc'en.   \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{controller}}
+\label{table:met_controller}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void controllerStream()} \\\hline
+Parametre &   \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Er selve funktionen der kontinuert bliver kørt at dataThread. Controller data bliver sendt til bilen med intervaller på 10ms.  \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{controllerStream}}
+\label{table:met_controllerStream}
+\end{table}
 
