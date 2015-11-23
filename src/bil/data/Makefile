@@ -1,4 +1,4 @@
-SOURCES=main.cpp data.cpp
+SOURCES=main.cpp Data.cpp
 OBJECTS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.d))
 EXE=data

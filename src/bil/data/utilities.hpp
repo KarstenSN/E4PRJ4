@@ -1,3 +1,5 @@
+#ifndef _INCL_UTILITIES_HPP
+#define _INCL_UTILITIES_HPP
 
 // Scoped locker anvendes i dataklassen til at forhindre flere tråde i at skrive i dataen på samme tid
 class ScopedLocker{
@@ -21,3 +23,5 @@ struct userInput {
     char turn;
     char stop;
 };
+
+#endif

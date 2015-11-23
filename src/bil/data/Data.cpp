@@ -1,6 +1,6 @@
 #include <iostream>
 #include <pthread.h>
-#include "data.hpp"
+#include "Data.hpp"
 #include "utilities.hpp"
 
 Data::Data(){
@@ -42,6 +42,11 @@ void Data::writeDistance(std::string name, int distance){
     }
 }
 
+void Data::writeUserInput(userInput input){
+    ScopedLocker Lock(& userDataMut);
+    this->input = input;
+}
+
 int Data::getLatestVelocity(){
     ScopedLocker Lock(&sensorDataMut);
     return this->velocity;
@@ -70,4 +75,9 @@ int Data::getLatestDistance(std::string name){
         std::cout << "name can only be: FL, FR, RL or RR" << std::endl;
         return -1;
     }
+}
+
+userInput Data::getUserInput(){
+    ScopedLocker Lock(&userDataMut);
+    return this->input;
 }
