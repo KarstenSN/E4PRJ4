@@ -10,8 +10,9 @@ int main()
     COORD RT_Cursor = {30, 4};
     COORD LS_Cursor = {30, 5};
 
-    char leftStick = 0, buttonX = 0;
+    char leftStick = 0;
     unsigned char rightTrigger = 0, leftTrigger = 0;
+    bool buttonX = 0;
 
 
     Controller1 = new XboxController(1);
@@ -68,7 +69,7 @@ int main()
             if(Controller1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START)
             {
                 Controller1->getCtrData(leftStick, rightTrigger, leftTrigger, buttonX);
-                std::cout << "LS: " << leftStick << " RS: " << rightTrigger << " LS: " << leftTrigger << " X: " << buttonX << std::endl;
+                std::cout << "LS: " << (int)leftStick << " RS: " << (int)rightTrigger << " LS: " << (int)leftTrigger << " X: " << (int)buttonX << std::endl;
             }
 
             if(Controller1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)

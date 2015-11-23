@@ -64,7 +64,7 @@ public:
         return;
     }
 
-    void getCtrData(char &leftStick, unsigned char &rightTrigger, unsigned char &leftTrigger, char &buttonX)
+    void getCtrData(char &leftStick, unsigned char &rightTrigger, unsigned char &leftTrigger, bool &buttonX)
     {
         // Zeroise the state
         ZeroMemory(&_controllerState, sizeof(XINPUT_STATE));
@@ -82,7 +82,7 @@ public:
         leftTrigger = static_cast<unsigned char>(this->_controllerState.Gamepad.bLeftTrigger);
 
         // Send the X Button [X] state
-        buttonX = static_cast<char>(this->_controllerState.Gamepad.wButtons & XINPUT_GAMEPAD_X);
+        buttonX = this->_controllerState.Gamepad.wButtons & XINPUT_GAMEPAD_X;
     }
 
 private:
