@@ -1,0 +1,48 @@
+\input{../preamble/preamble}
+
+\title{EMC Rapport \\ AU2 \\ \textit{Den intelligente bil}\\ Gruppe 1}
+\author{4. Semesterprojekt E4PRJ4 \\ Ingeniørhøjskolen, Aarhus Universitet\\ Vejleder: Arne Justesen}
+\date{\today}
+
+\begin{document}
+\fancyhf{} %Clear all header/footers
+\frontmatter
+\maketitle
+\vfill
+
+\begin{table} [h]
+	\centering
+	\begin{tabular}{|l|r|l|}
+	\hline 
+	\textbf{Navn} 				& \textbf{Studienummer} & \textbf{Underskrift~~~~~~~~~~~~~~~~~~~~} 	\\ \hline
+	Kristian Thomsen 			& 201311478 & \\ && 												\\ \hline
+	Philip Krogh-Pedersen 		& 201311473 & \\ && 												\\ \hline
+	Lasse Barner Sivertsen 		& 201371048 & \\ && 												\\ \hline
+	Henrik Bagger Jensen 		& 201304157 & \\ && 												\\ \hline
+	Kenn Hedegaard Eskildsen 	& 201370904 & \\ && 												\\ \hline
+	Karsten Schou Nielsen 		& 201370045 & \\ && 												\\ \hline
+	Jesper Pedersen 			& 201370530 & \\ && 												\\ \hline
+	\end{tabular}
+\end{table}
+
+\cleartorightpage
+\pagestyle{plain}
+
+\tableofcontents
+
+\vfill
+%\input{Arbejdsopgaver/arbejdsopgaver}
+
+\mainmatter
+\pagestyle{fancy}
+\fancyhf{} %Clear all header/footers
+\fancyhead[RO,LE]{Gruppe 1 - AU2}
+\fancyhead[CE,CO]{\nouppercase{\leftmark}}
+\fancyhead[LO,RE]{IHA, AU}
+\fancyfoot[CO,CE]{\nouppercase{\rightmark}}
+\fancyfoot[LE,RO]{\thepage}
+
+\include{projektbeskrivelse/projektbeskrivelse}
+\include{impl_kreds/impl_kreds}
+
+\end{document}
