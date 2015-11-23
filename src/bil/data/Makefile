@@ -15,7 +15,7 @@ endif
 # Making for host
 # > make ARCH=target
 ifeq (${ARCH},target)
-CXX=/usr/local/linaro/arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-g++ #Path added so it can run on OS x
+CXX=arm-linux-gnueabihf-g++
 BUILD_DIR=build/target
 BIN_DIR=bin/target
 endif
