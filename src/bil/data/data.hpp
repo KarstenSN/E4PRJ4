@@ -11,6 +11,12 @@ private:
     int acceleration;
     int velocity;
     
+    pthread_mutex_t sensorDataMut;
+    pthread_mutex_t userDataMut;
+    
+    pthread_cond_t sensorDataCond;
+    pthread_cond_t userDataCond;
+    
 public:
     void writeVelocity(int velocity);
     void writeAcceleration(int acceleration);
