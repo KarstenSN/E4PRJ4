@@ -6,6 +6,7 @@
 
 class Data {
 public:
+    Data();
     void writeVelocity(int velocity);
     void writeAcceleration(int acceleration);
     void writeDistance(std::string Name, int distance);

@@ -46,9 +46,9 @@ void Data::writeDistance(std::string name, int distance){
     }
 }
 
-void Data::writeUserInput(UserInput Input){
+void Data::writeUserInput(UserInput* Input){
     ScopedLocker Lock(& userDataMut);
-    this->Input = Input;
+    this->Input = *Input;
 }
 
 int Data::getLatestVelocity(){
@@ -81,7 +81,7 @@ int Data::getLatestDistance(std::string name){
     }
 }
 
-userInput Data::getUserInput(){
+UserInput Data::getUserInput(){
     ScopedLocker Lock(&userDataMut);
     return this->Input;
 }
