@@ -2,9 +2,18 @@
 #define _INCL_DATA_HPP
 
 #include <string>
-#include "utilities.hpp"
+#include <utilities.hpp>
 
 class Data {
+public:
+    void writeVelocity(int velocity);
+    void writeAcceleration(int acceleration);
+    void writeDistance(std::string Name, int distance);
+    void writeUserInput(UserInput* Input);
+    int getLatestVelocity();
+    int getLatestAcceleration();
+    int getLatestDistance(std::string name);
+    UserInput getUserInput();   
     
 private:
     int distanceFL;
@@ -13,25 +22,14 @@ private:
     int distanceRR;
     int acceleration;
     int velocity;
-    userInput input;
+    UserInput Input;
     
     pthread_mutex_t sensorDataMut;
     pthread_mutex_t userDataMut;
     
     pthread_cond_t sensorDataCond;
     pthread_cond_t userDataCond;
-    
-public:
-    void writeVelocity(int velocity);
-    void writeAcceleration(int acceleration);
-    void writeDistance(std::string name, int distance);
-    void writeUserInput(userInput input);
-    int getLatestVelocity();
-    int getLatestAcceleration();
-    int getLatestDistance(std::string name);
-    userInput getUserInput();
-    Data();
-    
+
 };
 
 #endif

@@ -16,9 +16,9 @@ private:
     pthread_mutex_t* SL;
 };
 
-// Denne struct anvendes til at håndtere brugeren input.
-struct userInput {
-    char forwared;
+// Denne struct anvendes til at håndtere brugerens input.
+struct UserInput {
+    char forward;
     char reverse;
     char turn;
     char stop;

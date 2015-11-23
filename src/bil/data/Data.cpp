@@ -1,7 +1,7 @@
 #include <iostream>
 #include <pthread.h>
-#include "Data.hpp"
-#include "utilities.hpp"
+#include <Data.hpp>
+#include <utilities.hpp>
 
 Data::Data(){
     std::cout << "data class running.." << std::endl;
@@ -11,6 +11,10 @@ Data::Data(){
     this->distanceRR = 0;
     this->acceleration = 0;
     this->velocity = 0;
+	this->Input.forward = 0;
+	this->Input.reverse = 0;
+	this->Input.turn = 0;
+	this->Input.stop = 0;
 }
 
 void Data::writeVelocity(int velocity){
@@ -42,9 +46,9 @@ void Data::writeDistance(std::string name, int distance){
     }
 }
 
-void Data::writeUserInput(userInput input){
+void Data::writeUserInput(UserInput Input){
     ScopedLocker Lock(& userDataMut);
-    this->input = input;
+    this->Input = Input;
 }
 
 int Data::getLatestVelocity(){
@@ -79,5 +83,5 @@ int Data::getLatestDistance(std::string name){
 
 userInput Data::getUserInput(){
     ScopedLocker Lock(&userDataMut);
-    return this->input;
+    return this->Input;
 }
