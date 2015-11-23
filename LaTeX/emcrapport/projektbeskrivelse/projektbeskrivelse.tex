@@ -1,3 +1,9 @@
 \chapter{Projektbeskrivelse}
 
-Svissen svassen
+Projektet omhandler design og implementering af en fjernstyret legetøjsbil. 
+Bilen skal kunne fjernstyres via en Xbox 360 Controller koblet til et PC, som via WiFi kommunikerer med en central computer, i dette tilfælde en Raspberry Pi, på bilen.
+Denne sørger for at styre bilen og udføre ''smarte'' funktioner, som indebærer et kamera, et anti-kollisionssystem samt mulighed for visning af data på PC'en omkring bilens fart, g-påvirkning mm.
+
+Raspberry Pi'en styrer selve bilen ved hjælp af nogle sensorer, deriblandt et eget designet tachometer, en motor og en servomotor til at styre hjulene.
+Alt dette er forsynet af bilens strømforsyning, som består af en buck converter, der leverer 3V og 5V forsyning samt en direkte adgang til bilens batteri.
+I forbindelse med denne rapport er der lagt fokus på bilens strømforsyning, tachometer og motor, da disse arbejder med hhv. høje frekvenser, strømme og følsomt måling af bilens hastighed.
