@@ -2,7 +2,7 @@ SOURCES=main.cpp data.cpp
 OBJECTS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.d))
 EXE=data
-CXXFLAGS=-I.
+CXXFLAGS=-I. -lpthread
 
 # Making for host
 # > make ARCH=host
@@ -12,10 +12,10 @@ BUILD_DIR=build/host
 BIN_DIR=bin/host
 endif
 
-# Making for host
+# Making for target
 # > make ARCH=target
 ifeq (${ARCH},target)
-CXX=arm-linux-gnueabihf-g++
+CXX=/usr/local/linaro/arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-g++
 BUILD_DIR=build/target
 BIN_DIR=bin/target
 endif
