@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::readSocket()
-{
+{   
     mutex.lock();
     socket->write(data,6);
     socket->waitForBytesWritten();
@@ -133,7 +133,7 @@ void MainWindow::maksHastighed()
     bool ok;
 
     data[0] = (char)QInputDialog::getInt(this, tr("Makshastighed"),tr("Indtast makshastigheden"),
-                                         (int)data[0], 0, 20, 1, &ok);
+                                         (int)data[0], 0, 10, 1, &ok);
     if (!ok)
         data[0] = (char)copy;
 
@@ -143,10 +143,10 @@ void MainWindow::maksHastighed()
 
 void MainWindow::updateData()
 {
-    ui->lcdAcceleration->display((int)data[3]);
-    ui->lcdHastighed->display((int)data[1]);
+    ui->lcdAcceleration->display((float)data[3]/10);
+    ui->lcdHastighed->display((float)data[1]/10);
     ui->lcdMakshastighed->display((int)data[0]);
-    ui->lcdAfstand->display((int)data[2]);
+    ui->lcdAfstand->display((float)data[2]/10);
 }
 
 void MainWindow::writeDataToFile()
@@ -256,17 +256,19 @@ void MainWindow::controller()
 
 void* MainWindow::controllerStream(void)
 {
-    char controllerData[3]={0};
-    short turn;
-    unsigned char speed;
+    char controllerData[4]={0};
+    char turn;
+    unsigned char forward;
+    unsigned char back;
     bool brake;
     while (controllerConnected)
     {
-        XboxController_->getCtrData(turn, speed, brake);
-        controllerData[0]=(char)(turn/256);
-        controllerData[1]=speed;
-        controllerData[2]=(char)brake;
-        controllerSocket->write(controllerData,3);
+        XboxController_->getCtrData(turn, forward, back, brake);
+        controllerData[0]=forward;
+        controllerData[1]=back;
+        controllerData[2]=turn;
+        controllerData[3]=(char)brake;
+        controllerSocket->write(controllerData,4);
         controllerSocket->waitForBytesWritten();
         QThread::msleep(10);
     }
@@ -320,6 +322,11 @@ void MainWindow::shutDown()
         messageBox.setFixedSize(500,200);
     }
 
+}
+
+void MainWindow::closeEvent (QCloseEvent *event)
+{
+    shutDown();
 }
 
 MainWindow::~MainWindow()

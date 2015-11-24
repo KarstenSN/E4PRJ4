@@ -49,6 +49,7 @@ private:
     void writeDataToFile();
     void readDataFromFile();
     void updateData();
+    void closeEvent(QCloseEvent *event);
     bool isConnected;
     bool controllerConnected;
     int socketDescriptor;
