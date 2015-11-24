@@ -4,7 +4,7 @@ DEPS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.d))
 EXE=pi
 CXXFLAGS=-pthread -I. -Idata -Ipccom -Itachometer
 
-VPATH=data:pccom:tachometer
+
 
 # Making for host
 # > make ARCH=host
@@ -21,6 +21,8 @@ CXX=arm-linux-gnueabihf-g++
 BUILD_DIR=build/target
 BIN_DIR=bin/target
 endif
+
+VPATH=data:pccom:tachometer
 
 $(EXE): ${DEPS} ${OBJECTS} # << Check the $(DEPS) new dependency
 	@mkdir -p ${BIN_DIR}
@@ -49,3 +51,5 @@ help:
 	@echo help
 	@echo clean
 	@echo ARCH=[target/host]
+	@echo To add new .cpp files, do as usual
+	@echo To add new dependencies remember to add the include folders with -Ifoldername

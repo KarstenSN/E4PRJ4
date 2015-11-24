@@ -4,8 +4,7 @@
 
 
 int main(){
-    std::cout << "Program runs!" << std::endl;
-    
+        
     
     return 0;
 }
