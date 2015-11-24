@@ -53,3 +53,5 @@ help:
 	@echo ARCH=[target/host]
 	@echo To add new .cpp files, do as usual
 	@echo To add new dependencies remember to add the include folders with -Ifoldername
+	@echo If ARCH=target fails, make sure you have added the compiler to PATH:
+	@echo Edit /etc/environment and add the path to arm-linux-gnueabihf-g++ there. Works through reboots!
