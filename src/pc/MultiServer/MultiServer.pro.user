@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.4.2, 2015-11-05T16:33:15. -->
+<!-- Written by QtCreator 3.4.2, 2015-11-23T10:06:26. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -225,7 +225,9 @@
      <value type="int">14</value>
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
-    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes">
+     <value type="QString">COMSPEC=C:\Windows\system32\cmd.exe &quot;/k mode con: cols=150 lines=50&quot;</value>
+    </valuelist>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">MultiServer</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/Karsten/Documents/Qt/MultiServer/MultiServer.pro</value>

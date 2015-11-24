@@ -3,20 +3,26 @@
 
 #include <QTcpServer>
 #include "Au2Thread.h"
-
+#include <String>
+#include <QMutex>
 
 class Au2Server : public QTcpServer
 {
     Q_OBJECT
 
 public:
-    explicit Au2Server(QObject *parent = 0);
+    explicit Au2Server(int port_, std::string type_, QMutex *mutex_);
 
 public slots:
     void StartServer();
 
 protected:
     void incomingConnection(int socketDescriptor);
+
+private:
+    int port;
+    std::string type;
+    QMutex *mutex;
 
 };
 
