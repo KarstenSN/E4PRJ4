@@ -1,5 +1,6 @@
-/Projektrapporten/Main.pdf
-/Projektdokumentation/Main.pdf
+#Ignore på alle mapper med navnet /bin/ eller /build/ - dejligt når man bruger make!
+bin/
+build/
 
 # Misc.
 Thumbs.db
