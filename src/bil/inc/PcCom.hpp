@@ -25,8 +25,8 @@ class PcCom
 public:
     PcCom(Data* dataClassPtr, Settings* settingsClassPtr);
     ~PcCom();
-    int controllerStream();
-    int dataStream();
+    void controllerStream();
+    void dataStream();
 
 private:
     void error(const char *msg );

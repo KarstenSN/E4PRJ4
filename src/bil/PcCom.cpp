@@ -1,6 +1,6 @@
 #include <PcCom.hpp>
 
-PcCom::PcCom(Data* dataClassPtr, Settings* settingsPtr)
+PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr)
 {
     int i;
     for(i = 0; i < 4; i++)
@@ -10,7 +10,7 @@ PcCom::PcCom(Data* dataClassPtr, Settings* settingsPtr)
     this->portnoData_ = 1234;
     this->portnoController_ = 1235;
     this->dataClassPtr_ = dataClassPtr;
-    this->settingsClassPtr_ = settingsPtr;
+    this->settingsClassPtr_ = settingsClassPtr;
     this->UserInput_.forward = 0;
     this->UserInput_.reverse = 0;
     this->UserInput_.stop = 0;
@@ -22,7 +22,7 @@ PcCom::~PcCom()
 
 }
 
-int PcCom::controllerStream()
+void PcCom::controllerStream()
 {
     // Initialize variables
     int sockfd, newsockfd, n;
@@ -82,11 +82,11 @@ int PcCom::controllerStream()
         close(newsockfd);
     }
     close(sockfd);
-    return 0;
+    return;
 
 }
 
-int PcCom::dataStream()
+void PcCom::dataStream()
 {
     // Initialize variables
     int sockfd, newsockfd, n;
@@ -182,7 +182,7 @@ int PcCom::dataStream()
     }
     std::cout << "Closing the data coneection" << std::endl;
     close(sockfd);
-    return 0;
+    return;
 }
 
 void PcCom::error(const char *msg)
