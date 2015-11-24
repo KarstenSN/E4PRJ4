@@ -34,7 +34,7 @@ private:
     char controller_[4];
     int portnoData_;
     int portnoController_;
-    dataTest* dataClassPtr_;
+    Data* dataClassPtr_;
     settingsTest* settingsClassPtr_;
     UserInput UserInput_;
 };
