@@ -379,7 +379,7 @@ Beskrivelse & Kaldes når Au2Connect()vil oprette controllerThread. Funktionen s
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{void controllerStream()} \\\hline
+Prototype & \texttt{void* controllerStream()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
 Beskrivelse & Er selve funktionen der kontinuert bliver kørt at dataThread. Controller data bliver sendt til bilen med intervaller på 10ms.  \\\hline
@@ -388,3 +388,79 @@ Beskrivelse & Er selve funktionen der kontinuert bliver kørt at dataThread. Con
 \label{table:met_controllerStream}
 \end{table}
 
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{static void* controllerStreamHelper()} \\\hline
+Parametre & void* context  \\\hline
+Returværdi & Funktionspointer tilcontrollerStream  \\\hline
+Beskrivelse & Kaldes af pthread\_create og retunerer funktionspointeren til controllerStream. Dette gøres fordi pthread kun kan tilgå static funktioner.  \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{controllerStreamHelper}}
+\label{table:met_controllerStreamHelper}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void* getData()} \\\hline
+Parametre &   \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Er selve funktionen der opdaterer MainWindow med data. Giver signal til MainWindow om at hente nye data fra bilen hvert 100ms.  \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{getData}}
+\label{table:met_getData}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{static void* getDataHelper()} \\\hline
+Parametre & void* context  \\\hline
+Returværdi & Funktionspointer getData  \\\hline
+Beskrivelse & Kaldes af pthread\_create og retunerer funktionspointeren til getData. Dette gøres fordi pthread kun kan tilgå static funktioner.  \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{getDataHelper}}
+\label{table:met_getDataHelper}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void openPlayer()} \\\hline
+Parametre &  \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Åbner instansen af VLC-player i hovedvinduet. Kaldes når dataSocket er forbundet.  \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{openPlayer}}
+\label{table:met_openPlayer}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void writeDataToFile()} \\\hline
+Parametre &  \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Skriver data-arrayet til log filen når GUI'en lukkes ned.  \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{writeDataToFile}}
+\label{table:met_writeDataToFile}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void readDataFromFile()} \\\hline
+Parametre &  \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Læser data-arrayet fra log filen når contructoren kaldes.  \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{readDataFromFile}}
+\label{table:met_readDataFromFile}
+\end{table}
+
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype & \texttt{void updateData()} \\\hline
+Parametre &  \\\hline
+Returværdi &  \\\hline
+Beskrivelse & Opdaterer hovedvinduet med data. Kaldes i constructoren og senere af dataThread.   \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{updateData}}
+\label{table:met_updateData}
+\end{table}
