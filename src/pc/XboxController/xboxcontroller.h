@@ -12,12 +12,12 @@ public:
         this->_controllerNum = number - 1;
     }
 
-    int GetNumber()
+    int getNumber()
     {
         return this->_controllerNum;
     }
 
-    XINPUT_STATE GetState()
+    XINPUT_STATE getState()
     {
         // Zeroise the state
         ZeroMemory(&this->_controllerState, sizeof(XINPUT_STATE));

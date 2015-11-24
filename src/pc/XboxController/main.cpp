@@ -30,56 +30,56 @@ int main()
     {
         if(Controller1->connect())
         {
-            if(Controller1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+            if(Controller1->getState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
             {
                 Controller1->vibrate(65535, 0);
             }
 
-            if(Controller1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B)
+            if(Controller1->getState().Gamepad.wButtons & XINPUT_GAMEPAD_B)
             {
                 Controller1->vibrate(0, 65535);
             }
 
-            if(Controller1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_X)
+            if(Controller1->getState().Gamepad.wButtons & XINPUT_GAMEPAD_X)
             {
                 Controller1->vibrate(65535, 65535);
             }
 
-            if(Controller1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_Y)
+            if(Controller1->getState().Gamepad.wButtons & XINPUT_GAMEPAD_Y)
             {
                 Controller1->vibrate();
             }
 
-            if(Controller1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
+            if(Controller1->getState().Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
             {
                 SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE ), LS_Cursor );
                 std::cout << "      " << std::endl;
                 SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE ), LS_Cursor );
-                std::cout << Controller1->GetState().Gamepad.sThumbLX << std::endl;
+                std::cout << Controller1->getState().Gamepad.sThumbLX << std::endl;
             }
 
-            if(Controller1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+            if(Controller1->getState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
             {
                 SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE ), RT_Cursor );
                 std::cout << "      " << std::endl;
                 SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE ), RT_Cursor );
-                std::cout << Controller1->GetState().Gamepad.bRightTrigger << std::endl;
+                std::cout << Controller1->getState().Gamepad.bRightTrigger << std::endl;
             }
 
-            if(Controller1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START)
+            if(Controller1->getState().Gamepad.wButtons & XINPUT_GAMEPAD_START)
             {
                 Controller1->getCtrData(leftStick, rightTrigger, leftTrigger, buttonX);
                 std::cout << "LS: " << (int)leftStick << " RS: " << (int)rightTrigger << " LS: " << (int)leftTrigger << " X: " << (int)buttonX << std::endl;
             }
 
-            if(Controller1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
+            if(Controller1->getState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
             {
                 break;
             }
         }
         else
         {
-            std::cout << "\n\tERROR! - XBOX 360 Controller #" << Controller1->GetNumber() + 1 << " Not Found!" << std::endl;
+            std::cout << "\n\tERROR! - XBOX 360 Controller #" << Controller1->getNumber() + 1 << " Not Found!" << std::endl;
             std::cout << "Press Any Key To Exit." << std::endl;
             std::cin.get();
             break;
