@@ -2,12 +2,16 @@
 #include <Data.hpp>
 #include <PcCom.hpp>
 #include <Aks.hpp>
+#include <Settings.hpp>
+#include <Steering.hpp>
 
 int main(){
-    Data MyData;
-    Aks TheAks(&MyData);
+    Data Data_;
+    Settings Settings_;
+    Aks Aks_(&Data_, &Settings_);
+    PcCom PcCom_(&Data_, &Settings_);
     
-    TheAks.start();
+    Aks_.start();
     
     return 0;
 }
