@@ -1,8 +1,8 @@
-SOURCES=pi.cpp Data.cpp PcCom.cpp
+SOURCES=pi.cpp Data.cpp PcCom.cpp Aks.cpp
 OBJECTS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.d))
 EXE=pi
-CXXFLAGS=-pthread -I. -Idata -Ipccom -Itachometer
+CXXFLAGS=-pthread -I. -Idata -Ipccom -Itachometer -IAks
 
 
 
@@ -22,7 +22,7 @@ BUILD_DIR=build/target
 BIN_DIR=bin/target
 endif
 
-VPATH=data:pccom:tachometer
+VPATH=data:pccom:tachometer:Aks
 
 $(EXE): ${DEPS} ${OBJECTS} # << Check the $(DEPS) new dependency
 	@mkdir -p ${BIN_DIR}
@@ -52,6 +52,6 @@ help:
 	@echo clean
 	@echo ARCH=[target/host]
 	@echo To add new .cpp files, do as usual
-	@echo To add new dependencies remember to add the include folders with -Ifoldername
+	@echo To add new dependencies remember to add the include folders with -Ifoldername and add to VPATH
 	@echo If ARCH=target fails, make sure you have added the compiler to PATH:
 	@echo Edit /etc/environment and add the path to arm-linux-gnueabihf-g++ there. Works through reboots!
