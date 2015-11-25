@@ -2,7 +2,8 @@ SOURCES=main.cpp Data.cpp
 OBJECTS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.d))
 EXE=data
-CXXFLAGS=-I. -lpthread
+CXXFLAGS=-I. 
+LDFLAGS=-lpthread
 
 # Making for host
 # > make ARCH=host
@@ -15,14 +16,14 @@ endif
 # Making for target
 # > make ARCH=target
 ifeq (${ARCH},target)
-CXX=/usr/local/linaro/arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-g++
+CXX=arm-linux-gnueabihf-g++
 BUILD_DIR=build/target
 BIN_DIR=bin/target
 endif
 
 $(EXE): ${DEPS} ${OBJECTS} # << Check the $(DEPS) new dependency
 	@mkdir -p ${BIN_DIR}
-	$(CXX) $(CXXFLAGS) -o ${BIN_DIR}/$@ $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o ${BIN_DIR}/$@ $(OBJECTS)
 
 # Rule that describes how a .d ( dependency ) file is created from a .cpp file
 # Similar to the assigment that you just completed %.cpp -> %.o
