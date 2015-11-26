@@ -75,7 +75,7 @@ Beskrivelse	& Denne funktion har til formål at opdatere \_controllerState som i
 Prototype 	& \texttt{bool connect()} \\\hline
 Parametre 	& \texttt{void}				\newline \\\hline
 Returværdi	& \texttt{bool} 			\newline Controllerens connection tilstand \\\hline
-Beskrivelse	&  Denne funktion returnerer hvorvidt der er forbindelse til controlleren med objektets ID \\\hline
+Beskrivelse	&  Denne funktion returnerer hvorvidt der er forbindelse til controlleren. \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{connect()}}
 \label{table:met_connect}
@@ -101,7 +101,7 @@ Prototype 	& \texttt{void getCtrlData(char \&LS, uchar \&RT, uchar \&LT, char X)
 Parametre 	& \texttt{LS}				\newline En reference til den char der ønskes at funktionen indsætter data om controllerens ''Left Stick'' tilstand i.				\newline \newline
 			  \texttt{RT}				\newline En reference til den unsigned char der ønskes at funktionen indsætter data om controllerens ''Right Trigger'' tilstand i.\newline \newline
 			  \texttt{LT}				\newline En reference til den unsigned char der ønskes at funktionen indsætter data om controllerens ''Left Trigger'' tilstand i.\newline \newline
-			  \texttt{X}				\newline En reference til den unsigned char der ønskes at funktionen indsætter data om controllerens ''X-button'' tilstand i. \\\hline
+			  \texttt{X}				\newline En reference til den char der ønskes at funktionen indsætter data om controllerens ''X-button'' tilstand i. \\\hline
 Returværdi	& \texttt{void} 			\newline \\\hline
 Beskrivelse	&  Denne funktion har til formål at returnere nye controller tilstande, for controllerens Left Stick, Right Trigger, Left Trigger og X-button, på de refererede parametres plads.\\\hline
 \end{tabularx}
