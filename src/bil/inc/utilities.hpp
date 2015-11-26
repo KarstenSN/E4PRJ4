@@ -19,10 +19,10 @@ private:
 
 // Denne struct anvendes til at håndtere brugerens input.
 struct UserInput {
-    char forward;
-    char reverse;
-    char turn;
-    char stop;
+    char forward = 0;
+    char reverse = 0;
+    char turn = 0;
+    char stop = 0;
 };
 
 #endif

@@ -14,8 +14,8 @@ Aks::Aks(Data* Dataptr, Settings* NewSettings): MySteering(Dataptr, NewSettings)
 }
 
 void Aks::activate(){
+	UserInput latestUserInput;
     while(1){
-		UserInput latestUserInput;
 		if(this->MySettings->getAKS()){
 			if(this->MyData->getLatestVelocity() < STILL_THRESH){
 				this->state = still;
@@ -33,24 +33,37 @@ void Aks::activate(){
 				this->MySteering.userInput(&latestUserInput);
 				break;
 			coasting:
-				//Read data from all prox. sensors
+				//this should be replaced by a for loop if possible
+				proxSensors[FR] = this->MyData->getLatestDistance("FR");
+				proxSensors[FL] = this->MyData->getLatestDistance("FL");
+				proxSensors[RR] = this->MyData->getLatestDistance("RR");
+				proxSensors[RL] = this->MyData->getLatestDistance("RL");
 				break;
 			fwd:
-				//read data from front prox. sensors
+				proxSensors[FR] = this->MyData->getLatestDistance("FR");
+				proxSensors[FL] = this->MyData->getLatestDistance("FL");
 				break;
 			bwd:
-				//read data from rear prox. sensors
+				proxSensors[RR] = this->MyData->getLatestDistance("RR");
+				proxSensors[RL] = this->MyData->getLatestDistance("RL");
 				break;
 			default:
 				break;
 		}
 		
-		//read accell
-		//if(analyzeData())
-		//parse brake to steering
-		//else
-		//parse userinput to steering
-		
-	
+		this->currentAccell = this->MyData->getLatestAcceleration();
+		if(analyzeData()){
+			UserInput tempUserInput;
+			tempUserInput.stop = 1;
+			MySteering.userInput(&tempUserInput);
+		}
+		else
+			MySteering.userInput(&latestUserInput);	
     }
+}
+
+//TODO Make this function yay
+bool Aks::analyzeData(void){
+	
+	return false;
 }
