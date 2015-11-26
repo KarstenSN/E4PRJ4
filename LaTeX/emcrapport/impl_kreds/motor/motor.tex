@@ -1,3 +1,4 @@
 \section{Motor med tilh. H-bro på bil}
 
-Svissen svassen
+Motorkredsløbet for AU2 kan potentielt være et større EMC-problem, da en højfrekvent og relativ stor strøm løber igennem det. Selve motoren vil producere en stor støj, og for at modvirke dette er der placeret en kondensator parallelt med motoren, som derved fjerner en stor del højfrekvent common-mode støj. Denne kondensator kan vælges at have en frekvens som ressonerer med motoren. Motoren har to et strømloop, som hhv. kan løbe den ene og den anden vej, hvilket principielt kan give problemer ifm. nærværende ledninger/printbaner. Pga. dette er printet til motorkredsløbet forsøgt designet således, at banerne med stor risiko for støj, er placeret så langt som muligt fra andre baner. Desuden er der placeret et groundplan, der virker som AC-dødt mellemled mellem strømførende baner.
+

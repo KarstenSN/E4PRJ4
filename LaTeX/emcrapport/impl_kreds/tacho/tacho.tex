@@ -1,3 +1,6 @@
 \section{Tachometer på bil}
 
-Svissen svassen
+Tachometeret består af en TLE4905 %TODO indsæt \citep{•}
+hallswitch, som fungerer ved at detektere magneter rettet i en bestemt retning. Kredsløbet er konstrueret således at hallswitchen trækker signalet til GND, når der detekteres en magnet. Kredsløbet bruger en meget lille strøm, målt til ca. 1.32mA, under tilstedeværelse af en magnet. Med en forsyningsspænding på 5V bliver det til en effekt på 6.6mW, hvilket ikke betragtes som nogen EMC-mæssig trussel. Dog er der strømloops i systemet, som på tidspunkter vil være udsat for højfrekvente skift i strøm, hvilket er forsøgt forhindret ved at designe omtalte loops så små som muligt. 
+
+Derimod vil tachometeret være potentielt truet af støjoverkobling fra andre kredsløb i systemet. Der er på baggrund er der truffet en beslutning om at placere kredsløbet ved højre forhjul, så langt fra motoren som muligt. 
