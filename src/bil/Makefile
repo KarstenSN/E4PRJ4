@@ -1,10 +1,9 @@
-SOURCES=pi.cpp Data.cpp PcCom.cpp Aks.cpp
+SOURCES=pi.cpp Data.cpp PcCom.cpp Aks.cpp Steering.cpp
 OBJECTS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.d))
 EXE=pi
-CXXFLAGS=-pthread -Iinc
-
-
+CXXFLAGS=-Iinc -std=c++11
+LDFLAGS=-pthread
 
 # Making for host
 # > make ARCH=host
@@ -24,7 +23,7 @@ endif
 
 $(EXE): ${DEPS} ${OBJECTS} # << Check the $(DEPS) new dependency
 	@mkdir -p ${BIN_DIR}
-	$(CXX) $(CXXFLAGS) -o ${BIN_DIR}/$@ $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o ${BIN_DIR}/$@ $(OBJECTS)
 
 # Rule that describes how a .d ( dependency ) file is created from a .cpp file
 # Similar to the assigment that you just completed %.cpp -> %.o

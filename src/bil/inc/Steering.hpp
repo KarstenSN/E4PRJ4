@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Data.hpp"
+#include <Settings.hpp>
 
 #define	pGain	1
 #define	iGain	0
@@ -14,9 +15,9 @@
 class Steering
 {
 public:
-	Steering(Data* dataClassPtr);
+	Steering(Data* dataClassPtr, Settings* MySettingsPtr);
 	~Steering();
-	int userInput(unsigned char speedForward, unsigned char speedBackward, char turn, char brake);
+	int userInput(UserInput* UsrInput_);
 	int updatePWM();
 
 
@@ -34,6 +35,7 @@ private:
 	int minServoPWM_;
 	int maxServoPWM_;
 	Data* dataClassPtr_;
+	Settings* settingsPtr_;
 	double dState_; // Last position input
 	double iState_; // Integrator state
 	double iMax_, iMin_; // Maximum and minimum allowable integrator state

@@ -1,7 +1,8 @@
 #Ignore på alle mapper med navnet /bin/ eller /build/ - dejligt når man bruger make!
 bin/
 build/
-*.kdev4/
+.kdev4/
+*.kdev4
 
 # Misc.
 Thumbs.db

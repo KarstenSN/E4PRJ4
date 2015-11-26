@@ -11,7 +11,9 @@ int main(){
     Aks Aks_(&Data_, &Settings_);
     PcCom PcCom_(&Data_, &Settings_);
     
-    Aks_.start();
+    Aks_.activate();
+    
+    
     
     return 0;
 }

@@ -11,10 +11,10 @@ Data::Data(){
     this->distanceRR = 0;
     this->acceleration = 0;
     this->velocity = 0;
-	this->Input.forward = 0;
-	this->Input.reverse = 0;
-	this->Input.turn = 0;
-	this->Input.stop = 0;
+    this->Input.forward = 0;
+    this->Input.reverse = 0;
+    this->Input.turn = 0;
+    this->Input.stop = 0;
 }
 
 void Data::writeVelocity(int velocity){

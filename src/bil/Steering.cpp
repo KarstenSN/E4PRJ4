@@ -3,6 +3,7 @@
 //#include "wiringPi.h"
 //#include <wiringPi.h>
 #include "Data.hpp"
+#include <Settings.hpp>
 
 // Pin number declarations. We're using the Broadcom chip pin numbers.
 const int pwmMotor = 18; // PWM Motor - Broadcom pin 18, P1 pin 12
@@ -15,10 +16,11 @@ pinMode(pwmServo, PWM_OUTPUT); // Set pwmServo as PWM output
 pinMode(pwmMotorForward, OUTPUT); // Set pwmMotorForward as output
 pinMode(pwmMotorBackward, OUTPUT); // Set pwmMotorBackward as output
 */
-Steering::Steering(Data* dataClassPtr)
+Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr)
 {
 	std::cout << "constructor" << std::endl;
 	dataClassPtr_ = dataClassPtr;
+	settingsPtr_ = MySettingsPtr;
 /*	direction_ = 1;
 	pwm_ = 0;
 	wiringPiSetupGpio(); // Initialize wiringPi -- using Broadcom pin numbers
@@ -52,24 +54,24 @@ Steering::~Steering()
 * @param turn Den ønskede dreje retning på forhjul. -127..127. -127 = fuldt udslag til venstre, center = 0, fuldt udslag til højre 127
 * @param brake Der skal bremses. Brems ikke = 0, Brems = 1.
 */
-int Steering::userInput(unsigned char speedForward, unsigned char speedBackward, char turn, char brake)
+int Steering::userInput(UserInput* UsrInput_)
 {
 	speedAct_ = dataClassPtr_->getLatestVelocity();
 	
-	std::cout << "userInput spdFor: " << speedForward << " spdBack: " << speedBackward << " turn: " << turn << " brake: " << brake <<   std::endl;
-	if(brake==1)
+	std::cout << "userInput spdFor: " << UsrInput_->forward << " spdBack: " << UsrInput_->reverse << " turn: " << UsrInput_->turn << " brake: " << UsrInput_->stop <<   std::endl;
+	if(UsrInput_->stop)
 		Steering::brake();
 	else
 	{
-		if(	speedForward != speedReqFor_ || speedBackward != speedReqBack_)
+		if(	UsrInput_->forward != speedReqFor_ || UsrInput_->reverse != speedReqBack_)
 		{
-			speedReqFor_ = speedForward;
-			speedReqBack_ = speedBackward;
+			speedReqFor_ = UsrInput_->forward;
+			speedReqBack_ = UsrInput_->reverse;
 			//Steering::motorSetPWM( speedForward, speedBackward);
 		}		
 	}
 	
-	Steering::turn(turn);
+	Steering::turn(UsrInput_->turn);
 	
 	return 1;
 }

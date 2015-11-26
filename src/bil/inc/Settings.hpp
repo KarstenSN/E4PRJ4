@@ -22,6 +22,10 @@ public:
         this->AKSStatus_ = AKSStatus;
         return;
     }
+    
+    bool getAKS(){
+		return this->AKSStatus_;
+	}
 
     void calibrateSteering(char calibration){
         this->calibration_ = calibration;
