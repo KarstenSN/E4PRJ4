@@ -27,10 +27,6 @@ private:
     
     pthread_mutex_t sensorDataMut;
     pthread_mutex_t userDataMut;
-    
-    pthread_cond_t sensorDataCond;
-    pthread_cond_t userDataCond;
-
 };
 
 #endif

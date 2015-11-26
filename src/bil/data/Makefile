@@ -2,7 +2,7 @@ SOURCES=main.cpp Data.cpp
 OBJECTS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.d))
 EXE=data
-CXXFLAGS=-I. 
+CXXFLAGS=-I. -std=c++11
 LDFLAGS=-lpthread
 
 # Making for host
