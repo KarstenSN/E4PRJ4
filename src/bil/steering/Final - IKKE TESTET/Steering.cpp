@@ -1,10 +1,9 @@
-﻿//**********************   FOR TESTING ONLY //**********************
-
-#include <iostream>
+﻿#include <iostream>
 #include "Steering.hpp"
 //#include "wiringPi.h"
-//#include <wiringPi.h>
-#include "Data.hpp"
+#include <wiringPi.h>
+//#include "Data.hpp"
+#include "Settings.hpp"
 
 // Pin number declarations. We're using the Broadcom chip pin numbers.
 const int pwmMotor = 18; // PWM Motor - Broadcom pin 18, P1 pin 12
@@ -17,15 +16,16 @@ pinMode(pwmServo, PWM_OUTPUT); // Set pwmServo as PWM output
 pinMode(pwmMotorForward, OUTPUT); // Set pwmMotorForward as output
 pinMode(pwmMotorBackward, OUTPUT); // Set pwmMotorBackward as output
 */
-Steering::Steering(Data* dataClassPtr)
+Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr)
 {
-	std::cout << "constructor" << std::endl;
+	std::cout << "Steering constructor" << std::endl;
 	dataClassPtr_ = dataClassPtr;
-/*	direction_ = 1;
+	settingsPtr_= MySettingsPtr;
+	direction_ = 1;
 	pwm_ = 0;
 	wiringPiSetupGpio(); // Initialize wiringPi -- using Broadcom pin numbers
 		
-	//	//pwmSetClock (int divisor) ; //This sets the divisor for the PWM clock
+	//pwmSetClock (int divisor) ; //This sets the divisor for the PWM clock
 	pwmSetMode (PWM_MODE_MS) ; //default mode in the Pi is “balanced”
 	pwmSetRange (2500) ; //The default is 1024.
 	iGain_ = iGain; // integral gain
@@ -35,7 +35,6 @@ Steering::Steering(Data* dataClassPtr)
 	iMin_ = iMin;
 	minServoPWM_ = minServoPWM;
 	maxServoPWM_ = maxServoPWM;
-*/	
 	
 }
 
@@ -49,29 +48,35 @@ Steering::~Steering()
 
 
 /**
-* @param speedForward  Den ønskede hastighed fremad  0..255. 255 er max af den indstillede hastighed
-* @param speedBackward Den ønskede hastighed bagud  0..255. 255 er max af den indstillede hastighed
-* @param turn Den ønskede dreje retning på forhjul. -127..127. -127 = fuldt udslag til venstre, center = 0, fuldt udslag til højre 127
-* @param brake Der skal bremses. Brems ikke = 0, Brems = 1.
+* @param UsrInput_->forward  Den ønskede hastighed fremad  0..255. 255 er max af den indstillede hastighed
+* @param UsrInput_->reverse Den ønskede hastighed bagud  0..255. 255 er max af den indstillede hastighed
+* @param UsrInput_->turn Den ønskede dreje retning på forhjul. -127..127. -127 = fuldt udslag til venstre, center = 0, fuldt udslag til højre 127
+* @param UsrInput_->stop Der skal bremses. Brems ikke = 0, Brems = 1.
 */
-int Steering::userInput(unsigned char speedForward, unsigned char speedBackward, char turn, char brake)
+int Steering::userInput(UserInput* UsrInput_)
 {
-	speedAct_ = dataClassPtr_->getLatestVelocity();
+	std::cout << "userInput spdFor: " << UsrInput_->forward << " spdBack: " << UsrInput_->reverse << " turn: " << UsrInput_->turn << " brake: " << UsrInput_->stop <<   std::endl;	
+	max_speed_ = settingsPtr_->getMaxSpeed();
 	
-	std::cout << "userInput spdFor: " << speedForward << " spdBack: " << speedBackward << " turn: " << turn << " brake: " << brake <<   std::endl;
-	if(brake==1)
-		Steering::brake();
+	if(UsrInput_->stop==1)
+	      Steering::brake();
 	else
 	{
-		if(	speedForward != speedReqFor_ || speedBackward != speedReqBack_)
+		if((float)((max_speed_/255)*UsrInput_->forward) != speedReqFor_ || (float)((max_speed_/255)*UsrInput_->reverse) != speedReqBack_)
 		{
-			speedReqFor_ = speedForward;
-			speedReqBack_ = speedBackward;
-			//Steering::motorSetPWM( speedForward, speedBackward);
-		}		
+		      speedReqFor_ = (float)((max_speed_/256) * UsrInput_->forward); 	//(maxSpeed/255)*forward adjust input with max speed 
+		      speedReqBack_ = (float)((max_speed_/256) * UsrInput_->reverse);	//(maxSpeed/255)*reverse adjust input with max speed
+		      Steering::motorSetPWM( UsrInput_->forward, UsrInput_->reverse );
+		}
+		
+		if(UsrInput_->forward < 5 && UsrInput_->reverse < 5)
+		{
+		    Steering::softbrake();
+		}
+		
 	}
 	
-	Steering::turn(turn);
+	Steering::turn(UsrInput_->turn);
 	
 	return 1;
 }
@@ -79,34 +84,36 @@ int Steering::userInput(unsigned char speedForward, unsigned char speedBackward,
 int Steering::brake()
 {
 	std::cout << "Brake() called " << std::endl;
-	/*pinMode(pwmMotor, OUTPUT);
+	activatePWM_ = 0;
+	pwmWrite(pwmMotor, 0) ;
+	pinMode(pwmMotor, OUTPUT);
 	digitalWrite(pwmMotor, HIGH) ;
 	digitalWrite(pwmMotorForward, LOW) ;
-	digitalWrite(pwmMotorBackward, LOW) ;*/
-	pwm_ = 0;
+	digitalWrite(pwmMotorBackward, LOW) ;
 	return 1;
 
 }
 
 int Steering::softbrake()
-{/*
+{
+	std::cout << "softbrake() called " << std::endl;
+	activatePWM_ = 0;
+	pwmWrite(pwmMotor, 0) ;
 	digitalWrite (pwmMotor, LOW) ;
 	digitalWrite (pwmMotorForward, LOW) ;
-	digitalWrite (pwmMotorBackward, LOW) ;*/
-	std::cout << "softbrake() called " << std::endl;
-	pwm_ = 0;
+	digitalWrite (pwmMotorBackward, LOW) ;
 	return 1;
 }
 
 
 int Steering::turn(int value)
-{/*
+{
+	std::cout << "turn() called:  " << value << std::endl;
 	pinMode(pwmServo, PWM_OUTPUT);
 	float value_ = (value + 127)/(255/(maxServoPWM-minServoPWM));
 	int servoPWM = (int)(minServoPWM + value_);
 	
-	pwmWrite(pwmServo, servoPWM) ;*/
-	std::cout << "turn() called:  " << value << std::endl;
+	pwmWrite(pwmServo, servoPWM) ;
 	return 1;
 }
 
@@ -116,32 +123,32 @@ int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackwar
 	if(speedForward > 2 && direction_ == 0)
 		{
 			Steering::brake();
-			pwm_ = 0;
 			return 1;
 		}
 	if(speedBackward > 2 && direction_ == 1)
 		{
 			Steering::brake();
-			pwm_ = 0;
 			return 1;
 		}
 	
-//	pinMode(pwmMotor, PWM_OUTPUT);
+	pinMode(pwmMotor, PWM_OUTPUT);
 	
 	if(speedForward > 0)
 		{
-//			digitalWrite(pwmMotorForward, HIGH);
-//			digitalWrite(pwmMotorBackward, LOW);
 			std::cout << "motorSetPWM() called: speedForward:  " << speedForward << std::endl;
+			digitalWrite(pwmMotorForward, HIGH);
+			digitalWrite(pwmMotorBackward, LOW);
 			direction_ = 1;
+			activatePWM_ = 1;
 			Steering::updatePWM();
 		}
 	else
 		{
-//			digitalWrite(pwmMotorForward, LOW);
-//			digitalWrite(pwmMotorBackward, HIGH); 
 			std::cout << "motorSetPWM() called: speedbackward:  " << speedBackward << std::endl;
+			digitalWrite(pwmMotorForward, LOW);
+			digitalWrite(pwmMotorBackward, HIGH); 
 			direction_ = 0;
+			activatePWM_ = 1;
 			Steering::updatePWM();
 		}
 	
@@ -151,13 +158,15 @@ int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackwar
 
 int Steering::updatePWM()
 {
-	
+	speedAct_ = dataClassPtr_->getLatestVelocity();
+  
+  
 	if(direction_ == 1)
 		{error_ = speedReqFor_ - speedAct_;}
 	else
 	{	error_ = speedReqBack_ - speedAct_;}
-	
-	pTemp_ = pGain_ * error_; // calculate the proportional temp
+	// calculate the proportional temp
+	pTemp_ = pGain_ * error_; 
 	// calculate the integral state with appropriate limiting
 	iState_ += error_;
 	if (iState_ > iMax_) iState_ = iMax_;
@@ -167,7 +176,13 @@ int Steering::updatePWM()
 	dState_ = speedAct_;
 	pwm_ = pTemp_ + dTemp_ + iTemp_;
 	std::cout << "updatePWM() called: PWM out :  " << pwm_ << std::endl;
-//	pwmWrite(pwmMotor, pwm_) ;
-
+	if(pwm_ <= 0)
+	{
+	    pwm_=0;
+	}
+	if(activatePWM_ == 1)
+	{
+	pwmWrite(pwmMotor, pwm_) ;
+	}
 return 1;
 }	

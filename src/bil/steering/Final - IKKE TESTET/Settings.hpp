@@ -1,5 +1,3 @@
-//**********************   FOR TESTING ONLY //**********************
-
 #ifndef SETTINGS_HPP
 #define SETTINGS_HPP
 
@@ -28,6 +26,10 @@ public:
     bool getAKS(){
 		return this->AKSStatus_;
 	}
+	
+    int getMaxSpeed(){
+        return this->maxVelocity_;
+    }
 
     void calibrateSteering(char calibration){
         this->calibration_ = calibration;
