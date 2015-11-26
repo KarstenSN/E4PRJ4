@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "data.hpp"
+#include "Data.hpp"
 
 #define	pGain	1
 #define	iGain	0
