@@ -11,11 +11,11 @@
 
 
 	
-class steering
+class Steering
 {
 public:
-	steering(Data* dataClassPtr);
-	~steering();
+	Steering(Data* dataClassPtr);
+	~Steering();
 	int userInput(unsigned char speedForward, unsigned char speedBackward, char turn, char brake);
 	int updatePWM();
 
