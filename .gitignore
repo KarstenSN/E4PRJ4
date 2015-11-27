@@ -1,4 +1,4 @@
-#Ignore på alle mapper med navnet /bin/ eller /build/ - dejligt når man bruger make!
+﻿#Ignore på alle mapper med navnet /bin/ eller /build/ - dejligt når man bruger make!
 bin/
 build/
 .kdev4/
@@ -73,3 +73,17 @@ Thumbs.db
 # xindy
 *.xdy
 *.~vsdx
+
+#Psoc build-generated files.
+*.cycdx
+*.cydwr
+*.cyfit
+*.rpt
+*.html
+*.svd
+*.cyprj.*
+cyapicallbacks.h
+Generated_Source/
+CortexM0/
+codegentemp/
+Export/
