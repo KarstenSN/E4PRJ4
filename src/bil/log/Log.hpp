@@ -1,3 +1,6 @@
+#ifndef _INCL_LOG_HPP
+#define _INCL_LOG_HPP
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -44,3 +47,5 @@ private:
 	std::ofstream logFile;
 
 };
+
+#endif
