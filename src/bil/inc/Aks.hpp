@@ -4,6 +4,7 @@
 #include <Data.hpp>
 #include <Steering.hpp>
 #include <Settings.hpp>
+#include <Log.hpp>
 
 #define NBR_PROX_SENSORS
 
@@ -23,7 +24,7 @@ enum sensorsPos{
 
 class Aks{
 public:
-    Aks(Data*, Settings*);
+    Aks(Data*, Settings*, Log*);
 	/*Activates the AKS, which enables steering of the car. Loops forever! */
     void activate(void);
 	
@@ -33,6 +34,7 @@ private:
     Data* MyData;
     Settings* MySettings;
     Steering MySteering;
+	Log* MyLog;
     aksStates state;
 	int proxSensors[NBR_PROX_SENSORS];
 	int currentAccell;

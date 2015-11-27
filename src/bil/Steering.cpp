@@ -4,6 +4,7 @@
 //#include <wiringPi.h>
 #include "Data.hpp"
 #include <Settings.hpp>
+#include <Log.hpp>
 
 // Pin number declarations. We're using the Broadcom chip pin numbers.
 const int pwmMotor = 18; // PWM Motor - Broadcom pin 18, P1 pin 12
@@ -16,11 +17,12 @@ pinMode(pwmServo, PWM_OUTPUT); // Set pwmServo as PWM output
 pinMode(pwmMotorForward, OUTPUT); // Set pwmMotorForward as output
 pinMode(pwmMotorBackward, OUTPUT); // Set pwmMotorBackward as output
 */
-Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr)
+Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 {
 	std::cout << "constructor" << std::endl;
 	dataClassPtr_ = dataClassPtr;
 	settingsPtr_ = MySettingsPtr;
+	logPtr_ = MyLogPtr;
 /*	direction_ = 1;
 	pwm_ = 0;
 	wiringPiSetupGpio(); // Initialize wiringPi -- using Broadcom pin numbers

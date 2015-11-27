@@ -1,6 +1,6 @@
 #include <PcCom.hpp>
 
-PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr)
+PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr)
 {
     int i;
     for(i = 0; i < 4; i++)
@@ -11,6 +11,7 @@ PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr)
     this->portnoController_ = 1235;
     this->dataClassPtr_ = dataClassPtr;
     this->settingsClassPtr_ = settingsClassPtr;
+	this->logClassPtr_ = logClassPtr;
     this->UserInput_.forward = 0;
     this->UserInput_.reverse = 0;
     this->UserInput_.stop = 0;

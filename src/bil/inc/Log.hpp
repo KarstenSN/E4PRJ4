@@ -1,5 +1,5 @@
-#ifndef _INCL_LOG_HPP
-#define _INCL_LOG_HPP
+#ifndef LOG_HPP
+#define LOG_HPP
 
 #include <iostream>
 #include <string>

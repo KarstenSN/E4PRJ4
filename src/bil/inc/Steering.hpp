@@ -15,7 +15,7 @@
 class Steering
 {
 public:
-	Steering(Data* dataClassPtr, Settings* MySettingsPtr);
+	Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr);
 	~Steering();
 	int userInput(UserInput* UsrInput_);
 	int updatePWM();
@@ -36,6 +36,7 @@ private:
 	int maxServoPWM_;
 	Data* dataClassPtr_;
 	Settings* settingsPtr_;
+	Log* logPtr_;
 	double dState_; // Last position input
 	double iState_; // Integrator state
 	double iMax_, iMin_; // Maximum and minimum allowable integrator state
