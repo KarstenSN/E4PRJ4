@@ -74,6 +74,7 @@ Thumbs.db
 *.xdy
 *.~vsdx
 
+<<<<<<< Updated upstream
 #Psoc build-generated files.
 *.cycdx
 *.cydwr
@@ -87,3 +88,6 @@ Generated_Source/
 CortexM0/
 codegentemp/
 Export/
+=======
+src/bil/log/Log.txt
+>>>>>>> Stashed changes

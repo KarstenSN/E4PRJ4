@@ -6,9 +6,9 @@
 
 int main()
 {
-	Log Log("test.log");
+	Log Log;
 
-	Log.writeError("main","this is a test");
+	Log.writeError(__func__,"this is a test");
 
 	return 0;
 }
