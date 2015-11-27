@@ -15,7 +15,7 @@ Aks::Aks(Data* Dataptr, Settings* NewSettings, Log* NewLog): MySteering(Dataptr,
     this->MySettings = NewSettings;
 	this->MyLog = NewLog;
     state = still;
-	MyLog->writeEvent(std::string(typeid(*this).name()) + "::" + __func__, "Aks initialized.");
+	MyLog->writeEvent(__PRETTY_FUNCTION__, "Aks initialized.");
 }
 
 void Aks::activate(){
@@ -62,7 +62,7 @@ void Aks::activate(){
 				proxSensors[FL] = 0;
 				break;
 			default:
-				MyLog->writeWarning(std::string(typeid(*this).name()) + "::" + __func__, "Reached 'default' in switch statement");
+				MyLog->writeWarning(__PRETTY_FUNCTION__, "Reached 'default' in switch statement");
 				break;
 		}
 		if(analyzeData()){
@@ -99,8 +99,8 @@ bool Aks::analyzeData(void){
 			}
 			break;
 		default:
-			MyLog->writeWarning(std::string(typeid(*this).name()) + "::" + __func__, "Reached 'default' in switch statement");
-				break;
+			MyLog->writeWarning(__PRETTY_FUNCTION__, "Reached 'default' in switch statement");
+			break;
 	}
 	
 	return false;
