@@ -16,7 +16,5 @@ int main(){
 	Log_.writeEvent("pi.cpp", "System initialized.");
     Aks_.activate();
     
-    
-    
     return 0;
 }

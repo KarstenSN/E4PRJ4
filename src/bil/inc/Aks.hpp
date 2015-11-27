@@ -6,7 +6,8 @@
 #include <Settings.hpp>
 #include <Log.hpp>
 
-#define NBR_PROX_SENSORS
+#define NBR_PROX_SENSORS 4
+#define DELTA_DISTANCE_FOR_ERROR 10
 
 enum aksStates{
     fwd,
@@ -37,7 +38,7 @@ private:
 	Log* MyLog;
     aksStates state;
 	int proxSensors[NBR_PROX_SENSORS];
-	int currentAccell;
+	int old_proxSensors[NBR_PROX_SENSORS];
 };
 
 
