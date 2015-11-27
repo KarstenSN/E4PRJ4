@@ -16,5 +16,5 @@ class DistanceSensor
 		int distanceRL;
 		int distanceRR;
 		int fd;
-		char distanceReturn
+        char distanceReturn(char);
 };
