@@ -3,13 +3,15 @@
 #include <Data.hpp>
 #include <Settings.hpp>
 #include <Steering.hpp>
+#include <Log.hpp>
 
 #define STILL_THRESH 20 //in km/h * 10
 
 
-Aks::Aks(Data* Dataptr, Settings* NewSettings): MySteering(Dataptr, NewSettings) {
+Aks::Aks(Data* Dataptr, Settings* NewSettings, Log* NewLog): MySteering(Dataptr, NewSettings, NewLog) {
     this->MyData = Dataptr;
     this->MySettings = NewSettings;
+	this->MyLog = NewLog;
     state = still;
 }
 

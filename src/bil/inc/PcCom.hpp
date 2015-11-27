@@ -23,7 +23,7 @@
 class PcCom
 {
 public:
-    PcCom(Data* dataClassPtr, Settings* settingsClassPtr);
+    PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr);
     ~PcCom();
     void controllerStream();
     void dataStream();
@@ -37,6 +37,7 @@ private:
     Data* dataClassPtr_;
     Settings* settingsClassPtr_;
     UserInput UserInput_;
+	Log* logClassPtr_;
 };
 
 #endif // PCCOM_HPP

@@ -2,8 +2,9 @@
 #include <pthread.h>
 #include <Data.hpp>
 #include <utilities.hpp>
+#include <Log.hpp>
 
-Data::Data(){
+Data::Data(Log* NewLog){
     std::cout << "data class running.." << std::endl;
     this->distanceFL = 0;
     this->distanceFR = 0;
@@ -15,6 +16,7 @@ Data::Data(){
     this->Input.reverse = 0;
     this->Input.turn = 0;
     this->Input.stop = 0;
+	this->MyLog = NewLog;
 }
 
 void Data::writeVelocity(int velocity){
