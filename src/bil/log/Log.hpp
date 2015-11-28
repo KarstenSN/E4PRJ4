@@ -2,11 +2,13 @@
 #define _INCL_LOG_HPP
 
 #include <fstream>
+#include <mutex>
+
 
 class Log{
 public:
 
-	Log(std::string filename = "Log.txt");
+	Log(std::string filename = "pi-log.txt");
 	bool writeError(std::string from, std::string msg);
 	bool writeWarning(std::string from, std::string msg);
 	bool writeEvent(std::string from, std::string msg);
@@ -15,7 +17,7 @@ public:
 private:
 	std::ofstream logFile;
 
-	pthread_mutex_t mutex;
+	std::mutex mutex;
 
 	time_t currentTime;
 	struct tm *localTime;

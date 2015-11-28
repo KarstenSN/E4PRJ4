@@ -2,8 +2,8 @@
 #include <string>
 #include <fstream>
 #include <ctime>
-#include <pthread.h>
-#include "utilities.hpp"
+#include <thread>
+#include <mutex>
 #include "Log.hpp"
 
 
@@ -19,19 +19,19 @@ Log::Log(std::string filename){
 }
 
 bool Log::writeError(std::string from, std::string msg){
-	ScopedLocker Lock(&mutex);
+	std::lock_guard<std::mutex> lock(mutex);
 	logFile << "[" << this->getTimestamp() << "] [Error] [" << from << "] " << msg << std::endl;
 	return true;
 }
 
 bool Log::writeWarning(std::string from, std::string msg){
-	ScopedLocker Lock(&mutex);
+	std::lock_guard<std::mutex> lock(mutex);
 	logFile << "[" << this->getTimestamp() << "] [Warning] [" << from << "] " << msg << std::endl;
 	return true;
 }
 
 bool Log::writeEvent(std::string from, std::string msg){
-	ScopedLocker Lock(&mutex);
+	std::lock_guard<std::mutex> lock(mutex);
 	logFile << "[" << this->getTimestamp() << "] [Event] [" << from << "] " << msg << std::endl;
 	return true;
 }
