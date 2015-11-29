@@ -9,7 +9,7 @@ public:
         DistanceSensor(){}
         ~DistanceSensor();
         char getDistance(std::string){
-			return -1;
+			return 2;
 		}
 private:
         int addrFL;

@@ -1,11 +1,11 @@
 #include <iostream>
-#include <pthread.h>
+#include <thread>
 #include <Data.hpp>
-#include <utilities.hpp>
-#include <Log.hpp>
+#include "utilities.hpp"
+#include "Log.hpp"
 
-Data::Data(Log* NewLog){
-    std::cout << "data class running.." << std::endl;
+Data::Data(Log* Log){
+    this->Log_ = Log;
     this->distanceFL = 0;
     this->distanceFR = 0;
     this->distanceRL = 0;
@@ -16,21 +16,27 @@ Data::Data(Log* NewLog){
     this->Input.reverse = 0;
     this->Input.turn = 0;
     this->Input.stop = 0;
-	this->MyLog = NewLog;
+
+    std::cout << "Data class running.." << std::endl;
+    this->Log_->writeEvent(__PRETTY_FUNCTION__,"Data class active");
+}
+
+Data::~Data(){
+    this->Log_->writeEvent(__PRETTY_FUNCTION__,"Data class shutdown");
 }
 
 void Data::writeVelocity(int velocity){
-    ScopedLocker Lock(&sensorDataMut);
+    std::lock_guard<std::mutex> lock(sensorDataMut);
     this->velocity = velocity;
 }
 
 void Data::writeAcceleration(int acceleration){
-    ScopedLocker Lock(&sensorDataMut);
+    std::lock_guard<std::mutex> lock(sensorDataMut);
     this->acceleration = acceleration;
 }
 
 void Data::writeDistance(std::string name, int distance){
-    ScopedLocker Lock(&sensorDataMut);
+    std::lock_guard<std::mutex> lock(sensorDataMut);
     if (name == "FL") {
         this->distanceFL = distance;
     }
@@ -49,22 +55,22 @@ void Data::writeDistance(std::string name, int distance){
 }
 
 void Data::writeUserInput(UserInput* Input){
-    ScopedLocker Lock(& userDataMut);
+    std::lock_guard<std::mutex> lock(userDataMut);
     this->Input = *Input;
 }
 
 int Data::getLatestVelocity(){
-    ScopedLocker Lock(&sensorDataMut);
+    std::lock_guard<std::mutex> lock(sensorDataMut);
     return this->velocity;
 }
 
 int Data::getLatestAcceleration(){
-    ScopedLocker Lock(&sensorDataMut);
+    std::lock_guard<std::mutex> lock(sensorDataMut);
     return this->acceleration;
 }
 
 int Data::getLatestDistance(std::string name){
-    ScopedLocker Lock(&sensorDataMut);
+    std::lock_guard<std::mutex> lock(sensorDataMut);
     if(name == "FL") {
         return this->distanceFL;
     }
@@ -84,6 +90,6 @@ int Data::getLatestDistance(std::string name){
 }
 
 UserInput Data::getUserInput(){
-    ScopedLocker Lock(&userDataMut);
+    std::lock_guard<std::mutex> lock(userDataMut);
     return this->Input;
 }

@@ -1,0 +1,10 @@
+[2015-11-29 12:41:20] [Event] [Log::Log(std::string)] Log class active
+[2015-11-29 12:41:20] [Event] [Data::Data(Log*)] Data class active
+[2015-11-29 12:41:20] [Event] [Aks::Aks(Data*, Settings*, Log*)] Initialized.
+[2015-11-29 12:41:20] [Event] [int main()] System initialized.
+[2015-11-29 12:41:20] [Event] [void* acquireData(ObjPts*)] Initialized
+[2015-11-29 12:46:11] [Event] [Log::Log(std::string)] Log class active
+[2015-11-29 12:46:11] [Event] [Data::Data(Log*)] Data class active
+[2015-11-29 12:46:11] [Event] [Aks::Aks(Data*, Settings*, Log*)] Initialized.
+[2015-11-29 12:46:11] [Event] [int main()] System initialized.
+[2015-11-29 12:46:11] [Event] [void* acquireData(ObjPts*)] Initialized
