@@ -1,4 +1,4 @@
-﻿#Ignore på alle mapper med navnet /bin/ eller /build/ - dejligt når man bruger make!
+#Ignore på alle mapper med navnet /bin/ eller /build/ - dejligt når man bruger make!
 bin/
 build/
 .kdev4/
@@ -91,3 +91,5 @@ Export/
 =======
 src/bil/log/Log.txt
 >>>>>>> Stashed changes
+
+src/bil/data/log.txt

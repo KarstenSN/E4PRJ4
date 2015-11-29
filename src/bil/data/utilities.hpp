@@ -1,10 +1,11 @@
 #ifndef _INCL_UTILITIES_HPP
 #define _INCL_UTILITIES_HPP
 
-// Scoped locker anvendes i dataklassen til at forhindre flere tråde i at skrive i dataen på samme tid
+//ScopedLocker should be removed because it doesn’t work.
 class ScopedLocker{
 public:
     ScopedLocker(pthread_mutex_t* theLock){
+        std::cout << "Warning: ScopedLocker doesn’t work. Use std::lock_guard." << std::endl;
         this->SL = theLock;
         pthread_mutex_lock(SL);
     }
@@ -16,7 +17,7 @@ private:
     pthread_mutex_t* SL;
 };
 
-// Denne struct anvendes til at håndtere brugerens input.
+// This struct is used for handling user input.
 struct UserInput {
     char forward;
     char reverse;

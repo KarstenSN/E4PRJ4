@@ -1,0 +1,18 @@
+[2015-11-29 1:4:18] [Event] [Log::Log(std::string)] Log class active
+[2015-11-29 1:4:18] [Event] [Data::Data(Log *)] Data class active
+[2015-11-29 1:4:18] [Event] [void writers(int)] Writer thread #0: velocity=120 acceleration=6 distanceFR=86
+[2015-11-29 1:4:18] [Event] [void writers(int)] Writer thread #1: velocity=120 acceleration=6 distanceFR=86
+[2015-11-29 1:4:18] [Event] [void writers(int)] Writer thread #0: velocity=120 acceleration=6 distanceFR=86
+[2015-11-29 1:4:18] [Event] [void writers(int)] Writer thread #1: velocity=120 acceleration=6 distanceFR=86
+[2015-11-29 1:4:19] [Event] [Data::~Data()] Data class shutdown
+[2015-11-29 1:4:19] [Event] [Log::~Log()] Log class shutdown
+
+[2015-11-29 1:5:48] [Event] [Log::Log(std::string)] Log class active
+[2015-11-29 1:5:48] [Event] [Data::Data(Log *)] Data class active
+[2015-11-29 1:5:48] [Event] [void reader(int)] Reader thread #0 checking in..
+[2015-11-29 1:5:48] [Event] [void writers(int)] Writer thread #0: velocity=150 acceleration=2 distanceFR=160
+[2015-11-29 1:5:48] [Event] [void writers(int)] Writer thread #1: velocity=150 acceleration=2 distanceFR=160
+[2015-11-29 1:5:48] [Event] [void reader(int)] Reader thread #1 checking in..
+[2015-11-29 1:5:49] [Event] [Data::~Data()] Data class shutdown
+[2015-11-29 1:5:49] [Event] [Log::~Log()] Log class shutdown
+

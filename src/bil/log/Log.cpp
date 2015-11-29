@@ -14,7 +14,7 @@ Log::Log(std::string filename){
 		std::cout << "Warning: Logging not active!" << std::endl;
 	}
 	else{
-		this->writeEvent(__PRETTY_FUNCTION__,"Log active");
+		this->writeEvent(__PRETTY_FUNCTION__,"Log class active");
 	}
 }
 
@@ -37,7 +37,7 @@ bool Log::writeEvent(std::string from, std::string msg){
 }
 
 Log::~Log(){
-	this->writeEvent(__PRETTY_FUNCTION__,"Log shutdown");
+	this->writeEvent(__PRETTY_FUNCTION__,"Log class shutdown");
 	logFile << std::endl;
 	logFile.close();
 }

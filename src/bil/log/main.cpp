@@ -9,7 +9,7 @@ Log Log;
 
 void writers(int num){
 	
-	std::string msg = "Thread #" + std::to_string(num) + "checking in..";
+	std::string msg = "Thread #" + std::to_string(num) + " checking in..";
 
 	Log.writeEvent(__PRETTY_FUNCTION__,msg);
 }
@@ -24,8 +24,7 @@ int main()
         myThreads[i] = std::thread(writers, i);
     }
 
-	for(int i = 0; i < NUM_THREADS; i++)
-	{
+	for(int i = 0; i < NUM_THREADS; i++){
 		myThreads[i].join();
 
 	}

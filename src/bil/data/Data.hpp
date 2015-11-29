@@ -2,11 +2,14 @@
 #define _INCL_DATA_HPP
 
 #include <string>
-#include <utilities.hpp>
+#include <mutex>
+#include "utilities.hpp"
+#include "Log.hpp"
 
 class Data {
 public:
-    Data();
+    Data(Log* Log);
+    ~Data();
     void writeVelocity(int velocity);
     void writeAcceleration(int acceleration);
     void writeDistance(std::string Name, int distance);
@@ -24,9 +27,10 @@ private:
     int acceleration;
     int velocity;
     UserInput Input;
+    Log* Log_;
     
-    pthread_mutex_t sensorDataMut;
-    pthread_mutex_t userDataMut;
+    std::mutex sensorDataMut;
+    std::mutex userDataMut;
 };
 
 #endif
