@@ -17,6 +17,8 @@ int fd= 0;
 // Constructor
 DistanceSensor::DistanceSensor(){
 
+    // Log->writeEvent(distanseSensor, Instans oprettet)
+    
 // Initialisering af adresser
     this->addrFL = 0b01110000;                  // 0x70 dec 112
     this->addrFR = 0b01110001;                  // 0x71 dec 113
@@ -38,28 +40,32 @@ DistanceSensor::DistanceSensor(){
         std::cout << "Error in opening: %s" << filename << std::endl;
         exit(1);
     }
+    std::cout << "OK Open: " << std::endl;
+
+
 
 // Sæt adresse på sensor:
-    // FrontLeft
+/*    // FrontLeft
     if (ioctl(fd, I2C_SLAVE, addrFL) < 0){
-        std::cout << "Error in setting addr: %d" << addrFL << std::endl;
+        std::cout << "Error in setting addr: " << addrFL << std::endl;
         exit(1);
     }
     // FrontRight
     if (ioctl(fd, I2C_SLAVE, addrFR) < 0){
-        std::cout << "Error in setting addr: %d" << addrFR << std::endl;
+        std::cout << "Error in setting addr: " << addrFR << std::endl;
         exit(1);
     }
     // RearLeft
     if (ioctl(fd, I2C_SLAVE, addrRL) < 0){
-        std::cout << "Error in setting addr: %d" << addrRL << std::endl;
+        std::cout << "Error in setting addr: " << addrRL << std::endl;
         exit(1);
     }
     // RearRight
     if (ioctl(fd, I2C_SLAVE, addrRR) < 0){
-        std::cout << "Error in setting addr: %d" << addrRR << std::endl;
+        std::cout << "Error in setting addr: " << addrRR << std::endl;
         exit(1);
     }
+*/
 }
 
 // Close Device()
@@ -71,8 +77,12 @@ DistanceSensor::~DistanceSensor(){
 // getDistance()
 char DistanceSensor::getDistance(std::string name){
 
+    DistanceSensor::returnDistance();
+
+    std::cout << "returnDistance finished: " << std::endl;
+
     if(name == "FL"){
-        return distanceFL;
+        return static_cast<char> (distanceFL);
     }
     if(name == "FR"){
         return distanceFR;
@@ -99,63 +109,73 @@ void DistanceSensor::returnDistance(){
     int RLread[1]  = { (this->addrRL << 1) + 1};
     int RRwrite[1] = { (this->addrRR << 1) & 11111110};
     int RRread[1]  = { (this->addrRR << 1) + 1};
+
+    std::cout << "OK setCommands" << std::endl;
     
 // Write "Start Range-reeading ved alle sensorer:
     //FrontLeft
-    if (write(fd, FLwrite, 1) != 1){
-        std::cout << "Error in start Range-reading at addr: %d" << addrFL << std::endl;
+    if ((write(fd, FLwrite, 1)) != 1){
+        std::cout << "Error in start Range-reading at addr: " << addrFL << std::endl;
     }
+
+    std::cout << "OK start-reading" << std::endl;
+
     // Front Right
     if (write(fd, FRwrite, 1) != 1){
-        std::cout << "Error in start Range-reading at addr: %d" << addrFR << std::endl;
+        std::cout << "Error in start Range-reading at addr: " << addrFR << std::endl;
     }
     // Rear Left
     if (write(fd, RLwrite, 1) != 1){
-        std::cout << "Error in start Range-reading at addr: %d" << addrRL << std::endl;
+        std::cout << "Error in start Range-reading at addr: " << addrRL << std::endl;
     }
     // Rear Right
     if (write(fd, RRwrite, 1) != 1){
-        std::cout << "Error in start Range-reading at addr: %d" << addrRR << std::endl;
+        std::cout << "Error in start Range-reading at addr: " << addrRR << std::endl;
     }
 
 //Læse seneste Range fra alle 4 sensorer
     // Front Left
     int dataFL[2];
     if (write(fd, FLread, 1) != 1){
-        std::cout << "Error in Range-reading at addr: %d" << addrFL << std::endl;
+        std::cout << "Error in Range-reading at addr: " << addrFL << std::endl;
     }
-    if (read(fd, dataFL, 2) != 2) {
-        std::cout << "Error in get Range-reading at addr: %d" << addrFL << std::endl;
-    }
+
+    std::cout << "OK read 1" << std::endl;
+
+    //if (read(fd, dataFL, 2) != 2) {
+        std::cout << "Error in get Range-reading at addr: " << addrFL << std::endl;
+    // }
     distanceFL = (dataFL[0] << 4) + dataFL[1];
+
+    std::cout << "OK read 2" << std::endl;
 
     // Front Right
     int dataFR[2];
     if (write(fd, FRread, 1) != 1){
-        std::cout << "Error in Range-reading at addr: %d" << addrFR << std::endl;
+        std::cout << "Error in Range-reading at addr: " << addrFR << std::endl;
     }
     if (read(fd, dataFR, 2) != 2) {
-        std::cout << "Error in get Range-reading at addr: %d" << addrFR << std::endl;
+        std::cout << "Error in get Range-reading at addr: " << addrFR << std::endl;
     }
     distanceFR = (dataFR[0] << 4) + dataFR[1];
 
     // Rear left
     int dataRL[2];
     if (write(fd, RLread, 1) != 1){
-        std::cout << "Error in Range-reading at addr: %d" << addrRL << std::endl;
+        std::cout << "Error in Range-reading at addr: " << addrRL << std::endl;
     }
     if (read(fd, dataRL, 2) != 2) {
-        std::cout << "Error in get Range-reading at addr: %d" << addrRL << std::endl;
+        std::cout << "Error in get Range-reading at addr: " << addrRL << std::endl;
     }
     distanceRL = (dataRL[0] << 4) + dataRL[1];
 
     // Rear Right
     int dataRR[2];
     if (write(fd, RRread, 1) != 1){
-        std::cout << "Error in Range-reading at addr: %d" << addrRR << std::endl;
+        std::cout << "Error in Range-reading at addr: " << addrRR << std::endl;
     }
     if (read(fd, dataRR, 2) != 2) {
-        std::cout << "Error in get Range-reading at addr: %d" << addrRR << std::endl;
+        std::cout << "Error in get Range-reading at addr: " << addrRR << std::endl;
     }
     distanceRR = (dataRR[0] << 4) + dataRR[1];
 }
