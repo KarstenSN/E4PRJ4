@@ -19,21 +19,30 @@ Log::Log(std::string filename){
 }
 
 bool Log::writeError(std::string from, std::string msg){
-	std::lock_guard<std::mutex> lock(mutex);
-	logFile << "[" << this->getTimestamp() << "] [Error] [" << from << "] " << msg << std::endl;
-	return true;
+	if (logFile.is_open()){
+		std::lock_guard<std::mutex> lock(mutex);
+		logFile << "[" << this->getTimestamp() << "] [Error] [" << from << "] " << msg << std::endl;
+		return true;
+	}
+	else return false
 }
 
 bool Log::writeWarning(std::string from, std::string msg){
-	std::lock_guard<std::mutex> lock(mutex);
-	logFile << "[" << this->getTimestamp() << "] [Warning] [" << from << "] " << msg << std::endl;
-	return true;
+	if (logFile.is_open()){
+		std::lock_guard<std::mutex> lock(mutex);
+		logFile << "[" << this->getTimestamp() << "] [Warning] [" << from << "] " << msg << std::endl;
+		return true;
+	}
+	else return false
 }
 
 bool Log::writeEvent(std::string from, std::string msg){
-	std::lock_guard<std::mutex> lock(mutex);
-	logFile << "[" << this->getTimestamp() << "] [Event] [" << from << "] " << msg << std::endl;
-	return true;
+		if (logFile.is_open()){
+		std::lock_guard<std::mutex> lock(mutex);
+		logFile << "[" << this->getTimestamp() << "] [Event] [" << from << "] " << msg << std::endl;
+		return true;
+	}
+	else return false
 }
 
 Log::~Log(){

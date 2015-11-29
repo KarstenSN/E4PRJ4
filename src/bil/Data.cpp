@@ -25,33 +25,46 @@ Data::~Data(){
     this->Log_->writeEvent(__PRETTY_FUNCTION__,"Data class shutdown");
 }
 
-void Data::writeVelocity(int velocity){
-    std::lock_guard<std::mutex> lock(sensorDataMut);
-    this->velocity = velocity;
+bool Data::writeVelocity(int velocity){
+    if(velocity >= 0 && velocity <= MAX_VELOCITY){
+        std::lock_guard<std::mutex> lock(sensorDataMut);
+        this->velocity = velocity;
+        return true;
+    }
+    else return false;
 }
 
-void Data::writeAcceleration(int acceleration){
-    std::lock_guard<std::mutex> lock(sensorDataMut);
-    this->acceleration = acceleration;
+bool Data::writeAcceleration(int acceleration){
+    if(acceleration >= 0 && acceleration <= MAX_ACCELERATION){
+        std::lock_guard<std::mutex> lock(sensorDataMut);
+        this->acceleration = acceleration;
+        return true;
+    }
+    else return false;
 }
 
-void Data::writeDistance(std::string name, int distance){
-    std::lock_guard<std::mutex> lock(sensorDataMut);
-    if (name == "FL") {
-        this->distanceFL = distance;
+bool Data::writeDistance(std::string name, int distance){
+    if(distance >= 0 && distance <= MAX_DISTANCE){
+        std::lock_guard<std::mutex> lock(sensorDataMut);
+        if (name == "FL") {
+            this->distanceFL = distance;
+        }
+        else if(name == "FR") {
+            this->distanceFR = distance;
+        }
+        else if(name == "RL") {
+            this->distanceRL = distance;
+        }
+        else if(name == "RR") {
+            this->distanceRR = distance;
+        }
+        else{
+            std::cout << "name can only be: FL, FR, RL or RR" << std::endl;
+            return false;
+        }
+        return true;
     }
-    else if(name == "FR") {
-        this->distanceFR = distance;
-    }
-    else if(name == "RL") {
-        this->distanceRL = distance;
-    }
-    else if(name == "RR") {
-        this->distanceRR = distance;
-    }
-    else{
-        std::cout << "name can only be: FL, FR, RL or RR" << std::endl;
-    }
+    else return false;
 }
 
 void Data::writeUserInput(UserInput* Input){

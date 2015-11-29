@@ -1,7 +1,7 @@
 #ifndef _INCL_UTILITIES_HPP
 #define _INCL_UTILITIES_HPP
 
-// Denne struct anvendes til at håndtere brugerens input.
+// This struct is used for handling user input.
 struct UserInput {
     char forward = 0;
     char reverse = 0;
