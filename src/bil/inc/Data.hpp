@@ -2,20 +2,28 @@
 #define _INCL_DATA_HPP
 
 #include <string>
-#include <utilities.hpp>
-#include <Log.hpp>
+#include <mutex>
+#include "utilities.hpp"
+#include "Log.hpp"
+
+#define MAX_VELOCITY 200        // (km/t)*10
+#define MAX_ACCELERATION 200    // G*10
+#define MAX_DISTANCE 250        // m*10
+
+
 
 class Data {
 public:
-    Data(Log*);
-    void writeVelocity(int velocity);
-    void writeAcceleration(int acceleration);
-    void writeDistance(std::string Name, int distance);
+    Data(Log* Log);
+    ~Data();
+    bool writeVelocity(int velocity);
+    bool writeAcceleration(int acceleration);
+    bool writeDistance(std::string Name, int distance);
     void writeUserInput(UserInput* Input);
     int getLatestVelocity();
     int getLatestAcceleration();
     int getLatestDistance(std::string name);
-    UserInput getUserInput();
+    UserInput getUserInput();   
     
 private:
     int distanceFL;
@@ -25,14 +33,10 @@ private:
     int acceleration;
     int velocity;
     UserInput Input;
-	Log* MyLog;
+    Log* Log_;
     
-    pthread_mutex_t sensorDataMut;
-    pthread_mutex_t userDataMut;
-    
-    pthread_cond_t sensorDataCond;
-    pthread_cond_t userDataCond;
-
+    std::mutex sensorDataMut;
+    std::mutex userDataMut;
 };
 
 #endif

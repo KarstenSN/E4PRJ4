@@ -1,11 +1,11 @@
 #include <iostream>
-#include <pthread.h>
+#include <thread>
 #include <Data.hpp>
-#include <utilities.hpp>
-#include <Log.hpp>
+#include "utilities.hpp"
+#include "Log.hpp"
 
-Data::Data(Log* NewLog){
-    std::cout << "data class running.." << std::endl;
+Data::Data(Log* Log){
+    this->Log_ = Log;
     this->distanceFL = 0;
     this->distanceFR = 0;
     this->distanceRL = 0;
@@ -16,55 +16,74 @@ Data::Data(Log* NewLog){
     this->Input.reverse = 0;
     this->Input.turn = 0;
     this->Input.stop = 0;
-	this->MyLog = NewLog;
+
+    std::cout << "Data class running.." << std::endl;
+    this->Log_->writeEvent(__PRETTY_FUNCTION__,"Data class active");
 }
 
-void Data::writeVelocity(int velocity){
-    ScopedLocker Lock(&sensorDataMut);
-    this->velocity = velocity;
+Data::~Data(){
+    this->Log_->writeEvent(__PRETTY_FUNCTION__,"Data class shutdown");
 }
 
-void Data::writeAcceleration(int acceleration){
-    ScopedLocker Lock(&sensorDataMut);
-    this->acceleration = acceleration;
+bool Data::writeVelocity(int velocity){
+    if(velocity >= 0 && velocity <= MAX_VELOCITY){
+        std::lock_guard<std::mutex> lock(sensorDataMut);
+        this->velocity = velocity;
+        return true;
+    }
+    else return false;
 }
 
-void Data::writeDistance(std::string name, int distance){
-    ScopedLocker Lock(&sensorDataMut);
-    if (name == "FL") {
-        this->distanceFL = distance;
+bool Data::writeAcceleration(int acceleration){
+    if(acceleration >= 0 && acceleration <= MAX_ACCELERATION){
+        std::lock_guard<std::mutex> lock(sensorDataMut);
+        this->acceleration = acceleration;
+        return true;
     }
-    else if(name == "FR") {
-        this->distanceFR = distance;
+    else return false;
+}
+
+bool Data::writeDistance(std::string name, int distance){
+    if(distance >= 0 && distance <= MAX_DISTANCE){
+        std::lock_guard<std::mutex> lock(sensorDataMut);
+        if (name == "FL") {
+            this->distanceFL = distance;
+        }
+        else if(name == "FR") {
+            this->distanceFR = distance;
+        }
+        else if(name == "RL") {
+            this->distanceRL = distance;
+        }
+        else if(name == "RR") {
+            this->distanceRR = distance;
+        }
+        else{
+            std::cout << "name can only be: FL, FR, RL or RR" << std::endl;
+            return false;
+        }
+        return true;
     }
-    else if(name == "RL") {
-        this->distanceRL = distance;
-    }
-    else if(name == "RR") {
-        this->distanceRR = distance;
-    }
-    else{
-        std::cout << "name can only be: FL, FR, RL or RR" << std::endl;
-    }
+    else return false;
 }
 
 void Data::writeUserInput(UserInput* Input){
-    ScopedLocker Lock(& userDataMut);
+    std::lock_guard<std::mutex> lock(userDataMut);
     this->Input = *Input;
 }
 
 int Data::getLatestVelocity(){
-    ScopedLocker Lock(&sensorDataMut);
+    std::lock_guard<std::mutex> lock(sensorDataMut);
     return this->velocity;
 }
 
 int Data::getLatestAcceleration(){
-    ScopedLocker Lock(&sensorDataMut);
+    std::lock_guard<std::mutex> lock(sensorDataMut);
     return this->acceleration;
 }
 
 int Data::getLatestDistance(std::string name){
-    ScopedLocker Lock(&sensorDataMut);
+    std::lock_guard<std::mutex> lock(sensorDataMut);
     if(name == "FL") {
         return this->distanceFL;
     }
@@ -84,6 +103,6 @@ int Data::getLatestDistance(std::string name){
 }
 
 UserInput Data::getUserInput(){
-    ScopedLocker Lock(&userDataMut);
+    std::lock_guard<std::mutex> lock(userDataMut);
     return this->Input;
 }
