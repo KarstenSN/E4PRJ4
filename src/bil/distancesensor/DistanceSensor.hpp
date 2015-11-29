@@ -8,7 +8,7 @@ class DistanceSensor{
 public:
         DistanceSensor();
         ~DistanceSensor();
-        char getDistance(std::string);
+        char getDistance(std::string name);
 private:
         int addrFL;
         int addrFR;
@@ -19,7 +19,7 @@ private:
         int distanceRL;
         int distanceRR;
         int fd;
-        char distanceReturn(char);
+        void returnDistance();
 };
 
 #endif
