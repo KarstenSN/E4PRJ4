@@ -8,10 +8,10 @@
 #include <fcntl.h>
 #include "Log.hpp"
 
-class tachometer {
+class Tachometer {
 public:
-  tachometer(Log *);
-  ~tachometer();
+  Tachometer(Log *);
+  ~Tachometer();
   char getVelocity();
 private:
   Log * myLogPtr;

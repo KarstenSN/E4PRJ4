@@ -53,7 +53,7 @@ int main(){
     Data Data_(&Log_);
     Aks Aks_(&Data_, &Settings_, &Log_);
     PcCom PcCom_(&Data_, &Settings_, &Log_);
-	Tachometer Tacho_(1337); //Dummy number
+	Tachometer Tacho_(&Log_);
 	
 	ObjPts AcquireObjects;
 	AcquireObjects.dataPtr = &Data_;
@@ -61,7 +61,7 @@ int main(){
 	AcquireObjects.tachoPtr = &Tacho_;
 	
 	std::thread acqDataThread(acquireData, &AcquireObjects);
-    
+	
 	Log_.writeEvent(__PRETTY_FUNCTION__, "System initialized.");
     Aks_.activate();
 	

@@ -1,10 +1,10 @@
-#include "tachometer.hpp"
+#include "Tachometer.hpp"
 
 int main() {
     
-    int myTachoAddr = 0x08;
+    Log myLog;
     
-    tachometer myTacho(myTachoAddr);
+    Tachometer myTacho(&myLog);
     
     char p = 'X';
     while (1){
