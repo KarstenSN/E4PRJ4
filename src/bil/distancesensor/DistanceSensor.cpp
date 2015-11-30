@@ -1,192 +1,77 @@
 //DistanceSensor.cpp
 
+#include <string>
 #include "DistanceSensor.hpp"
-#include <linux/i2c-dev.h>
-#include "Log.hpp"
-#include <sys/ioctl.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
 
 int adapter_nr = 1;                             // Valg af I2C-bus
 char filename[20];
 int fd= 0;
 
 // Constructor
-DistanceSensor::DistanceSensor(){
-
-    // Log->writeEvent(distanseSensor, Instans oprettet)
-    
-// Initialisering af adresser
-    this->addrFL = 0b01110000;                  // 0x70 dec 112
-    this->addrFR = 0b01110001;                  // 0x71 dec 113
-    this->addrRL = 0b01110011;                  // 0x73 dec 115
-    this->addrRR = 0b01110110;                  // 0x76 dec 118
-    
-// Initialisering af afstande
-    this->distanceFL = 0;
-    this->distanceFR = 0;
-    this->distanceRL = 0;
-    this->distanceRR = 0;    
-    
-// open i2c device;
-    snprintf(filename, 19, "/dev/i2c-%d", adapter_nr);
-
-    std::cout << "opening: "<< filename << std::endl;
-
-    if (fd = open(filename, O_RDWR) < 0){
-        std::cout << "Error in opening: %s" << filename << std::endl;
-        exit(1);
-    }
-    std::cout << "OK Open: " << std::endl;
-
-
-
-// Sæt adresse på sensor:
-/*    // FrontLeft
-    if (ioctl(fd, I2C_SLAVE, addrFL) < 0){
-        std::cout << "Error in setting addr: " << addrFL << std::endl;
-        exit(1);
-    }
-    // FrontRight
-    if (ioctl(fd, I2C_SLAVE, addrFR) < 0){
-        std::cout << "Error in setting addr: " << addrFR << std::endl;
-        exit(1);
-    }
-    // RearLeft
-    if (ioctl(fd, I2C_SLAVE, addrRL) < 0){
-        std::cout << "Error in setting addr: " << addrRL << std::endl;
-        exit(1);
-    }
-    // RearRight
-    if (ioctl(fd, I2C_SLAVE, addrRR) < 0){
-        std::cout << "Error in setting addr: " << addrRR << std::endl;
-        exit(1);
-    }
-*/
-}
+DistanceSensor::DistanceSensor(Log* log){}
 
 // Close Device()
-DistanceSensor::~DistanceSensor(){
-    close(fd);
-}
+DistanceSensor::~DistanceSensor(){}
 
 
 // getDistance()
-char DistanceSensor::getDistance(std::string name){
+int DistanceSensor::getDistance(std::string name){
+// open i2c device;
+    int distanceSlave = 0x08;
+    int rdBuffer[8];
+    int FL = 0;
+    int FR = 0;
+    int RL = 0;
+    int RR = 0;
 
-    DistanceSensor::returnDistance();
-
-    std::cout << "returnDistance finished: " << std::endl;
-
-    if(name == "FL"){
-        return static_cast<char> (distanceFL);
+    if (fd = open("/dev/i2c-1", O_RDWR) < 0){
+        std::cout << "Error in opening i2c-bus " << std::endl;
+        return -1;
     }
-    if(name == "FR"){
-        return distanceFR;
+
+// Sæt adresse på sensor:
+    // FrontLeft
+    if (ioctl(fd, I2C_SLAVE, distanceSlave) < 0){
+        std::cout << "Error in setting addr: " << distanceSlave << std::endl;
+        return -1;
     }
-    if(name == "RL"){
-        return distanceRL;
+
+    if (read(fd,rdBuffer,8) != 8){
+        std::cout << "Failed to read distancesensor from I2C bus.\n" << std::endl;
+        return -1;
     }
-    if(name == "RR"){
-        return distanceRR;
-    }
-return 0;
-}
-
-
-// returnDistance()
-void DistanceSensor::returnDistance(){
-
-// MaxSonar1202 commands:
-    int FLwrite[1] = { (this->addrFL << 1) & 11111110};     // adressen sættes til write-enable
-    int FLread[1]  = { (this->addrFL << 1) + 1};            // adressen sættes til read-enable
-    int FRwrite[1] = { (this->addrFR << 1) & 11111110};
-    int FRread[1]  = { (this->addrFR << 1) + 1};
-    int RLwrite[1] = { (this->addrRL << 1) & 11111110};
-    int RLread[1]  = { (this->addrRL << 1) + 1};
-    int RRwrite[1] = { (this->addrRR << 1) & 11111110};
-    int RRread[1]  = { (this->addrRR << 1) + 1};
-
-    std::cout << "OK setCommands" << std::endl;
     
-// Write "Start Range-reeading ved alle sensorer:
-    //FrontLeft
-    if ((write(fd, FLwrite, 1)) != 1){
-        std::cout << "Error in start Range-reading at addr: " << addrFL << std::endl;
+        close(fd);
+    
+    switch (name){
+        case "FL":
+            FL = (rdBuffer[0] << 8) + rdBuffer[1];
+            return FL;
+            break;
+        case "FR":
+            FR = (rdBuffer[2] << 8) + rdBuffer[3];
+            return FR;
+            break;
+        case "RL":
+            RL = (rdBuffer[4] << 8) + rdBuffer[5];
+            return RL;
+            break;
+        case "RR":
+            RR = (rdBuffer[6] << 8) + rdBuffer[7];
+            return RR;
+            break;
+        default:
+            std::cout << "Wrong parameter to getDistance" << std::endl;
+            break;
     }
-
-    std::cout << "OK start-reading" << std::endl;
-
-    // Front Right
-    if (write(fd, FRwrite, 1) != 1){
-        std::cout << "Error in start Range-reading at addr: " << addrFR << std::endl;
-    }
-    // Rear Left
-    if (write(fd, RLwrite, 1) != 1){
-        std::cout << "Error in start Range-reading at addr: " << addrRL << std::endl;
-    }
-    // Rear Right
-    if (write(fd, RRwrite, 1) != 1){
-        std::cout << "Error in start Range-reading at addr: " << addrRR << std::endl;
-    }
-
-//Læse seneste Range fra alle 4 sensorer
-    // Front Left
-    int dataFL[2];
-    if (write(fd, FLread, 1) != 1){
-        std::cout << "Error in Range-reading at addr: " << addrFL << std::endl;
-    }
-
-    std::cout << "OK read 1" << std::endl;
-
-    //if (read(fd, dataFL, 2) != 2) {
-        std::cout << "Error in get Range-reading at addr: " << addrFL << std::endl;
-    // }
-    distanceFL = (dataFL[0] << 4) + dataFL[1];
-
-    std::cout << "OK read 2" << std::endl;
-
-    // Front Right
-    int dataFR[2];
-    if (write(fd, FRread, 1) != 1){
-        std::cout << "Error in Range-reading at addr: " << addrFR << std::endl;
-    }
-    if (read(fd, dataFR, 2) != 2) {
-        std::cout << "Error in get Range-reading at addr: " << addrFR << std::endl;
-    }
-    distanceFR = (dataFR[0] << 4) + dataFR[1];
-
-    // Rear left
-    int dataRL[2];
-    if (write(fd, RLread, 1) != 1){
-        std::cout << "Error in Range-reading at addr: " << addrRL << std::endl;
-    }
-    if (read(fd, dataRL, 2) != 2) {
-        std::cout << "Error in get Range-reading at addr: " << addrRL << std::endl;
-    }
-    distanceRL = (dataRL[0] << 4) + dataRL[1];
-
-    // Rear Right
-    int dataRR[2];
-    if (write(fd, RRread, 1) != 1){
-        std::cout << "Error in Range-reading at addr: " << addrRR << std::endl;
-    }
-    if (read(fd, dataRR, 2) != 2) {
-        std::cout << "Error in get Range-reading at addr: " << addrRR << std::endl;
-    }
-    distanceRR = (dataRR[0] << 4) + dataRR[1];
 }
-
 
     // skriv i Log
 
 
 /* Syntax til Log-klassen
 *
-* Log->writeEvent(from (string), msg (string))
+* Log->writeEvent( __PRETTY_FUNCTION__ , msg (string))
 *
 * Event / Error / Warning
 */
