@@ -30,6 +30,7 @@ public:
     void activate(void);
 	
 private:
+	/*Analyzes the data currently in the class, returns TRUE when action is needed to prevent a crash */
 	bool analyzeData(void);
 	
     Data* MyData;

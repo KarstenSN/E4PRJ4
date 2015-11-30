@@ -1,4 +1,4 @@
-SOURCES=pi.cpp Data.cpp PcCom.cpp Aks.cpp Steering.cpp Log.cpp Settings.cpp
+SOURCES=pi.cpp Data.cpp PcCom.cpp Aks.cpp Steering.cpp Log.cpp Settings.cpp DistanceSensor.cpp Tachometer.cpp
 OBJECTS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.d))
 EXE=pi

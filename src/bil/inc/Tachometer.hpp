@@ -6,13 +6,13 @@
 #include <string.h>
 #include <sys/ioctl.h>
 #include <fcntl.h>
-#include "Log.hpp"
+#include <Log.hpp>
 
 class Tachometer {
 public:
-  Tachometer(Log *);
+  Tachometer(Log* );
   ~Tachometer();
   char getVelocity();
 private:
-  Log * myLogPtr;
+	Log* myLogPtr;
 };
