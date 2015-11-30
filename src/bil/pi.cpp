@@ -10,7 +10,7 @@
 #include <DistanceSensor.hpp>
 #include <Tachometer.hpp>
 
-#define DEBUGGING //Uncomment to enable debugging
+//#define DEBUGGING //Uncomment to enable debugging
 
 struct ObjPts{
 	Data* dataPtr;
