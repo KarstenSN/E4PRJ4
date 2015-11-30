@@ -3,7 +3,7 @@
 
 \begin{figure}[h]
 \centering
-\includegraphics[]{../fig/diagrammer/bil/cd_aks.pdf}
+\includegraphics[scale=1]{../fig/diagrammer/bil/cd_aks.pdf}
 \caption{Klassebeskrivelse for domain-klassen Aks}
 \label{fig:cd_aks}
 \end{figure}
@@ -11,10 +11,16 @@
 \textbf{Attributter}
 
 \begin{table}[h]
-\begin{tabularx}{\textwidth}{| Z | Z | L{10cm} |} \hline
+\begin{tabularx}{\textwidth}{| Z | Z | L{9cm} |} \hline
 Navn & Type & Beskrivelse \\\hline
 \texttt{MySteering} & \texttt{Steering} & Styretøjsklassen, bruges når Aks skal påvirke bilens hastighed eller retning.\\\hline
 \texttt{MyData} & \texttt{Data*} & Pointer til bilens datastruktur.\\\hline
+\texttt{MySettings} & \texttt{Settings*} & Pointer til Settingsklassen. \\\hline
+\texttt{MyLog} & \texttt{Log*} & Pointer til loggen. \\\hline
+\texttt{state} & \texttt{aksStates} & Husker hvilket stadie bilen er i, kan skifte mellem at stå stille, køre fremad/bagud eller trille. \\\hline
+\texttt{proxSensors} & \texttt{int*} & Et array med nuværende værdier fra afstandssensorer \\\hline
+\texttt{old\_proxSensors} & \texttt{int*} & Et array der holder de foregående værdier fra afstandssensorer \\\hline
+\texttt{latestUserInput} & \texttt{UserInput} & Gemmer de seneste input fra brugeren. \\ \hline
 \end{tabularx}
 \caption{Attributter for klassen Aks}
 \label{table:attr_aks}
@@ -22,18 +28,6 @@ Navn & Type & Beskrivelse \\\hline
 
 \textbf{Metoder}
 
-%----------------- userInput -------------------
-
-\begin{table}[h]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{void userInput(XboxStatus input)} \\\hline
-Parametre & \texttt{input} \newline En struct med alle input fra brugeren. \\\hline
-Returværdi &  \texttt{void} \\\hline
-Beskrivelse & Metoden sender input fra brugeren videre til Steering-klassen. \\\hline
-\end{tabularx}
-\caption{Metodebeskrivelse for \texttt{userInput}}
-\label{table:met_aks_userInput}
-\end{table}
 
 %----------------- aksActivate -------------------
 \begin{table}[h]
