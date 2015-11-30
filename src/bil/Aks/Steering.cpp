@@ -23,6 +23,7 @@ Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 	dataClassPtr_ = dataClassPtr;
 	settingsPtr_ = MySettingsPtr;
 	logPtr_ = MyLogPtr;
+	old_turn = 0;
 /*	direction_ = 1;
 	pwm_ = 0;
 	wiringPiSetupGpio(); // Initialize wiringPi -- using Broadcom pin numbers
@@ -65,22 +66,24 @@ int Steering::userInput(UserInput* UsrInput_)
 		Steering::brake();
 	else
 	{
-		if(	UsrInput_->forward != speedReqFor_ || UsrInput_->reverse != speedReqBack_)
+		if(	(UsrInput_->forward != speedReqFor_) || (UsrInput_->reverse != speedReqBack_))
 		{
 			speedReqFor_ = UsrInput_->forward;
 			speedReqBack_ = UsrInput_->reverse;
-			//Steering::motorSetPWM( speedForward, speedBackward);
+			motorSetPWM( speedReqFor_, speedReqBack_);
 		}		
 	}
-	
-	Steering::turn(UsrInput_->turn);
-	
+	if(old_turn != UsrInput_->turn){
+		Steering::turn(UsrInput_->turn);
+	}
+	old_turn = UsrInput_->turn;
 	return 1;
 }
 
+bool brakeFlag = true;
 int Steering::brake()
 {
-	//std::cout << "Brake() called " << std::endl;
+	std::cout << "Brake() called " << std::endl;
 	/*pinMode(pwmMotor, OUTPUT);
 	digitalWrite(pwmMotor, HIGH) ;
 	digitalWrite(pwmMotorForward, LOW) ;
@@ -90,17 +93,18 @@ int Steering::brake()
 
 }
 
+bool softBrakeFlag = true;
 int Steering::softbrake()
 {/*
 	digitalWrite (pwmMotor, LOW) ;
 	digitalWrite (pwmMotorForward, LOW) ;
 	digitalWrite (pwmMotorBackward, LOW) ;*/
-	//std::cout << "softbrake() called " << std::endl;
+	std::cout << "softbrake() called " << std::endl;
 	pwm_ = 0;
 	return 1;
 }
 
-
+bool turnFlag = true;
 int Steering::turn(int value)
 {/*
 	pinMode(pwmServo, PWM_OUTPUT);
@@ -108,10 +112,11 @@ int Steering::turn(int value)
 	int servoPWM = (int)(minServoPWM + value_);
 	
 	pwmWrite(pwmServo, servoPWM) ;*/
-	std::cout << "turn() called:  " << value << std::endl;
+	std::cout << "turn() called:  " << static_cast<int>(value) << std::endl;
 	return 1;
 }
 
+bool motorFlag = true;
 int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackward)
 {
 	
@@ -134,7 +139,7 @@ int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackwar
 		{
 //			digitalWrite(pwmMotorForward, HIGH);
 //			digitalWrite(pwmMotorBackward, LOW);
-			std::cout << "motorSetPWM() called: speedForward:  " << speedForward << std::endl;
+			std::cout << "motorSetPWM() called: speedForward:  " << static_cast<int>(speedForward) << std::endl;
 			direction_ = 1;
 			Steering::updatePWM();
 		}
@@ -142,7 +147,7 @@ int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackwar
 		{
 //			digitalWrite(pwmMotorForward, LOW);
 //			digitalWrite(pwmMotorBackward, HIGH); 
-			std::cout << "motorSetPWM() called: speedbackward:  " << speedBackward << std::endl;
+			std::cout << "motorSetPWM() called: speedbackward:  " << static_cast<int>(speedBackward) << std::endl;
 			direction_ = 0;
 			Steering::updatePWM();
 		}
@@ -153,7 +158,6 @@ int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackwar
 
 int Steering::updatePWM()
 {
-	
 	if(direction_ == 1)
 		{error_ = speedReqFor_ - speedAct_;}
 	else
