@@ -4,7 +4,7 @@
 #include <ctime>
 #include <thread>
 #include <mutex>
-#include "Log.hpp"
+#include <Log.hpp>
 
 
 Log::Log(std::string filename){

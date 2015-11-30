@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <thread>
-#include "Log.hpp"
+#include <Log.hpp>
 
 #define NUM_THREADS 10
 

@@ -20,10 +20,10 @@ DistanceSensor::~DistanceSensor(){
 // getDistance()
 int DistanceSensor::getDistance(std::string name){
     std::cout << "getDistance() running.." << std::endl;
-    this->Log_->writeEvent(__PRETTY_FUNCTION__,"getDistance() running");
+    //this->Log_->writeEvent(__PRETTY_FUNCTION__,"getDistance() running");
 
     // open i2c device;
-    int distanceSlave = 0x08;
+    int distanceSlave = 0x10;
     int rdBuffer[8];
     int FL = 0;
     int FR = 0;
