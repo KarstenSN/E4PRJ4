@@ -16,21 +16,23 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
+#include <thread>
 #include <Data.hpp>
 #include <Settings.hpp>
-#include <Log.hpp>
 #include <utilities.hpp>
+#include <Log.hpp>
 
 class PcCom
 {
 public:
     PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr);
     ~PcCom();
-    void controllerStream();
-    void dataStream();
 
 private:
+    void controllerStream();
+    void dataStream();
     void error(std::string msg);
+    
     char data_[6];
     char controller_[4];
     int portnoData_;

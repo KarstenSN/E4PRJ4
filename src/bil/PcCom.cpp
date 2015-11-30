@@ -16,6 +16,9 @@ PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr)
     this->UserInput_.reverse = 0;
     this->UserInput_.stop = 0;
     this->UserInput_.turn = 0;
+    
+    std::thread dataStreamTh(&PcCom::dataStream , this);
+    std::thread controllerStreamTh(&PcCom::controllerStream , this);
 }
 
 PcCom::~PcCom()
@@ -153,7 +156,7 @@ void PcCom::dataStream()
             this->settingsClassPtr_->setMaxSpeed((int)this->data_[0]);
 
             // Get latest Velocity and put in data buffer
-            this->data_[1] = static_cast<char>(this->dataClassPtr_->getLatestVelocity());
+            this->data_[1] = static_cast<char>(this->dataClassPtr_->getLatestVelocity() * 10);
 
             // Get latest distances and put lowest value in data buffer
             distance = this->dataClassPtr_->getLatestDistance("FR");
@@ -164,10 +167,10 @@ void PcCom::dataStream()
             if (this->dataClassPtr_->getLatestDistance("RR") > distance)
                 distance = this->dataClassPtr_->getLatestDistance("RR");
 
-            this->data_[2] = static_cast<char>(distance);
+            this->data_[2] = static_cast<char>(distance * 10);
 
             // Get latest Acceleration and put in data buffer
-            this->data_[3] = static_cast<char>(this->dataClassPtr_->getLatestAcceleration());
+            this->data_[3] = static_cast<char>(this->dataClassPtr_->getLatestAcceleration() * 10);
 
             // Send new data
             n = write(newsockfd,this->data_,6);
