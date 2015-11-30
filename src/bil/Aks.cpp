@@ -22,17 +22,25 @@ Aks::Aks(Data* Dataptr, Settings* NewSettings, Log* NewLog): MySteering(Dataptr,
 
 void Aks::activate(){
 	while(1){
+		latestUserInput = this->MyData->getUserInput();
 		if(this->MySettings->getAKS()){
 			if(this->MyData->getLatestVelocity() < STILL_THRESH){
 				this->state = still;
 			}
 			else{
-				latestUserInput = this->MyData->getUserInput();
+				if(latestUserInput.forward < 10 && latestUserInput.reverse < 10){
+					this->state = coasting;
+				}
+				else if(latestUserInput.forward > latestUserInput.reverse){
+					this->state = fwd;
+				}
+				else{
+					this->state = bwd;
+				}
 			}
 		}
 		else{
 			this->state = still;
-			latestUserInput = this->MyData->getUserInput();
 		}
 		for(int i = 0; i < NBR_PROX_SENSORS; i++)
 			old_proxSensors[i] = proxSensors[i];
