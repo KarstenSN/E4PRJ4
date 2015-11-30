@@ -1,9 +1,9 @@
 #include <iostream>
 #include <thread>
 #include <random>
-#include "Data.hpp"
-#include "Log.hpp"
-#include "utilities.hpp"
+#include <Data.hpp>
+#include <Log.hpp>
+#include <utilities.hpp>
 
 
 #define NUM_THREADS 10
@@ -32,7 +32,11 @@ void writers(int num){
 
 	// Generate random numbers for user attributes
 	std::uniform_int_distribution<> inp(1,255);
-	UserInput Input{static_cast<char>(inp(gen)),static_cast<char>(inp(gen)),static_cast<char>(inp(gen)),static_cast<char>(inp(gen))};
+	UserInput Input;
+	Input.forward =	static_cast<char>(inp(gen));
+	Input.reverse =	static_cast<char>(inp(gen));
+	Input.turn = static_cast<char>(inp(gen));
+	Input.stop = static_cast<char>(inp(gen));
 
 	// Writing to user attributes
 	d.writeUserInput(&Input);

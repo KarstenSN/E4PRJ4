@@ -9,7 +9,7 @@ Tachometer::~Tachometer() {}
 char Tachometer::getVelocity() {
 
     int file;
-    int tachoAddr = 0x08;
+    int tachoAddr = 0x10;
     char buffer[9];
     // NB, denne skal sættes op individuelt på den PI der skal bruges...
      

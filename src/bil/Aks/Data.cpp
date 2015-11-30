@@ -1,8 +1,8 @@
 #include <iostream>
 #include <thread>
 #include <Data.hpp>
-#include <utilities.hpp>
-#include <Log.hpp>
+#include "utilities.hpp"
+#include "Log.hpp"
 
 Data::Data(Log* Log){
     this->Log_ = Log;
@@ -70,6 +70,7 @@ bool Data::writeDistance(std::string name, int distance){
 void Data::writeUserInput(UserInput* Input){
     std::lock_guard<std::mutex> lock(userDataMut);
     this->Input = *Input;
+	std::cout << __PRETTY_FUNCTION__ << " called" << std::endl;
 }
 
 int Data::getLatestVelocity(){
