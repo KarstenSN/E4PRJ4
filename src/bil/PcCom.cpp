@@ -11,7 +11,7 @@ PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr)
     this->portnoController_ = 1235;
     this->dataClassPtr_ = dataClassPtr;
     this->settingsClassPtr_ = settingsClassPtr;
-	this->logClassPtr_ = logClassPtr;
+    this->logClassPtr_ = logClassPtr;
     this->UserInput_.forward = 0;
     this->UserInput_.reverse = 0;
     this->UserInput_.stop = 0;
@@ -25,6 +25,8 @@ PcCom::~PcCom()
 
 void PcCom::controllerStream()
 {
+    this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Initializing TCP connection for user input stream");
+  
     // Initialize variables
     int sockfd, newsockfd, n;
     socklen_t clilen;
@@ -49,7 +51,7 @@ void PcCom::controllerStream()
         if (newsockfd < 0)
             break;
 
-        std::cout << "Controller TCP-Connection aquired" << std::endl;
+        this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__, "Controller TCP-Connection aquired");
         while(1)
         {
             /* Acquire controller data from computer
@@ -84,11 +86,12 @@ void PcCom::controllerStream()
     }
     close(sockfd);
     return;
-
 }
 
 void PcCom::dataStream()
 {
+    this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__, "Initializing TCP connection for data stream");
+    
     // Initialize variables
     int sockfd, newsockfd, n;
     socklen_t clilen;
@@ -114,7 +117,7 @@ void PcCom::dataStream()
         if (newsockfd < 0)
             break;
 
-        std::cout << "Data TCP-Connection aquired" << std::endl;
+        this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__, "Data TCP-Connection aquired");
         while(1)
         {
             /*  Acquire data from computer:
@@ -181,13 +184,13 @@ void PcCom::dataStream()
         if(this->data_[0] == 'd' && this->data_[1] == 'w' && this->data_[2] == 'n' && this->data_[3] == 'n' && this->data_[4] == 'o' && this->data_[5] == 'w')
             break;
     }
-    std::cout << "Closing the data coneection" << std::endl;
+    this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Closing the data coneection");
     close(sockfd);
     return;
 }
 
-void PcCom::error(const char *msg)
+void PcCom::error(std::string msg)
 {
-    perror( msg );
+    this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,msg);
     exit(1);
 }

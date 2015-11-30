@@ -9,13 +9,15 @@
 #include <unistd.h>
 #include <iostream>
 #include <stdlib.h>
-//#include "Log.hpp"
+#include "Log.hpp"
 
 class DistanceSensor{
 public:
-        DistanceSensor();
+        DistanceSensor(Log* log);
         ~DistanceSensor();
         int getDistance(std::string name);
+private:
+        Log* Log;
 };
 
 #endif

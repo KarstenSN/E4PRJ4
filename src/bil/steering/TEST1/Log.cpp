@@ -24,7 +24,7 @@ bool Log::writeError(std::string from, std::string msg){
 		logFile << "[" << this->getTimestamp() << "] [Error] [" << from << "] " << msg << std::endl;
 		return true;
 	}
-    else return false;
+	else return false;
 }
 
 bool Log::writeWarning(std::string from, std::string msg){
@@ -33,16 +33,16 @@ bool Log::writeWarning(std::string from, std::string msg){
 		logFile << "[" << this->getTimestamp() << "] [Warning] [" << from << "] " << msg << std::endl;
 		return true;
 	}
-    else return false;
+	else return false;
 }
 
 bool Log::writeEvent(std::string from, std::string msg){
-    if (logFile.is_open()){
+		if (logFile.is_open()){
 		std::lock_guard<std::mutex> lock(mutex);
 		logFile << "[" << this->getTimestamp() << "] [Event] [" << from << "] " << msg << std::endl;
 		return true;
 	}
-        else return false;
+	else return false;
 }
 
 Log::~Log(){
