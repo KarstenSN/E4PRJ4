@@ -18,6 +18,7 @@
 #include <errno.h>
 #include <Data.hpp>
 #include <Settings.hpp>
+#include <Log.hpp>
 #include <utilities.hpp>
 
 class PcCom
@@ -29,7 +30,7 @@ public:
     void dataStream();
 
 private:
-    void error(const char *msg );
+    void error(std::string msg);
     char data_[6];
     char controller_[4];
     int portnoData_;
@@ -37,7 +38,7 @@ private:
     Data* dataClassPtr_;
     Settings* settingsClassPtr_;
     UserInput UserInput_;
-	Log* logClassPtr_;
+    Log* logClassPtr_;
 };
 
 #endif // PCCOM_HPP
