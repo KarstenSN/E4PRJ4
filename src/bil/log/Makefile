@@ -2,8 +2,8 @@ SOURCES=main.cpp Log.cpp
 OBJECTS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.d))
 EXE=log
-CXXFLAGS=-I. -std=c++11
-LDFLAGS=-pthread
+CXXFLAGS=-I../inc -std=c++11
+LDFLAGS=-lpthread
 
 # Making for host
 # > make ARCH=host
