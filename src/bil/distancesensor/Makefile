@@ -1,8 +1,8 @@
-SRC=DistanceSensor.cpp
+SRC=main.cpp DistanceSensor.cpp Log.cpp
 OBJ=$(addprefix ${BUILD_DIR}/,$(SRC:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SRC:.cpp=.d))
-EXE=prog
-CXXFLAGS= -Iinc -std=c++11
+EXE=DistanceSensor
+CXXFLAGS= -I../inc -std=c++11
 
 ARCH ?= host
 

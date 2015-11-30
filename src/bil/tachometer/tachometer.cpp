@@ -1,7 +1,7 @@
 #include "tachometer.hpp"
 
-tachometer::tachometer(int slaveAddr) {
-    tachometer::tachoAddr = slaveAddr;
+tachometer::tachometer(Log *log) {
+    this->myLogPtr = log;
 }
 
 tachometer::~tachometer() {}
