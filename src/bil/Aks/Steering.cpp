@@ -6,6 +6,8 @@
 #include <Settings.hpp>
 #include <Log.hpp>
 
+char old_turn = 0;
+
 // Pin number declarations. We're using the Broadcom chip pin numbers.
 const int pwmMotor = 18; // PWM Motor - Broadcom pin 18, P1 pin 12
 const int pwmServo = 24; // PWM Servo - Broadcom pin 19, P1 pin 33
