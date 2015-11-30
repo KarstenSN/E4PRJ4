@@ -4,7 +4,7 @@
 #include <ctime>
 #include <thread>
 #include <mutex>
-#include "Log.hpp"
+#include <Log.hpp>
 
 
 Log::Log(std::string filename){
@@ -24,7 +24,7 @@ bool Log::writeError(std::string from, std::string msg){
 		logFile << "[" << this->getTimestamp() << "] [Error] [" << from << "] " << msg << std::endl;
 		return true;
 	}
-	else return false
+	else return false;
 }
 
 bool Log::writeWarning(std::string from, std::string msg){
@@ -33,7 +33,7 @@ bool Log::writeWarning(std::string from, std::string msg){
 		logFile << "[" << this->getTimestamp() << "] [Warning] [" << from << "] " << msg << std::endl;
 		return true;
 	}
-	else return false
+	else return false;
 }
 
 bool Log::writeEvent(std::string from, std::string msg){
@@ -42,7 +42,7 @@ bool Log::writeEvent(std::string from, std::string msg){
 		logFile << "[" << this->getTimestamp() << "] [Event] [" << from << "] " << msg << std::endl;
 		return true;
 	}
-	else return false
+	else return false;
 }
 
 Log::~Log(){

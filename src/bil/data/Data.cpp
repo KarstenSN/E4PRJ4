@@ -1,8 +1,8 @@
 #include <iostream>
 #include <thread>
 #include <Data.hpp>
-#include "utilities.hpp"
-#include "Log.hpp"
+#include <utilities.hpp>
+#include <Log.hpp>
 
 Data::Data(Log* Log){
     this->Log_ = Log;
