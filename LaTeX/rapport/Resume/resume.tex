@@ -1,0 +1,32 @@
+\chapter{Resume}
+\label{ch:Resume}
+
+Denne rapport omhandler udviklingen af en prototype til et system, der kan installeres i et drivhus. 
+Systemet - kaldet AutoGreen - måler lufttemperatur og regulerer denne i drivhuset ved hjælp af åbning og lukning af et vindue, ventilation og et varmelegeme. 
+Systemet kan desuden måle jordfugtighed med op til seks jordfugtmålere, og give brugeren besked om, at det er tid til at vande ved en given jordfugtmåler. 
+
+Gennem de første faser af projektarbejdet er der desuden lagt op til måling af luftfugtighed og lysintensitet i drivhuset, logning og grafisk præsentaion af måledata, database med planteinformationer, e-mailnotifikationer med mere. 
+Dette er dog ikke implementeret. 
+
+Under udviklingen af prototypen er der anvendt en model af et drivhus på ca. 33 liter. 
+Såfremt AutoGreen skulle anvendes i et rigtigt drivhus, skulle aktuatorer - dvs. ventilatorer, varmelegeme og vinduesmotor - skaleres derefter.
+
+AutoGreen's brugerflade og controller er realiseret på et Embest DevKit8000 Evaluation board\cite{lib:DK8000}.
+DevKit8000 kommunikerer vha. UART med en \IIC master, der er realiseret på et PSoC 4 Pioneer Kit\cite{lib:psoc4_guide}. 
+Masterenheden kommnunikerer med flere \IIC slaver, der er koblet til hhv. aktuatorer og analoge sensorer. 
+To af disse disse \IIC slaver er ligeledes realiseret på et PSoC 4 Pioneer Kit. 
+Måling af temperatur i drivhuset sker vha. en sensor - LM75 - med \IIC interface\cite{lib:LM75}. 
+
+Det realiserede system kan måle temperaturen i drivhuset med en præsision på +/- 0.5 $^{\circ}$C. 
+Systemet kan - i området op til 10 $^{\circ}$C over den omgivende temperatur - regulere temperaturen med en præcision på +/- 1 grad. 
+Måling af jordfugt fungerer ligeledes på det realiserede system. 
+I tilfælde af manglende vand ved en sensor, gives der besked om dette på brugerfladen, og en port på en af systemets \IIC slaver går fra logisk lav til logisk høj.
+
+Dette åbner op for muligheden for tilkobling af et vandingssystem, men der er som nævnt flere muligheder for videreudvikling og udbygning af systemet. Se afsnit \ref{P-ch:Projektformulering} \nameref{P-ch:Projektformulering} på side \pageref{P-ch:Projektformulering} i projektdokumentationen for yderligere information om systemet. 
+
+Den største udfordring i det realiserede system ligger i UART kommunikationen mellem DevKit8000 og \IIC master. 
+Der anvendes en simplificeret UART kommunikation - kun med Tx, Rx og reference - hvorpå der er en del fejlkommunikation. 
+Dette opleves ikke, hvis man fx. kobler en UART terminal direkte på \IIC masteren. 
+Se afsnit \ref{P-ch:Accepttest} \nameref{P-ch:Accepttest} på side \pageref{P-ch:Accepttest} i projektdokumentationen for yderligere information om resultatet.
+
+\clearpage

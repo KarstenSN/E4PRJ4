@@ -1,0 +1,25 @@
+\section{Udviklingsværktøjer}
+\label{ch:Udviklingsvaerktoejer}
+
+I dette afsnit vil der blive gennemgået de forskellige udviklingsværktøjer, som er blevet anvendt under dette projekts design-, implementerings- og integrationsproces.
+
+\subsection{PSoC Creator}
+Til programmering af projektets PSoC 4 Pioneer Kits blev PSoC Creator udnyttet. Programmet er anvendt til kodning og debugging af PSoCs under implementering af software. Dette udviklingsmiljø har et stort bibliotek af klargjorte komponenter og kode hertil, hvilket gør processen af programmering af PSoCs effektiv.\\
+I dette projekt er der valgt at bruge PSoC 4 processoren på de tre Pioneer Kits, det er dog muligt at bruge PSoC 5 processoren i stedet, hvis dette ønskes, da denne processor har mange flere funktionaliteter. Grunden til at PSoC 5 komponenten ikke er valgt i dette projekt er, at der ikke har været brug for den funktionalitet PSoC 5'eren har, frem for PSoC 4'eren. Ved at bruge PSoC 4, kan PSoC 5 processoren ligeledes bruges til at debugge direkte på et PSoC 4 projekt, hvilket har gjort fejlfinding af PSoCs effektiv.
+
+\subsection{Multisim}
+Gruppen har valgt Multisim til design af hardware. Styrkerne ved Multisim er at skabe et overblik og muligheden for at simulere forskellige hardware moduler, med de ønskede komponenter, fra et rigt bibliotek. Svaghederne ved Multisim er, at det nogle gange ikke er muligt simulere et kredsløb korrekt samt i værste tilfælde, at Multisim ikke har mulighed for at simulere en specifik hardware komponent. I dette projekt er Multisim anvendt under design og implementeringsprocessen for hardware.
+
+\subsection{Ultiboard}
+Ultiboard blev brugt til at tegne og konstruere printplade layouts. Ultiboard kan, i forbindelse med Multisim, uddrage de komponenter der findes i designs fra Multisim og konstruere printplade layouts ud fra disse.
+
+\subsection{QT Creator}
+QT Creator er brugt til designe GUI'en til DevKit8000. Programmet har en del funktionalitet, der gør at de GUI programmer man kan lave i programmet også kan køre på andre OS platforme fx Windows eller Linux. Dette er dog også problematisk, da denne funktionalitet kommer på bekostning af den normale implementering. Dette ses i deres interne primitive typer, som fx er string kaldet en Qstring, så alle normale strings skal castes til Qstring for at kunne bruges i deres UI klasser.
+
+\subsection{Git}
+Git er et versionstyringsværktøj til at vedligeholde kildekode. 
+Git er et stærkere værktøj end SVN, der blev brugt i sidste semester projekt. 
+Det er dog mere kompliceret at bruge pga. de flere valgmuliger som medfølger. 
+Som repository host er der valgt Github grundet stabilitet, da gruppen oplevede problemer med RiouxSVN sidste semester.
+
+\clearpage

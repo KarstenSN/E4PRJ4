@@ -1,0 +1,23 @@
+\section{Metoder} \label{ch:Metoder}
+Under Metoder vil de forskellige arbejdsmetoder, der er blevet brugt under dette projekt blive beskrevet. Disse metoder er hhv. V-model, SysML, Scrum, Reviews og Versionsstyring.
+
+\subsection{V-Model og ASE-Model} 
+Under projektets forløb er V-Modellen fulgt, som en vejledning til udførelsen af projektet. Modellen er dog ikke fulgt fuldstændigt, da der ikke er blevet defineret flere testscenarier ud over den vigtige Accepttest. Dette skyldes, at gruppen har fundet det mere hensigtsmæssigt at lave løbende tests, da der i mange tilfælde har været en vigtig læringsproces i hvilke funktionaliteter, der har kunne lade sig gøre. Derved har det været svært at fastsætte mindre tests imellem de forskellige enheder i tidligere stadier. Det vil sige at tests såsom modultests blev beskrevet og bearbejdet sideløbende med design- og implementeringsfasen.
+
+Ud over V-Modellen \ref{lib:T-006}, er ASE-Modellen \ref{lib:vejledning} taget i brug som en vejledning til udførelse af projektet. Der er hovedsageligt lagt fokus på at gøre det muligt for HW- og SW-grupper at dele sig op under design og implementering. På baggrund af dette er der lagt stor fokus på at forklare systemets ønskede funktionalitet og kommunikationsveje under systemarkitektur. Opdelingen har gjort arbejdet mere effektivt, da det har givet den enkelte mulighed for mere fordybelse til at arbejde med et specifikt område.
+
+\subsection{SysML}
+SysML har været medvirkende til at give overblik over projektet, da systemet har kunnet deles op i blokke, og det herefter var muligt at arbejde med disse individuelt. Ud fra disse blokke var beskrivelsen af parts og ports nemt. BDD-diagrammer har givet overblik over komposition af blokkenes relationer, som er specificeret i diagrammet. IBD-diagrammer har givet mulighed for at holde styr på signaler og kommunikationsveje mellem de forskellige blokke. Signalerne, der går imellem blokkene, gav mulighed for at lave detaljerede grænseflader på systemets elementer. UART protokollen er systemets vigtigste grænseflade, da den definerer grænsen mellem HW og SW gruppen. Use Cases har givet mulighed for at designe det ønskede scenarie, og tage højde for de faldgrupper, der kan opstå undervejs i scenariet. Use Cases er blevet anvendt til at fremstille sekvensdiagrammer, så de stemmer overens med udførelsen af de enkelte steps i use casen.
+
+\subsection{Scrum}
+Scrum er primært brugt af SW gruppen. Scrum blev brugt til uddeling af opgaver under design af SW til DevKit8000. En webbaseret løsning er brugt som scrum-board, i stedet for et fysisk scrum-board, da et fast grupperum ikke har været til rådighed. Der blev i SW gruppen brugt en form for daglige scrum-møder, hvor der hurtigt kunne gennemgås status på individuelle opgaver, og om der var forekommet nogle problemer, der kunne være svære at løse. Herefter kunne scrum-boardet opdateres med evt. nye opgaver. Det gav et godt overblik, og alle havde altid adgang til at kunne se, hvad der kunne laves som det næste, når en opgave var løst. Det blev dog valgt i SW gruppen ikke at bruge scrum-boardet under implementeringsfasen, da der blev holdt daglige møder, og det ikke føltes som en nødvendighed at skulle holde styr på alle opgaverne vha. Scrum, når der kun var 3 personer i teamet. Der blev dog fortsat holdt fast på de daglige scrum-møder.
+
+\clearpage
+
+\subsection{Versionsstyring}
+Versionerhistorik på dokumenter i projetdokumentationen er blevet opdateret løbende bla. i forbindelse med kommentarer fra vejleder og reviews. Væsentlige ændringer i fx design har givet anledning til versions-ændring, hvilket hjælper med at holde styr på hvilke ændringer projektet har gennemgået.
+
+\subsection{Reviews}
+De reviews der er modtaget igennem projektet, \cite{lib:Review1} og \cite{lib:Review2}, har været en stor hjælp til retning og tilføjelser til dokumentationen. De afgivne reviews har været med til at give ideer til ændringer af dokumentation og eget projekt. De afleverede review er rettet med henblik på, hvad der er svært at forstå eller dårligt beskrevet. Dette gør reviewet objektivt. Der medtages ikke forslag til, hvordan man kunne ændre projektet, da det ikke er reviewernes opgave at komme med løsninger til modtagers problemer. Ved modtagelse af review er der holdt en neutralt tilgang. Fokus er lagt på at få så meget som muligt ud af de kommentarer, der modtages. Disse kommentarer har herefter kunnet diskuteres på et efterfølgende internt møde.
+
+\clearpage

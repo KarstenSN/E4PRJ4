@@ -1,0 +1,23 @@
+\section{Fremtidigt Arbejde} \label{ch:Fremtidigt_arbejde}
+
+Umiddelbart er de resterende krav, som ikke blev implementeret i projektforløbet, oplagte kandidater til fremtidigt arbejde.
+Dette inkluderer måling af lysintensitet og luftfugtighed, mulighed for at tilføje planter i det virtuelle drivhus, interaktion med plantedatabase, grafer for samtlige måledata, e-mail notifikationer samt fuld systemlog.
+For at e-mail notifikationer skal fungere ville det også være nødvendigt at implementere internetadgang på DevKit8000, hertil kan det tilføjes at mulighed for trådløst netværk ville være oplagt, da systemet skal sidde i brugerens hjem og ikke nødvendigvis være i nærheden af router el. lign., og man ville slippe for at trække ethernet kabel til sit drivhus.
+Man kunne også overveje en eller anden form for trådløs kommunikation mellem DevKit8000 og PSoC 4 Master; derved undgår man at brugerfladen skal placeres i drivhuset. 
+
+Udover disse opgaver er oplagte muligheder integration med et vandingssystem, så drivhuset er selvstyrende mht. vanding. 
+Dette kunne gøres ved at åbne/lukke magnetventiler for hver plante i drivhuset. 
+For at det ville fungere, bør der også implementeres en form for kalibrering af vandtilførslen i forhold til systemet, så en eventuel vandingsalgoritme ville kunne justere vandmængden fornuftigt.
+
+Under projektforløbet har gruppen indset, at PSoC Master-blokkens funktionaliteter kunne integreres i DevKit8000 og herved spare en hel hardwareblok, da denne har mulighed for \IIC direkte på kittet.
+Der er ligeleds også fordele i at lade den digitale filtrering foregå på DevKit8000, da denne har langt flere resourcer tilgængelige i forhold til digital filtrering i software end PSoC 4.
+En anden mulighed ville være at lade den digitale signalbehandling foregå på PSoC 5, der også forefindes på PSoC 4 Pioneer Kit.
+Denne er dog upraktisk at udvikle på, da den ikke tilbyder samme debugging funktionaliteter som PSoC 4 processoren.
+
+Gruppen har under forløbet også luftet tanken om at implementere en mobilapp til monitorering og interaktion med systemet, denne ville fx kunne implementeres til Android og iOS.
+En sådan app ville kunne give brugeren information og mulighed for interaktion med systemet når brugeren ikke er hjemme i en længere periode, som fx på ferie.
+Brugeren ville ligeledes også kunne anvende appen udelukkende i stedet for touchskærmen på DevKit8000.
+
+Med hensyn til selve hardwaren i drivhuset ville det være oplagt at integrere aktuator og jordfugtmåler på én PSoC 4 og placere denne på samme print som strømforsyning. 
+Dette ville reducere prisen på produktet væsentligt samt skabe mere stabilitet ift. udefrakommende påvirkninger (elektromagnetisk stråling og mekanisk påvirkning).
+Ligeledes ville det være en fordel at indpakke alle hardwareenheder i passende kabinetter.

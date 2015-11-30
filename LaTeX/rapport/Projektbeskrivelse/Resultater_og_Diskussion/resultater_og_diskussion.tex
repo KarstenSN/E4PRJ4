@@ -1,0 +1,37 @@
+\section{Resultater og Diskussion} \label{ch:Resultater_og_diskussion}
+
+Overordnet er alle "skal"\ krav blevet opfyldt for AutoGreen projektet. 
+Det vil sige, at systemet kan overvåge temperaturen, samt regulere den på baggrund af måleværdier. 
+Systemet giver mulighed for at vælge om varmelegeme og/eller blæsere skal være aktive under regulering, og AutoGreen indeholder en grafisk brugerflade udviklet i QT. 
+AutoGreen indeholder desuden nogle "bør"\ funktionaliteter, da brugeren har mulighed for at overvåge op til seks planters jordfugtigthed i hovedmenuen. 
+
+Lysintensitet- og luftfugtighedssensorer er blevet droppet sent i forløbet, da det viste sig at der var problemer med at få dem til at fungere. 
+Systemet har en fungerende datalog over alle måleværdier, dog er der ikke implemeneteret en grafisk fremstilling af dem. 
+Ligeledes er plantedatabasen ikke implementeret.
+Systemloggen virker, men kan kun vise sidste hændelse, dvs. den er ikke implementeret færdig.
+System opfylder kun et enkelt "kan"\ krav, nemlig mulighed for tilslutning til et automatisk vandingssystem, ellers opfylder AutoGreen ikke flere "kan"\ krav. 
+
+\mbox{}
+
+En af de ting som virker overraskende godt i AutoGreen, er selve reguleringen af temperaturen. 
+Vi havde forventet at få problemer med at kunne regulere temperaturen med en præcision på +/- 2 $^{\circ}$C, men det er på grænsen til at det lader sig gøre med +/- 0,5 $^{\circ}$C, og så er det pludselig opløsningen på temperatursensoren, der sætter begrænsningen. 
+
+Det gode resultat grunder i et sammenfald af flere ting. 
+For det første er aktuatorerne passende dimensioneret i forhold til drivhusets størrelse. 
+Der ligger ikke dybe tanker og en masse beregninger bag dette. 
+Der var monteret fire ventilatorer i drivhuset da vi overtog det, hvilket syntes en smule voldomt; derfor kører de med en duty cycle på 50\% for at undgå overshoot i forbindelse med køling.
+De 50\% var intet mere end et gæt, som viste sig at være fornuftigt.
+Vi indkøbte i starten af forløbet 3 stk. 100W glødepærer til at bruge som varmelegeme, men det viste sig hurtigt, at en enkelt var passende, for at undgå overshoot i forbindelse med opvarmning.  
+
+Der var fra begyndelsen desuden lagt op til at udvide med PWM styring og PID-regulering af varmlegeme og ventilation under hhv. opvarmning og afkøling af drivhuset. 
+Dette blev bla. pga. tidsnød ikke implementeret, så vi regnede fx med at varmelegemet ville komme til at stå og tænde og slukke, når temperaturen i drivhuset nåede det ønskede nivaeu. 
+Dette er også tilfældet, men det sker meget langsommere end vi havde forventet, da glødepæren ikke bliver kold i det samme øjeblik den slukkes; derfor falder temperaturen kun langsomt. 
+
+UART kommunikationen mellem DevKit8000 og PSoC Master kom desværre til at fungere dårligere end forventet.
+Der er en del fejlkommunikation, som primært kommer til udtryk ved udfald på jordfugtsensorerne. 
+Vi mener dette kan skyldes problemer med timing i SW på hhv. DevKit8000 og PSoC Master, da meget af koden er interruptbaseret, der afvikles flere strenge samtidigt og der skal ventes på retursvar, når der spørges efter en sensorværdi eller sendes en kommando til en aktuator. 
+Problemet kan også skyldes decideret fejl på selve den fysiske UART kommunikation.
+Problemet kan muligvis afhjælpes ved at anvende skærmet kabel mellem DevKit8000 og PSoC Master, eller mere sandsynligt ved at anvende en komplet UART med alle 9 forbindelser i stedet for AutoGreen's mere skrabede model, der kun indeholder Tx, Rx og en reference.
+Alternativt skal design af SW på PSoC Master og/eller DevKit8000 skrives helt om. 
+Under alle omstændigheder ligger her et oplagt udviklingspotentiale for systemet.
+\clearpage

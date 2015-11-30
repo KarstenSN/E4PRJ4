@@ -1,0 +1,60 @@
+\chapter{Indledning}
+\label{ch:Indledning}
+
+%TODO
+OBS: Fra PRJ3, skal rettes
+
+Denne rapport omhandler udvikling og realisering af en prototype til et system, der kan installeres i et drivhus. 
+Systemet - AutoGreen - hjælper brugeren med at opnå og fastholde optimale forhold for planterne i drivhuset.
+Systemets vigtigste funktioner er måling og regulering af temperatur, samt måling af jordfugt.
+Reguleringen af temperatur sker ved hjælp af et varmelegeme, ventilatorer og åbning/lukning af et vindue. 
+Ved manglende fugtighed i jorden gives brugeren besked herom. 
+
+AutoGreen er både for den uerfarne bruger, der har brug for hjælp for at sikre sine drivhusplanters overlevelse, men det er også for den mere erfarne bruger, der ønsker optimerede forhold i sit drivhus. 
+Opvarmning af drivhuset medvirker til forlængelse af vækstsæsonen og rettidig vanding af planterne er med til at sikre optimale vækstforhold. 
+
+Controlleren og brugerfladen i AutoGreen - realiseret på et DevKit8000 - kommunikerer via UART med et PSoC 4 Pioneer Kit, der agerer \IIC master i systemet. 
+Masteren kommunikerer flere \IIC slaver, der har ansvar for hhv. aktuatorer (varme, vindue og ventilation), måling af temperatur og analoge jordfugtsensorer.
+
+\section{Læsevejledning}
+Rapporten er, så vel som projektdokumentationen, opbygget kronologisk, dvs. efter samme rækkefølge som arbejdet er udført. Der er dog den undtagelse at accepttestspecifikationen er udarbejdet i umiddelbar forlængelse af kravspecifikationen, men selve testen er naturligvis først gennemført i slutningen af forløbet, hvorfor dette afsnit er behandlet i slutningen af både rapport og projektdokumentation. 
+
+Bemærk at afsnittet \nameref{ch:arbejdsopgaver} (side \pageref{ch:arbejdsopgaver}) indeholder en oversigt over hvad de enkelte gruppemedlemmer har haft ansvar for - ikke nødvendigvis hvilke afsnit af rapporten (eller dokumentationen) de har skrevet. 
+
+For dokumentationen gælder det, at hvert kapitel har en versionshistorik, hvor der ved hver indtastning er påført et gruppemedlems initialer. 
+Dette betyder udelukkende at det pågældende gruppemedlem har 'siddet ved tasterne', og giver således ikke gruppemedlemmet nogen form for ansvar eller ejerskab af kapitlet. 
+
+Ved første øjekast kan denne rapport synes væsentlig længere end de tilladte 30 normalsider. 
+Se \cite{lib:dispRapport} for detaljeret disposition. 
+
+\clearpage
+
+\section{Ordforklaring}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth*9/10}{| l | Z |}
+% header ------------------------
+\hline
+\textbf{Begreb} & \textbf{Forklaring} \\\hline
+% header ------------------------
+	Plantedatabase & 
+	Plantedatabasen indeholder information om ideelle forhold for forskellige typer planter, som brugeren kunne tænkes at plante i sit fysiske drivhus. Informationen i plantedatabasen står til grund for udgangsparametre for nye planter i det virtuelle drivhus. Der findes en række systemplanter, som brugeren ikke kan redigere eller slette, men brugeren kan tilføje egne planter. \\\hline
+	Datalog &
+Systemet er udstyret med en log over de indsamlede data fra sensorer i systemet, og der måles og indskrives i loggen hvert minut. Denne er opbygget som en datastruktur, hvor hver logning indeholder information fra sensorerne samt et tidspunkt. \\\hline
+	Systemlog &
+Systemet er udstyret med en log over hvad systemet foretager sig. Dette kunne f.eks. være et indlæg når systemet foretager en måling, sender en e-mail og regulerer miljøet i drivhuset. \\\hline
+	Virtuelt Drivhus &
+Det virtuelle drivhus er systemets repræsentation af det fysiske drivhus. Brugeren kan tilføje planter fra plantedatabasen i det virtuelle drivhus, og på den måde give systemet indirekte oplysninger om ønskede parametre. Disse informationer lagres i systemets konfigurationsfil. \\\hline
+	Fysisk Drivhus &
+Ved det fysiske drivhus forstås det drivhus, hvori systemet er monteret. \\\hline
+	Konfigurationsfil &
+Dette er en klasse, der er placeret på DevKit8000, som indeholder brugerens konfigurationer om blandt andet notifikationer, e-mailadresser, antallet af fugtsensorer og deres unikke ID mm. \\\hline
+	Notifikations e-mail &
+Dette er en daglig e-mail, som brugeren kan vælge at få tilsendt. Den sendes klokken 12:00, og indeholder informationer om parametrene i det fysiske drivhus. \\\hline
+	Advarsels e-mail &
+Dette er en e-mail, som brugeren kan vælge at få tilsendt. Den sendes, hvis en parameter i det fysiske drivhus kommer uden for tolerancen af den ønskede værdi. \\\hline
+\end{tabularx}
+\end{table}
+
+\clearpage

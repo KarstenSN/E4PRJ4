@@ -1,0 +1,50 @@
+\section{Software Implementering} \label{ch:SWimplementering}
+
+\subsection{QT Integration}
+
+Implementeringen af SW på DevKit8000 begyndte med en opdeling af klasser, således at hver klasse kunne testes individuelt med teststubs for manglende associationer. 
+Derefter blev hele grundsystemet koblet sammen, en klasse af gangen, før den endelige integration med QT. 
+Selve sammenkoblingen forløb problemfrit, men QT-integrationen tog længst tid af integrationsfasen.
+
+Første problem softwaregruppen havde, var deling af ressourcer mellem de forskellige QT-klasser. 
+Den grundlæggende løsning var først at gøre alle grundsystemsklasser statiske, så de kunne ses globalt - dette virkede dog ikke med pthreads. I stedet blev der lavet en referencestruct, som indeholdt pointers til relevante grundsystemsklasser. Den er oprettet i main og structen bliver sendt med i hver QT constructor. 
+
+Et af de største problemer var live opdatering af UI'en på hovedmenuen. Det første forsøg på at løse problemet var, at bruge slots og signaler, hvilket er QT's foreslåede løsing. Dette indebar at monitor-klassen skulle nedarves fra \texttt{Qobject} \cite{lib:signals} og at der skulle implementere et signal, som udsendte GUI data'en for alle klasser, der abbonerede på dette signal. Dog kunne signaler ikke blive sendt fra en klasse kørt i en pthread, så som en alternativ løsning blev der oprettet en Qtimer, der opdaterede GUI'en med faste intervaller, ved at hente informationen direkte fra monitor.
+
+\subsection{Timers på DevKit8000}
+
+For at indstille tiden på DevKit8000, skulle der bruges en C++ API, som kunne sætte tiden. De metoder der kan bruges til at sætte tiden med, er linux's \texttt{gettimeofday()} og \texttt{settimeofday()}. 
+Måden det virker på, er ved at starte tiden fra 1. januar 1970. Dette betyder, at dags dato svarer til den tid, der er gået siden 1970. Men dette API er obsolete derfor kunne det ikke bruges. Det blev i stedet valgt at få koden til at manipulere tiden ved at køre et script med et mere stabilt interface. Når først tiden er sat, anvendes et normalt C++ API til at få fat i den aktuelle tid på systemet.
+
+QT skabte problemer (se afsnit \ref{P-sec:QT_impl} \nameref{P-sec:QT_impl} på side \pageref{P-sec:QT_impl} vedrørende løsning) angående brugen af pthreads, da QT har implementeret sin egen trådprotokol kaldet Qthread. Måden problemet blev løst på, var at starte pthreads i QT main cpp filen. 
+Et andet problem var, at monitor og regulator konfliktede om adgangen til UART. 
+Dette gjorde, at regulator var langsom mht. at sende kommandoer til PSoC Masteren, da regulatoren lavede flere små kald til UART'en, mens monitor brugte et større kald til UART. Siden monitor og regulator kører i hver sin tråd kan monitor gå ind i mellem hver kald regulator laver. For at undgå dette satte vi monitor og regulator i samme tråd, hvilket heldigvis ikke gav nogen problemer mht. systemets ydeevne, da monitor skal hente nye data før regulator kan regulere fra dem.
+
+\subsection{UART Implementering}
+
+UART'en er implementeret ud fra et open-source bibliotek \cite{lib:UART_opensource}, hvor koden er nedskåret til at kunne bruge simple funktionskald til at sende data ud på UART'en. Der kan hentes data ind med et pull, så det data der er blevet sendt til RX-benet på DevKit8000, bliver hentet ind i en buffer. Når data er hentet ind i buffer, kan der tjekkes på det data der befinder sig i bufferen og ud fra dette, afgøre hvad der skal returneres eller lagres. Hvis fx bufferen er tom på den første plads, vil UART'en i de fleste tilfælde, sende en kommando igen og vente på et nyt svar. Dette tilføjer noget fejlhåndtering (se afsnit \ref{P-sec:UART_impl} \nameref{P-sec:UART_impl} på side \pageref{P-sec:UART_impl} i projektdokumentationen), hvilket er smart, da en kommando kan gå tabt i kommunikationen mellem PSoC Master og DevKit8000.
+
+Systemet gav fejl på nogle enkelte beskeder sendt via UART'en, hvilket umiddelbart skyldes QT timeren. 
+QTtimeren opdaterer GUI'en mens UART'en venter på data fra PSoC Masteren. 
+PSoC Masteren venter fx med at svare på UART forspørgselser, mens den kommunikerer med Slave Aktuator. 
+Disse problemer med kommunikation på UART kunne ikke helt løses, men UART'en er lavet til at forespørge op til tre gange med lidt delay, afhængigt af hvilken kommando der er sendt, hvis PSoC Masteren giver en fejlbesked tilbage.
+
+UART'ens standard udgange på DevKit8000 forekommer på J1, J2 og J3 \cite{lib:DevKit8000_Addon}, men da der her udsendes op til 15V, var det en nødvendighed at mappe UART'ens RX og TX til andre udgange, som kun udsender 3.3V. Udgangen blev skiftet af hensyn til PSoC Masteren, som arbejder inden for 3.3V. Dette gjorde også, at der ikke skulle bruges et RS-232 standardkabel, men i stedet kun tre forbindelser; Tx, Rx og reference.
+
+\subsection{Regulering}
+
+Ikke alle QT-menuer er blevet implementeret, da der blev lagt større vægt på optimering af regulatoren. 
+Regulatoren blev i første omgang implementeret med, at når der skulle fortages en regulering vil den altid sende en kommando om fx at åbne vinduet, selvom vinduet allerede var åbent. 
+Dette blev undgået ved at sætte interne bools ind i regulatoren, så den selv har styr på om vindue, varmelegeme og blæsere er tændte eller slukkede. 
+Denne ændring gav mindre data, der skulle sendes over UART'en og gjorde derfor regulatoren hurtigere til at komme igennem dens kode.
+En anden stor ændring der kom igennem implementeringen af regulatoren var, at ændre reguleringsområderne så regulatoren tænder for varmen, når der var 1 grad for koldt, istedet for 4 $^{\circ}$C, som var udgangspunktet. 
+Regulering når der bliver for varmt sker også inden for 1 grad, hvor vindue og blæsere bliver hhv. åbnet og tændt. 
+Dette er med til at systemet godt kan tænde og slukke for blæsere, varmelegeme eller vindue relativt ofte.
+For at gøre regulatoren en smule hurtigere, blev beskeder til systemloggen fra regulatoren også fjernet. 
+UART skriver i forvejen til systemloggen, hvorfor det ikke var nødvendigt for Regulering også at skrive i denne.
+
+\mbox{}
+
+Efter implementeringen blev det konstateret, at mange af de udfordringer, der var undervejs kunne være undgået, hvis alt kode var skrevet med QT syntax fra begyndelsen - men på grund af tidspres, valgte softwaregruppen at fortsætte implementering af grundsystemet direkte ind i QT miljøet.
+
+\clearpage
