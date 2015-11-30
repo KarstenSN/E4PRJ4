@@ -4,7 +4,7 @@
 \centering
 \includegraphics[]{../fig/diagrammer/bil/cd_pccom.pdf}
 \caption{Klassebeskrivelse for boundry-klassen PcCom}
-\label{fig:cd_data}
+\label{fig:cd_pccom}
 \end{figure}
 
 \textbf{Attributter}
@@ -36,9 +36,10 @@ Navn & Type & Beskrivelse \\\hline
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype 	& \texttt{void PcCom(Data* dataClass, Settings* settingsClass)} \\\hline
+Prototype 	& \texttt{void PcCom(Data* dataClass, Settings* settingsClass, Log* logClass)} \\\hline
 Parametre 	& \texttt{dataClass} 		\newline Det objekt af typen Data der ønskes bearbjedet af PcCom. \newline \newline
-			  \texttt{settingsClass} 	\newline Det objekt af typen Settings der ønskes bearbjedet af PcCom. \\\hline
+			  \texttt{settingsClass} 	\newline Det objekt af typen Settings der ønskes bearbjedet af PcCom. \newline \newline
+			  \texttt{logClass}	 		\newline Det objekt af typen Log der ønskes skrevet til af PcCom. \\\hline
 Returværdi	& \texttt{void} 			\newline \\\hline
 Beskrivelse	& Constructor til klassen PcCom. \newline \\\hline
 \end{tabularx}
@@ -68,6 +69,8 @@ Beskrivelse	& Denne funktion har til formål at initialisere og køre en TCP ser
 \label{table:met_controllerstream}
 \end{table}
 
+\clearpage
+
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype 	& \texttt{void dataStream()} \\\hline
@@ -81,10 +84,10 @@ Beskrivelse	& Denne funktion har til formål at initialisere og køre en TCP ser
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype 	& \texttt{void error(const char* msg)} \\\hline
+Prototype 	& \texttt{void error(string msg)} \\\hline
 Parametre 	& \texttt{msg}				\newline En pågældende fejl-besked i form af en string. \\\hline
 Returværdi	& \texttt{void} 			\newline \\\hline
-Beskrivelse	& Denne funktion har til formål at skrive en fejl ud hvis der opstår en fejl. \newline \\\hline
+Beskrivelse	& Denne funktion har til formål at skrive en fejl til log, hvis der opstår en fejl. \newline \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{error()}}
 \label{table:met_error}
