@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Data.hpp"
+#include <Data.hpp>
 #include <Settings.hpp>
 
 #define	pGain	1

@@ -1,4 +1,4 @@
-SOURCES=aks_test.cpp Log.cpp
+SOURCES=aks_test.cpp Log.cpp Data.cpp Settings.cpp Aks.cpp Steering.cpp
 OBJECTS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.d))
 EXE=pi
@@ -22,6 +22,7 @@ BIN_DIR=bin/target
 endif
 
 $(EXE): ${DEPS} ${OBJECTS} # << Check the $(DEPS) new dependency
+	@rm -f pi-log.txt
 	@mkdir -p ${BIN_DIR}
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o ${BIN_DIR}/$@ $(OBJECTS)
 
@@ -42,6 +43,7 @@ endif
 
 clean:
 	rm -rf build bin
+	rm pi-log.txt
 
 help:
 	@echo Possible targets are:
