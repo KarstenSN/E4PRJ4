@@ -1,5 +1,7 @@
 \subsubsection{Domain-klasse: Settings}
 
+Denne klasses formål er at gemme de nyeste data af hhv. bilens maksimale hastighed, kalibrering af styrtøj samt AKS status. Alle disse værdier har brugeren mulighed for at indstille fra PC'en. Disse data skal ligeledes være tilgængelige for andre klasser, der har brug for en eller flere af disse data. Da der arbejdes med mange threads i systemet, er det vigtigt at det ikke er muligt at skrive og læse fra de samme data af to forskellige threads på samme tid, til dette udnyttes mutex låse. På Figur \ref{fig:cd_settings} kan ses et klasse diagram over den ønskede klasse efterfulgt af funktionalitet.
+
 \begin{figure}[h]
 \centering
 \includegraphics[]{../fig/diagrammer/bil/cd_settings.pdf}
@@ -28,6 +30,8 @@ Navn & Type & Beskrivelse \\\hline
 \label{table:attr_settings}
 \end{table}
 
+\clearpage
+
 \textbf{Metoder}
 
 \begin{table}[h]
@@ -39,8 +43,6 @@ Beskrivelse	& Constructor til klassen Settings. \newline \\\hline
 \caption{Metodebeskrivelse for constructoren af \texttt{Settings} klassen}
 \label{table:met_settings}
 \end{table}
-
-\clearpage
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
@@ -75,6 +77,8 @@ Beskrivelse	& Denne funktion har til formål at skrive til variablen calibration
 \label{table:met_calibratesteering}
 \end{table}
 
+\clearpage
+
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype 	& \texttt{int getMaxSpeed()} \\\hline
@@ -85,8 +89,6 @@ Beskrivelse	& Denne funktion har til formål at give muligheden for at læse var
 \caption{Metodebeskrivelse for \texttt{getMaxSpeed()}}
 \label{table:met_getmaxspeed}
 \end{table}
-
-\clearpage
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline

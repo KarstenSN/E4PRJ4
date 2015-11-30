@@ -1,5 +1,7 @@
 \subsubsection{Boundry-klasse: PcCom}
 
+Denne klasse har til formål at styre alt kommunikation mellem PC og Bil, fra bilens side. Det er valgt at bruge TCP connections til dette og det er valgt at bruge to forskellige former for sockets således at det er muligt at sende vigtige data oftere end andre ikke nær så vigtige data. Denne klasse skal ligeledes oprette de to threads der skal styre disse sockets, således at disse TCP connections ikke stopper anden funktionalitet på bilen. På Figur \ref{fig:cd_pccom} kan ses et klasse diagram over den ønskede klasse efterfulgt af funktionalitet.
+
 \begin{figure}[h]
 \centering
 \includegraphics[]{../fig/diagrammer/bil/cd_pccom.pdf}
