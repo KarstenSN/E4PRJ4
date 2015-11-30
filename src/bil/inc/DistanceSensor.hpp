@@ -3,25 +3,21 @@
 #define _INCL_DISTANCESENSOR_HPP
 
 #include <string>
+#include <linux/i2c-dev.h>
+#include <sys/ioctl.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <iostream>
+#include <stdlib.h>
+#include <Log.hpp>
 
 class DistanceSensor{
 public:
-        DistanceSensor(){}
+        DistanceSensor(Log* Log);
         ~DistanceSensor();
-        char getDistance(std::string){
-			return 2;
-		}
+        int getDistance(std::string name);
 private:
-        int addrFL;
-        int addrFR;
-        int addrRL;
-        int addrRR;
-        int distanceFL;
-        int distanceFR;
-        int distanceRL;
-        int distanceRR;
-        int fd;
-        char distanceReturn(char);
+        Log* Log_;
 };
 
 #endif
