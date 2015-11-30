@@ -30,6 +30,7 @@ uint16 distanceFL = 0;
 uint16 distanceFR = 0;
 uint16 distanceRL = 0;
 uint16 distanceRR = 0;
+uint8 sendBuffer[9] = {0};
 
 uint8 FLwrite = 0b11100000;
 uint8 FRwrite = 0b11100010;	
@@ -42,6 +43,8 @@ uint8 RRread  = 0b11101101;
 
 // Commando for start RangeReading
 uint8 StartReading   = 0b01010001;  // 0x51 dec 81  
+
+CYBIT newDataDistance = 0;
 
 // Wait till complete functions.
 void checkWriteComplete(void){
@@ -97,6 +100,8 @@ void getDistance(void){
     checkWriteComplete();
     I2C_1_I2CMasterReadBuf(addrFL, FLbuf, 2 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     checkReadComplete();
+    sendBuffer[0] = FLbuf[0];
+    sendBuffer[1] = FLbuf[1];
     distanceFL = (FLbuf[0] << 8) + FLbuf[1];
 
     // Front Right
@@ -104,6 +109,8 @@ void getDistance(void){
     checkWriteComplete();
     I2C_1_I2CMasterReadBuf(addrFR, FRbuf, 2 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     checkReadComplete();
+    sendBuffer[2] = FRbuf[0];
+    sendBuffer[3] = FRbuf[1];
     distanceFR = (FRbuf[0] << 8) + FRbuf[1];
 
     // Rear Left
@@ -111,6 +118,8 @@ void getDistance(void){
     checkWriteComplete();
     I2C_1_I2CMasterReadBuf(addrRL, RLbuf, 2 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     checkReadComplete();
+    sendBuffer[4] = RLbuf[0];
+    sendBuffer[5] = RLbuf[1];
     distanceFR = (RLbuf[0] << 8) + RLbuf[1];
     
     // Rear Right
@@ -118,13 +127,11 @@ void getDistance(void){
     checkWriteComplete();
     I2C_1_I2CMasterReadBuf(addrRR, RRbuf, 2 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     checkReadComplete();
+    sendBuffer[6] = RRbuf[0];
+    sendBuffer[7] = RRbuf[1];
     distanceRR = (RRbuf[0] << 8) + RRbuf[1];
-}
-
-// I2C initiation 
-void I2C_init(void){
-    I2C_1_Start();
-    I2C_1_I2CMasterClearStatus();
+    
+    newDataDistance = 1;
 }
 
 //############################### TACHOMETER ##########################
@@ -137,7 +144,7 @@ volatile double timeBetween = 0;
 volatile double rpm = 0;
 volatile double calcVelocity = 0;
 uint32 timerPeriod;
-CYBIT newData = 0;
+CYBIT newDataTacho = 0;
 
 // Tachometer eget interrupt
 CY_ISR_PROTO(my_ISR);
@@ -158,11 +165,13 @@ CY_ISR(my_ISR){
     rpm = 60 / (timeBetween*5);
     calcVelocity = ((circumference*rpm) / 60)*3.6;
 
-    newData = 1;
+    newDataTacho = 1;
 }
 
-int main()
-{
+// Initiation of components. 
+void init(void){
+    I2C_1_Start();
+    I2C_1_I2CMasterClearStatus();
     Timer_1_Start();
     isr_1_StartEx(my_ISR);
     isr_1_ClearPending();
@@ -170,23 +179,26 @@ int main()
     I2C_1_I2CMasterClearReadBuf();
     I2C_1_Start();
     timerPeriod = Timer_1_ReadPeriod();
-    
-     CyGlobalIntEnable;
+    CyGlobalIntEnable;
+}
 
-    for(;;)
-    {   
-        if (newData){
-            if (calcVelocity < 25){
-                readBuffer[0] = (uint8)(calcVelocity*10);
-                //test[count] = readBuffer[0];
-                readBuffer[1] = 0;
-            } else { 
-                readBuffer[0] = 'X';
-                readBuffer[1] = 'X';
-            }
-        
-            I2C_1_I2CMasterClearReadBuf(); //Reset read buffer pointer  (Resetter IKKE data...)
-            newData = 0;
+int main()
+{
+    init();
+ for(;;){   
+            
+    getDistance();          
+            
+    if (newDataTacho){
+        if (calcVelocity < 25){
+            sendBuffer[8] = (uint8)(calcVelocity*10);
+        } else { 
+            sendBuffer[8] = 'X';
         }
+        I2C_1_I2CMasterClearReadBuf(); //Reset read buffer pointer  (Resetter IKKE data...)
+        newDataTacho = 0;
+        }
+        I2C_1_I2CMasterClearReadBuf(); //Reset read buffer pointer  (Resetter IKKE data...)
     }
 }
+
