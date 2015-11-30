@@ -3,19 +3,21 @@
 %Debugging
 %\overfullrule=2cm
 
-\title{Rapport \\ AutoGreen \\ Gruppe 9}
-\author{ 3. Semesterprojekt E3PRJ3-02 \\ Ingeniørhøjskolen, Aarhus Universitet \\ Vejleder: Tore Arne Skogberg}
+\title{Projektrapport \\ Gruppe 1 - AU2 \\ \textit{Den intelligente bil }}
+\author{4. Semesterprojekt E4PRJ4 \\ Ingeniørhøjskolen, Aarhus Universitet\\ Vejleder: Arne Justesen}
 \date{\today}
 
 %Så man kan hive samtlige \labels i projektdokumentationen, alle har prefix "P-"
-\externaldocument[P-]{../Projektdokumentation/Projektformulering/projektformulering}
-\externaldocument[P-]{../Projektdokumentation/Kravspecifikation/kravspecifikation}
-\externaldocument[P-]{../Projektdokumentation/Systemarkitektur/systemarkitektur}
-\externaldocument[P-]{../Projektdokumentation/HardwareDesign/HardwareDesign}
-\externaldocument[P-]{../Projektdokumentation/SoftwareDesign/SoftwareDesign}
-\externaldocument[P-]{../Projektdokumentation/HardwareImplementering/HardwareImplementering}
-\externaldocument[P-]{../Projektdokumentation/SoftwareImplementering/swimplementering}
-\externaldocument[P-]{../Projektdokumentation/AcceptTest/accepttest}
+\externaldocument[P-]{../projektdokumentation/acceptTest/accepttest}
+\externaldocument[P-]{../projektdokumentation/hwdesign/hwdesign}
+\externaldocument[P-]{../projektdokumentation/hwimplementering/hwimpl}
+\externaldocument[P-]{../projektdokumentation/kravspecifikation/kravspecifikation}
+\externaldocument[P-]{../projektdokumentation/litteraturliste/litteraturliste}
+\externaldocument[P-]{../projektdokumentation/projektdokumentation/HardwareImplementering}
+\externaldocument[P-]{../projektdokumentation/softwareImplementering/swimpl}
+\externaldocument[P-]{../projektdokumentation/swdesign/swdesign}
+\externaldocument[P-]{../projektdokumentation/systemarkitektur/systemarkitektur}
+\externaldocument[P-]{../projektdokumentation/projektformulering/projektformulering}
 
 \begin{document}
 \fancyhf{}
@@ -27,15 +29,14 @@
 	\centering
 	\begin{tabular}{|l|r|l|}
 	\hline 
-	\textbf{Navn} & \textbf{Studienummer} & \textbf{Underskrift~~~~~~~~~~~~~~~~~~~~} \\ \hline
-	Morten Hasseriis Gormsen & 201370948 & \\ && \\ \hline
-	Kristian Thomsen & 201311478 & \\ && \\ \hline
-	Philip Krogh-Pedersen & 201311473 & \\ && \\ \hline
-	Lasse Barner Sivertsen & 201371048 & \\ && \\ \hline
-	Henrik Bagger Jensen & 201304157 & \\ && \\ \hline
-	David Erik Jensen & 11229 & \\ && \\ \hline
-	Kasper Torp Samuelsen & 201311498 & \\ && \\ \hline
-	Kristian Søgaard Sørensen & 20115255 & \\ && \\ \hline
+	\textbf{Navn} 				& \textbf{Studienummer} & \textbf{Underskrift~~~~~~~~~~~~~~~~~~~~} 	\\ \hline
+	Kristian Thomsen 			& 201311478 & \\ && 												\\ \hline
+	Philip Krogh-Pedersen 		& 201311473 & \\ && 												\\ \hline
+	Lasse Barner Sivertsen 		& 201371048 & \\ && 												\\ \hline
+	Henrik Bagger Jensen 		& 201304157 & \\ && 												\\ \hline
+	Kenn Hedegaard Eskildsen 	& 201370904 & \\ && 												\\ \hline
+	Karsten Schou Nielsen 		& 201370045 & \\ && 												\\ \hline
+	Jesper Pedersen 			& 201370530 & \\ && 												\\ \hline
 	\end{tabular}
 \end{table}
 
@@ -57,7 +58,7 @@
 
 \pagestyle{fancy}
 \fancyhf{} %Clear all header/footers
-\fancyhead[RO,LE]{Gruppe 9 - AutoGreen}
+\fancyhead[RO,LE]{Gruppe 1 - AU2}
 \fancyhead[CE,CO]{\nouppercase{\leftmark}}
 \fancyhead[LO,RE]{IHA, AU}
 \fancyfoot[CO,CE]{\nouppercase{\rightmark}}
@@ -65,13 +66,13 @@
 
 \include{Forord/forord}
 \include{Indledning/indledning}
-\include{Opgaveformulering/opgaveformulering}
-\include{Projektafgraensning/projektafgraensning}
-\include{Systembeskrivelse/systembeskrivelse}
-\include{Krav/krav}
-\include{Projektbeskrivelse/projektbeskrivelse}
-\include{Konklusion/konklusion}
-\include{Litteraturliste/Litteraturliste}
+%\include{Opgaveformulering/opgaveformulering}
+%\include{Projektafgraensning/projektafgraensning}
+%\include{Systembeskrivelse/systembeskrivelse}
+%\include{Krav/krav}
+%\include{Projektbeskrivelse/projektbeskrivelse}
+%\include{Konklusion/konklusion}
+%\include{Litteraturliste/Litteraturliste}
 
 \clearpage
 ~ 
