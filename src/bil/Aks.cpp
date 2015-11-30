@@ -6,14 +6,14 @@
 #include <Log.hpp>
 
 #define STILL_THRESH 20 //in km/h * 10
-#define DEBUGGING //Uncomment to enable debugging
+//#define DEBUGGING //Uncomment to enable debugging
 #ifdef DEBUGGING
 #include <iostream>
 #endif
 
 
 Aks::Aks(Data* Dataptr, Settings* NewSettings, Log* NewLog): MySteering(Dataptr, NewSettings, NewLog) {
-    this->MyData = Dataptr;
+	this->MyData = Dataptr;
     this->MySettings = NewSettings;
 	this->MyLog = NewLog;
     this->state = still;

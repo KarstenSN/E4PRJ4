@@ -28,7 +28,6 @@ public:
     Aks(Data*, Settings*, Log*);
 	/*Activates the AKS, which enables steering of the car. Loops forever! */
     void activate(void);
-	UserInput latestUserInput;
 	
 private:
 	bool analyzeData(void);
@@ -40,6 +39,7 @@ private:
     aksStates state;
 	int proxSensors[NBR_PROX_SENSORS];
 	int old_proxSensors[NBR_PROX_SENSORS];
+	UserInput latestUserInput;
 };
 
 #endif
