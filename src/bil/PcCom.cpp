@@ -19,6 +19,8 @@ PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr)
     
     std::thread dataStreamTh(&PcCom::dataStream , this);
     std::thread controllerStreamTh(&PcCom::controllerStream , this);
+    
+    this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"PcCom initialized");
 }
 
 PcCom::~PcCom()
