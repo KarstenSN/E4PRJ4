@@ -7,7 +7,7 @@ Den resulterende strøm ledes herefter igennem en diode, så der er en lukket sl
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth * 1/2]{../fig/billeder/buck_circuit_diagram}
-\caption{Princippet for en buck converter, figur venligst lånt fra Wikipedia}
+\caption{Princippet for en buck converter, figur venligst lånt fra Wikipedia\cite{lib:buck_skitse}}
 \label{fig:buck_conv}
 \end{figure}
 
@@ -34,7 +34,8 @@ Dette medfører at der er tre strømloops, hvor der fremkommer højfrekvente sig
 I figur \ref{fig:psu_kredsloeb_EMC} ses disse indrammet.
 
 Hvis man kikker på den blå strømsløjfe handler det om den vekselstrøm der løber fra batteriet/kondensatoren på indgangen og ud til udgangskondensatoren når transistoren skifter mellem ON og OFF. 
-Denne strøm er både højfrekvent og relativt høj i spænding og der er i designet derfor forsøgt at mindske arealet sløjfen dækker over for at mindske udstråling af B-felter.
+Denne strøm er både højfrekvent, har en høj spændingsmæssig middelværdi og har stejle flanker. 
+Der er i designet derfor forsøgt at mindske arealet sløjfen dækker over for at mindske udstråling af B-felter.
 
 Den orange sløjfe viser den skiftende strøm der går gennem dioden og optages af kondensatoren.
 Når transistoren er ON løber strømmen gennem IC'en og når transistoren er OFF løber den via dioden.
@@ -68,7 +69,15 @@ Forsyningsstrømmen til IC'en samt direkte udgang er trukket op i øverste venst
 Der er så vidt muligt taget hensyn til at signalbaner og forsyningsbaner (både input og output) ikke er lagt oveni hinanden eller tæt på hinanden for netop at undgå kapacitiv kobling mellem banerne.
 Dette minimerer også at man i stelplanet mindsker problemer med impedans i fælles strømveje. 
 
-For at mindske de højfrekvente strømsløjfer er afkoblingskondensatorer placeret så tæt på de komponenter de skal afkoble som muligt. Dette ses ved C9, C10, C1 og C11-12.
+For at mindske de højfrekvente strømsløjfer er afkoblingskondensatorer placeret så tæt på komponenterne som muligt, dette ses ved C1 og C11-12.
+Der er ligeledes gjort et forsøg på at placere ladekondensatorer så tæt på strømforsyningens udgange som muligt, dette ses ved C9 og C10.
+
+I figur \ref{fig:psu_pcb} ses printudlægget til strømforsyningen.
+Der er nogle enkelte forskelle på printet i forhold til kredsløbet i figur \ref{fig:psu_kredsloeb}.
+C14 er erstattet med 6 parallelkoblede kondensatorer, da skolens komponentlager ikke har keramiske kondensatorer større end 1 uF.
+Ydermere bør der på det rigtige print monteres film-kondensatorer ved begge udgange for at minimere HF-støj.
+Dette blev ikke taget med i betragtningen af det første design og forefindes derved ikke på figur \ref{fig:psu_pcb}.
+Størrelsen på disse afhænger af HF-støjen på udgangen, som kan måles og tilpasses i designet efter den første prototype.
 
 \clearpage
 
