@@ -7,12 +7,13 @@
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <Log.hpp>
+#include <DistanceSensor.hpp>
 
 class Tachometer {
 public:
-  Tachometer(Log* );
+  Tachometer(Log *);
   ~Tachometer();
-  char getVelocity();
+  int getVelocity();
 private:
-	Log* myLogPtr;
+  Log * myLogPtr;
 };

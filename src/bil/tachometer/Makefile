@@ -4,7 +4,7 @@ DEPS=$(addprefix ${BUILD_DIR}/,$(SRC:.cpp=.d))
 EXE=Prog
 CXXFLAGS= -I. -std=c++11
 
-ARCH ?= host
+ARCH ?=target
 
 ifeq (${ARCH},host)
 GXX=g++ -pthread

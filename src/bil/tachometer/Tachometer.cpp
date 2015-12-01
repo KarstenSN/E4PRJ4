@@ -6,11 +6,11 @@ Tachometer::Tachometer(Log *log) {
 
 Tachometer::~Tachometer() {}
 
-char Tachometer::getVelocity() {
+int Tachometer::getVelocity() {
 
     int file;
     int tachoAddr = 0x10;
-    char buffer[9];
+    char buffer[9] = {0};
     // NB, denne skal sættes op individuelt på den PI der skal bruges...
      
     if ((file = open("/dev/i2c-1", O_RDWR)) < 0){
@@ -28,19 +28,23 @@ char Tachometer::getVelocity() {
     }
 
     //Reading I2C tachometer
-    if ((read(file,buffer,9)) != 9){
+    int check = read(file,buffer,9);
+    if ((check) != 9){
         //Error
         myLogPtr->writeError(__PRETTY_FUNCTION__,"Failed to read tachometer from I2C bus.\n");
+        close (file);
         return 'R';    
          // Read failure
     }
-    else if (buffer[8] > 0 && buffer[8] < 254) {
-        return buffer[8];
+    else if (buffer[8] >= 0 && buffer[8] < 254) {
+        close (file);
+        return ((int)buffer[8]);
     }
     else {
-        return 'M';  
+        close (file);
+        return 'U';  
         // Out of bounds
     }
-    close (file);
+    
 }
 

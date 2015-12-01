@@ -13,7 +13,7 @@ class Tachometer {
 public:
   Tachometer(Log *);
   ~Tachometer();
-  char getVelocity();
+  int getVelocity();
 private:
   Log * myLogPtr;
 };
