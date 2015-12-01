@@ -1,47 +1,38 @@
-SOURCES=main.cpp Steering.cpp Data.cpp Log.cpp
+SOURCES=pi.cpp Data.cpp PcCom.cpp Aks.cpp Steering.cpp Log.cpp Settings.cpp DistanceSensor.cpp Tachometer.cpp
 OBJECTS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.d))
-EXE=steering
+EXE=pi
+CXXFLAGS=-Iinc -std=c++11
+LDFLAGS=-pthread
 
-#-I.
 # Making for host
 # > make ARCH=host
 ifeq (${ARCH},host)
 CXX=g++
 BUILD_DIR=build/host
 BIN_DIR=bin/host
-INCLUDE	= -I. -I/usr/local/include
-LDFLAGS	= -L/usr/local/lib
 endif
 
-# Making for target
+# Making for host
 # > make ARCH=target
 ifeq (${ARCH},target)
 CXX=arm-linux-gnueabihf-g++
-BUILD_DIR=build/targetpi
-BIN_DIR=bin/targetpi
-INCLUDE	= -I. -I/home/stud/Documents/for_PI/include
-LDFLAGS	= -L/home/stud/Documents/for_PI/lib
+BUILD_DIR=build/target
+BIN_DIR=bin/target
 endif
-
-CXXFLAGS= $(INCLUDE) -lwiringPi -pthread -Wall -std=c++11
-LDLIBS    = -lwiringPi -lpthread -lm
 
 $(EXE): ${DEPS} ${OBJECTS} # << Check the $(DEPS) new dependency
 	@mkdir -p ${BIN_DIR}
-	@echo "Linking '$<'"
-	@$(CXX) $(CXXFLAGS) -o ${BIN_DIR}/$@ $(OBJECTS) $(LDFLAGS) $(LDLIBS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o ${BIN_DIR}/$@ $(OBJECTS)
 
 # Rule that describes how a .d ( dependency ) file is created from a .cpp file
 # Similar to the assigment that you just completed %.cpp -> %.o
 ${BUILD_DIR}/%.d: %.cpp
-	@echo "Generating dependency file for '$<'"
 	@mkdir -p ${BUILD_DIR}
-	@$(CXX) -MT$(@:.d=.o) -MM $(CXXFLAGS) $^ > $@ $(LDFLAGS) $(LDLIBS)
+	$(CXX) -MT$(@:.d=.o) -MM $(CXXFLAGS) $^ > $@
 
 ${BUILD_DIR}/%.o: %.cpp
-	@echo "Compiling '$<'"
-	@$(CXX) -c -o $@ $< $(CXXFLAGS) 
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(MAKECMDGOALS),help)
@@ -57,3 +48,7 @@ help:
 	@echo help
 	@echo clean
 	@echo ARCH=[target/host]
+	@echo To add new .cpp files, do as usual
+	@echo Note: Please put .hpp files in /inc/
+	@echo If ARCH=target fails, make sure you have added the compiler to PATH:
+	@echo Edit /etc/environment and add the path to arm-linux-gnueabihf-g++ there. Works through reboots!

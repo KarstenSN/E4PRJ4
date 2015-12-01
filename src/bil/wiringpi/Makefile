@@ -1,4 +1,4 @@
-SOURCES=main.cpp Steering.cpp Data.cpp Log.cpp
+SOURCES=main.cpp Steering.cpp Data.cpp
 OBJECTS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.d))
 EXE=steering
@@ -17,15 +17,15 @@ endif
 # Making for target
 # > make ARCH=target
 ifeq (${ARCH},target)
-CXX=arm-linux-gnueabihf-g++
+CXX=arm-linux-gnueabihf-g++ 
 BUILD_DIR=build/targetpi
 BIN_DIR=bin/targetpi
 INCLUDE	= -I. -I/home/stud/Documents/for_PI/include
 LDFLAGS	= -L/home/stud/Documents/for_PI/lib
 endif
 
-CXXFLAGS= $(INCLUDE) -lwiringPi -pthread -Wall -std=c++11
-LDLIBS    = -lwiringPi -lpthread -lm
+CXXFLAGS= $(INCLUDE) -lwiringPi -pthread -Wall 
+LDLIBS    = -lwiringPi -lwiringPiDev -lpthread -lm
 
 $(EXE): ${DEPS} ${OBJECTS} # << Check the $(DEPS) new dependency
 	@mkdir -p ${BIN_DIR}
