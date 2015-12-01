@@ -41,6 +41,6 @@ char Tachometer::getVelocity() {
         return 'M';  
         // Out of bounds
     }
-    
+    close (file);
 }
 
