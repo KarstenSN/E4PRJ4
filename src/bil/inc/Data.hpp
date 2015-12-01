@@ -14,7 +14,7 @@
 
 class Data {
 public:
-    Data(Log* Log);
+    Data(Log* myLog);
     ~Data();
     bool writeVelocity(int velocity);
     bool writeAcceleration(int acceleration);
@@ -33,7 +33,7 @@ private:
     int acceleration;
     int velocity;
     UserInput Input;
-    Log* Log_;
+    Log* myLog;
     
     std::mutex sensorDataMut;
     std::mutex userDataMut;
