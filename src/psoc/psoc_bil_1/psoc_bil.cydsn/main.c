@@ -91,7 +91,8 @@ void getDistance(void){
     checkWriteComplete();
     I2C_1_I2CMasterWriteBuf(addrRR, &StartReading, 1 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     checkWriteComplete();
-    
+
+    CyDelay(100);
  
 // Read Range-Reading command
     // Front Left Sensor
@@ -178,6 +179,7 @@ void init(void){
     I2C_1_Start();
     timerPeriod = Timer_1_ReadPeriod();
     I2C_1_I2CSlaveInitReadBuf(sendBuffer, RD_BUFFERSIZE);
+    I2C_1_I2CSlaveInitWriteBuf(sendBuffer, RD_BUFFERSIZE);
     CyGlobalIntEnable;
 }
 
@@ -185,10 +187,23 @@ int main()
 {   
     init();
     
+    sendBuffer[0] = 0;
+    sendBuffer[1] = 10;
+    sendBuffer[2] = 0;
+    sendBuffer[3] = 20;
+    sendBuffer[4] = 0;
+    sendBuffer[5] = 30;
+    sendBuffer[6] = 0;
+    sendBuffer[7] = 40;
+    sendBuffer[8] = 50;
+    
     for(;;){
     I2C_1_I2CMasterClearWriteBuf();
- 
-    //if(I2C_1_I2CSlaveStatus() & I2C_1_I2C_SSTAT_WR_CMPLT){
+    
+    while(!(I2C_1_I2CSlaveStatus() & I2C_1_I2C_SSTAT_RD_CMPLT)){}
+
+/*    
+    if(I2C_1_I2CSlaveStatus() & I2C_1_I2C_SSTAT_WR_CMPLT){
 
         getDistance();
                 
@@ -204,7 +219,9 @@ int main()
             }
             I2C_1_I2CMasterClearReadBuf(); //Reset read buffer pointer  (Resetter IKKE data...)
         }
-    //}
+*/
+    }
+    
     I2C_1_I2CSlaveClearReadBuf();
     I2C_1_I2CMasterClearStatus();
 }
