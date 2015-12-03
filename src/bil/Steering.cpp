@@ -67,12 +67,12 @@ int Steering::userInput(UserInput* UsrInput_)
 {
 	std::string msg;
 
-	msg.append("userInput ").append(" forward: ").append(std::to_string(UsrInput_->forward))
+	/*msg.append("userInput ").append(" forward: ").append(std::to_string(UsrInput_->forward))
 		.append(" reverse: ").append(std::to_string(UsrInput_->reverse))
 		.append(" turn: ").append(std::to_string(UsrInput_->turn))
 		.append(" stop: ").append(std::to_string(UsrInput_->stop));
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
-
+	*/
 	this->max_speed_ = (int)settingsPtr_->getMaxSpeed();
 
 	if (UsrInput_->stop == 1)
@@ -85,12 +85,12 @@ int Steering::userInput(UserInput* UsrInput_)
 
 			speedReqFor_ = (int)((max_speed_*UsrInput_->forward) / 255); 	//(maxSpeed/255)*forward adjust input with max speed 
 			speedReqBack_ = (int)((max_speed_*UsrInput_->reverse) / 255);	//(maxSpeed/255)*reverse adjust input with max speed
-
+			/*
 			msg.append("userInput ").append(" speedReqFor_ ").append(std::to_string(speedReqFor_))
 			.append(" speedReqBack_ ").append(std::to_string(speedReqBack_));
 			this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
 			//std::cout << "userInput()" << "speedReqFor_ " << speedReqFor_ << " speedReqBack_ " << speedReqBack_ << std::endl;
-
+			*/
 		}
 
 		this->motorSetPWM(UsrInput_->forward, UsrInput_->reverse);
@@ -109,8 +109,8 @@ int Steering::userInput(UserInput* UsrInput_)
 
 int Steering::brake()
 {
-	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Brake");		// For testing only
-	std::cout << "Brake() called " << std::endl;			// For testing only
+	//this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Brake");		// For testing only
+	//std::cout << "Brake() called " << std::endl;			// For testing only
 	std::lock_guard<std::mutex> lock(changeVar_Mut);
 
 	activatePWM_ = 0;
@@ -124,8 +124,8 @@ int Steering::brake()
 int Steering::softbrake()
 {
 	std::lock_guard<std::mutex> lock(changeVar_Mut);
-	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Softbrake activated"); // For testing only
-	std::cout << "softbrake() called " << std::endl;
+	//this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Softbrake activated"); // For testing only
+	//std::cout << "softbrake() called " << std::endl;
 	activatePWM_ = 0;
 	pwmWrite(PWM_MOTOR_PIN, 0);
 	digitalWrite(PWM_MOTOR_FORWARD, LOW);
@@ -137,11 +137,11 @@ int Steering::turn(signed char value)
 {
 	int TurnValue_ = ((((value + 127) * (maxServoPWM - minServoPWM)) / 255) + 5);
 	softPwmWrite(PWM_SERVO_PIN, TurnValue_);
-
+	/*
 	std::string msg;			// For testing only
 	msg.append("Turn value received: ").append(std::to_string(value)).append(" Output value: ").append(std::to_string(TurnValue_));
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
-
+	*/
 	return 1;
 }
 
@@ -149,7 +149,7 @@ int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackwar
 {	
 	std::string msg;
 	
-	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "MotorSetPWM entered"); 	// For testing only
+	//this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "MotorSetPWM entered"); 	// For testing only
 	
 	std::lock_guard<std::mutex> lock(changeVar_Mut);
 
@@ -168,8 +168,8 @@ int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackwar
 		direction_ = 1;
 		activatePWM_ = 1;
 
-		msg.append("SpeedForward >= 0: ").append(std::to_string(speedForward)); // For testing only
-		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);			// For testing only
+		//msg.append("SpeedForward >= 0: ").append(std::to_string(speedForward)); // For testing only
+		//this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);			// For testing only
 	}
 
 	if (speedBackward > 0)
@@ -184,9 +184,9 @@ int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackwar
 		digitalWrite(PWM_MOTOR_BACKWARD, HIGH);
 		direction_ = 0;
 		activatePWM_ = 1;
-		std::string msg;
-		msg.append("SpeedBackward > 0: ").append(std::to_string(speedBackward));	// For testing only
-		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);			// For testing only
+		//std::string msg;
+		//msg.append("SpeedBackward > 0: ").append(std::to_string(speedBackward));	// For testing only
+		//this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);			// For testing only
 	}
 
 	return 1;
