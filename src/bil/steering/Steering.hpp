@@ -6,14 +6,15 @@
 #include <thread>
 #include <string>
 #include <mutex>
+#include <chrono>
 
-#define	pGain	1
-#define	iGain	0.0001
-#define	dGain	0.0001
-#define	iMax	5
-#define	iMin	50
+#define	pGain	2
+#define	iGain	0.1
+#define	dGain	0.1
+#define	iMax	10000
+#define	iMin	0
 #define minServoPWM 5 // 0,5 ms
-#define	maxServoPWM 69 // 2,5 ms
+#define	maxServoPWM 25 // 2,5 ms
 
 
 	
@@ -24,7 +25,7 @@ public:
 	~Steering();
 	int userInput(UserInput* UsrInput_);
 	void PWMUpdate();
-	
+	bool stop_thread;
 	
 	
 private:
@@ -37,42 +38,28 @@ private:
 	int speedReqBack_ = 0;
 	int speedAct_ = 0;
 	int max_speed_ = 0;
-	int pwm_ = 0;
-	bool activatePWM_ ;
-	bool direction_; // 1 = forward, 0 = Backward
+	int motorPWMOutValue = 0;
+	bool activatePWM_ = 0;
+	bool direction_ = 1; // 1 = forward, 0 = Backward
 	int minServoPWM_;
 	int maxServoPWM_;
 	Data* dataClassPtr_;
 	Settings* settingsPtr_;
 	Log* logPtr_;
 	
-	double dState_; // Last position input
-	double iState_; // Integrator state
-	double iMax_, iMin_; // Maximum and minimum allowable integrator state
-	double iGain_; // integral gain
-	double pGain_; // proportional gain
-	double dGain_; // derivative gain
-	double error_;
-	double pTemp_, dTemp_, iTemp_;
-	//std::thread the_thread;
-	bool stop_thread;
-	std::mutex getPWMvar_Mut;
+	double dState_ = 0; // Last position input
+	double iState_ = 0; // Integrator state
+	double iMax_ = 0, iMin_ = 0; // Maximum and minimum allowable integrator state
+	double iGain_ = 0; // integral gain
+	double pGain_ = 0; // proportional gain
+	double dGain_ = 0; // derivative gain
+	double error_ = 0;
+	double pTemp_ = 0, dTemp_ = 0, iTemp_ = 0;
+	std::thread motorPWMThread; 
 	
+	std::mutex changeVar_Mut;
 	
+	int err = 0;
 	
 	
 };
-
-// void SteeringStartpwm(Steering*  car, Log* log);
-
-/* JUNK
-
-bool goForward(int speed);
-bool goBackward(int speed);
-void awaitNewInput();
-void analyseInput();
-bool blockUser();
-bool turnLeft();
-bool turnRight();
-
-*/
