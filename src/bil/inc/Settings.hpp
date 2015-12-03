@@ -4,10 +4,11 @@
 #include <iostream>
 #include <thread>
 #include <mutex>
+#include <Log.hpp>
 
 class Settings{
 public:
-    Settings();
+    Settings(*Log logClassPtr);
     void setMaxSpeed(int maxVelocity);
     void setAKS(bool AKSStatus);
     void calibrateSteering(char calibration);
@@ -19,6 +20,7 @@ private:
     int maxVelocity_;
     bool AKSStatus_;
     char calibration_;
+	Log* logClassPtr_;
     
     std::mutex maxVelocityMut;
     std::mutex AKSStatusMut;

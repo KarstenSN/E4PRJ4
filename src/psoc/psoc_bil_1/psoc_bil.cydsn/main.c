@@ -14,7 +14,7 @@
 #include <stdio.h>
 
 //Definer stoerrelse paa buffere - hhv. 1 og 2 bytes
-#define RD_BUFFERSIZE 9u
+#define RD_BUFFERSIZE 9
 #define fclk 400000                 //400kHz timer counter clk
 
 /*################### DISTANCESENSOR #############################*/
@@ -58,10 +58,10 @@ void checkReadComplete(void){
 // getDistance()
 void getDistance(void){
     
-    uint8 FLbuf[2];
-    uint8 FRbuf[2];
-    uint8 RLbuf[2];
-    uint8 RRbuf[2];
+    uint8 FLbuf[2] = {0};
+    uint8 FRbuf[2] = {0};
+    uint8 RLbuf[2] = {0};
+    uint8 RRbuf[2] = {0};
     
 // Write Range-Reading commands
     // Front Left
@@ -163,8 +163,6 @@ CY_ISR(my_ISR){
    
     rpm = 60 / (timeBetween*5);
     calcVelocity = ((circumference*rpm) / 60)*3.6;
-
-    newDataTacho = 1;
 }
 
 // Initiation of components. 
@@ -179,50 +177,39 @@ void init(void){
     I2C_1_Start();
     timerPeriod = Timer_1_ReadPeriod();
     I2C_1_I2CSlaveInitReadBuf(sendBuffer, RD_BUFFERSIZE);
-    I2C_1_I2CSlaveInitWriteBuf(sendBuffer, RD_BUFFERSIZE);
     CyGlobalIntEnable;
 }
 
 int main()
 {   
     init();
-    
-    sendBuffer[0] = 0;
-    sendBuffer[1] = 10;
-    sendBuffer[2] = 0;
-    sendBuffer[3] = 20;
-    sendBuffer[4] = 0;
-    sendBuffer[5] = 30;
-    sendBuffer[6] = 0;
-    sendBuffer[7] = 40;
-    sendBuffer[8] = 50;
-    
+    uint8 count = 0;
     for(;;){
-    I2C_1_I2CMasterClearWriteBuf();
-    
-    while(!(I2C_1_I2CSlaveStatus() & I2C_1_I2C_SSTAT_RD_CMPLT)){}
 
-/*    
-    if(I2C_1_I2CSlaveStatus() & I2C_1_I2C_SSTAT_WR_CMPLT){
-
-        getDistance();
-                
-        if (newDataTacho){
+        I2C_1_I2CSlaveClearReadBuf();
+        //I2C_1_I2CSlaveClearReadStatus();
+        while(!(I2C_1_I2CSlaveStatus() & I2C_1_I2C_SSTAT_RD_CMPLT)){} 
+           
+        if((I2C_1_I2CSlaveStatus() & I2C_1_I2C_SSTAT_RD_CMPLT)){
+            sendBuffer[0] = 0;
+            sendBuffer[1] = 10+count;
+            sendBuffer[2] = 0; 
+            sendBuffer[3] = 20+count;
+            sendBuffer[4] = 0;
+            sendBuffer[5] = 30+count;
+            sendBuffer[6] = 0;
+            sendBuffer[7] = 40+count;
+            
+            //getDistance();
+            count++;
             if (calcVelocity < 25){
                 sendBuffer[8] = (uint8)(calcVelocity*10);
             } 
             else { 
                 sendBuffer[8] = 'X';
             }
-            I2C_1_I2CMasterClearReadBuf(); //Reset read buffer pointer  (Resetter IKKE data...)
-            newDataTacho = 0;
-            }
-            I2C_1_I2CMasterClearReadBuf(); //Reset read buffer pointer  (Resetter IKKE data...)
+            I2C_1_I2CSlaveClearReadStatus();
         }
-*/
     }
-    
-    I2C_1_I2CSlaveClearReadBuf();
-    I2C_1_I2CMasterClearStatus();
 }
 

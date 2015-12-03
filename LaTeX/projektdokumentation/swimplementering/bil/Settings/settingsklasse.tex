@@ -1,0 +1,39 @@
+\section{Indstillinger} \label{sec:Indstillinger_impl}
+
+Indstillinger er en klasse, som holder styr på systemets indstillinger. Klassen kan også blive refereret til, som konfigurationsfil, enkelte steder. Klassens primære opgave er, at holde styr på tiden i systemet, de virtuelle planter i drivhuset samt hvilken hardware der må bruges til at regulere med.
+Tiden kunne implementeres på et par måder. Der kunne fx laves en counter, hvor der tælles op hvert sekund. Denne løsning blev dog ikke valgt, da vi anvender en embedded linux platform, som selv kan holde styr på tiden, hvis den indstilles korrekt. Der er dog nogle krav til at indstille tiden på den embeddede linux platform. Når tiden skal indstilles, skal der bruges ”super brugerrettigheder”, altså tiden skal sættes mens root anvendes.
+I Listing \ref{lst:setDate}, ses noget af koden der indstiller tiden.
+
+\subsection{SetDate}
+
+Koden i Listing \ref{lst:setDate} opretter en pipe til linux’s commandline, og kører kommandoen \texttt{pwd} på linux platformen, som returnerer stien programmet køres i. Denne sti bruges til at eksekvere et script med de ønskede tidsindstillinger, således tiden sættes til det rigtige på systemet. 
+
+\lstinputlisting[linerange=setDate0-setDate1, label=lst:setDate, caption=Implementering af setDate]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/Indstillinger.hpp}
+
+Scriptet som koden afvikler, bruger kommandoen Date, som enten kan sætte tiden eller vise den. Kommandoen Date findes i en minimal version på DevKit8000, da linux distributionen angstrom, har brugt busybox. BusyBox kombinerer bittesmå versioner af mange almindelige UNIX utilities, i en enkelt lille eksekverbar fil. Det betyder at de ikke tager hele programmet med, kun det mest nødvendige af det.  Koden kan ses i Listing \ref{lst:setTimeBeagleBoard}.
+
+\clearpage
+
+\lstinputlisting[linerange=setTimeBeagleBoard0-setTimeBeagleBoard1, label=lst:setTimeBeagleBoard, caption=Implementering af setTimeBeagleBoard scriptet, language=bash]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/setTimeBeagleBoard.c}
+
+\subsection{Exec af linux kommandoer}
+
+I metoden exec, er det kode som får platformen til at køre kommandoer i linux’s shell. Metoden tager et char array, der indeholder den kommando der ønskes afviklet på systemet, som parameter. Popen-metoden laver en proces ved at kalde pipe i read-mode, så retursvaret fra kommandoen fås i en string. Metoden kan ses i Listing \ref{lst:exec}.
+
+\lstinputlisting[linerange=exec0-exec1, label=lst:exec, caption=Implementering af exec]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/Indstillinger.hpp}
+
+\subsection{GetDate}
+Nu da tiden kan sættes til den tid det ønskede på platformen, er det meget nemmere at læse den ud fra systemet. Fordi vi bare kan bruge et almindeligt API kald som er bygget ind i c++. I Listing \ref{lst:getDate} vises den kode, der henter tiden ud.
+
+\lstinputlisting[linerange=getDate0-getDate1, label=lst:getDate, caption=Implementering af getDate.]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/Indstillinger.hpp}
+
+I projektet er det valgt at repræsentere tid med en struct, der indeholder år, måneder, dage, timer og minutter. Dog skal structen først udfyldes med tiden fra systemet, hvilket gøres ved at oprette et objekt af typen time\_t med navnet ”tm”. Objektet fyldes så med systemets tid med funktionen time$(0)$. Efter dette fylder metoden tids-structen ud og returnerer denne.
+
+\subsection{Get- og set-metoder}
+
+Ud over disse metoder indeholder indstillinger en masse get- og set-metoder, så de andre klasser kan hente information om drivhuset. Eksempler kan ses i Listing \ref{lst:getHardware} og \ref{lst:setHardware}.
+
+Her tages en reference til 
+\lstinputlisting[linerange=GetHardware0-GetHardware1, label=lst:getHardware, caption=Implementering af getHardware.]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/Indstillinger.hpp}
+
+\lstinputlisting[linerange=SetHardware0-SetHardware1, label=lst:setHardware, caption=Implementering af setHardware.]{../src/AutoGreenSem3/Devkit8000/autogreenbuild3/Indstillinger.hpp}
