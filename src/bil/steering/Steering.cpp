@@ -13,10 +13,10 @@
 
 // Pin number declarations. We're using the Broadcom chip pin numbers.
 const int pwmMotorPin = 18; // PWM Motor - Broadcom pin 18, P1 pin 12
-const int pwmServoPin = 24; // PWM Servo - Broadcom pin 19, P1 pin 33
+const int pwmServoPin = 23; // PWM Servo - Broadcom pin 19, P1 pin 33
 const int pwmMotorForward = 6; // PWM Servo - Broadcom pin 6, P1 pin 31
 const int pwmMotorBackward = 12; // PWM Servo - Broadcom pin 12, P1 pin 32
-const int pwmSetClockValue = 1024; // PWM Clock Set Value for hardware PWM between 2 to 4095
+const int pwmSetClockValue = 2; // PWM Clock Set Value for hardware PWM between 2 to 4095
 const int pwmSetRangeValue = 1024; //The default is 1024.
 /*
 pinMode(pwmMotor, PWM_OUTPUT); // Set pwmMotor as PWM output
@@ -26,12 +26,12 @@ pinMode(pwmMotorBackward, OUTPUT); // Set pwmMotorBackward as output
 Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 //: the_thread()
 {
-	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Steering constructor created");
-  
 	dataClassPtr_ = dataClassPtr;
 	settingsPtr_ = MySettingsPtr;
 	logPtr_ = MyLogPtr;
 	stop_thread = false;
+  
+	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Steering constructor created");
 
 	//***** Hardware PWM *****
 	wiringPiSetupGpio(); // Initialize wiringPi -- using Broadcom pin numbers
@@ -52,10 +52,10 @@ Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 	//***** Software PWM *****
 	err = softPwmCreate(pwmServoPin, 0, 200);
 	if (err != 0)
-	    logPtr_->writeError(__PRETTY_FUNCTION__, "Error creating softPwmCreate()");
+	    this->logPtr_->writeError(__PRETTY_FUNCTION__, "Error creating softPwmCreate()");
 
 	//std::thread motorPWMThread (&Steering::PWMUpdate, this );
-	logPtr_->writeEvent(__PRETTY_FUNCTION__, "Constructor complete");
+	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Constructor complete");
 }
 
 Steering::~Steering()
@@ -65,7 +65,7 @@ Steering::~Steering()
 	stop_thread = true;
 	if (motorPWMThread.joinable()) 
 	  motorPWMThread.join();
-	logPtr_->writeEvent(__PRETTY_FUNCTION__, "DeConstructor");
+	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "DeConstructor");
 }
 
 /**
@@ -138,7 +138,7 @@ int Steering::brake()
 int Steering::softbrake()
 {
 	std::lock_guard<std::mutex> lock(changeVar_Mut);
-	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "softbrake");
+	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Softbrake activated");
 	std::cout << "softbrake() called " << std::endl;
 	activatePWM_ = 0;
 	pwmWrite(pwmMotorPin, 0);
@@ -149,7 +149,7 @@ int Steering::softbrake()
 
 int Steering::turn(int value)
 {
-	float TurnValue_ = ((((value + 127) * (maxServoPWM - minServoPWM)) / 255) + 5);
+	float TurnValue_ = ((((value + 127) * (maxServoPWM - minServoPWM)) / 255) + 1);
 	softPwmWrite(pwmServoPin, TurnValue_);
 
 	std::string msg;
@@ -215,14 +215,16 @@ void Steering::PWMUpdate()
 {
 	std::string msg;
 
+	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "thread starting");
+	
 	std::this_thread::sleep_for(std::chrono::microseconds(100));
 
 	while (!stop_thread)
 	{
-		msg.append("PWMUpdate entry").append(" speedReqFor_: ").append(std::to_string(speedReqFor_))
-		   .append(" speedAct_: ").append(std::to_string(speedAct_))
-		   .append(" Direction: ").append(std::to_string(direction_));
-		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
+// 		msg.append("PWMUpdate entry").append(" speedReqFor_: ").append(std::to_string(speedReqFor_))
+// 		   .append(" speedAct_: ").append(std::to_string(speedAct_))
+// 		   .append(" Direction: ").append(std::to_string(direction_));
+// 		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
 
 		std::lock_guard<std::mutex> lock(changeVar_Mut);
 
@@ -259,25 +261,28 @@ void Steering::PWMUpdate()
 			motorPWMOutValue = 0;
 		}
 
-		if (motorPWMOutValue >= 800)
+		if (motorPWMOutValue >= pwmSetRangeValue)
 		{
-			motorPWMOutValue = 800;
+			motorPWMOutValue = pwmSetRangeValue;
 		}
 
 		if (activatePWM_ == 1)
-		{
+		{	
+			//pinMode(pwmMotorPin, PWM_OUTPUT);
+			pwmSetMode(PWM_MODE_MS);
+			//pwmSetClock (pwmSetClockValue) ; //This sets the divisor for the PWM clock
 			pwmWrite(pwmMotorPin, motorPWMOutValue);
 
 		}
 
-		//std::cout << "updatePWM() called: PWM out :  " << pwm_ << " I " << iTemp_<< " D " << dTemp_ << " iState_ " << iState_<<   std::endl;
+// 		std::cout << "updatePWM() called: PWM out :  " << motorPWMOutValue << " I " << iTemp_<< " D " << dTemp_ << " iState_ " << iState_<<   std::endl;
 
-		msg.append("Before write ").append(std::to_string(motorPWMOutValue));
-		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
+// 		msg.append("Before write ").append(std::to_string(motorPWMOutValue));
+// 		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
 
-		std::this_thread::sleep_for(std::chrono::microseconds(5)); // For testing
+		std::this_thread::sleep_for(std::chrono::microseconds(5000)); // For testing
 	}
-
+	
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "thread stopping");
 
 }
