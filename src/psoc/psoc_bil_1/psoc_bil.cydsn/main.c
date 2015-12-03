@@ -26,11 +26,12 @@ uint8 addrRL = 0b1110011;	            // 0x73 dec 115
 uint8 addrRR = 0b1110110;	            // 0x76 dec 118
 
 // Initiering af distance-variabler
-uint16 distanceFL   = 0;	
-uint16 distanceFR   = 0;
-uint16 distanceRL   = 0;
-uint16 distanceRR   = 0;
-uint8 sendBuffer[9] = {0};
+uint16 distanceFL                   = 0;	
+uint16 distanceFR                   = 0;
+uint16 distanceRL                   = 0;
+uint16 distanceRR                   = 0;
+uint8 sendBuffer[RD_BUFFERSIZE]     = {0};
+uint8 receiveBuffer[RD_BUFFERSIZE]  = {0};
 
 uint8 FLwrite = 0b11100000;             // 0xE0 dec 224
 uint8 FRwrite = 0b11100010;	            // 0xE2 dec 226
@@ -47,7 +48,7 @@ uint8 StartReading    = 0b01010001;     // 0x51 dec 81
 // Wait till complete functions.
 uint8 checkWriteComplete(void){
     while(0u == (I2C_1_I2CMasterStatus() & I2C_1_I2C_MSTAT_WR_CMPLT));
-    CyDelay(20);
+    // CyDelay(50);
     return 0;
 }
 
@@ -58,10 +59,10 @@ void checkReadComplete(void){
 // getDistance()
 void getDistance(void){
     
-    uint8 FLbuf[2] = {0};
-    uint8 FRbuf[2] = {0};
-    uint8 RLbuf[2] = {0};
-    uint8 RRbuf[2] = {0};
+    uint8 FLbuf[2] = {1};
+    uint8 FRbuf[2] = {1};
+    uint8 RLbuf[2] = {1};
+    uint8 RRbuf[2] = {1};
     
 // Write Range-Reading commands
     // Front Left
@@ -92,7 +93,7 @@ void getDistance(void){
     I2C_1_I2CMasterWriteBuf(addrRR, &StartReading, 1 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     checkWriteComplete();
 
-    CyDelay(100);
+    CyDelay(50);
  
 // Read Range-Reading command
     // Front Left Sensor
@@ -130,7 +131,6 @@ void getDistance(void){
     sendBuffer[6] = RRbuf[0];
     sendBuffer[7] = RRbuf[1];
     //distanceRR = (RRbuf[0] << 8) + RRbuf[1];
-    
 }
 
 //############################### TACHOMETER ##########################
@@ -184,31 +184,40 @@ int main()
 {   
     init();
     uint8 count = 0;
+    uint8 readyFlag = 0;
+    uint8 *TempPtr = NULL;
+    
     for(;;){
 
+        *sendBuffer = *receiveBuffer;
+        
         I2C_1_I2CSlaveClearReadBuf();
         //I2C_1_I2CSlaveClearReadStatus();
-        while(!(I2C_1_I2CSlaveStatus() & I2C_1_I2C_SSTAT_RD_CMPLT)){} 
+        while(!(I2C_1_I2CSlaveStatus() & I2C_1_I2C_SSTAT_RD_CMPLT)){}
+        
+        
+        I2C_1_I2CSlaveClearReadStatus();
+        
+        if (count <= 5){
+        count++;
+        } else {
+            readyFlag = 1;
+            count = 0;
+        }
            
-        if((I2C_1_I2CSlaveStatus() & I2C_1_I2C_SSTAT_RD_CMPLT)){
-            sendBuffer[0] = 0;
-            sendBuffer[1] = 10+count;
-            sendBuffer[2] = 0; 
-            sendBuffer[3] = 20+count;
-            sendBuffer[4] = 0;
-            sendBuffer[5] = 30+count;
-            sendBuffer[6] = 0;
-            sendBuffer[7] = 40+count;
+        if(readyFlag){
+            readyFlag = 0;
             
-            //getDistance();
-            count++;
+            getDistance();
+            
             if (calcVelocity < 25){
-                sendBuffer[8] = (uint8)(calcVelocity*10);
+                    sendBuffer[8] = (uint8)(calcVelocity*10);
             } 
             else { 
                 sendBuffer[8] = 'X';
             }
-            I2C_1_I2CSlaveClearReadStatus();
+            
+            
         }
     }
 }
