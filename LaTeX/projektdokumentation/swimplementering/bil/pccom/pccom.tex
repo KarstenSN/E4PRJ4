@@ -1,23 +1,42 @@
-\subsubsection{Settings} \label{sec:settings_impl}
+\subsubsection{PcCom} \label{sec:pccom_impl}
 
 PcCom er en klasse, som styrer kommunikation mellem PC software og bil, fra bilens side. Klassens primære opgave er, at igangsætte to threads der hver især styrer en TCP kommunikation mellem PIen og softwaren på computeren. Den ene thread modtager og vidersender brugerinput fra brugeren til AKS og Steering objekter. Den anden thread modtager indstillinger og sætter disse i et Settings objekt, samt henter data fra et Data objekt og sender disse tilbage til softwaren på computeren.
 Herunder vil koden blive forklaret i detaljer.
 
 
-%\paragraph{Settings Constructor} er klassens constructor. Ud over at initialisere alle settings data til 0, sker der en linkning til et Log object, via association, da det ønskes at constructoren skriver til text logen når klassen initialiseres, for at kunne fejlfinde. Koden er vist i vist i Listing \ref{lst:settings}.
-%
-%\begin{lstlisting}[caption={Settings Constructor},label=lst:settings, language=c++]
-%Settings::Settings(Log* logClassPtr)
-%{
-%  this->logClassPtr_ = logClassPtr;
-%  this->maxVelocity_ = 0;
-%  this->AKSStatus_ = 0;
-%  this->calibration_ = 0;
-%  this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Initialized Settings")
-%}
-%\end{lstlisting}
-%
-%
+\paragraph{PcCom Constructor} er klassens constructor. Koden er vist i vist i Listing \ref{lst:pccom}. Ud over at initialisere, sker der en linkning til et Log, et Data og et Settings object (linje 10, 11 og 12), via association. Denne association sørger for at det er de samme objekter, der bliver bearbejdet af de andre klasser i systemet. På linje 18 og 19 igangsættes de førnævnte threads med hver deres funktionskald, hhv. dataStream og controllerStream.
+
+\begin{lstlisting}[caption={PcCom Constructor},label=lst:pccom, language=c++]
+PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr)
+{
+    int i;
+    for(i = 0; i < 4; i++)
+        this->controller_[i] = 0;
+    for(i = 0; i < 6; i++)
+        this->data_[i] = 0;
+    this->portnoData_ = 1234;
+    this->portnoController_ = 1235;
+    this->dataClassPtr_ = dataClassPtr;
+    this->settingsClassPtr_ = settingsClassPtr;
+    this->logClassPtr_ = logClassPtr;
+    this->UserInput_.forward = 0;
+    this->UserInput_.reverse = 0;
+    this->UserInput_.stop = 0;
+    this->UserInput_.turn = 0;
+    
+    std::thread dataStreamTh(&PcCom::dataStream , this);
+    std::thread controllerStreamTh(&PcCom::controllerStream , this);
+    
+    this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"PcCom initialized");
+}
+\end{lstlisting}
+
+
+\paragraph{PcCom Destructor} er klassens destructor. Denne vil ikke blive gennemgået i detaljer da den ikke har nogen særlig funktionalitet, ud over en basal destructor.
+
+
+
+
 %\paragraph{setMaxSpeed} er en funktion til at skrive til klassens attribut, der indeholder den indstillede maksimale hastighed. Koden er vist i Listing \ref{lst:setmaxspeed}. Ud over at skrive tallet, der er givet med som parameter, til klassens attribut, låses klassens attribut så det ikke er muligt for andre funktionskald at skrive eller læse attributen til at den er færdig med at skrive til den. 
 %
 %\begin{lstlisting}[caption={Funktionen setMaxSpeed},label=lst:setmaxspeed, language=c++]
