@@ -4,7 +4,7 @@ PcCom er en klasse, som styrer kommunikation mellem PC software og bil, fra bile
 Herunder vil koden blive forklaret i detaljer.
 
 
-\paragraph{PcCom Constructor} er klassens constructor. Koden er vist i vist i Listing \ref{lst:pccom}. Ud over at initialisere, sker der en linkning til et Log, et Data og et Settings object (linje 10, 11 og 12), via association. Denne association sørger for at det er de samme objekter, der bliver bearbejdet af de andre klasser i systemet. På linje 18 og 19 igangsættes de førnævnte threads med hver deres funktionskald, hhv. dataStream og controllerStream.
+\paragraph{PcCom Constructor} er klassens constructor. Koden er vist i vist i Listing \ref{lst:pccom}. Ud over at initialisere, sker der en linkning til et Log, et Data og et Settings object (linje 10, 11 og 12), via association. Denne association sørger for at det er de samme objekter, der bliver bearbejdet af de andre klasser i systemet. På linje 18 og 19 igangsættes de førnævnte threads med hver deres funktionskald, hhv. dataStream og controllerStream. På linje 21 skriver den til Log objektet at den er færdig med initiaisering.
 
 \begin{lstlisting}[caption={PcCom Constructor},label=lst:pccom, language=c++]
 PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr)
