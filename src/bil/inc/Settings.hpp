@@ -8,7 +8,7 @@
 
 class Settings{
 public:
-    Settings(*Log logClassPtr);
+    Settings(Log* logClassPtr);
     void setMaxSpeed(int maxVelocity);
     void setAKS(bool AKSStatus);
     void calibrateSteering(char calibration);

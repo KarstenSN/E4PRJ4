@@ -155,10 +155,10 @@ void PcCom::dataStream()
             }
 
             // Update the maximum speed in Settings
-            this->settingsClassPtr_->setMaxSpeed((int)this->data_[0]);
+            this->settingsClassPtr_->setMaxSpeed(static_cast<int>(this->data_[0]));
 
             // Get latest Velocity and put in data buffer
-            this->data_[1] = static_cast<char>(this->dataClassPtr_->getLatestVelocity() * 10);
+            this->data_[1] = static_cast<char>(this->dataClassPtr_->getLatestVelocity());
 
             // Get latest distances and put lowest value in data buffer
             distance = this->dataClassPtr_->getLatestDistance("FR");
@@ -169,10 +169,10 @@ void PcCom::dataStream()
             if (this->dataClassPtr_->getLatestDistance("RR") > distance)
                 distance = this->dataClassPtr_->getLatestDistance("RR");
 
-            this->data_[2] = static_cast<char>(distance * 10);
+            this->data_[2] = static_cast<char>(distance);
 
             // Get latest Acceleration and put in data buffer
-            this->data_[3] = static_cast<char>(this->dataClassPtr_->getLatestAcceleration() * 10);
+            this->data_[3] = static_cast<char>(this->dataClassPtr_->getLatestAcceleration());
 
             // Send new data
             n = write(newsockfd,this->data_,6);
