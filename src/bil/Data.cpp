@@ -1,11 +1,11 @@
 #include <iostream>
 #include <thread>
 #include <Data.hpp>
-#include "utilities.hpp"
-#include "Log.hpp"
+#include <utilities.hpp>
+#include <Log.hpp>
 
-Data::Data(Log* Log){
-    this->Log_ = Log;
+Data::Data(Log* myLog){
+    this->myLog = myLog;
     this->distanceFL = 0;
     this->distanceFR = 0;
     this->distanceRL = 0;
@@ -18,11 +18,11 @@ Data::Data(Log* Log){
     this->Input.stop = 0;
 
     std::cout << "Data class running.." << std::endl;
-    this->Log_->writeEvent(__PRETTY_FUNCTION__,"Data class active");
+    this->myLog->writeEvent(__PRETTY_FUNCTION__,"Data class active");
 }
 
 Data::~Data(){
-    this->Log_->writeEvent(__PRETTY_FUNCTION__,"Data class shutdown");
+    this->myLog->writeEvent(__PRETTY_FUNCTION__,"Data class shutdown");
 }
 
 bool Data::writeVelocity(int velocity){
