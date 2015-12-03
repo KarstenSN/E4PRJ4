@@ -1,28 +1,5 @@
-﻿#include <iostream>
-#include <string>
-#include <wiringPi.h>
-#include <pthread.h>
-#include <thread>
-#include <mutex>
-#include <softPwm.h>
-#include "Steering.hpp"
-#include "Log.hpp"
+﻿#include <Steering.hpp>
 
-
-
-
-// Pin number declarations. We're using the Broadcom chip pin numbers.
-const int pwmMotorPin = 18; // PWM Motor - Broadcom pin 18, P1 pin 12
-const int pwmServoPin = 23; // PWM Servo - Broadcom pin 19, P1 pin 33
-const int pwmMotorForward = 6; // PWM Servo - Broadcom pin 6, P1 pin 31
-const int pwmMotorBackward = 12; // PWM Servo - Broadcom pin 12, P1 pin 32
-const int pwmSetClockValue = 2; // PWM Clock Set Value for hardware PWM between 2 to 4095
-const int pwmSetRangeValue = 1024; //The default is 1024.
-/*
-pinMode(pwmMotor, PWM_OUTPUT); // Set pwmMotor as PWM output
-pinMode(pwmMotorForward, OUTPUT); // Set pwmMotorForward as output
-pinMode(pwmMotorBackward, OUTPUT); // Set pwmMotorBackward as output
-*/
 Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 //: the_thread()
 {
@@ -30,17 +7,23 @@ Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 	settingsPtr_ = MySettingsPtr;
 	logPtr_ = MyLogPtr;
 	stop_thread = false;
-  
+
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Steering constructor created");
 
 	//***** Hardware PWM *****
-	wiringPiSetupGpio(); // Initialize wiringPi -- using Broadcom pin numbers
-	pinMode(pwmMotorPin, PWM_OUTPUT);// PWM_OUTPUT  /  OUTPUT
-	//pwmSetClock (pwmSetClockValue) ; //This sets the divisor for the PWM clock
+	if (wiringPiSetupGpio() == -1)// Initialize wiringPi -- using Broadcom pin numbers
+	{
+		this->logPtr_->writeError(__PRETTY_FUNCTION__, "Failed to init wiringPiSetupGpio()");
+		exit(1);
+	}
+	pinMode(PWM_MOTOR_PIN, PWM_OUTPUT);// PWM_OUTPUT  /  OUTPUT
+	pwmSetRange(PWM_SET_RANGE_VALUE); //The default is 1024.
+	pwmSetClock(PWM_CLOCK_FREQ/(PWM_SET_RANGE_VALUE*PWM_FREQ)); //This sets the divisor for the PWM clock
 	pwmSetMode(PWM_MODE_MS); //default mode in the Pi is “balanced” PWM_MODE_BAL PWM_MODE_MS 
-	pwmSetRange(pwmSetRangeValue); //The default is 1024.
+	pinMode(PWM_MOTOR_FORWARD, OUTPUT);
+	pinMode(PWM_MOTOR_BACKWARD, OUTPUT);
 
-	//PID 
+	//*****  PID *****
 	iGain_ = iGain; // integral gain
 	pGain_ = pGain; // proportional gain
 	dGain_ = dGain; // derivative gain
@@ -50,21 +33,27 @@ Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 	maxServoPWM_ = maxServoPWM;
 
 	//***** Software PWM *****
-	err = softPwmCreate(pwmServoPin, 0, 200);
+	err = softPwmCreate(PWM_SERVO_PIN, 0, 200);
 	if (err != 0)
-	    this->logPtr_->writeError(__PRETTY_FUNCTION__, "Error creating softPwmCreate()");
+		this->logPtr_->writeError(__PRETTY_FUNCTION__, "Failed to init softPwmCreate()");
 
 	//std::thread motorPWMThread (&Steering::PWMUpdate, this );
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Constructor complete");
+		
 }
 
 Steering::~Steering()
 {
-	softPwmWrite(pwmServoPin, 0);
-	softPwmStop(pwmServoPin);
 	stop_thread = true;
-	if (motorPWMThread.joinable()) 
-	  motorPWMThread.join();
+	if (motorPWMThread.joinable())
+		motorPWMThread.join();
+	
+	softPwmWrite(PWM_SERVO_PIN, 0);
+	softPwmStop(PWM_SERVO_PIN);
+	pwmWrite(PWM_MOTOR_PIN, 0);
+	digitalWrite(PWM_MOTOR_FORWARD, LOW);
+	digitalWrite(PWM_MOTOR_BACKWARD, LOW);
+	
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "DeConstructor");
 }
 
@@ -75,62 +64,59 @@ Steering::~Steering()
 * @param UsrInput_->stop Der skal bremses. Brems ikke = 0, Brems = 1.
 */
 int Steering::userInput(UserInput* UsrInput_)
-{	
+{
 	std::string msg;
-	
+
 	msg.append("userInput ").append(" forward: ").append(std::to_string(UsrInput_->forward))
-	   .append(" reverse: ").append(std::to_string(UsrInput_->reverse))
-	   .append(" turn: ").append(std::to_string(UsrInput_->turn))
-	   .append(" stop: ").append(std::to_string(UsrInput_->stop));
+		.append(" reverse: ").append(std::to_string(UsrInput_->reverse))
+		.append(" turn: ").append(std::to_string(UsrInput_->turn))
+		.append(" stop: ").append(std::to_string(UsrInput_->stop));
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
-	
-	max_speed_ = (int)settingsPtr_->getMaxSpeed();
-	
+
+	this->max_speed_ = (int)settingsPtr_->getMaxSpeed();
+
 	if (UsrInput_->stop == 1)
-		Steering::brake();
+		this->brake();
 	else
 	{
-		if ((int)((max_speed_*UsrInput_->forward) / 255) != speedReqFor_ || (int)((max_speed_*UsrInput_->reverse) / 255) != speedReqBack_)
+		
 		{
 			std::lock_guard<std::mutex> lock(changeVar_Mut);
 
 			speedReqFor_ = (int)((max_speed_*UsrInput_->forward) / 255); 	//(maxSpeed/255)*forward adjust input with max speed 
 			speedReqBack_ = (int)((max_speed_*UsrInput_->reverse) / 255);	//(maxSpeed/255)*reverse adjust input with max speed
 
-
 			msg.append("userInput ").append(" speedReqFor_ ").append(std::to_string(speedReqFor_))
-			   .append(" speedReqBack_ ").append(std::to_string(speedReqBack_));
+			.append(" speedReqBack_ ").append(std::to_string(speedReqBack_));
 			this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
 			//std::cout << "userInput()" << "speedReqFor_ " << speedReqFor_ << " speedReqBack_ " << speedReqBack_ << std::endl;
 
 		}
 
-		Steering::motorSetPWM(UsrInput_->forward, UsrInput_->reverse);
+		this->motorSetPWM(UsrInput_->forward, UsrInput_->reverse);
 
 		if ((int)UsrInput_->forward < 1 && (int)UsrInput_->reverse < 1)
 		{
-			Steering::softbrake();
+			this->softbrake();
 		}
 
 	}
 
-	Steering::turn(UsrInput_->turn);
+	this->turn(UsrInput_->turn);
 
 	return 1;
 }
 
 int Steering::brake()
-{	
-	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "brake");
-	
+{
+	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Brake");		// For testing only
+	std::cout << "Brake() called " << std::endl;			// For testing only
 	std::lock_guard<std::mutex> lock(changeVar_Mut);
-	
+
 	activatePWM_ = 0;
-	pwmWrite(pwmMotorPin, 0);
-	pinMode(pwmMotorPin, OUTPUT);
-	digitalWrite(pwmMotorPin, HIGH);
-	digitalWrite(pwmMotorForward, LOW);
-	digitalWrite(pwmMotorBackward, LOW);
+	pwmWrite(PWM_MOTOR_PIN, PWM_SET_RANGE_VALUE);
+	digitalWrite(PWM_MOTOR_FORWARD, LOW);
+	digitalWrite(PWM_MOTOR_BACKWARD, LOW);
 	return 1;
 
 }
@@ -138,21 +124,21 @@ int Steering::brake()
 int Steering::softbrake()
 {
 	std::lock_guard<std::mutex> lock(changeVar_Mut);
-	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Softbrake activated");
+	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Softbrake activated"); // For testing only
 	std::cout << "softbrake() called " << std::endl;
 	activatePWM_ = 0;
-	pwmWrite(pwmMotorPin, 0);
-	digitalWrite(pwmMotorForward, LOW);
-	digitalWrite(pwmMotorBackward, LOW);
+	pwmWrite(PWM_MOTOR_PIN, 0);
+	digitalWrite(PWM_MOTOR_FORWARD, LOW);
+	digitalWrite(PWM_MOTOR_BACKWARD, LOW);
 	return 1;
 }
 
-int Steering::turn(int value)
+int Steering::turn(signed char value)
 {
-	float TurnValue_ = ((((value + 127) * (maxServoPWM - minServoPWM)) / 255) + 1);
-	softPwmWrite(pwmServoPin, TurnValue_);
+	int TurnValue_ = ((((value + 127) * (maxServoPWM - minServoPWM)) / 255) + 5);
+	softPwmWrite(PWM_SERVO_PIN, TurnValue_);
 
-	std::string msg;
+	std::string msg;			// For testing only
 	msg.append("Turn value received: ").append(std::to_string(value)).append(" Output value: ").append(std::to_string(TurnValue_));
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
 
@@ -160,9 +146,11 @@ int Steering::turn(int value)
 }
 
 int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackward)
-{
-	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "MotorSetPWM entered");
+{	
 	std::string msg;
+	
+	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "MotorSetPWM entered"); 	// For testing only
+	
 	std::lock_guard<std::mutex> lock(changeVar_Mut);
 
 	speedAct_ = dataClassPtr_->getLatestVelocity();
@@ -171,40 +159,34 @@ int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackwar
 	{
 		if (speedAct_ > 5 && direction_ == 0)
 		{
-			Steering::brake();
+			this->brake();
 			return 1;
 		}
 
-		pinMode(pwmMotorPin, PWM_OUTPUT);
-		pwmSetMode(PWM_MODE_MS);
-		pwmSetClock(pwmSetClockValue);
-		digitalWrite(pwmMotorForward, HIGH);
-		digitalWrite(pwmMotorBackward, LOW);
+		digitalWrite(PWM_MOTOR_FORWARD, HIGH);
+		digitalWrite(PWM_MOTOR_BACKWARD, LOW);
 		direction_ = 1;
 		activatePWM_ = 1;
 
-		msg.append("SpeedForward >= 0: ").append(std::to_string(speedForward));
-		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
+		msg.append("SpeedForward >= 0: ").append(std::to_string(speedForward)); // For testing only
+		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);			// For testing only
 	}
-	
+
 	if (speedBackward > 0)
 	{
 		if (speedAct_ > 5 && direction_ == 1)
 		{
-			Steering::brake();
+			this->brake();
 			return 1;
 		}
 
-		pinMode(pwmMotorPin, PWM_OUTPUT);
-		pwmSetMode(PWM_MODE_MS);
-		pwmSetClock(pwmSetClockValue);
-		digitalWrite(pwmMotorForward, LOW);
-		digitalWrite(pwmMotorBackward, HIGH);
+		digitalWrite(PWM_MOTOR_FORWARD, LOW);
+		digitalWrite(PWM_MOTOR_BACKWARD, HIGH);
 		direction_ = 0;
 		activatePWM_ = 1;
 		std::string msg;
-		msg.append("SpeedBackward > 0: ").append(std::to_string(speedForward));
-		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
+		msg.append("SpeedBackward > 0: ").append(std::to_string(speedBackward));	// For testing only
+		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);			// For testing only
 	}
 
 	return 1;
@@ -215,29 +197,27 @@ void Steering::PWMUpdate()
 {
 	std::string msg;
 
-	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "thread starting");
-	
-	std::this_thread::sleep_for(std::chrono::microseconds(100));
+	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Thread starting");
 
-	while (!stop_thread)
-	{
-// 		msg.append("PWMUpdate entry").append(" speedReqFor_: ").append(std::to_string(speedReqFor_))
-// 		   .append(" speedAct_: ").append(std::to_string(speedAct_))
-// 		   .append(" Direction: ").append(std::to_string(direction_));
-// 		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
+	std::this_thread::sleep_for(std::chrono::microseconds(100000));
 
+	while (!this->stop_thread)
+	{	/*
+		msg.append("PWMUpdate entry").append(" speedReqFor_: ").append(std::to_string(speedReqFor_)).append("speedAct_: ").append(std::to_string(speedAct_)).append(" Direction: ").append(std::to_string(direction_));
+		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);  	// For testing only
+		*/
 		std::lock_guard<std::mutex> lock(changeVar_Mut);
 
-		speedAct_ = dataClassPtr_->getLatestVelocity();
+		this->speedAct_ = this->dataClassPtr_->getLatestVelocity();
 
 		// PID regulation
 		if (direction_ == 1)
 		{
-			error_ = speedReqFor_ - speedAct_;
+			this->error_ = this->speedReqFor_ - this->speedAct_;
 		}
 		else
 		{
-			error_ = speedReqBack_ - speedAct_;
+			this->error_ = this->speedReqBack_ - this->speedAct_;
 		}
 		// calculate the proportional temp
 		pTemp_ = pGain_ * error_;
@@ -261,28 +241,19 @@ void Steering::PWMUpdate()
 			motorPWMOutValue = 0;
 		}
 
-		if (motorPWMOutValue >= pwmSetRangeValue)
+		if (motorPWMOutValue >= PWM_SET_RANGE_VALUE)
 		{
-			motorPWMOutValue = pwmSetRangeValue;
+			motorPWMOutValue = PWM_SET_RANGE_VALUE-10;
 		}
 
 		if (activatePWM_ == 1)
-		{	
-			//pinMode(pwmMotorPin, PWM_OUTPUT);
-			pwmSetMode(PWM_MODE_MS);
-			//pwmSetClock (pwmSetClockValue) ; //This sets the divisor for the PWM clock
-			pwmWrite(pwmMotorPin, motorPWMOutValue);
-
+		{
+			pwmWrite(PWM_MOTOR_PIN, motorPWMOutValue);
 		}
 
-// 		std::cout << "updatePWM() called: PWM out :  " << motorPWMOutValue << " I " << iTemp_<< " D " << dTemp_ << " iState_ " << iState_<<   std::endl;
-
-// 		msg.append("Before write ").append(std::to_string(motorPWMOutValue));
-// 		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
-
-		std::this_thread::sleep_for(std::chrono::microseconds(5000)); // For testing
+		std::this_thread::sleep_for(std::chrono::microseconds(5000)); // For testing. Needed ??
 	}
-	
-	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "thread stopping");
+
+	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Thread stopping");
 
 }

@@ -1,12 +1,17 @@
 ﻿#pragma once
-#include "Data.hpp"
-#include "utilities.hpp"
-#include "Settings.hpp"
-#include "Log.hpp"
+#include <pthread.h>
+#include <iostream>
 #include <thread>
 #include <string>
 #include <mutex>
 #include <chrono>
+#include <stdlib.h>
+#include <softPwm.h>
+#include <wiringPi.h>
+#include <Data.hpp>
+#include <utilities.hpp>
+#include <Settings.hpp>
+#include <Log.hpp>
 
 #define	pGain	2
 #define	iGain	0.1
@@ -16,8 +21,15 @@
 #define minServoPWM 5 // 0,5 ms
 #define	maxServoPWM 25 // 2,5 ms
 
+#define PWM_CLOCK_FREQ 19200000
+#define PWM_MOTOR_PIN  18 // PWM Motor - Broadcom pin 18, P1 pin 12
+#define PWM_SERVO_PIN  23 // PWM Servo - Broadcom pin 19, P1 pin 33
+#define PWM_MOTOR_FORWARD  6 // PWM Servo - Broadcom pin 6, P1 pin 31
+#define PWM_MOTOR_BACKWARD  12 // PWM Servo - Broadcom pin 12, P1 pin 32
+#define PWM_SET_CLOCK_VALUE  2 // PWM Clock Set Value for hardware PWM between 2 to 4095
+#define PWM_SET_RANGE_VALUE  240 //The default is 1024.
+#define PWM_FREQ 40000 
 
-	
 class Steering
 {
 public:
@@ -26,14 +38,14 @@ public:
 	int userInput(UserInput* UsrInput_);
 	void PWMUpdate();
 	bool stop_thread;
-	
-	
+
+
 private:
 	void getPWMvar(int &PWMforward, int &PWMBackward, bool &PWMdirection);
 	int brake();
 	int softbrake();
-	int turn(int value);
-	int motorSetPWM(unsigned char speedForward, unsigned char speedBackward );
+	int turn(signed char value);
+	int motorSetPWM(unsigned char speedForward, unsigned char speedBackward);
 	int speedReqFor_ = 0;
 	int speedReqBack_ = 0;
 	int speedAct_ = 0;
@@ -46,7 +58,7 @@ private:
 	Data* dataClassPtr_;
 	Settings* settingsPtr_;
 	Log* logPtr_;
-	
+
 	double dState_ = 0; // Last position input
 	double iState_ = 0; // Integrator state
 	double iMax_ = 0, iMin_ = 0; // Maximum and minimum allowable integrator state
@@ -55,11 +67,11 @@ private:
 	double dGain_ = 0; // derivative gain
 	double error_ = 0;
 	double pTemp_ = 0, dTemp_ = 0, iTemp_ = 0;
-	std::thread motorPWMThread; 
-	
+	std::thread motorPWMThread;
+
 	std::mutex changeVar_Mut;
-	
+
 	int err = 0;
-	
-	
+
+
 };

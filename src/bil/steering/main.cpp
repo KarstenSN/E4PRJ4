@@ -1,19 +1,19 @@
 ﻿
-#include "Steering.hpp"
+#include <Steering.hpp>
 #include <wiringPi.h>
-#include "Data.hpp"
-#include "Settings.hpp"
-#include "Log.hpp"
+#include <Data.hpp>
+#include <Settings.hpp>
+#include <Log.hpp>
 #include <string>
 
 int main()
 {	
 	Log loginfo;
 	Data data(&loginfo);
-        data.writeVelocity(10);
+        data.writeVelocity(100);
 	
 	std::cout << " Main: Data loaded " << std::endl;
-	Settings set;
+	Settings set(&loginfo);
 	
 	set.setMaxSpeed(50);
 	
@@ -29,6 +29,8 @@ int main()
  	testuser.stop = 0;
  	testuser.turn = 0;
  	
+	std::this_thread::sleep_for(std::chrono::seconds(5));
+	
 	car.userInput(&testuser);
 
 	std::cout << " Main: Start pwm thread" << std::endl;
@@ -42,37 +44,52 @@ while(1)
 	
 	std::this_thread::sleep_for(std::chrono::seconds(5));
 	testuser.forward = 0;
-	testuser.turn = -127;
-	car.userInput(&testuser);
-	
-	std::this_thread::sleep_for(std::chrono::seconds(5));
-	testuser.forward = 50;
-	testuser.turn = -90;
-	car.userInput(&testuser);
-	
-	std::this_thread::sleep_for(std::chrono::seconds(5));
-	testuser.forward = 100;
-	testuser.turn = -40;
+	testuser.turn = -127; 
+	std::cout << "Main Turn input (-127) : " << testuser.turn << std::endl;
 	car.userInput(&testuser);
 	
 	std::this_thread::sleep_for(std::chrono::seconds(5));
 	testuser.forward = 150;
-	testuser.turn = 0;
+	testuser.reverse = 0;
+	testuser.turn = (char)-90;
+	std::cout << "Main Turn input(-90) : " << testuser.turn << std::endl;
 	car.userInput(&testuser);
 	
 	std::this_thread::sleep_for(std::chrono::seconds(5));
-	testuser.forward = 200;
-	testuser.turn = 40;
+	testuser.forward = 0;
+	testuser.reverse = 0;
+	testuser.turn = (char)-40;
+	std::cout << "Main Turn input(-40): " << testuser.turn << std::endl;
+	car.userInput(&testuser);
+	
+	std::this_thread::sleep_for(std::chrono::seconds(5));
+	testuser.forward = 150;
+	testuser.reverse = 0;
+	testuser.turn = (char)0;
+	std::cout << "Main Turn input(0): " << testuser.turn << std::endl;
+	car.userInput(&testuser);
+	
+	std::this_thread::sleep_for(std::chrono::seconds(5));
+	testuser.forward = 0;
+	testuser.reverse = 150;
+	data.writeVelocity(0);
+	testuser.reverse = 150;
+	testuser.turn =(char) 40;
+	std::cout << "Main Turn input(40): " << testuser.turn << std::endl;
 	car.userInput(&testuser);
 	
 	std::this_thread::sleep_for(std::chrono::seconds(5));
 	testuser.forward = 250;
-	testuser.turn = 90;
+	testuser.reverse = 0;
+	testuser.turn = (char)90;
+	std::cout << "Main Turn input(90): " << testuser.turn << std::endl;
 	car.userInput(&testuser);
 	
 	std::this_thread::sleep_for(std::chrono::seconds(5));
 	testuser.forward = 255;
-	testuser.turn = 127;
+	testuser.reverse = 0;
+	testuser.turn = (char)127;
+	std::cout << "Main Turn input(127): " << testuser.turn << std::endl;
 	car.userInput(&testuser);
 }	
 	std::this_thread::sleep_for(std::chrono::seconds(5));
