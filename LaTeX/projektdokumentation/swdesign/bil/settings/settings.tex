@@ -20,6 +20,8 @@ Navn & Type & Beskrivelse \\\hline
 
 \texttt{calibration\_}			& \texttt{char}		&Variabel af typen char der indeholder nuværende kalibrering til styrtøj.\\\hline
 
+\texttt{logClassPtr\_}			& \texttt{Log*}		&En pointer til et object af typen Log. Gør det muligt at kalde funktioner fra Log objektet.\\\hline
+
 \texttt{maxVelocitMut}			& \texttt{mutex}	&Mutex til kontrol af læsning og skrivning af/til maxVelocity\_ variabel fra flere threads.\\\hline
 
 \texttt{AKSStautsMut}			& \texttt{mutex}	&Mutex til kontrol af læsning og skrivning af/til AKSStatus\_ variabel fra flere threads.\\\hline
@@ -36,8 +38,8 @@ Navn & Type & Beskrivelse \\\hline
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype 	& \texttt{void Settings()} \\\hline
-Parametre 	& \texttt{void} 		\newline \\\hline
+Prototype 	& \texttt{void Settings(Log* logClassPtr)} \\\hline
+Parametre 	& \texttt{logClassPtr} 		\newline En pointer til objektet af typen Log der bruges til at lave en association til objektet. \\\hline
 Beskrivelse	& Constructor til klassen Settings. \newline \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for constructoren af \texttt{Settings} klassen}
