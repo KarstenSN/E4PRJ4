@@ -18,6 +18,11 @@ public:
         int getDistance(std::string name);
 private:
         Log* Log_;
+        int FL_;
+        int FR_;
+        int RL_;
+        int RR_;
+        int tacho_;
 };
 
 #endif
