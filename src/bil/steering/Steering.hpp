@@ -11,7 +11,7 @@
 #define	pGain	2
 #define	iGain	0.1
 #define	dGain	0.1
-#define	iMax	1000
+#define	iMax	10000
 #define	iMin	0
 #define minServoPWM 5 // 0,5 ms
 #define	maxServoPWM 25 // 2,5 ms
@@ -25,7 +25,7 @@ public:
 	~Steering();
 	int userInput(UserInput* UsrInput_);
 	void PWMUpdate();
-	
+	bool stop_thread;
 	
 	
 private:
@@ -56,24 +56,10 @@ private:
 	double error_ = 0;
 	double pTemp_ = 0, dTemp_ = 0, iTemp_ = 0;
 	std::thread motorPWMThread; 
-	bool stop_thread;
+	
 	std::mutex changeVar_Mut;
 	
 	int err = 0;
 	
 	
 };
-
-// void SteeringStartpwm(Steering*  car, Log* log);
-
-/* JUNK
-
-bool goForward(int speed);
-bool goBackward(int speed);
-void awaitNewInput();
-void analyseInput();
-bool blockUser();
-bool turnLeft();
-bool turnRight();
-
-*/
