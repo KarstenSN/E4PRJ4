@@ -12,3 +12,8 @@ LDFLAGS	= -L/home/stud/for_PI/lib
 For ARCH=host, you need only need:
 INCLUDE	= -I. -I/usr/local/include
 LDFLAGS	= -L/usr/local/lib
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The project "test_wiringpi" is an example of controlling a PWM on PIN 12. The project shows calculations for setting a PWM freq easily
