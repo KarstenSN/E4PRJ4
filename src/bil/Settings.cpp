@@ -6,7 +6,7 @@ Settings::Settings(Log* logClassPtr)
   this->maxVelocity_ = 0;
   this->AKSStatus_ = 0;
   this->calibration_ = 0;
-  this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Initialized Settings")
+  this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Initialized Settings");
 }
 
 void Settings::setMaxSpeed(int maxVelocity)
