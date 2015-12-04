@@ -235,10 +235,10 @@ Beskrivelse & Er MainWindows destructor. Bruges til at slette oprettede instanse
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{signal sig\_getData()} \\\hline
+Prototype & \texttt{signal void sig\_getData()} \\\hline
 Parametre &  \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Bliver kaldt af dataThread når MainWindow skal opdatere data arrayet. \\\hline
+Beskrivelse & Bliver kaldt af dataThread når MainWindow skal opdatere data arrayet. Signalet fungerer ved at det eksekveres som en funktion i dataThread. Herved gives et signal til MainWindow som derved eksekverer funktionen readSocket.  \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{sig\_getData}}
 \label{table:met_siggetData}
@@ -246,7 +246,7 @@ Beskrivelse & Bliver kaldt af dataThread når MainWindow skal opdatere data arra
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{slot Au2connect()} \\\hline
+Prototype & \texttt{slot void Au2connect()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
 Beskrivelse & Kaldes når bruger trykker på ''Opret forbindelse''. Bruges til at skabe forbindelse mellem bil og Pc samt oprette dataThread og Xbox360ControllerThread. \\\hline
@@ -257,7 +257,7 @@ Beskrivelse & Kaldes når bruger trykker på ''Opret forbindelse''. Bruges til a
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{slot konfigurerIp()} \\\hline
+Prototype & \texttt{slot void konfigurerIp()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
 Beskrivelse & Kaldes når bruger trykker på ''Konfigurer IP''. Bruges til at opdatere variablen IP med brugerinput. \\\hline
@@ -268,7 +268,7 @@ Beskrivelse & Kaldes når bruger trykker på ''Konfigurer IP''. Bruges til at op
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{slot AKSstatus()} \\\hline
+Prototype & \texttt{slot void AKSstatus()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
 Beskrivelse & Kaldes når bruger trykker på ''AKS-On'' eller ''AKS-Off''. Bruges til at ændre status på AKS. \\\hline
@@ -279,7 +279,7 @@ Beskrivelse & Kaldes når bruger trykker på ''AKS-On'' eller ''AKS-Off''. Bruge
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{slot AKSstatus()} \\\hline
+Prototype & \texttt{slot void AKSstatus()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
 Beskrivelse & Kaldes når bruger trykker på ''Indstil makshastighed''. Bruges til at ændre makshastigheden på bilen. \\\hline
@@ -290,7 +290,7 @@ Beskrivelse & Kaldes når bruger trykker på ''Indstil makshastighed''. Bruges t
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{slot readSocket()} \\\hline
+Prototype & \texttt{slot void readSocket()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
 Beskrivelse & Kaldes når dataThread vil have opdateret data fra bilen. dataThread giver signalet sig\_getData(). Funktionen kører i MainWindow og opdaterer data arrayet.\\\hline
@@ -301,7 +301,7 @@ Beskrivelse & Kaldes når dataThread vil have opdateret data fra bilen. dataThre
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{slot connectionLost()} \\\hline
+Prototype & \texttt{slot void connectionLost()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
 Beskrivelse & Kaldes når dataSocket mister forbindelsen til bilen. Variablen isConnected sættes til false. \\\hline
@@ -312,7 +312,7 @@ Beskrivelse & Kaldes når dataSocket mister forbindelsen til bilen. Variablen is
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{slot connected()} \\\hline
+Prototype & \texttt{slot void connected()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
 Beskrivelse & Kaldes når dataSocket har oprettet forbindelsen til bilen. Variablen isConnected sættes til true. \\\hline
@@ -324,7 +324,7 @@ Beskrivelse & Kaldes når dataSocket har oprettet forbindelsen til bilen. Variab
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{slot kalibrerStyretoj()} \\\hline
+Prototype & \texttt{slot void kalibrerStyretoj()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
 Beskrivelse & Kaldes når bruger trykker på ''Kalibrer styretøj''. Bruges til at kalibrere styretøjet på bilen. Funktionen opdaterer den respektive plads i data arrayet. \\\hline
@@ -335,7 +335,7 @@ Beskrivelse & Kaldes når bruger trykker på ''Kalibrer styretøj''. Bruges til 
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{slot shutDown()} \\\hline
+Prototype & \texttt{slot void shutDown()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
 Beskrivelse & Kaldes når bruger trykker på ''Luk ned'' eller klikker i det røde kryds i hovedvinduet. Sørger for at sende besked til bilen om at lukke dens software sikkert ned, samt skrive data arrayet til log-filen.  \\\hline
@@ -346,7 +346,7 @@ Beskrivelse & Kaldes når bruger trykker på ''Luk ned'' eller klikker i det rø
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{slot controllerIsConnected()} \\\hline
+Prototype & \texttt{slot void controllerIsConnected()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
 Beskrivelse & Kaldes når der er forbindelse mellem Xbox360 controlleren og bilen. controllerConnected sættes til true.   \\\hline
@@ -357,7 +357,7 @@ Beskrivelse & Kaldes når der er forbindelse mellem Xbox360 controlleren og bile
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{slot controllerLostConnection()} \\\hline
+Prototype & \texttt{slot void controllerLostConnection()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
 Beskrivelse & Kaldes når forbindelse mellem Xbox360 controlleren og bilen afbrydes. controllerConnected sættes til false.   \\\hline
