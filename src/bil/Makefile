@@ -2,7 +2,6 @@ SOURCES=pi.cpp Data.cpp PcCom.cpp Aks.cpp Steering.cpp Log.cpp Settings.cpp Dist
 OBJECTS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.o))
 DEPS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.d))
 EXE=pi
-CXXFLAGS=-Iinc -std=c++11
 LDFLAGS=-pthread
 
 # Making for host
@@ -19,11 +18,16 @@ ifeq (${ARCH},target)
 CXX=arm-linux-gnueabihf-g++
 BUILD_DIR=build/target
 BIN_DIR=bin/target
+INCLUDE=-I../../crosscompilation/for_PI/include
+LDFLAGS=-L../../crosscompilation/for_PI/lib
 endif
+
+CXXFLAGS= $(INCLUDE) -Iinc -lwiringPi -pthread -Wall -std=c++11
+LDLIBS  = -lwiringPi -lpthread -lm
 
 $(EXE): ${DEPS} ${OBJECTS} # << Check the $(DEPS) new dependency
 	@mkdir -p ${BIN_DIR}
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o ${BIN_DIR}/$@ $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o ${BIN_DIR}/$@ $(OBJECTS) $(LDFLAGS) $(LDLIBS)
 
 # Rule that describes how a .d ( dependency ) file is created from a .cpp file
 # Similar to the assigment that you just completed %.cpp -> %.o

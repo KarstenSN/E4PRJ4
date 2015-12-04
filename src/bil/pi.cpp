@@ -48,8 +48,8 @@ void* acquireData(ObjPts* structPtr){
 }
 
 int main(){
-    Settings Settings_;
-	Log Log_("logfile.txt");
+	Log Log_;
+    Settings Settings_(&Log_);
     Data Data_(&Log_);
     Aks Aks_(&Data_, &Settings_, &Log_);
     PcCom PcCom_(&Data_, &Settings_, &Log_);

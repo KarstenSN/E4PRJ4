@@ -8,21 +8,21 @@
 
 // Constructor
 DistanceSensor::DistanceSensor(Log* Log){
-    this->Log_ = Log;
+    this->logPtr = Log;
     std::cout << "Distance class running.." << std::endl;
-    this->Log_->writeEvent(__PRETTY_FUNCTION__,"Distance class active");
+    this->logPtr->writeEvent(__PRETTY_FUNCTION__,"Distance class active");
 }
 
 // Close Device()
 DistanceSensor::~DistanceSensor(){
     std::cout << "Distance class shutdown.." << std::endl;
-    this->Log_->writeEvent(__PRETTY_FUNCTION__,"Data class shutdown");
+    this->logPtr->writeEvent(__PRETTY_FUNCTION__,"Data class shutdown");
 }
 
 // getDistance()
 int DistanceSensor::getDistance(std::string name){
     //std::cout << "getDistance() running.." << std::endl;
-    this->Log_->writeEvent(__PRETTY_FUNCTION__,"getDistance() running");
+    this->logPtr->writeEvent(__PRETTY_FUNCTION__,"getDistance() running");
 
     // open i2c device;
     int fd;
