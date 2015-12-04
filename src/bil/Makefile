@@ -22,7 +22,7 @@ INCLUDE=-I../../crosscompilation/for_PI/include
 LDFLAGS=-L../../crosscompilation/for_PI/lib
 endif
 
-CXXFLAGS= $(INCLUDE) -Iinc -lwiringPi -pthread -Wall -std=c++11
+CXXFLAGS= $(INCLUDE) -Iinc -lwiringPi -pthread -std=c++11
 LDLIBS  = -lwiringPi -lpthread -lm
 
 $(EXE): ${DEPS} ${OBJECTS} # << Check the $(DEPS) new dependency
