@@ -17,12 +17,11 @@ public:
         ~DistanceSensor();
         int getDistance(std::string name);
 private:
-        Log* Log_;
-        int FL_;
-        int FR_;
-        int RL_;
-        int RR_;
-        int tacho_;
+        int distanceFL_;
+        int distanceFR_;
+        int distanceRL_;
+        int distanceRR_;
+        Log* logPtr;
 };
 
 #endif
