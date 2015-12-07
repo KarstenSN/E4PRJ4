@@ -8,10 +8,10 @@ build/
 Thumbs.db
 
 #tilføjet af karsten
-LaTeX/projektdokumentation/projekdokumentation.pdf
-LaTeX/projektdokumentation/projekdokumentation.aux
-LaTeX/projektdokumentation/projekdokumentation.out
-LaTeX/projektdokumentation/projekdokumentation.toc
+LaTeX/projektdokumentation/projektdokumentation.pdf
+LaTeX/projektdokumentation/projektdokumentation.aux
+LaTeX/projektdokumentation/projektdokumentation.out
+LaTeX/projektdokumentation/projektdokumentation.toc
 
 # Compiled Object files
 *.slo
