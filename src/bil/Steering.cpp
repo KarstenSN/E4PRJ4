@@ -1,7 +1,6 @@
 ﻿#include <Steering.hpp>
 
 Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
-//: the_thread()
 {
 	dataClassPtr_ = dataClassPtr;
 	settingsPtr_ = MySettingsPtr;
@@ -37,7 +36,8 @@ Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 	if (err != 0)
 		this->logPtr_->writeError(__PRETTY_FUNCTION__, "Failed to init softPwmCreate()");
 
-	//std::thread motorPWMThread (&Steering::PWMUpdate, this );
+	this->motorPWMThread = std::thread(&Steering::PWMUpdate , this);
+	
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Constructor complete");
 		
 }
@@ -95,7 +95,7 @@ int Steering::userInput(UserInput* UsrInput_)
 
 		this->motorSetPWM(UsrInput_->forward, UsrInput_->reverse);
 
-		if ((int)UsrInput_->forward < 1 && (int)UsrInput_->reverse < 1)
+		if (UsrInput_->forward < 5 && UsrInput_->reverse < 5)
 		{
 			this->softbrake();
 		}
@@ -202,10 +202,11 @@ void Steering::PWMUpdate()
 	std::this_thread::sleep_for(std::chrono::microseconds(100000));
 
 	while (!this->stop_thread)
-	{	/*
+	{	
 		msg.append("PWMUpdate entry").append(" speedReqFor_: ").append(std::to_string(speedReqFor_)).append("speedAct_: ").append(std::to_string(speedAct_)).append(" Direction: ").append(std::to_string(direction_));
 		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);  	// For testing only
-		*/
+		
+		
 		std::lock_guard<std::mutex> lock(changeVar_Mut);
 
 		this->speedAct_ = this->dataClassPtr_->getLatestVelocity();
@@ -219,10 +220,10 @@ void Steering::PWMUpdate()
 		{
 			this->error_ = this->speedReqBack_ - this->speedAct_;
 		}
-		// calculate the proportional temp
-		pTemp_ = pGain_ * error_;
-		// calculate the integral state with appropriate limiting
-		iState_ += error_;
+		
+		pTemp_ = pGain_ * error_;		// calculate the proportional temp
+		iState_ += error_;			// calculate the integral state with appropriate limiting
+		
 		if (iState_ > iMax_)
 		{
 			iState_ = iMax_;
@@ -231,6 +232,7 @@ void Steering::PWMUpdate()
 		{
 			iState_ = iMin_;
 		}
+		
 		iTemp_ = iGain_ * iState_; // calculate the integral temp
 		dTemp_ = dGain_ * (dState_ - speedAct_); // calculate the  derivative temp
 		dState_ = speedAct_;
@@ -243,17 +245,20 @@ void Steering::PWMUpdate()
 
 		if (motorPWMOutValue >= PWM_SET_RANGE_VALUE)
 		{
-			motorPWMOutValue = PWM_SET_RANGE_VALUE;
+			motorPWMOutValue = PWM_SET_RANGE_VALUE-10;
 		}
 
 		if (activatePWM_ == 1)
 		{
 			pwmWrite(PWM_MOTOR_PIN, motorPWMOutValue);
 		}
-
+		 
+		
+		//this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Thread prg end - sleeping");
 		std::this_thread::sleep_for(std::chrono::microseconds(5000)); // For testing. Needed ??
 	}
 
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Thread stopping");
 
+				
 }
