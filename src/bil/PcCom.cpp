@@ -52,14 +52,14 @@ void PcCom::controllerStream()
     clilen = sizeof(cli_addr);
 
     // Infinite wait for connection
-    while(running_)
+    while(1)
     {
         newsockfd = accept(sockfd,(struct sockaddr *) &cli_addr, &clilen);
         if (newsockfd < 0)
             break;
 
         this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__, "Controller TCP-Connection aquired");
-        while(running_)
+        while(1)
         {
             /* Acquire controller data from computer
              * controller[0] = Forward      (0 - 255)
@@ -84,12 +84,17 @@ void PcCom::controllerStream()
             n = write(newsockfd,this->controller_,4);
 
             if (n < 0)
-            {
-                this->error("ERROR writing to socket");
                 break;
-            }
+			
+			if (!this->running_)
+				break;
         }
+		
+		if (n < 0)
+				this->error("ERROR writing to socket");
         close(newsockfd);
+		if (!this->running_)
+				break;
     }
     close(sockfd);
     return;
