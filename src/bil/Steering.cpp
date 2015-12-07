@@ -258,7 +258,9 @@ void Steering::PWMUpdate()
 
 		if (activatePWM_ == 1)
 		{
-			pwmWrite(PWM_MOTOR_PIN, motorPWMOutValue);
+			//pwmWrite(PWM_MOTOR_PIN, motorPWMOutValue);
+			pwmWrite(PWM_MOTOR_PIN, this->speedReqFor_);
+			
 		}
 		 
 		
