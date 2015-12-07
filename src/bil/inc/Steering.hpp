@@ -13,7 +13,7 @@
 #include <Settings.hpp>
 #include <Log.hpp>
 
-#define	pGain	8
+#define	pGain	20
 #define	iGain	0.1
 #define	dGain	0.1
 #define	iMax	2300
