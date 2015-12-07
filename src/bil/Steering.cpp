@@ -253,7 +253,7 @@ void Steering::PWMUpdate()
 
 		if (motorPWMOutValue >= PWM_SET_RANGE_VALUE)
 		{
-			motorPWMOutValue = PWM_SET_RANGE_VALUE-10;
+			motorPWMOutValue = PWM_SET_RANGE_VALUE;
 		}
 
 		if (activatePWM_ == 1)
