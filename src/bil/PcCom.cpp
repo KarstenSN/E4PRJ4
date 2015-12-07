@@ -138,10 +138,8 @@ void PcCom::dataStream()
 
             // Shut down if "dwnnow" is send by the PC
             if(this->data_[0] == 'd' && this->data_[1] == 'w' && this->data_[2] == 'n' && this->data_[3] == 'n' && this->data_[4] == 'o' && this->data_[5] == 'w')
-	    {
-		this->running_ = false;
-                break;
-	    }
+				break;
+	    
 
            if (n < 0)
                 this->error("ERROR reading from socket");
@@ -196,6 +194,7 @@ void PcCom::dataStream()
     }
     this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Closing the data coneection");
     close(sockfd);
+	this->running_ = false;
     return;
 }
 
