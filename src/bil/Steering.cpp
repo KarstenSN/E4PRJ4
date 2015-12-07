@@ -1,4 +1,7 @@
-﻿#include <Steering.hpp>
+﻿#define DEBUG
+#include <Steering.hpp>
+
+
 
 Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 {
@@ -89,8 +92,12 @@ int Steering::userInput(UserInput* UsrInput_)
 			msg.append("userInput ").append(" speedReqFor_ ").append(std::to_string(speedReqFor_))
 			.append(" speedReqBack_ ").append(std::to_string(speedReqBack_));
 			this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
-			//std::cout << "userInput()" << "speedReqFor_ " << speedReqFor_ << " speedReqBack_ " << speedReqBack_ << std::endl;
 			*/
+			
+#ifdef DEBUG
+			fflush(stdout);
+			std::cout << "userInput()" << "speedReqFor_ " << speedReqFor_ << " speedReqBack_ " << speedReqBack_ << "\r";
+#endif
 		}
 
 		this->motorSetPWM(UsrInput_->forward, UsrInput_->reverse);
@@ -203,9 +210,10 @@ void Steering::PWMUpdate()
 
 	while (!this->stop_thread)
 	{	
+	 /*
 		msg.append("PWMUpdate entry").append(" speedReqFor_: ").append(std::to_string(speedReqFor_)).append("speedAct_: ").append(std::to_string(speedAct_)).append(" Direction: ").append(std::to_string(direction_));
 		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);  	// For testing only
-		
+	*/	
 		
 		std::lock_guard<std::mutex> lock(changeVar_Mut);
 
