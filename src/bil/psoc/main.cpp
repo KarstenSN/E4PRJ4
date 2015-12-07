@@ -8,8 +8,10 @@ int main() {
     
     Psoc myPsoc(&myLog);
     
-    myPsoc.getDistance("FL");   
-    myPsoc.getVelocity();
+    std::cout << "Class created" << std::endl;
+    
+    //myPsoc.getDistance("FL");   
+    //myPsoc.getVelocity();
     
     sleep(2);
     

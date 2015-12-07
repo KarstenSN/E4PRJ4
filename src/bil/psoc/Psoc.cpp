@@ -1,15 +1,17 @@
 //Psoc.cpp
 #include <Psoc.hpp>
 
+
+// Constructor
 Psoc::Psoc(Log* Log){
     this->logPtr_ = Log;
-    std::cout << "Psoc4 class running.." << std::endl;
+    std::cout << "Psoc class running.." << std::endl;
     this->logPtr_->writeEvent(__PRETTY_FUNCTION__,"Psoc class active");
     
-    this->psocThread_ = std::thread(Psoc::psocRead);
+    std::thread psocThread_(&Psoc::psocRead, this);
 }
 
-
+// Destructor
 Psoc::~Psoc(){
     std::cout << "Psoc class shutdown.." << std::endl;
     this->logPtr_->writeEvent(__PRETTY_FUNCTION__,"Psoc class shutdown");
@@ -19,6 +21,8 @@ Psoc::~Psoc(){
 
 // getDistance()
 int Psoc::getDistance(std::string name){
+    
+    std::lock_guard<std::mutex> lock(psocMut);
     
     if( name == "FL" ){
         return distanceFL_;
@@ -35,8 +39,9 @@ int Psoc::getDistance(std::string name){
     else{
         std::cout << "Wrong parameter in getDistance " << std::endl;
         return 4;
-    }    
+    }
 }
+
 
 // getVelocity()
 int Psoc::getVelocity(){
@@ -49,7 +54,6 @@ int Psoc::update(){
     // open i2c device;
     int fd;
     int Psocslave = 0x10;
-    char rdBuffer[9] = {0};
 
     if ((fd = open("/dev/i2c-1", O_RDWR)) < 0){
         std::cout << "Error in opening I2C-Bus (DistanceSensor)" << std::endl;
@@ -63,6 +67,7 @@ int Psoc::update(){
         close(fd);
         return -2;
     }
+/*    
     // Fejlcheck
     int check = read(fd,rdBuffer,9);
     if (check != 9){
@@ -70,21 +75,25 @@ int Psoc::update(){
         close(fd);
         return -3;
     }
+*/
     close(fd);
 }
 
 void Psoc::psocRead(){
+    char rdBuffer[9] = {0};
+    
     std::cout << "test af Thred" << std::endl;
     
     Psoc::update();
     
     while(1){
         {
-            std::lock_guard<std::mutex> lock(mtx)
+            std::lock_guard<std::mutex> lock(psocMut);
             distanceFL_ = (int)((rdBuffer[0] << 8) + rdBuffer[1]);
             distanceFR_ = (int)((rdBuffer[2] << 8) + rdBuffer[3]);
             distanceRL_ = (int)((rdBuffer[4] << 8) + rdBuffer[5]);
             distanceRR_ = (int)((rdBuffer[6] << 8) + rdBuffer[7]);
+            Tacho_      = (int)(rdBuffer[8]);
         }
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
