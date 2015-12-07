@@ -16,8 +16,9 @@ Data::Data(Log* myLog){
     this->Input.reverse = 0;
     this->Input.turn = 0;
     this->Input.stop = 0;
-
+#ifdef DEBUG
     std::cout << "Data class running.." << std::endl;
+#endif
     this->myLog->writeEvent(__PRETTY_FUNCTION__,"Data class active");
 }
 
@@ -59,7 +60,10 @@ bool Data::writeDistance(std::string name, int distance){
             this->distanceRR = distance;
         }
         else{
+#ifdef DEBUG
             std::cout << "name can only be: FL, FR, RL or RR" << std::endl;
+#endif
+            this->myLog->writeWarning(__PRETTY_FUNCTION__,"Error in input argument std::string name");
             return false;
         }
         return true;
@@ -97,7 +101,10 @@ int Data::getLatestDistance(std::string name){
         return this->distanceRR;
     }
     else{
+#ifdef DEBUG
         std::cout << "name can only be: FL, FR, RL or RR" << std::endl;
+#endif
+        this->myLog->writeWarning(__PRETTY_FUNCTION__,"Error in input argument std::string name");
         return -1;
     }
 }

@@ -64,7 +64,7 @@ void PcCom::controllerStream()
             /* Acquire controller data from computer
              * controller[0] = Forward      (0 - 255)
              * controller[1] = Reverse      (0 - 255)
-             * controller[2] = Turn         (-127 - 128)
+             * controller[2] = Turn         (-128 - 127)
              * controller[3] = Break        (0 - 1) */
             n = read(newsockfd,this->controller_,4);
 
@@ -97,6 +97,7 @@ void PcCom::controllerStream()
 				break;
     }
     close(sockfd);
+	this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Closing the controller connection");
     return;
 }
 
@@ -163,10 +164,10 @@ void PcCom::dataStream()
             }
 
             // Update the maximum speed in Settings
-            this->settingsClassPtr_->setMaxSpeed((int)this->data_[0]);
+            this->settingsClassPtr_->setMaxSpeed(static_cast<int>(this->data_[0]));
 
             // Get latest Velocity and put in data buffer
-            this->data_[1] = static_cast<char>(this->dataClassPtr_->getLatestVelocity() * 10);
+            this->data_[1] = static_cast<char>(this->dataClassPtr_->getLatestVelocity());
 
             // Get latest distances and put lowest value in data buffer
             distance = this->dataClassPtr_->getLatestDistance("FR");
@@ -177,10 +178,10 @@ void PcCom::dataStream()
             if (this->dataClassPtr_->getLatestDistance("RR") > distance)
                 distance = this->dataClassPtr_->getLatestDistance("RR");
 
-            this->data_[2] = static_cast<char>(distance * 10);
+            this->data_[2] = static_cast<char>(distance);
 
             // Get latest Acceleration and put in data buffer
-            this->data_[3] = static_cast<char>(this->dataClassPtr_->getLatestAcceleration() * 10);
+            this->data_[3] = static_cast<char>(this->dataClassPtr_->getLatestAcceleration());
 
             // Send new data
             n = write(newsockfd,this->data_,6);
@@ -197,8 +198,8 @@ void PcCom::dataStream()
         if(this->data_[0] == 'd' && this->data_[1] == 'w' && this->data_[2] == 'n' && this->data_[3] == 'n' && this->data_[4] == 'o' && this->data_[5] == 'w')
             break;
     }
-    this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Closing the data coneection");
     close(sockfd);
+	this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Closing the data connection");
 	this->running_ = false;
     return;
 }
@@ -206,5 +207,5 @@ void PcCom::dataStream()
 void PcCom::error(std::string msg)
 {
     this->logClassPtr_->writeError(__PRETTY_FUNCTION__,msg);
-    exit(1);
+    return;
 }
