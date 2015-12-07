@@ -118,14 +118,14 @@ void PcCom::dataStream()
     clilen = sizeof(cli_addr);
 
     // Infinite wait for connection
-    while(running_)
+    while(1)
     {
         newsockfd = accept(sockfd,(struct sockaddr *) &cli_addr, &clilen);
         if (newsockfd < 0)
             break;
 
         this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__, "Data TCP-Connection aquired");
-        while(running_)
+        while(1)
         {
             /*  Acquire data from computer:
              *  data[0] = Max speed             (km/h)
