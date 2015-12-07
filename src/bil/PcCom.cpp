@@ -164,7 +164,7 @@ void PcCom::dataStream()
             }
 
             // Update the maximum speed in Settings
-            this->settingsClassPtr_->setMaxSpeed(static_cast<int>(this->data_[0]);
+            this->settingsClassPtr_->setMaxSpeed(static_cast<int>(this->data_[0]));
 
             // Get latest Velocity and put in data buffer
             this->data_[1] = static_cast<char>(this->dataClassPtr_->getLatestVelocity());
