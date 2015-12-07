@@ -241,8 +241,8 @@ void Steering::PWMUpdate()
 			iState_ = iMin_;
 		}
 		
-		iTemp_ = iGain_ * iState_; // calculate the integral temp
-		dTemp_ = dGain_ * (dState_ - speedAct_); // calculate the  derivative temp
+		//iTemp_ = iGain_ * iState_; // calculate the integral temp
+		//dTemp_ = dGain_ * (dState_ - speedAct_); // calculate the  derivative temp
 		dState_ = speedAct_;
 		motorPWMOutValue = pTemp_ + dTemp_ + iTemp_;
 
@@ -258,9 +258,7 @@ void Steering::PWMUpdate()
 
 		if (activatePWM_ == 1)
 		{
-			//pwmWrite(PWM_MOTOR_PIN, motorPWMOutValue);
-			pwmWrite(PWM_MOTOR_PIN, this->speedReqFor_);
-			
+			pwmWrite(PWM_MOTOR_PIN, motorPWMOutValue);
 		}
 		 
 		
