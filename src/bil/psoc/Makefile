@@ -1,45 +1,50 @@
-SRC=main.cpp Log.cpp Psoc.cpp
-OBJ=$(addprefix ${BUILD_DIR}/,$(SRC:.cpp=.o))
-DEPS=$(addprefix ${BUILD_DIR}/,$(SRC:.cpp=.d))
+SOURCES=main.cpp Log.cpp Psoc.cpp
+OBJECTS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.o))
+DEPS=$(addprefix ${BUILD_DIR}/,$(SOURCES:.cpp=.d))
 EXE=Prog
-CXXFLAGS= -I../inc -std=c++11
+CXXFLAGS=-I../inc -std=c++11
+LDFLAGS=-lpthread
 
-ARCH ?=target
-
+# Making for host
+# > make ARCH=host
 ifeq (${ARCH},host)
-GXX=g++ -pthread
+CXX=g++
 BUILD_DIR=build/host
 BIN_DIR=bin/host
 endif
 
+# Making for target
+# > make ARCH=target
 ifeq (${ARCH},target)
-GXX=arm-linux-gnueabihf-g++ -pthread
+CXX=arm-linux-gnueabihf-g++
 BUILD_DIR=build/target
 BIN_DIR=bin/target
 endif
 
-$(EXE): $(OBJ) $(DEPS)
-	mkdir -p ${BIN_DIR}
-	$(GXX) $(CXXFLAGS) -o ${BIN_DIR}/$@ $(OBJ)
+$(EXE): ${DEPS} ${OBJECTS} # << Check the $(DEPS) new dependency
+	@mkdir -p ${BIN_DIR}
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o ${BIN_DIR}/$@ $(OBJECTS)
 
-${BUILD_DIR}/%.o:%.cpp
-	$(GXX) $(CXXFLAGS) -c -o $@ $<
+# Rule that describes how a .d ( dependency ) file is created from a .cpp file
+# Similar to the assigment that you just completed %.cpp -> %.o
+${BUILD_DIR}/%.d: %.cpp
+	@mkdir -p ${BUILD_DIR}
+	$(CXX) -MT$(@:.d=.o) -MM $(CXXFLAGS) $^ > $@
 
-${BUILD_DIR}/%.d:%.cpp
-	mkdir -p ${BUILD_DIR}
-	$(GXX) -MT $(@:.d=.o) -MM $(CXXFLAGS) $^ > $@
-	@echo "Creating dependency: " $@
+${BUILD_DIR}/%.o: %.cpp
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 ifneq ($(MAKECMDGOALS),clean)
--include $(DEPS)
+ifneq ($(MAKECMDGOALS),help)
+-include ${DEPS}
+endif
 endif
 
-clean: 
+clean:
 	rm -rf build bin
 
 help:
-	@echo "Available targets:"
-	@echo "default: ARCH=host"
-	@echo "ARCH=target"
-	@echo "clean"
-	@echo "help"
+	@echo Possible targets are:
+	@echo help
+	@echo clean
+	@echo ARCH=[target/host]
