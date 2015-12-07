@@ -7,6 +7,12 @@ build/
 # Misc.
 Thumbs.db
 
+#tilføjet af karsten
+/LaTeX/projektdokumentation/projekdokumentation.pdf
+/LaTeX/projektdokumentation/projekdokumentation.aux
+/LaTeX/projektdokumentation/projekdokumentation.out
+/LaTeX/projektdokumentation/projekdokumentation.toc
+
 # Compiled Object files
 *.slo
 *.lo
