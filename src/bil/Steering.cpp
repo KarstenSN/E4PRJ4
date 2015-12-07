@@ -96,7 +96,7 @@ int Steering::userInput(UserInput* UsrInput_)
 			
 #ifdef DEBUG
 			fflush(stdout);
-			std::cout << "userInput()" << "speedReqFor_ " << UsrInput_->forward << " speedReqBack_ " << UsrInput_->reverse << "\r";
+			std::cout << "userInput()" << "speedReqFor_ " << static_cast<int>(UsrInput_->forward) << " speedReqBack_ " << static_cast<int>(UsrInput_->reverse) << "\r";
 #endif
 		}
 
