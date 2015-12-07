@@ -207,5 +207,5 @@ void PcCom::dataStream()
 void PcCom::error(std::string msg)
 {
     this->logClassPtr_->writeError(__PRETTY_FUNCTION__,msg);
-    exit(1);
+    return;
 }
