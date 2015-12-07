@@ -7,14 +7,12 @@ int main() {
     Log myLog;
     
     Psoc myPsoc(&myLog);
-    
-    std::cout << "Class created" << std::endl;
-    
-    //myPsoc.getDistance("FL");   
-    //myPsoc.getVelocity();
-    
-    sleep(2);
-    
+
+    for(int i = 0; i<5;i++){
+      std::cout << myPsoc.getDistance("FL") << std::endl;
+      std::cout << myPsoc.getVelocity() << std::endl;    
+      
+      sleep(1);
+    }
     return 0;
 }
- 

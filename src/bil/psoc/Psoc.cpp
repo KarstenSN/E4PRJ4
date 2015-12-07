@@ -1,6 +1,7 @@
 //Psoc.cpp
 #include <Psoc.hpp>
 
+char rdBuffer[9] = {0};
 
 // Constructor
 Psoc::Psoc(Log* Log){
@@ -8,14 +9,15 @@ Psoc::Psoc(Log* Log){
     std::cout << "Psoc class running.." << std::endl;
     this->logPtr_->writeEvent(__PRETTY_FUNCTION__,"Psoc class active");
     
-    std::thread psocThread_(&Psoc::psocRead, this);
+    this->psocThread_ = std::thread(&Psoc::psocThread_ , this);
 }
+
 
 // Destructor
 Psoc::~Psoc(){
     std::cout << "Psoc class shutdown.." << std::endl;
     this->logPtr_->writeEvent(__PRETTY_FUNCTION__,"Psoc class shutdown");
-    psocThread_.join();
+    this->psocThread_.join();
 }
 
 
@@ -23,6 +25,8 @@ Psoc::~Psoc(){
 int Psoc::getDistance(std::string name){
     
     std::lock_guard<std::mutex> lock(psocMut);
+    
+    std::cout << "getdistance() kører" << std::endl;
     
     if( name == "FL" ){
         return distanceFL_;
@@ -45,8 +49,35 @@ int Psoc::getDistance(std::string name){
 
 // getVelocity()
 int Psoc::getVelocity(){
+    
+    std::cout << "getVelocity() kører" << std::endl;
+  
     return Tacho_;
 }
+
+
+// PsocRead()
+void Psoc::psocRead(){
+    
+    std::cout << "test af Thread" << std::endl;
+    
+    while(1){
+	  // get data from PSOC
+	  Psoc::update();
+	
+	  std::lock_guard<std::mutex> lock(psocMut);
+	  
+	  // move data to members
+	  distanceFL_ = (int)((rdBuffer[0] << 8) + rdBuffer[1]);
+	  distanceFR_ = (int)((rdBuffer[2] << 8) + rdBuffer[3]);
+	  distanceRL_ = (int)((rdBuffer[4] << 8) + rdBuffer[5]);
+	  distanceRR_ = (int)((rdBuffer[6] << 8) + rdBuffer[7]);
+	  Tacho_      = (int)(rdBuffer[8]);
+	
+	  std::this_thread::sleep_for(std::chrono::seconds(1));
+      }
+}
+
 
 // update()
 int Psoc::update(){
@@ -54,6 +85,8 @@ int Psoc::update(){
     // open i2c device;
     int fd;
     int Psocslave = 0x10;
+    
+    std::cout << "Update() kører" << std::endl;
 
     if ((fd = open("/dev/i2c-1", O_RDWR)) < 0){
         std::cout << "Error in opening I2C-Bus (DistanceSensor)" << std::endl;
@@ -66,38 +99,13 @@ int Psoc::update(){
         std::cout << "Error in setting addr: (DistanceSensor)" << Psocslave << std::endl;
         close(fd);
         return -2;
-    }
-/*    
-    // Fejlcheck
+    }   
+    // Læsning og fejlcheck
     int check = read(fd,rdBuffer,9);
     if (check != 9){
         std::cout << "Failed to read distancesensor from I2C bus.\n" << std::endl;
         close(fd);
         return -3;
     }
-*/
     close(fd);
 }
-
-void Psoc::psocRead(){
-    char rdBuffer[9] = {0};
-    
-    std::cout << "test af Thred" << std::endl;
-    
-    Psoc::update();
-    
-    while(1){
-        {
-            std::lock_guard<std::mutex> lock(psocMut);
-            distanceFL_ = (int)((rdBuffer[0] << 8) + rdBuffer[1]);
-            distanceFR_ = (int)((rdBuffer[2] << 8) + rdBuffer[3]);
-            distanceRL_ = (int)((rdBuffer[4] << 8) + rdBuffer[5]);
-            distanceRR_ = (int)((rdBuffer[6] << 8) + rdBuffer[7]);
-            Tacho_      = (int)(rdBuffer[8]);
-        }
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-    }
-}
-
-
-
