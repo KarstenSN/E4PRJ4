@@ -37,10 +37,13 @@ private:
     char controller_[4];
     int portnoData_;
     int portnoController_;
+    bool running_;
     Data* dataClassPtr_;
     Settings* settingsClassPtr_;
     UserInput UserInput_;
     Log* logClassPtr_;
+    std::thread dataStreamTh;
+    std::thread controllerStreamTh;
 };
 
 #endif // PCCOM_HPP

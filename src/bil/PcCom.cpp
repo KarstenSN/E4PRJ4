@@ -16,16 +16,18 @@ PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr)
     this->UserInput_.reverse = 0;
     this->UserInput_.stop = 0;
     this->UserInput_.turn = 0;
+    this->running_ = true;
     
-    std::thread dataStreamTh(&PcCom::dataStream , this);
-    std::thread controllerStreamTh(&PcCom::controllerStream , this);
+    this->dataStreamTh = std::thread(&PcCom::dataStream , this);
+    this->controllerStreamTh = std::thread(&PcCom::controllerStream , this);
     
-    this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"PcCom initialized");
+    this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"PcCom initialized");    
 }
 
 PcCom::~PcCom()
 {
-
+    this->dataStreamTh.join();
+    this->controllerStreamTh.join();
 }
 
 void PcCom::controllerStream()
@@ -50,14 +52,14 @@ void PcCom::controllerStream()
     clilen = sizeof(cli_addr);
 
     // Infinite wait for connection
-    while(1)
+    while(running_)
     {
         newsockfd = accept(sockfd,(struct sockaddr *) &cli_addr, &clilen);
         if (newsockfd < 0)
             break;
 
         this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__, "Controller TCP-Connection aquired");
-        while(1)
+        while(running_)
         {
             /* Acquire controller data from computer
              * controller[0] = Forward      (0 - 255)
@@ -116,14 +118,14 @@ void PcCom::dataStream()
     clilen = sizeof(cli_addr);
 
     // Infinite wait for connection
-    while(1)
+    while(running_)
     {
         newsockfd = accept(sockfd,(struct sockaddr *) &cli_addr, &clilen);
         if (newsockfd < 0)
             break;
 
         this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__, "Data TCP-Connection aquired");
-        while(1)
+        while(running_)
         {
             /*  Acquire data from computer:
              *  data[0] = Max speed             (km/h)
@@ -136,7 +138,10 @@ void PcCom::dataStream()
 
             // Shut down if "dwnnow" is send by the PC
             if(this->data_[0] == 'd' && this->data_[1] == 'w' && this->data_[2] == 'n' && this->data_[3] == 'n' && this->data_[4] == 'o' && this->data_[5] == 'w')
+	    {
+		this->running_ = false;
                 break;
+	    }
 
            if (n < 0)
                 this->error("ERROR reading from socket");
@@ -155,10 +160,10 @@ void PcCom::dataStream()
             }
 
             // Update the maximum speed in Settings
-            this->settingsClassPtr_->setMaxSpeed(static_cast<int>(this->data_[0]));
+            this->settingsClassPtr_->setMaxSpeed((int)this->data_[0]);
 
             // Get latest Velocity and put in data buffer
-            this->data_[1] = static_cast<char>(this->dataClassPtr_->getLatestVelocity());
+            this->data_[1] = static_cast<char>(this->dataClassPtr_->getLatestVelocity() * 10);
 
             // Get latest distances and put lowest value in data buffer
             distance = this->dataClassPtr_->getLatestDistance("FR");
@@ -169,10 +174,10 @@ void PcCom::dataStream()
             if (this->dataClassPtr_->getLatestDistance("RR") > distance)
                 distance = this->dataClassPtr_->getLatestDistance("RR");
 
-            this->data_[2] = static_cast<char>(distance);
+            this->data_[2] = static_cast<char>(distance * 10);
 
             // Get latest Acceleration and put in data buffer
-            this->data_[3] = static_cast<char>(this->dataClassPtr_->getLatestAcceleration());
+            this->data_[3] = static_cast<char>(this->dataClassPtr_->getLatestAcceleration() * 10);
 
             // Send new data
             n = write(newsockfd,this->data_,6);
@@ -196,6 +201,6 @@ void PcCom::dataStream()
 
 void PcCom::error(std::string msg)
 {
-    this->logClassPtr_->writeError(__PRETTY_FUNCTION__,msg);
+    this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,msg);
     exit(1);
 }
