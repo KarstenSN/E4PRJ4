@@ -34,7 +34,7 @@ Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 	maxServoPWM_ = maxServoPWM;
 
 	//***** Software PWM *****
-	err = softPwmCreate(PWM_SERVO_PIN, 0, 100);
+	err = softPwmCreate(PWM_SERVO_PIN, 0, 75);
 	if (err != 0)
 		this->logPtr_->writeError(__PRETTY_FUNCTION__, "Failed to init softPwmCreate()");
 
