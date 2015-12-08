@@ -8,11 +8,14 @@ int main() {
     
     Psoc myPsoc(&myLog);
 
-    for(int i = 0; i<5;i++){
-      std::cout << myPsoc.getDistance("FL") << std::endl;
-      std::cout << myPsoc.getVelocity() << std::endl;    
+    while(1){
+      std::cout << "FL: " << myPsoc.getDistance("FL") << std::endl;
+      std::cout << "FR: " << myPsoc.getDistance("FR") << std::endl;
+      std::cout << "RL: " << myPsoc.getDistance("RL") << std::endl;
+      std::cout << "RR: " << myPsoc.getDistance("RR") << std::endl;
+      std::cout << "Km/t: " << ((double)myPsoc.getVelocity())/10 << std::endl;    
       
-      sleep(1);
+      usleep(100000);
     }
     return 0;
 }
