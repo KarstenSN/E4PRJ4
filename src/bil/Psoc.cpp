@@ -8,7 +8,9 @@ char rdBuffer[9] = {0};
 // Constructor
 Psoc::Psoc(Log* Log){
     this->logPtr_ = Log;
+    #ifdef DEBUGGING_MODE
     std::cout << "Psoc class running.." << std::endl;
+    #endif 
     this->logPtr_->writeEvent(__PRETTY_FUNCTION__,"Psoc class active");
     
     this->psocThread_ = std::thread(&Psoc::psocRead , this);
@@ -17,7 +19,9 @@ Psoc::Psoc(Log* Log){
 
 // Destructor
 Psoc::~Psoc(){
+    #ifdef DEBUGGING_MODE
     std::cout << "Psoc class shutdown.." << std::endl;
+    #endif 
     this->logPtr_->writeEvent(__PRETTY_FUNCTION__,"Psoc class shutdown");
     this->psocThread_.join();
 }
