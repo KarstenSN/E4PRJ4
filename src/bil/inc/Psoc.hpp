@@ -21,15 +21,14 @@ public:
         int getVelocity();
 private:
         int update();
-        static void psocRead();
-        int distanceFL_;
-        int distanceFR_;
-        int distanceRL_;
-        int distanceRR_;
-        int Tacho_;
+        void psocRead();
+        int distanceFL_ = 0;
+        int distanceFR_ = 0;
+        int distanceRL_ = 0;
+        int distanceRR_ = 0 ;
+        int Tacho_ = 0;
         Log* logPtr_;
-        std::mutex mtx;
-        
+        std::mutex psocMut;
         std::thread psocThread_;
 };
 

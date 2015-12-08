@@ -6,19 +6,184 @@
 \caption{GUI i implementerings processen}
 \label{fig:GUI_design}
 \end{figure}
-Udviklingsmiljøet som hele GUI'en er skrevet i er Qt version 5.5 \cite{lib:qt}. En af fordelene ved QT er at man kan lave den grafiske del af GUI'en hurtigt og uden at skulle vide noget om hvordan koden bagved fungerer. Princippet er drag and drop og fungerer ved at man trækker de forskellige knapper og bokse ind i vinduet. Qt opretter selv en klasse kaldet MainWindow. I Main.cpp oprettes en instans af MainWindow som gør at hele programmet køres i MainWindow's constructor. Når programmet kører og der trykkes på en knap gives der et signal. Signalet forbindes til en slot i constructoren ved hjælp af funktionen \texttt{connect}.
-\begin{lstlisting}[caption={Forbindelse af signals og slots},label=gui_connect, language=c++]
-connect(ui->OpretForbindelse, SIGNAL(clicked()), this, SLOT(Au2connect()));
-connect(ui->KonfigurerIP, SIGNAL(clicked()), this, SLOT(konfigurerIP()));
-connect(ui->AKS, SIGNAL(clicked()), this, SLOT(AKSstatus()));
-connect(ui->IndstilMaksHastighed, SIGNAL(clicked()), this, SLOT(maksHastighed()));
-connect(ui->KalibrerStyretoj, SIGNAL(clicked()), this, SLOT(kalibrerStyretoj()));
-connect(ui->LukNed, SIGNAL(clicked()), this, SLOT(shutDown()));
-connect(this, SIGNAL(sig_getData()), this, SLOT(readSocket()));
+I denne sektion beskrives funktionerne i MainWindow i detaljer. Udviklingsmiljøet som hele GUI'en er skrevet i er Qt version 5.5 \cite{lib:qt}. En af fordelene ved QT er at man kan lave den grafiske del af GUI'en hurtigt og uden at skulle vide noget om hvordan koden bagved fungerer. Princippet er drag and drop og fungerer ved at man trækker de forskellige knapper og bokse ind i vinduet. Se figur \ref{fig:GUI_design}.
+\subsubsection{MainWindow::MainWindow}
+Qt opretter selv en klasse kaldet MainWindow. I main funktionen oprettes en instans af MainWindow som gør at hele programmet køres i MainWindow's constructor. Når programmet kører og der trykkes på en knap gives der et signal. Signalet forbindes til et slot i constructoren ved hjælp af funktionen \texttt{connect}. Hovedvinduets signals og slots forbindes i constructoren. I listing \ref{lst:constructor} ses fx. at når der klikkes på OpretForbindelse kaldes funktionen Au2connect som er funktionen der opretter forbindelsen til bilen. Det ses også at variablerne sættes til en default værdi samt der oprettes instanser af VLC-player når constructoren eksekveres. 
+\begin{lstlisting}[caption={MainWindows constructor},label=lst:constructor, language=c++]
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent), ui(new Ui::MainWindow),media(0)
+{
+    isConnected=false;
+    controllerConnected=false;
+    ui->setupUi(this);
+    this->setWindowTitle("Au2");
+
+    instance = new VlcInstance(VlcCommon::args(), this);
+    player = new VlcMediaPlayer(instance);
+    player->setVideoWidget(ui->video);
+
+    readDataFromFile();
+
+    data[1] = 0;//hastighed
+    data[2] = 0;//afstand
+    data[3] = 0;//acceleration
+    data[4] = 1;//AKS = on
+
+    ui->AKS->setText("AKS-On");
+
+    updateData();
+    // Forbindelse af signals og slots 
+    connect(ui->OpretForbindelse, SIGNAL(clicked()), this, SLOT(Au2connect()));
+    connect(ui->KonfigurerIP, SIGNAL(clicked()), this, SLOT(konfigurerIP()));
+    connect(ui->AKS, SIGNAL(clicked()), this, SLOT(AKSstatus()));
+    connect(ui->IndstilMaksHastighed, SIGNAL(clicked()), this, SLOT(maksHastighed()));
+    connect(ui->KalibrerStyretoj, SIGNAL(clicked()), this, SLOT(kalibrerStyretoj()));
+    connect(ui->LukNed, SIGNAL(clicked()), this, SLOT(shutDown()));
+    connect(this, SIGNAL(sig_getData()), this, SLOT(readSocket()));
+}
 \end{lstlisting}
-I listing \ref{gui_connect} ses fx. at når der klikkes på OpretForbindelse kaldes funktionen Au2connect som er funktionen der opretter forbindelsen til bilen. 
+\subsubsection{void MainWindow::Au2connect()}
+Når \textbf{Au2connect} bliver kaldt testes der først om forbindelsen allerede er oprettet ved hjælp af variablen isConnected. Er forbindelsen allerede oprettet vil denne variabel være true og der gives besked til brugeren ved hjælp af en messageBox om at forbindelsen allerede er oprettet. Er forbindelsen ikke oprettet, oprettes dataSocket og signals og slot forbindes således signalet connected forbindes til funktionen connected, som sætter variablen isConnected til true samt skaber en messageBox hvor brugeren gives besked om at forbindelsen er oprettet. Derefter oprettes der forbindelse til bilen og der ventes indtil at forbindelsen er etableret, bliver forbindelsen ikke etableret oprettes en messageBox hvori bruger gives besked herom. Lykkedes det at oprette forbindelse kaldes funktionen controller() som sørger for at forbinde comtrolleren med bilen. Når controller() er retuneret oprettes dataThread.
+\begin{lstlisting}[caption={Au2Connect},label=lst:au2connect, language=c++]
+void MainWindow::Au2connect()
+{
+    if(isConnected)
+    {
+        QMessageBox messageBox;
+        messageBox.information(0,"Status","Forbindelsen er allerede oprettet!");
+        messageBox.setFixedSize(500,200);
+    }
+    else
+    {
+        socket = new QTcpSocket(this);
 
+        connect(socket,SIGNAL(connected()),this,SLOT(connected()),Qt::DirectConnection);
+        connect(socket,SIGNAL(disconnected()),this,SLOT(connectionLost()),Qt::DirectConnection);
 
+        socket->connectToHost(IP,1234);
+
+        if(!socket->waitForConnected(1000))
+        {
+            QMessageBox messageBox;
+            messageBox.critical(0,"Fejl","Forbindelsen blev ikke oprettet!");
+            messageBox.setFixedSize(500,200);
+        }
+        else
+        {
+            controller();
+            int error = pthread_create(&dataThread, NULL, this->getDataHelper ,this);
+               if(error !=0)
+              {
+                qDebug()<<"Error on pthread_create"<<endl;
+                return;
+              }
+
+            openPlayer();
+         }
+     }
+}
+\end{lstlisting}
+\subsubsection{void MainWindow::controller()}
+\textbf{controller()} sørger for at forbinde controlleren med bilen. Der oprettes først en instance af Xboxcontroller hvorefter der testes om controlleren er forbundet. Er controlleren ikke forbundet oprettes der en messageBox hvori brugeren gives besked herom. Hvis controlleren er forbundet oprettes controllerSocket og dens signals og slots forbindes. Efterfølgende skabes der forbindelse og der testes om det lykkedes. Lykkedes det ikke gives bruger besked herom. Ellers oprettes controllerThread og og funktionen returnerer. Se Listing \ref{lst:controller}.
+\begin{lstlisting}[caption={controller},label=lst:controller, language=c++]
+void MainWindow::controller()
+{
+
+    XboxController_ = new XboxController(1);
+
+    if(!XboxController_->connect())
+    {
+        QMessageBox messageBox;
+        messageBox.critical(0,"Fejl","Controlleren er ikke tilsluttet");
+        messageBox.setFixedSize(500,200);
+        delete XboxController_;
+        return;
+    }
+
+    controllerSocket = new QTcpSocket;
+
+    connect(controllerSocket,SIGNAL(connected()),this,SLOT(controllerIsConnected()),Qt::AutoConnection);
+    connect(controllerSocket,SIGNAL(disconnected()),this,SLOT(controllerLostConnection()),Qt::AutoConnection);
+
+    controllerSocket->connectToHost(IP,1235);
+
+    if(!controllerSocket->waitForConnected(1000))
+    {
+        QMessageBox messageBox;
+        messageBox.critical(0,"Fejl","Controlleren kunne ikke oprette forbindelse til bilen");
+        messageBox.setFixedSize(500,200);
+        delete controllerSocket;
+        delete XboxController_;
+    }
+    else
+    {
+        int error = pthread_create(&controllerThread, NULL, this->controllerStreamHelper ,this);
+           if(error !=0)
+          {
+            qDebug()<<"Error on pthread_create controller"<<endl;
+            return;
+          }
+
+     }
+
+}
+\end{lstlisting}
+\subsubsection{void* MainWindow::controllerStream()}
+Funktionen \textbf{controllerStream()} streamer data fra controlleren til bilen således bilen kan reagere på input fra brugeren. Funktionen starter med at oprette et array hvori controller data gemmes. Data fra XboxController hentes og sendes til bilen ved hjælp af controllerSocket i en while-løkke, så længe controllerConnected er true.
+\begin{lstlisting}[caption={controllerStream},label=lst:controller, language=c++]
+void* MainWindow::controllerStream(void)
+{
+    char controllerData[4]={0};
+    char turn;
+    unsigned char forward;
+    unsigned char back;
+    bool brake;
+    while (controllerConnected)
+    {
+        XboxController_->getCtrData(turn, forward, back, brake);
+        controllerData[0]=forward;
+        controllerData[1]=back;
+        controllerData[2]=turn;
+        controllerData[3]=(char)brake;
+        controllerSocket->write(controllerData,4);
+        controllerSocket->waitForBytesWritten();
+        QThread::msleep(10);
+    }
+
+    return NULL;
+}
+\end{lstlisting}
+\subsubsection{void* MainWindow::controllerStreamHelper()}
+Funktionen \textbf{controllerStreamHelper()} kaldes når \textbf{controllerThread} oprettes af p\_thread\_create. Da p\_thread\_create kun kan tilgå static funktioner gøres \textbf{controllerStreamHelper()} static i MainWindow.h. Funktionen retunerer blot en pointer til \textbf{controllerStream()}
+\begin{lstlisting}[caption={controllerStream},label=lst:controller, language=c++]
+void* MainWindow::controllerStreamHelper(void* context)
+{
+    return ((MainWindow *)context)->controllerStream();
+}
+\end{lstlisting}
+
+\subsubsection{void* MainWindow::getData()}
+Funktionen \textbf{getData} kører i en while-løkke så længe variablen isConnected er true. isConnected sættes til true når dataSocket har oprettet forbindelsen til bilen og false når dataSocket mister forbindelsen. I while-løkken gives signalet sig\_getData som gør at MainWindow eksekverer funktionen readSocket() som sender og henter nyt data fra bilen. Efterfølgende eksekveres funktionen updateData som opdater variablerne i hovedvinduet.
+\begin{lstlisting}[caption={getData},label=lst:getData, language=c++]
+void* MainWindow::getData(void)
+{
+    while(isConnected)
+    {
+        sig_getData();
+        updateData();
+        QThread::msleep(100);
+    }
+    return NULL;
+}
+\end{lstlisting}
+\subsubsection{void* MainWindow::getDataHelper()}
+
+\begin{lstlisting}[caption={getDataHelper},label=lst:getData, language=c++]
+void* MainWindow::getDataHelper(void* context)
+{
+    return ((MainWindow *)context)->getData();
+}
+\end{lstlisting}
 
 \subsection{VLC}
 Udviklingsmiljøet som hele GUI'en er skrevet i er Qt version 5.5. For at inkludere VLC, skal Qt være installeret \cite{lib:qt}. For at kunne modtage video stream i GUI'en skal vi bruge en forbygget version af VLC til windows32 indeholdende .dll filer osv, samt bilioteker til Qt. Dette gøres ved at udpakke Filen \textbf{vlc-2.0.7-win32.7z} som hentes fra en ftp server \cite{lib:vlc-ftp}. til destinationen \textbf{c:/Qt/}. Pakken indeholder rumtime-filerne som senere skal kopieres over i debugfolderen. Include filerne til Qt downloades \textbf{“Official VLC-Qt Windows SDK and Source Packages”} \cite{lib:vlc-qt} og udpakkes i \textbf{c:/Qt/}. I denne pakke ligger der et demoprojekt som der er hentet inspiration fra til projektet. Laves der et nyt projekt skal der inkluderes de rigtige filer til Qt. Dette gøres ved at åbne .pro filen i Qt og tilføje:

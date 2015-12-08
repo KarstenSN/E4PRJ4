@@ -52,19 +52,19 @@ void PcCom::controllerStream()
     clilen = sizeof(cli_addr);
 
     // Infinite wait for connection
-    while(running_)
+    while(1)
     {
         newsockfd = accept(sockfd,(struct sockaddr *) &cli_addr, &clilen);
         if (newsockfd < 0)
             break;
 
         this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__, "Controller TCP-Connection aquired");
-        while(running_)
+        while(1)
         {
             /* Acquire controller data from computer
              * controller[0] = Forward      (0 - 255)
              * controller[1] = Reverse      (0 - 255)
-             * controller[2] = Turn         (-127 - 128)
+             * controller[2] = Turn         (-128 - 127)
              * controller[3] = Break        (0 - 1) */
             n = read(newsockfd,this->controller_,4);
 
@@ -84,14 +84,20 @@ void PcCom::controllerStream()
             n = write(newsockfd,this->controller_,4);
 
             if (n < 0)
-            {
-                this->error("ERROR writing to socket");
                 break;
-            }
+			
+			if (!this->running_)
+				break;
         }
+		
+		if (n < 0)
+				this->error("ERROR writing to socket");
         close(newsockfd);
+		if (!this->running_)
+				break;
     }
     close(sockfd);
+	this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Closing the controller connection");
     return;
 }
 
@@ -100,10 +106,9 @@ void PcCom::dataStream()
     this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__, "Initializing TCP connection for data stream");
     
     // Initialize variables
-    int sockfd, newsockfd, n;
+    int sockfd, newsockfd, n, distance; 
     socklen_t clilen;
     struct sockaddr_in serv_addr, cli_addr;
-    char distance;
 
     // Initialize socket for dataStream
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -118,14 +123,14 @@ void PcCom::dataStream()
     clilen = sizeof(cli_addr);
 
     // Infinite wait for connection
-    while(running_)
+    while(1)
     {
         newsockfd = accept(sockfd,(struct sockaddr *) &cli_addr, &clilen);
         if (newsockfd < 0)
             break;
 
         this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__, "Data TCP-Connection aquired");
-        while(running_)
+        while(1)
         {
             /*  Acquire data from computer:
              *  data[0] = Max speed             (km/h)
@@ -138,10 +143,8 @@ void PcCom::dataStream()
 
             // Shut down if "dwnnow" is send by the PC
             if(this->data_[0] == 'd' && this->data_[1] == 'w' && this->data_[2] == 'n' && this->data_[3] == 'n' && this->data_[4] == 'o' && this->data_[5] == 'w')
-	    {
-		this->running_ = false;
-                break;
-	    }
+				break;
+	    
 
            if (n < 0)
                 this->error("ERROR reading from socket");
@@ -160,10 +163,10 @@ void PcCom::dataStream()
             }
 
             // Update the maximum speed in Settings
-            this->settingsClassPtr_->setMaxSpeed((int)this->data_[0]);
+            this->settingsClassPtr_->setMaxSpeed(static_cast<int>(this->data_[0]));
 
             // Get latest Velocity and put in data buffer
-            this->data_[1] = static_cast<char>(this->dataClassPtr_->getLatestVelocity() * 10);
+            this->data_[1] = static_cast<char>(this->dataClassPtr_->getLatestVelocity());
 
             // Get latest distances and put lowest value in data buffer
             distance = this->dataClassPtr_->getLatestDistance("FR");
@@ -174,10 +177,10 @@ void PcCom::dataStream()
             if (this->dataClassPtr_->getLatestDistance("RR") > distance)
                 distance = this->dataClassPtr_->getLatestDistance("RR");
 
-            this->data_[2] = static_cast<char>(distance * 10);
+            this->data_[2] = static_cast<char>(distance/10);
 
             // Get latest Acceleration and put in data buffer
-            this->data_[3] = static_cast<char>(this->dataClassPtr_->getLatestAcceleration() * 10);
+            this->data_[3] = static_cast<char>(this->dataClassPtr_->getLatestAcceleration());
 
             // Send new data
             n = write(newsockfd,this->data_,6);
@@ -194,13 +197,14 @@ void PcCom::dataStream()
         if(this->data_[0] == 'd' && this->data_[1] == 'w' && this->data_[2] == 'n' && this->data_[3] == 'n' && this->data_[4] == 'o' && this->data_[5] == 'w')
             break;
     }
-    this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Closing the data coneection");
     close(sockfd);
+	this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Closing the data connection");
+	this->running_ = false;
     return;
 }
 
 void PcCom::error(std::string msg)
 {
-    this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,msg);
-    exit(1);
+    this->logClassPtr_->writeError(__PRETTY_FUNCTION__,msg);
+    return;
 }

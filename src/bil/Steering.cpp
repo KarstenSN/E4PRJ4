@@ -1,5 +1,7 @@
 ﻿#include <Steering.hpp>
 
+
+
 Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 {
 	dataClassPtr_ = dataClassPtr;
@@ -89,9 +91,13 @@ int Steering::userInput(UserInput* UsrInput_)
 			msg.append("userInput ").append(" speedReqFor_ ").append(std::to_string(speedReqFor_))
 			.append(" speedReqBack_ ").append(std::to_string(speedReqBack_));
 			this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
-			//std::cout << "userInput()" << "speedReqFor_ " << speedReqFor_ << " speedReqBack_ " << speedReqBack_ << std::endl;
 			*/
-		}
+/*			
+#ifdef DEBUG
+			fflush(stdout);
+			std::cout << "userInput()" << "speedReqFor_ " << static_cast<int>(UsrInput_->forward) << " speedReqBack_ " << static_cast<int>(UsrInput_->reverse) << "            " << "\r";
+#endif
+*/		}
 
 		this->motorSetPWM(UsrInput_->forward, UsrInput_->reverse);
 
@@ -137,11 +143,16 @@ int Steering::turn(signed char value)
 {
 	int TurnValue_ = ((((value + 127) * (maxServoPWM - minServoPWM)) / 255) + 5);
 	softPwmWrite(PWM_SERVO_PIN, TurnValue_);
-	/*
+	
 	std::string msg;			// For testing only
 	msg.append("Turn value received: ").append(std::to_string(value)).append(" Output value: ").append(std::to_string(TurnValue_));
-	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
-	*/
+	//this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
+	
+	
+#ifdef DEBUG
+			fflush(stdout);
+			std::cout << "Steering::turn" << msg  << "            " << "\r";
+#endif
 	return 1;
 }
 
@@ -234,8 +245,8 @@ void Steering::PWMUpdate()
 			iState_ = iMin_;
 		}
 		
-		iTemp_ = iGain_ * iState_; // calculate the integral temp
-		dTemp_ = dGain_ * (dState_ - speedAct_); // calculate the  derivative temp
+		//iTemp_ = iGain_ * iState_; // calculate the integral temp
+		//dTemp_ = dGain_ * (dState_ - speedAct_); // calculate the  derivative temp
 		dState_ = speedAct_;
 		motorPWMOutValue = pTemp_ + dTemp_ + iTemp_;
 
@@ -246,7 +257,7 @@ void Steering::PWMUpdate()
 
 		if (motorPWMOutValue >= PWM_SET_RANGE_VALUE)
 		{
-			motorPWMOutValue = PWM_SET_RANGE_VALUE-10;
+			motorPWMOutValue = PWM_SET_RANGE_VALUE;
 		}
 
 		if (activatePWM_ == 1)
@@ -256,7 +267,7 @@ void Steering::PWMUpdate()
 		 
 		
 		//this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Thread prg end - sleeping");
-		std::this_thread::sleep_for(std::chrono::microseconds(5000)); // For testing. Needed ??
+		std::this_thread::sleep_for(std::chrono::microseconds(2500)); // For testing. Needed ??
 	}
 
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Thread stopping");

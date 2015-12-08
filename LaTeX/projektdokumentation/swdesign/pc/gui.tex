@@ -203,6 +203,7 @@ Navn & Type & Beskrivelse \\\hline
 \texttt{dataThread}          & \texttt{p\_thread\_t}     &Er selve data tråden\\\hline
 \texttt{controller -Thread}    & \texttt{p\_thread\_t}     &Er selve controller tråden\\\hline
 \texttt{XboxControl -ler\_}     & \texttt{XboxControl -ler*}&En instance af Xbox360-controlleren\\\hline
+\texttt{sig\_getData}     & \texttt{signal}&dataThread bruger dette signal til at give besked til MainWindow om at køre funktionen readSocket \\\hline
 
 \end{tabularx}
 \caption{Attributter for klassen MainWindow}
@@ -216,7 +217,7 @@ Navn & Type & Beskrivelse \\\hline
 Prototype & \texttt{explicit void MainWindow()} \\\hline
 Parametre &  QWidget \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Er MainWindows constructor. Bruges til at indlæse data fra log filen så bruger kan se gamle indtastede værdier, samt opdatere hovedvinduet.   \\\hline
+Beskrivelse & Er MainWindows constructor. Bruges til at indlæse data fra log filen så bruger kan se gamle indtastede værdier, samt opdatere hovedvinduet, forbinde signals og slots, initiere variabler til deres default værdi og oprette en instans af VLC player. Playeren åbnes dog først når en socketforbindelse er oprettet.   \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{MainWindow}}
 \label{table:met_MainWindow}
@@ -233,23 +234,13 @@ Beskrivelse & Er MainWindows destructor. Bruges til at slette oprettede instanse
 \label{table:met_sMainWindow}
 \end{table}
 
-\begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{signal void sig\_getData()} \\\hline
-Parametre &  \\\hline
-Returværdi &  \\\hline
-Beskrivelse & Bliver kaldt af dataThread når MainWindow skal opdatere data arrayet. Signalet fungerer ved at det eksekveres som en funktion i dataThread. Herved gives et signal til MainWindow som derved eksekverer funktionen readSocket.  \\\hline
-\end{tabularx}
-\caption{Metodebeskrivelse for \texttt{sig\_getData}}
-\label{table:met_siggetData}
-\end{table}
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype & \texttt{slot void Au2connect()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Kaldes når bruger trykker på ''Opret forbindelse''. Bruges til at skabe forbindelse mellem bil og Pc samt oprette dataThread og Xbox360ControllerThread. \\\hline
+Beskrivelse & Kaldes når bruger trykker på ''Opret forbindelse''. Bruges til at skabe forbindelse mellem bil og Pc samt oprette dataThread og Xbox360ControllerThread samt forbinde signals og slots. Når der ikke kan oprettes forbindelse skabes der et advarselsvindue hvori der gives besked til bruger om at forbindelsen ikke kunne skabes. Oprettes forbindelsen oprettes der et meddelelsesvindue hvor bruger gives besked om at forbindelse er oprettet. Er forbindelsen oprettet sørger denne funktion også for at åbne VLC-playeren i hovedvinduet. \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{Au2connect}}
 \label{table:met_Au2connect}
@@ -260,7 +251,7 @@ Beskrivelse & Kaldes når bruger trykker på ''Opret forbindelse''. Bruges til a
 Prototype & \texttt{slot void konfigurerIp()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Kaldes når bruger trykker på ''Konfigurer IP''. Bruges til at opdatere variablen IP med brugerinput. \\\hline
+Beskrivelse & Kaldes når bruger trykker på ''Konfigurer IP''. Bruges til at opdatere variablen IP med brugerinput. En inputdialog åbnes hvor brugeren indtaster en IP-adresse. IP-adressen gemmes i variablen IP. Variablen videoURL sættes til "http://"+IP+":8081/stream.mjpeg" \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{konfigurerIp}}
 \label{table:met_konfigurerIp}
@@ -271,7 +262,7 @@ Beskrivelse & Kaldes når bruger trykker på ''Konfigurer IP''. Bruges til at op
 Prototype & \texttt{slot void AKSstatus()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Kaldes når bruger trykker på ''AKS-On'' eller ''AKS-Off''. Bruges til at ændre status på AKS. \\\hline
+Beskrivelse & Kaldes når bruger trykker på ''AKS-On'' eller ''AKS-Off''. Bruges til at ændre status på AKS. data[4] sættes til henholdsvis 1 eller 0. Teksten på knappen ændres enten til ''AKS-Off'' eller ''AKS-On'' afhængig af en nuværende værdi af AKS. \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{AKSstatus}}
 \label{table:met_AKSstatus}
@@ -279,13 +270,13 @@ Beskrivelse & Kaldes når bruger trykker på ''AKS-On'' eller ''AKS-Off''. Bruge
 
 \begin{table}[H]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{slot void AKSstatus()} \\\hline
+Prototype & \texttt{slot void maksHastighed} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Kaldes når bruger trykker på ''Indstil makshastighed''. Bruges til at ændre makshastigheden på bilen. \\\hline
+Beskrivelse & Kaldes når bruger trykker på ''Indstil makshastighed''. Bruges til at ændre makshastigheden på bilen. En inputdialog åbnes hvori bruger kan indtaste en værdi mellem 0 og 10. Inputdialogen blokere selv for indtastninger uden for dette interval.  \\\hline
 \end{tabularx}
-\caption{Metodebeskrivelse for \texttt{AKSstatus}}
-\label{table:met_AKSstatus}
+\caption{Metodebeskrivelse for \texttt{maksHastighed}}
+\label{table:met_maksHastighed}
 \end{table}
 
 \begin{table}[H]
@@ -293,7 +284,7 @@ Beskrivelse & Kaldes når bruger trykker på ''Indstil makshastighed''. Bruges t
 Prototype & \texttt{slot void readSocket()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Kaldes når dataThread vil have opdateret data fra bilen. dataThread giver signalet sig\_getData(). Funktionen kører i MainWindow og opdaterer data arrayet.\\\hline
+Beskrivelse & dataThread giver signalet sig\_getData() som modtages af MainWindow der herved eksekverer denne funktion. I funktionen låses mutexen så MainWindow ikke kan tilgå data arrayet samtidig. data arrayet sendes til bilen, derefter sender bilen dens data som igen modtages i data arrayet. Efter modtagelse af data oplåses mutexen. \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{readSocket}}
 \label{table:met_readSocket}
@@ -304,7 +295,7 @@ Beskrivelse & Kaldes når dataThread vil have opdateret data fra bilen. dataThre
 Prototype & \texttt{slot void connectionLost()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Kaldes når dataSocket mister forbindelsen til bilen. Variablen isConnected sættes til false. \\\hline
+Beskrivelse & Når dataSocket mister forbindelse gives signalet disconnected som er forbundet til denne funktion. Det vil sige at denne funktion køres når forbindelsen er mistet. Funktionen sætter variablen \textbf{isConnected} til \textbf{false}  \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{connectionLost}}
 \label{table:met_connectionLost}
@@ -315,7 +306,7 @@ Beskrivelse & Kaldes når dataSocket mister forbindelsen til bilen. Variablen is
 Prototype & \texttt{slot void connected()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Kaldes når dataSocket har oprettet forbindelsen til bilen. Variablen isConnected sættes til true. \\\hline
+Beskrivelse & Når dataSocket har oprettet forbindelse gives signalet connected som er forbundet til denne funktion. Det vil sige at denne funktion køres når forbindelsen er oprettet. Funktionen sætter variablen \textbf{isConnected} til \textbf{true}  \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{connected}}
 \label{table:met_connected}
@@ -327,7 +318,7 @@ Beskrivelse & Kaldes når dataSocket har oprettet forbindelsen til bilen. Variab
 Prototype & \texttt{slot void kalibrerStyretoj()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Kaldes når bruger trykker på ''Kalibrer styretøj''. Bruges til at kalibrere styretøjet på bilen. Funktionen opdaterer den respektive plads i data arrayet. \\\hline
+Beskrivelse & Kaldes når bruger trykker på ''Kalibrer styretøj''. Bruges til at kalibrere styretøjet på bilen. En inputdialog åbnes hvor det er mulig for brugeren at indtaste en værdi mellem -50 og 50. Inputdialogen blokerer selv for input udover dette interval. data[5] opdateres med værdien. \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{kalibrerStyretoj}}
 \label{table:met_kalibrerStyretoj}
@@ -338,7 +329,7 @@ Beskrivelse & Kaldes når bruger trykker på ''Kalibrer styretøj''. Bruges til 
 Prototype & \texttt{slot void shutDown()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Kaldes når bruger trykker på ''Luk ned'' eller klikker i det røde kryds i hovedvinduet. Sørger for at sende besked til bilen om at lukke dens software sikkert ned, samt skrive data arrayet til log-filen.  \\\hline
+Beskrivelse & Kaldes når bruger trykker på ''Luk ned'' eller klikker i det røde kryds i hovedvinduet. Sørger for at sende besked til bilen om at lukke dens software sikkert ned. Når funktionen køres tester den om isConnected er true, hvis den er skrives der "dwnnow" til bilen. Retuneres "dwnnow" fra bilen bliver dataSocket disconnected og destructoren kaldes. Modtages der andet en "dwnnow" fra bilen skabes der et advarselsvindue til brugeren om at bilen ikke kan lukke sikkert ned. \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{shutDown}}
 \label{table:met_shutDown}
@@ -349,7 +340,7 @@ Beskrivelse & Kaldes når bruger trykker på ''Luk ned'' eller klikker i det rø
 Prototype & \texttt{slot void controllerIsConnected()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Kaldes når der er forbindelse mellem Xbox360 controlleren og bilen. controllerConnected sættes til true.   \\\hline
+Beskrivelse & Eksekveres når controlleren er forbundet til bilen. controllerSocket giver signalet connected som er forbundet til denne funktion. Funktionen sætter variablen \textbf{controllerConnected} til \textbf{true}.   \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{controllerIsConnected}}
 \label{table:met_controllerIsConnected}
@@ -360,7 +351,7 @@ Beskrivelse & Kaldes når der er forbindelse mellem Xbox360 controlleren og bile
 Prototype & \texttt{slot void controllerLostConnection()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Kaldes når forbindelse mellem Xbox360 controlleren og bilen afbrydes. controllerConnected sættes til false.   \\\hline
+Beskrivelse & Eksekveres når controlleren mister forbundet til bilen. controllerSocket giver signalet disconnected som er forbundet til denne funktion. Funktionen sætter variablen \textbf{controllerConnected} til \textbf{false}.   \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{controllerLostConnection}}
 \label{table:met_ccontrollerLostConnection}
@@ -371,7 +362,7 @@ Beskrivelse & Kaldes når forbindelse mellem Xbox360 controlleren og bilen afbry
 Prototype & \texttt{void controller()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Kaldes når Au2Connect()vil oprette controllerThread. Funktionen sørger for at oprette controllerThread samt skabe controllerSocket. Funktionen retunerer hvis Xbox360 controlleren ikke er tilsluttet Pc'en.   \\\hline
+Beskrivelse & Kaldes af Au2Connect()når dataSocket er forbundet. Funktionen opretter en ny instance af XboxController og tester efterfølgende om controlleren er forbundet. Er controlleren ikke forbundet oprettes en advarselsmeddelelse hvor bruger gives besked herom. Er controlleren forbundet oprettes der en ny instance af controllerSocket og signals og slots forbindes. controllerSocket forbindes til bilen. Kan der ikke skabes forbindelse oprettes der en advarselsmeddelelse hvor bruger gives besked herom. Skabes forbindelsen retunerer funktionen herefter.  \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{controller}}
 \label{table:met_controller}
@@ -382,7 +373,7 @@ Beskrivelse & Kaldes når Au2Connect()vil oprette controllerThread. Funktionen s
 Prototype & \texttt{void* controllerStream()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Er selve funktionen der kontinuert bliver kørt at dataThread. Controller data bliver sendt til bilen med intervaller på 10ms.  \\\hline
+Beskrivelse & Funktionen kører i en while-løkke sålænge variablen controllerConnected er true. I while-løkken hentes data fra controlleren som efterfølgende sendes til bilen igennem controllerSocket. Herefter ventes 10ms før sekvensen gentages. Funktionen køres som controllerThread.\\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{controllerStream}}
 \label{table:met_controllerStream}
@@ -393,7 +384,7 @@ Beskrivelse & Er selve funktionen der kontinuert bliver kørt at dataThread. Con
 Prototype & \texttt{static void* controllerStreamHelper()} \\\hline
 Parametre & void* context  \\\hline
 Returværdi & Funktionspointer tilcontrollerStream  \\\hline
-Beskrivelse & Kaldes af pthread\_create og retunerer funktionspointeren til controllerStream. Dette gøres fordi pthread kun kan tilgå static funktioner.  \\\hline
+Beskrivelse & Kaldes af pthread\_create og retunerer funktionspointeren til controllerStream. Dette gøres fordi pthread kun kan tilgå static funktioner og at static funktioner kun kan tilgå static variabler. Dette giver et problem da controllerStream ikke tilgår static variabler og derfor ikke kan gøres static. pthread\_create eksekverer således controllerstream som controllerThread.\\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{controllerStreamHelper}}
 \label{table:met_controllerStreamHelper}
@@ -404,7 +395,7 @@ Beskrivelse & Kaldes af pthread\_create og retunerer funktionspointeren til cont
 Prototype & \texttt{void* getData()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Er selve funktionen der opdaterer MainWindow med data. Giver signal til MainWindow om at hente nye data fra bilen hvert 100ms.  \\\hline
+Beskrivelse & Funktionen kører i en while-løkke sålænge variablen isConnected er true. I while-løkken gives signalet sig\_getData som gør MainWindow eksekverer funktionen readSocket og herved opdaterer data arrayet. Efter signalet er givet kaldes funktionen updateData()som opdaterer hovedvinduet. Herefter ventes 100ms før sekvensen gentages.  \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{getData}}
 \label{table:met_getData}
@@ -415,7 +406,7 @@ Beskrivelse & Er selve funktionen der opdaterer MainWindow med data. Giver signa
 Prototype & \texttt{static void* getDataHelper()} \\\hline
 Parametre & void* context  \\\hline
 Returværdi & Funktionspointer getData  \\\hline
-Beskrivelse & Kaldes af pthread\_create og retunerer funktionspointeren til getData. Dette gøres fordi pthread kun kan tilgå static funktioner.  \\\hline
+Beskrivelse & Kaldes af pthread\_create og retunerer funktionspointeren til getData. Dette gøres fordi pthread kun kan tilgå static funktioner og at static funktioner kun kan tilgå static variabler. Dette giver et problem da getData ikke tilgår static variabler og derfor ikke kan gøres static. pthread\_create eksekverer således getData som dataThread.\\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{getDataHelper}}
 \label{table:met_getDataHelper}
@@ -437,7 +428,7 @@ Beskrivelse & Åbner instansen af VLC-player i hovedvinduet. Kaldes når dataSoc
 Prototype & \texttt{void writeDataToFile()} \\\hline
 Parametre &  \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Skriver data-arrayet til log filen når GUI'en lukkes ned.  \\\hline
+Beskrivelse & Skriver data-arrayet til log filen når GUI'en lukkes ned. Filen AutoData.txt belliggende i samme folder som Au2.exe, åbnes og indholdet af data arrayet skrives ud.  \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{writeDataToFile}}
 \label{table:met_writeDataToFile}
@@ -459,7 +450,7 @@ Beskrivelse & Læser data-arrayet fra log filen når contructoren kaldes.  \\\hl
 Prototype & \texttt{void updateData()} \\\hline
 Parametre &  \\\hline
 Returværdi &  \\\hline
-Beskrivelse & Opdaterer hovedvinduet med data. Kaldes i constructoren og senere af dataThread.   \\\hline
+Beskrivelse & Opdatere hovedvinduet med data arrayet. \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{updateData}}
 \label{table:met_updateData}
