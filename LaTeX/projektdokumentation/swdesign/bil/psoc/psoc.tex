@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 % ++++++++++++ Controller PSoC Master klassen ++++++++++++++
 \subsubsection{Boundary-klasse: Psoc}
 
@@ -7,184 +6,48 @@
 \includegraphics[]{../fig/diagrammer/bil/cd_psoc.pdf}
 \caption{Klassebeskrivelse af boundary-klassen Psoc}
 \label{fig:cd_psoc}
-=======
-\subsubsection{Domain-klasse: Settings}
 
-Denne klasses formål er at gemme de nyeste data af hhv. bilens maksimale hastighed, kalibrering af styrtøj samt AKS status. Alle disse værdier har brugeren mulighed for at indstille fra PC'en. Disse data skal ligeledes være tilgængelige for andre klasser, der har brug for en eller flere af disse data. Da der arbejdes med mange threads i systemet, er det vigtigt at det ikke er muligt at skrive og læse fra de samme data af to forskellige threads på samme tid, til dette udnyttes mutex låse. På Figur \ref{fig:cd_settings} kan ses et klasse diagram over den ønskede klasse efterfulgt af funktionalitet.
-
-\begin{figure}[h]
-\centering
-\includegraphics[]{../fig/diagrammer/bil/cd_tachometer.pdf}
-\caption{Klassebeskrivelse for domain-klassen Settings}
-\label{fig:cd_settings}
->>>>>>> 27b6dc3f50c6cb2555e7d05314a702b1b32e3a7b
 \end{figure}
 
 \textbf{Attributter}
 
 \begin{table}[h]
-<<<<<<< HEAD
 	\begin{tabularx}{\textwidth}{| Z | Z | L{10cm} |} \hline
 	Navn & Type & Beskrivelse \\\hline
-	\texttt{distanceFL\_}  & \texttt{int} 	& Midlertidig variabel der indeholder afstanden fra forreste venstre afstandssensor				\\\hline
-	\texttt{distanceFR\_}  & \texttt{int} 	& Midlertidig variabel der indeholder afstanden fra forreste højre afstandssensor				\\\hline
-	\texttt{distanceRL\_}  & \texttt{int} 	& Midlertidig variabel der indeholder afstanden fra bagerste venstre afstandssensor				\\\hline
-	\texttt{distanceRR\_}  & \texttt{int} 	& Midlertidig variabel der indeholder hastigheden fra Tachometeret								\\\hline
-	\texttt{logPtr} 	 & \texttt{Log*} 	& Pointer til Log-klassen, benyttes til at skrive i loggen										\\\hline
-	\texttt{psocMut} 	 & \texttt{mutex} 	& Mutex der benyttes til at låse de midlertidige variabler imens der skrives/læses til/fra dem	\\\hline
+	\texttt{distanceFL\_}  & \texttt{int} 	& Midlertidig variabel der indeholder afstanden fra forreste venstre afstandssensor					\\\hline
+	\texttt{distanceFR\_}  & \texttt{int} 	& Midlertidig variabel der indeholder afstanden fra forreste højre afstandssensor					\\\hline
+	\texttt{distanceRL\_}  & \texttt{int} 	& Midlertidig variabel der indeholder afstanden fra bagerste venstre afstandssensor					\\\hline
+	\texttt{distanceRR\_}  & \texttt{int} 	& Midlertidig variabel der indeholder hastigheden fra Tachometeret									\\\hline
+	\texttt{logPtr} 	 & \texttt{Log*} 	& Pointer til Log-klassen, benyttes til at skrive i loggen											\\\hline
+	\texttt{psocMut} 	 & \texttt{mutex} 	& Mutex der benyttes til at låse de midlertidige variabler imens der skrives/læses til/fra dem		\\\hline
 	\texttt{psocThread\_} & \texttt{thread} 	& Mutex der benyttes til at låse de midlertidige variabler imens der skrives/læses til/fra dem	\\\hline
 	\end{tabularx}
 	\caption{Attributter for klassen Psoc}
 	\label{table:attr_Psoc}
 \end{table}
-=======
-\begin{tabularx}{\textwidth}{| L{3cm} | Z | L{10cm} |} \hline
-Navn & Type & Beskrivelse \\\hline
-\texttt{maxVelocity\_}			& \texttt{int}		&Variabel af typen int til indhold af nuværende maksimal hastighed på bil.\\\hline
-
-\texttt{AKSStauts\_}			& \texttt{bool}		&Variabel af typen bool til indhold af nuværende tilstand af AKS.\\\hline
-
-\texttt{calibration\_}			& \texttt{char}		&Variabel af typen char der indeholder nuværende kalibrering til styrtøj.\\\hline
-
-\texttt{logClassPtr\_}			& \texttt{Log*}		&En pointer til et object af typen Log. Gør det muligt at kalde funktioner fra Log objektet.\\\hline
-
-\texttt{maxVelocitMut}			& \texttt{mutex}	&Mutex til kontrol af læsning og skrivning af/til maxVelocity\_ variabel fra flere threads.\\\hline
-
-\texttt{AKSStautsMut}			& \texttt{mutex}	&Mutex til kontrol af læsning og skrivning af/til AKSStatus\_ variabel fra flere threads.\\\hline
-
-\texttt{calibrationMut}			& \texttt{mutex}	&Mutex til kontrol af læsning og skrivning af/til calibration\_ variabel fra flere threads.\\\hline
-\end{tabularx}
-\caption{Attributter for klassen Settings}
-\label{table:attr_settings}
-\end{table}
-
->>>>>>> 27b6dc3f50c6cb2555e7d05314a702b1b32e3a7b
 \clearpage
 
 \textbf{Metoder}
 
 \begin{table}[h]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-<<<<<<< HEAD
-Prototype 	& \texttt{int getDistance(string name)} \\\hline
-Parametre 	& \texttt{name} \newline Navnet på den sensor der skal læses fra. Kan rumme én af fire muligheder "FL", "FR", "RL" og "RR". \\\hline
-Returværdi 	& \texttt{int} \newline Seneste afstandsmåling for den pågældende sensor. Værdien er angivet i cm. \\\hline
-Beskrivelse & Metoden læser afstanden som en given sensor befinder sig fra en forhindring. \\\hline
-\end{tabularx}
-\caption{Metodebeskrivelse for \texttt{getDistance}}
-\label{table:met_getdistance}
-=======
-Prototype 	& \texttt{void Settings(Log* logClassPtr)} \\\hline
-Parametre 	& \texttt{logClassPtr} 		\newline En pointer til objektet af typen Log der bruges til at lave en association til objektet. \\\hline
-Beskrivelse	& Constructor til klassen Settings. \newline \\\hline
-\end{tabularx}
-\caption{Metodebeskrivelse for constructoren af \texttt{Settings} klassen}
-\label{table:met_settings}
->>>>>>> 27b6dc3f50c6cb2555e7d05314a702b1b32e3a7b
+	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+	Prototype 	& \texttt{int getDistance(string name)} \\\hline
+	Parametre 	& \texttt{name} \newline Navnet på den sensor der skal læses fra. Kan rumme én af fire muligheder "FL", "FR", "RL" og "RR". \\\hline
+	Returværdi 	& \texttt{int} \newline Seneste afstandsmåling for den pågældende sensor. Værdien er angivet i cm. \\\hline
+	Beskrivelse & Metoden læser afstanden som en given sensor befinder sig fra en forhindring. \\\hline
+	\end{tabularx}
+	\caption{Metodebeskrivelse for \texttt{getDistance}}
+	\label{table:met_getdistance}
 \end{table}
 
 \begin{table}[h]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-<<<<<<< HEAD
-Prototype 	& \texttt{int getVelocity()} \\\hline
-Parametre 	& \texttt{void} \newline Funktionen tager ingen parametre \\\hline
-Returværdi 	& \texttt{int} \newline Seneste hastighedsmåling for tachometeret. Værdien er angivet i km/t * 10. \\\hline
-Beskrivelse & Metoden læser hastigheden fra tachometeret. \\\hline
-\end{tabularx}
-\caption{Metodebeskrivelse for \texttt{getVelocity}}
-\label{table:met_velocity}
+	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+	Prototype 	& \texttt{int getVelocity()} \\\hline
+	Parametre 	& \texttt{void} \newline Funktionen tager ingen parametre \\\hline
+	Returværdi 	& \texttt{int} \newline Seneste hastighedsmåling for tachometeret. Værdien er angivet i km/t * 10. \\\hline
+	Beskrivelse & Metoden læser hastigheden fra tachometeret. \\\hline
+	\end{tabularx}
+	\caption{Metodebeskrivelse for \texttt{getVelocity}}
+	\label{table:met_velocity}
 \end{table}
-
-
 \clearpage
-
-
-Afstandssensorene leveres formonteret på chip hvor benene fra IC'en er trukket til harwinpins som let kan tilgås. Til kommunikationen med sensoren benyttes følgende 4 linjer: 
-
-\begin{itemize}
-	\item pin 7: VCC: Forsyning
-	\item pin 6: GND: Reference
-	\item pin 5: SCL: Clock
-	\item pin 4: SDA: Data
-\end{itemize}
-
-Data kommunikeres på SDA-linjen med reference til GND,  SCL styrer clocken.
-Der benyttes de hardcodede default adresser til de 4 sensorer, disser er som følger: 
-
-\begin{table}[h]\centering
-\begin{tabular}{| l | l |} \hline
-	\textbf{Sensor} 	& \textbf{Adresse} \\\hline
-	FL & \texttt{0x70} \\\hline
-	FR & \texttt{0x71} \\\hline
-	RL & \texttt{0x73} \\\hline
-	RR & \texttt{0x76} \\\hline
-\end{tabular}
-\caption{Adresser på afstandssensorer}
-\label{table:adr_afstandssensorer}
-=======
-Prototype 	& \texttt{void setMaxSpeed(int maxVelocity)} \\\hline
-Parametre 	& \texttt{maxVelocity}		\newline Den hastighed der ønskes sættet til maksimal hastighed for bil.\\\hline
-Returværdi	& \texttt{void} 			\newline \\\hline
-Beskrivelse	& Denne funktion har til formål at skrive til variablen maxVelocity\_. \newline \\\hline
-\end{tabularx}
-\caption{Metodebeskrivelse for \texttt{setMaxSpeed()}}
-\label{table:met_setmaxspeed}
-\end{table}
-
-\begin{table}[h]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype 	& \texttt{void setAKS(bool AKSStatus)} \\\hline
-Parametre 	& \texttt{AKSStatus}		\newline Den ønskede tilstand af AKS status for bil.\\\hline
-Returværdi	& \texttt{void} 			\newline \\\hline
-Beskrivelse	& Denne funktion har til formål at skrive til variablen AKSStatus\_.\newline \\\hline
-\end{tabularx}
-\caption{Metodebeskrivelse for \texttt{setAKS()}}
-\label{table:met_setaks}
-\end{table}
-
-\begin{table}[h]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype 	& \texttt{void calibrateSteering(char calibration)} \\\hline
-Parametre 	& \texttt{calibration}		\newline Den ønskede kalibrering af bilens styrtøj.\\\hline
-Returværdi	& \texttt{void} 			\newline \\\hline
-Beskrivelse	& Denne funktion har til formål at skrive til variablen calibration\_.\newline \\\hline
-\end{tabularx}
-\caption{Metodebeskrivelse for \texttt{calibratesteering()}}
-\label{table:met_calibratesteering}
-\end{table}
-
-\clearpage
-
-\begin{table}[h]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype 	& \texttt{int getMaxSpeed()} \\\hline
-Parametre 	& \texttt{void}			\newline \\\hline
-Returværdi	& \texttt{int} 			\newline Returnerer variablen maxVelocity\_\\\hline
-Beskrivelse	& Denne funktion har til formål at give muligheden for at læse variablen maxVelocity\_.\newline \\\hline
-\end{tabularx}
-\caption{Metodebeskrivelse for \texttt{getMaxSpeed()}}
-\label{table:met_getmaxspeed}
-\end{table}
-
-\begin{table}[h]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype 	& \texttt{bool getAKS()} \\\hline
-Parametre 	& \texttt{void}			\newline \\\hline
-Returværdi	& \texttt{bool}			\newline Returnerer variablen AKSStatus\_\\\hline
-Beskrivelse	& Denne funktion har til formål at give muligheden for at læse variablen AKSStatus\_.\newline \\\hline
-\end{tabularx}
-\caption{Metodebeskrivelse for \texttt{getAKS()}}
-\label{table:met_getaks}
-\end{table}
-
-\begin{table}[h]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype 	& \texttt{char getCalibration()} \\\hline
-Parametre 	& \texttt{void}			\newline \\\hline
-Returværdi	& \texttt{char} 		\newline Returnerer variablen calibration\_\\\hline
-Beskrivelse	& Denne funktion har til formål at give muligheden for at læse variablen calibration\_.\newline \\\hline
-\end{tabularx}
-\caption{Metodebeskrivelse for \texttt{getCalibration()}}
-\label{table:met_getcalibration}
->>>>>>> 27b6dc3f50c6cb2555e7d05314a702b1b32e3a7b
-\end{table}
