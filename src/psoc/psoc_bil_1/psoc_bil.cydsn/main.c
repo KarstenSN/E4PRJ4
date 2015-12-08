@@ -1,6 +1,6 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
+ * IHA Aarhus
  * All Rights Reserved
  * UNPUBLISHED, LICENSED SOFTWARE.
  *
@@ -15,23 +15,22 @@
 
 //Definer stoerrelse paa buffere - hhv. 1 og 2 bytes
 #define RD_BUFFERSIZE 9
-#define fclk 400000                 //400kHz timer counter clk
+#define fclk 400000                     //400kHz timer counter clk
 
 /*################### DISTANCESENSOR #############################*/
 // DistanceSensor variable definition
-// Define af adresser
+// Definer adresser
 uint8 addrFL = 0b1110000;	            // 0x70 dec 112
 uint8 addrFR = 0b1110001;	            // 0x71 dec 113
 uint8 addrRL = 0b1110011;	            // 0x73 dec 115
 uint8 addrRR = 0b1110110;	            // 0x76 dec 118
 
 // Initiering af distance-variabler
-uint16 distanceFL                   = 0;	
-uint16 distanceFR                   = 0;
-uint16 distanceRL                   = 0;
-uint16 distanceRR                   = 0;
-uint8 sendBuffer[RD_BUFFERSIZE]     = {0};
-uint8 receiveBuffer[RD_BUFFERSIZE]  = {0};
+uint16 distanceFL = 0;	
+uint16 distanceFR = 0;
+uint16 distanceRL = 0;
+uint16 distanceRR = 0;
+uint8 sendBuffer[RD_BUFFERSIZE] = {0};
 
 uint8 FLwrite = 0b11100000;             // 0xE0 dec 224
 uint8 FRwrite = 0b11100010;	            // 0xE2 dec 226
@@ -43,7 +42,7 @@ uint8 RLread  = 0b11100111;	            // 0xE7 dec 231
 uint8 RRread  = 0b11101101;             // 0xED dec 237
 
 // Kommando til start RangeReading
-uint8 StartReading    = 0b01010001;     // 0x51 dec 81  
+uint8 StartReading = 0b01010001;        // 0x51 dec 81  
 
 // Wait till complete functions.
 uint8 checkWriteComplete(void){
@@ -52,6 +51,7 @@ uint8 checkWriteComplete(void){
     return 0;
 }
 
+// checkReadComplete()
 void checkReadComplete(void){
     while(0u == (I2C_1_I2CMasterStatus() & I2C_1_I2C_MSTAT_RD_CMPLT));
 }
@@ -65,38 +65,38 @@ void getDistance(void){
     uint8 RRbuf[2] = {1};
     
 // Write Range-Reading commands
-    // Front Left
+    // FL
     I2C_1_I2CMasterWriteBuf(addrFL, &FLwrite, 1 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     // check for transfor complete
     checkWriteComplete();
     I2C_1_I2CMasterWriteBuf(addrFL, &StartReading, 1 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     checkWriteComplete();
 
-    // Front Right
+    // FR
     I2C_1_I2CMasterWriteBuf(addrFR, &FRwrite, 1 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     // check for transfor complete
     checkWriteComplete();
     I2C_1_I2CMasterWriteBuf(addrFR, &StartReading, 1 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     checkWriteComplete();
 
-    // Rear Left
+    // RL
     I2C_1_I2CMasterWriteBuf(addrRL, &FRwrite, 1 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     // check for transfor complete
     checkWriteComplete();
     I2C_1_I2CMasterWriteBuf(addrRL, &StartReading, 1 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     checkWriteComplete();
 
-    // Rear Right
+    // RR
     I2C_1_I2CMasterWriteBuf(addrRR, &FRwrite, 1 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     // check for transfor complete
     checkWriteComplete();
     I2C_1_I2CMasterWriteBuf(addrRR, &StartReading, 1 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     checkWriteComplete();
 
-    CyDelay(50);
+    CyDelay(100);
  
 // Read Range-Reading command
-    // Front Left Sensor
+    // FL
     I2C_1_I2CMasterWriteBuf(addrFL, &FLread, 1 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     checkWriteComplete();
     I2C_1_I2CMasterReadBuf(addrFL, FLbuf, 2 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
@@ -105,7 +105,7 @@ void getDistance(void){
     sendBuffer[1] = FLbuf[1];
     //distanceFL = (FLbuf[0] << 8) + FLbuf[1];
 
-    // Front Right Sensor
+    // FR
     I2C_1_I2CMasterWriteBuf(addrFR, &FRread, 1 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     checkWriteComplete();
     I2C_1_I2CMasterReadBuf(addrFR, FRbuf, 2 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
@@ -114,7 +114,7 @@ void getDistance(void){
     sendBuffer[3] = FRbuf[1];
     //distanceFR = (FRbuf[0] << 8) + FRbuf[1];
 
-    // Rear Left Sensor
+    // RL
     I2C_1_I2CMasterWriteBuf(addrRL, &RLread, 1 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     checkWriteComplete();
     I2C_1_I2CMasterReadBuf(addrRL, RLbuf, 2 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
@@ -123,7 +123,7 @@ void getDistance(void){
     sendBuffer[5] = RLbuf[1];
     //distanceRL = (RLbuf[0] << 8) + RLbuf[1];
     
-    // Rear Right Sensor
+    // RR
     I2C_1_I2CMasterWriteBuf(addrRR, &RRread, 1 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
     checkWriteComplete();
     I2C_1_I2CMasterReadBuf(addrRR, RRbuf, 2 ,I2C_1_I2C_MODE_COMPLETE_XFER  );
@@ -183,41 +183,25 @@ void init(void){
 int main()
 {   
     init();
-    uint8 count = 0;
-    uint8 readyFlag = 0;
-    uint8 *TempPtr = NULL;
     
     for(;;){
-
-        *sendBuffer = *receiveBuffer;
         
         I2C_1_I2CSlaveClearReadBuf();
         //I2C_1_I2CSlaveClearReadStatus();
         while(!(I2C_1_I2CSlaveStatus() & I2C_1_I2C_SSTAT_RD_CMPLT)){}
         
-        
         I2C_1_I2CSlaveClearReadStatus();
-        
-        if (count <= 5){
-        count++;
-        } else {
-            readyFlag = 1;
-            count = 0;
-        }
-           
-        if(readyFlag){
-            readyFlag = 0;
             
             getDistance();
             
             if (calcVelocity < 25){
-                    sendBuffer[8] = (uint8)(calcVelocity*10);
+                if(sendBuffer[8] == sendBuffer[8]){
+                    sendBuffer[8] = 0;
+                }
+                sendBuffer[8] = (uint8)(calcVelocity*10);
             } 
-            else { 
+            else{ 
                 sendBuffer[8] = 'X';
-            }
-            
-            
         }
     }
 }
