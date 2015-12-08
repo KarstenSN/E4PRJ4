@@ -106,10 +106,9 @@ void PcCom::dataStream()
     this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__, "Initializing TCP connection for data stream");
     
     // Initialize variables
-    int sockfd, newsockfd, n;
+    int sockfd, newsockfd, n, distance; 
     socklen_t clilen;
     struct sockaddr_in serv_addr, cli_addr;
-    char distance;
 
     // Initialize socket for dataStream
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
