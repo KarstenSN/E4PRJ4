@@ -66,9 +66,9 @@ int Psoc::getVelocity(){
 
 // PsocRead()
 void Psoc::psocRead(){
-    
-  std::cout << "test af Thread" << std::endl;
-    
+    #ifdef DEBUGGING_MODE    
+	std::cout << "test af Thread" << std::endl;
+  #endif     
   while(1){
     // get data from PSOC
     Psoc::update();

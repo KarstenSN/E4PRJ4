@@ -4,7 +4,7 @@
 #include <fstream>
 #include <mutex>
 
-
+//----------classLog1----------
 class Log{
 public:
 
@@ -25,5 +25,5 @@ private:
 	std::string getTimestamp();
 
 };
-
+//----------classLog2----------
 #endif
