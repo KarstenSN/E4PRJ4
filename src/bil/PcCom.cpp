@@ -177,7 +177,7 @@ void PcCom::dataStream()
             if (this->dataClassPtr_->getLatestDistance("RR") > distance)
                 distance = this->dataClassPtr_->getLatestDistance("RR");
 
-            this->data_[2] = static_cast<char>(distance);
+            this->data_[2] = static_cast<char>(distance/10);
 
             // Get latest Acceleration and put in data buffer
             this->data_[3] = static_cast<char>(this->dataClassPtr_->getLatestAcceleration());
