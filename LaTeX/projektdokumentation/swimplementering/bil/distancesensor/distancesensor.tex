@@ -1,0 +1,7 @@
+\subsection{Distancesensorklassen}
+
+Distancesensorklassen håndterer alt kommunikation mellem Pi og de 4 afstandssensorer. Som førnævnt er dette implementeret via I2C-kommunikation. Klassen er implementeret med en enkelt \texttt{getDistance(name)}-metode. på denne måde holdes et enkelt interface udadtil. Denne funktion kan kaldes fra de klasser der har brug for data'en. Metoden tilgår så internt I2C-bussen og henter data fra sensorerne.  
+
+I listing \ref{lst:REF} ses implementeringen.
+
+\lstinputlisting[linerange=DS::DS1-DS::DS2, label=lst:Distancesensor_hpp, caption=hpp-fil for distanceSensorklassen.]{../../src/bil/distancesensor/distancesensor.hpp}
