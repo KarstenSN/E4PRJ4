@@ -189,7 +189,7 @@ void PcCom::dataStream()
             if (n < 0)
                 break;
         }
-        n = write(newsockfd,this->data_,6);
+        n = write(newsockfd,"dwnnow",6);
         if (n < 0)
             this->error("ERROR writing to socket");
         close(newsockfd);
