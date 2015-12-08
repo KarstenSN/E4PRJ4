@@ -33,7 +33,7 @@ Data::~Data(){
 //----------Data::writeVelocity1----------
 bool Data::writeVelocity(int velocity){
     if(velocity >= 0 && velocity <= MAX_VELOCITY){
-        std::lock_guard<std::mutex> lock(sensorDataMut);
+        std::lock_guard<std::mutex> lock(sensorDataMut_vel);
         this->velocity = velocity;
         return true;
     }
@@ -44,7 +44,7 @@ bool Data::writeVelocity(int velocity){
 //----------Data::writeAcceleration1----------
 bool Data::writeAcceleration(int acceleration){
     if(acceleration >= 0 && acceleration <= MAX_ACCELERATION){
-        std::lock_guard<std::mutex> lock(sensorDataMut);
+        std::lock_guard<std::mutex> lock(sensorDataMut_acc);
         this->acceleration = acceleration;
         return true;
     }
@@ -55,7 +55,7 @@ bool Data::writeAcceleration(int acceleration){
 //----------Data::writeDistance1----------
 bool Data::writeDistance(std::string name, int distance){
     if(distance >= 0 && distance <= MAX_DISTANCE){
-        std::lock_guard<std::mutex> lock(sensorDataMut);
+        std::lock_guard<std::mutex> lock(sensorDataMut_dist);
         if (name == "FL") {
             this->distanceFL = distance;
         }
@@ -90,21 +90,21 @@ void Data::writeUserInput(UserInput* Input){
 
 //----------Data::getLatestVelocity1----------
 int Data::getLatestVelocity(){
-    std::lock_guard<std::mutex> lock(sensorDataMut);
+    std::lock_guard<std::mutex> lock(sensorDataMut_vel);
     return this->velocity;
 }
 //----------Data::getLatestVelocity2----------
 
 //----------Data::getLatestAcceleration1----------
 int Data::getLatestAcceleration(){
-    std::lock_guard<std::mutex> lock(sensorDataMut);
+    std::lock_guard<std::mutex> lock(sensorDataMut_acc);
     return this->acceleration;
 }
 //----------Data::getLatestAcceleration2----------
 
 //----------Data::getLatestDistance1----------
 int Data::getLatestDistance(std::string name){
-    std::lock_guard<std::mutex> lock(sensorDataMut);
+    std::lock_guard<std::mutex> lock(sensorDataMut_dist);
     if(name == "FL") {
         return this->distanceFL;
     }
