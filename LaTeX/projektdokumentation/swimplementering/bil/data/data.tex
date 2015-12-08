@@ -1,1 +1,11 @@
 \subsection{Dataklassen}
+
+Dataklassen håndterer alt den data der skal kommunikeres imellem brugeren og brugerinterfacet på PCen og ud til sensorer og aktautorer på bilen, så længe de er opbevaret på Pi. Klassen/datastrukturen er implementeret ganske simpelt med variable frem for en fil, da dette vil gøre klassen hurtigere. Igennem koden i denne klasse er der indtil flere \texttt{\#ifdef DEBUG}, hvilket giver mulighed for at slå debugging til ved at definere \texttt{DEBUG} i mainfilen. \\
+Constructoren, der er vist i listing \ref{lst:data_con}, er for klassen er ganske simpel. Den initialiserer alle variable til ''0'' og gemmer en pointer til logfilen.
+
+\lstinputlisting[linerange=Data::Data1-Data::Data2, label=lst:data_con, caption=Constructor for dataklassen.]{../../src/bil/data/data.cpp}
+
+Klassen har en række variable \ref{write} metoder, som alle er beskyttet af variable
+
+%TODO Skal skrivesfærdig
+TODO skal skrives færdig.
