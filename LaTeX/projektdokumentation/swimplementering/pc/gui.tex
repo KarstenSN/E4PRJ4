@@ -177,11 +177,190 @@ void* MainWindow::getData(void)
 }
 \end{lstlisting}
 \subsubsection{void* MainWindow::getDataHelper()}
-
+Funktionen \textbf{getDataHelper()} kaldes når \textbf{dataThread} oprettes af p\_thread\_create. Da p\_thread\_create kun kan tilgå static funktioner gøres \textbf{getDataHelper()} static i MainWindow.h. Funktionen retunerer blot en pointer til \textbf{getData()}
 \begin{lstlisting}[caption={getDataHelper},label=lst:getData, language=c++]
 void* MainWindow::getDataHelper(void* context)
 {
     return ((MainWindow *)context)->getData();
+}
+\end{lstlisting}
+
+\subsubsection{void* MainWindow::readSocket()}
+readSocket() sender og læser data fra bilen. Når funktionen eksekveres låses for mutexen således andre funktioner ikke kan tilgå samme data.
+\begin{lstlisting}[caption={readSocket},label=lst:readSocket, language=c++]
+void MainWindow::readSocket()
+{   
+    mutex.lock();
+    socket->write(data,6);
+    socket->waitForBytesWritten();
+    socket->waitForReadyRead();
+    socket->read(data,6);
+    mutex.unlock();
+}
+\end{lstlisting}
+
+\subsubsection{void* MainWindow::konfigurerIP()}
+Funktionen konfigurerIP() åbner for en inputdialog som giver brugeren mulighed for at indtaste en IP-adressen. IP-adressen gemmes i variablen IP og variablen videoUrl opdateres til stream-adressen.
+\begin{lstlisting}[caption={konfigurerIP},label=lst:konfigurerIP, language=c++]
+void MainWindow::konfigurerIP()
+{
+    QString copy = IP;
+    IP = QInputDialog::getText(this, tr("Konfigurer IP"), tr("Indtast IP adressen"), QLineEdit::Normal,IP);
+    if (IP.isEmpty()){
+    IP = copy;
+    return;
+    }
+    videoUrl = "http://"+IP+":8081/stream.mjpeg";
+}
+\end{lstlisting}
+
+\subsubsection{void* MainWindow::AKSstatus()}
+Funktionen AKSstatus()ændre status på AKS. Når bruger trykker på knappen ''AKS-on'' ændres teksten til ''AKS-off'' og omvendt. Plads 4 i data arrayet opdateres til henholdsvis 1 eller 0. 
+\begin{lstlisting}[caption={AKSstatus},label=lst:AKSstatus, language=c++]
+void MainWindow::AKSstatus()
+{
+    data[4] =!data[4];
+    if(data[4])
+    ui->AKS->setText("AKS-On");
+    else
+    ui->AKS->setText("AKS-Off");
+}
+\end{lstlisting}
+
+\subsubsection{void* MainWindow::maksHastighed()}
+Funktionen maksHastighed() åbner en inputdialog hvor bruger gives mulighed for at indtaste en værdi mellem 0 og 1 i intervaller på 1.  
+\begin{lstlisting}[caption={maksHastighed},label=lst:maksHastighed, language=c++]
+void MainWindow::maksHastighed()
+{
+    int copy = (int)data[0];
+    bool ok;
+
+    data[0] = (char)QInputDialog::getInt(this, tr("Makshastighed"),tr("Indtast makshastigheden"),
+                                         (int)data[0], 0, 10, 1, &ok);
+    if (!ok)
+        data[0] = (char)copy;
+
+    ui->lcdMakshastighed->display((int)data[0]);
+}
+\end{lstlisting}
+
+\subsubsection{void* MainWindow::maksHastighed()}
+Funktionen maksHastighed() åbner en inputdialog hvor bruger gives mulighed for at indtaste en værdi mellem 0 og 1 i intervaller på 1. Værdien gemmes i data arrayet plads 0.  
+\begin{lstlisting}[caption={maksHastighed},label=lst:maksHastighed, language=c++]
+void MainWindow::maksHastighed()
+{
+    int copy = (int)data[0];
+    bool ok;
+
+    data[0] = (char)QInputDialog::getInt(this, tr("Makshastighed"),tr("Indtast makshastigheden"),
+                                         (int)data[0], 0, 10, 1, &ok);
+    if (!ok)
+        data[0] = (char)copy;
+
+    ui->lcdMakshastighed->display((int)data[0]);
+}
+\end{lstlisting}
+
+\subsubsection{void* MainWindow::writeDataToFile()}
+Funktionen writeDataToFile() åbner logfilen Au2Data.txt og skriver data arrayet til filen. Funktionen kaldes i destructoren således brugerinput gemmes. 
+\begin{lstlisting}[caption={writeDataToFile},label=lst:writeDataToFile, language=c++]
+void MainWindow::writeDataToFile()
+{
+    QFile file("Au2Data.txt");
+        if(!file.open(QIODevice::WriteOnly))
+            return;
+
+    QTextStream out(&file);
+    out << IP << "\r\n";
+    out << videoUrl << "\r\n";
+    out << (int)data[5] << "\r\n";
+    out << (int)data[0] << "\r\n";
+}
+\end{lstlisting}
+
+\subsubsection{void* MainWindow::readDataFromFile()}
+Funktionen readDataFromFile() åbner logfilen Au2Data.txt og læser data arrayet fra filen. Funktionen kaldes i constructoren således brugerinput genindlæses. 
+\begin{lstlisting}[caption={readDataFromFile},label=lst:readDataFromFile, language=c++]
+void MainWindow::readDataFromFile()
+{
+    QFile file("Au2Data.txt");
+        if(!file.open(QIODevice::ReadOnly))
+            return;
+
+    QTextStream in(&file);
+    IP = in.readLine();
+    videoUrl = in.readLine();
+    data[5] = (char)in.readLine().toInt();
+    data[0] = (char)in.readLine().toInt();
+}
+\end{lstlisting}
+
+\subsubsection{void MainWindow::kalibrerStyretoj()}
+Funktionen kalibrerStyretoj() åbner en inputdialog som giver brugeren mulighed for at indtaste en værdi mellem -50 og 50. Inputdialogen blokerer selv for værdier uden for dette interval.
+\begin{lstlisting}[caption={kalibrerStyretoj},label=lst:kalibrerStyretoj, language=c++]
+void MainWindow::kalibrerStyretoj()
+{
+    int copy = (int)data[5];
+    bool ok;
+
+    data[5] = (char)QInputDialog::getInt(this, tr("Styretoj"),tr("Indstil styretoj"),
+                                         (int)data[5], -50, 50, 1, &ok);
+    if (!ok)
+        data[5] = (char)copy;
+}
+\end{lstlisting}
+
+\subsubsection{void MainWindow::shutDown()}
+Funktionen shutDown() kaldes når GUI'en lukkes ned, enten i det røde kryds eller på knappen luk ned. Funktionen tester først om dataSocket er forbundet ved hjælp en variablen isConnected. Er der forbindelse låses mutexen og der skrived ''dwnnow'' til bilen. Returneres dette igen fra bilen, har bilen accepteret at lukke ned. Hvis ikke åbnes en advarsel som giver bruger besked herom. Er forbindelsen ikke forbundet kaldes MainWondows destructor med funktionen close(). 
+\begin{lstlisting}[caption={shutDown},label=lst:shutDown, language=c++]
+void MainWindow::shutDown()
+{
+    if(isConnected)
+    {
+        char sdata[6];
+        mutex.lock();
+        socket->write("dwnnow",6);
+        socket->waitForBytesWritten();
+        socket->waitForReadyRead();
+        socket->read(sdata,6);
+        if(sdata[0]=='d' && sdata[1]=='w' && sdata[2]=='n' && sdata[3]=='n' && sdata[4]=='o' && sdata[5]=='w')
+        {
+            socket->disconnect();
+            mutex.unlock();
+            close();
+        }
+        else
+        {
+            mutex.unlock();
+            QMessageBox messageBox;
+            messageBox.critical(0,"Fejl","Bilen kan ikke lukke ned!\n Prøv igen");
+            messageBox.setFixedSize(500,200);
+            return;
+        }
+    }
+    close();
+}
+\end{lstlisting}
+
+\subsubsection{void MainWindow::MainWindow()}
+Destructor!!!!
+\begin{lstlisting}[caption={MainWindow},label=lst:MainWindow, language=c++]
+MainWindow::~MainWindow()
+{
+    writeDataToFile();
+
+    if(controllerSocket != NULL)
+        delete controllerSocket;
+
+    if(socket != NULL)
+        delete socket;
+
+    if(media != NULL)
+        delete media;
+
+    delete player;
+    delete instance;
+    delete ui;
 }
 \end{lstlisting}
 
