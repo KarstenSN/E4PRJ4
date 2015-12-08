@@ -37,10 +37,7 @@ private:
     
     std::mutex sensorDataMut_vel;
     std::mutex sensorDataMut_acc;
-    std::mutex sensorDataMut_distFL;
-    std::mutex sensorDataMut_distFR;
-    std::mutex sensorDataMut_distRL;
-    std::mutex sensorDataMut_distRR;
+    std::mutex sensorDataMut_dist;
     std::mutex userDataMut;
 };
 
