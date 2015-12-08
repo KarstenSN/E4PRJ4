@@ -29,4 +29,4 @@ R1 = \dfrac{5V}{4mA} = 1.25\cdot 10^3 \Omega
 
 Derved kan vi sætte $R1 = 1.25k\Omega \approx 1.2k\Omega$
 
-TLE4905L forventes at blive monteret på bilens højre forhjul, på en måde, så kredsløbet ikke bliver forstyrret for meget af rystelser osv. 
+TLE4905L forventes at blive monteret på bilens højre forhjul, på en måde, så kredsløbet ikke bliver forstyrret for meget af rystelser osv. Som udgangspunkt blev det valgt at implementere tachometeret, således at det kunne aflæses direkte af PI'en, men det viste sig at være særdeles besværligt at komme i kontakt med PI'ens timing og derved kunne udregne hastigheden for bilen. Faktisk viste det sig så besværligt at, der på et relativt tidligt tidspunkt blev indført en PSoC i projektet, som skulle fungere både som en master-slave enhed. Derved kan vi bibeholde \IIC kommunikationen og samtidig have et meget lettere interface, eftersom PSoC'en er lettere at arbejde med, på et mere lavpraktisk niveau end PI'en
