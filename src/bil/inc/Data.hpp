@@ -35,7 +35,9 @@ private:
     UserInput Input;
     Log* myLog;
     
-    std::mutex sensorDataMut;
+    std::mutex sensorDataMut_vel;
+    std::mutex sensorDataMut_acc;
+    std::mutex sensorDataMut_dist;
     std::mutex userDataMut;
 };
 

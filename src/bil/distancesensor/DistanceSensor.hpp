@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <Log.hpp>
 
+//----------DS::DS1----------
 class DistanceSensor{
 public:
         DistanceSensor(Log* Log);
@@ -23,5 +24,6 @@ private:
         int distanceRR_;
         Log* logPtr;
 };
+//----------DS::DS2----------
 
 #endif

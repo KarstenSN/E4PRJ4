@@ -6,7 +6,7 @@
 #include <mutex>
 #include <Log.hpp>
 
-
+//----------Log::Log1----------
 Log::Log(std::string filename){
 	
 	logFile.open(filename, std::ofstream::out | std::ofstream::app);
@@ -17,40 +17,50 @@ Log::Log(std::string filename){
 		this->writeEvent(__PRETTY_FUNCTION__,"Log class active");
 	}
 }
+//----------Log::Log2----------
 
+//----------Log::writeError1----------
 bool Log::writeError(std::string from, std::string msg){
 	if (logFile.is_open()){
 		std::lock_guard<std::mutex> lock(mutex);
 		logFile << "[" << this->getTimestamp() << "] [Error] [" << from << "] " << msg << std::endl;
 		return true;
 	}
-	else return false;
+    else return false;
 }
+//----------Log::writeError2----------
 
+//----------Log::writeWarning1----------
 bool Log::writeWarning(std::string from, std::string msg){
 	if (logFile.is_open()){
 		std::lock_guard<std::mutex> lock(mutex);
 		logFile << "[" << this->getTimestamp() << "] [Warning] [" << from << "] " << msg << std::endl;
 		return true;
 	}
-	else return false;
+    else return false;
 }
+//----------Log::writeWarning2----------
 
+//----------Log::writeEvent1----------
 bool Log::writeEvent(std::string from, std::string msg){
-		if (logFile.is_open()){
+    if (logFile.is_open()){
 		std::lock_guard<std::mutex> lock(mutex);
 		logFile << "[" << this->getTimestamp() << "] [Event] [" << from << "] " << msg << std::endl;
 		return true;
 	}
-	else return false;
+        else return false;
 }
+//----------Log::writeEvent2----------
 
+//----------Log::Log::~Log1----------
 Log::~Log(){
 	this->writeEvent(__PRETTY_FUNCTION__,"Log class shutdown");
 	logFile << std::endl;
 	logFile.close();
 }
+//----------Log::Log::~Log2----------
 
+//----------Log::getTimestamp1----------
 std::string Log::getTimestamp(){
 	std::string timestamp;
 
@@ -68,3 +78,4 @@ std::string Log::getTimestamp(){
 
 	return timestamp;
 }
+//----------Log::getTimestamp2----------
