@@ -1,6 +1,6 @@
 \subsubsection{Boundry-klasse: PcCom}
 
-Denne klasse har til formål at styre alt kommunikation mellem PC og Bil, fra bilens side. Det er valgt at bruge TCP connections til dette og det er valgt at bruge to forskellige former for sockets således at det er muligt at sende vigtige data oftere end andre ikke nær så vigtige data. Denne klasse skal ligeledes oprette de to threads der skal styre disse sockets, således at disse TCP connections ikke stopper anden funktionalitet på bilen. På Figur \ref{fig:cd_pccom} kan ses et klasse diagram over den ønskede klasse efterfulgt af funktionalitet.
+Denne klasse har til formål at styre alt kommunikation mellem PC og Bil, fra bilens side. Det er valgt at bruge TCP connections til dette og det er valgt at bruge to forskellige former for sockets således at det er muligt at sende vigtige data oftere end andre ikke nær så vigtige data. Denne klasse skal ligeledes oprette de to threads der skal styre disse sockets, således at disse TCP connections ikke stopper anden funktionalitet på bilen, men kører sideløbende. På Figur \ref{fig:cd_pccom} kan ses et klasse diagram over den ønskede klasse, herefter kan en kort beskrivelse af klassens attributer ses på Tabel \ref{table:attr_pccom}, efterfulgt af metodernes funktionalitet på Tabel \ref{table:met_pccom}-\ref{table:met_error}
 
 \begin{figure}[h]
 \centering
@@ -8,6 +8,8 @@ Denne klasse har til formål at styre alt kommunikation mellem PC og Bil, fra bi
 \caption{Klassebeskrivelse for boundry-klassen PcCom}
 \label{fig:cd_pccom}
 \end{figure}
+
+\clearpage
 
 \textbf{Attributter}
 
@@ -22,11 +24,17 @@ Navn & Type & Beskrivelse \\\hline
 
 \texttt{portno- Controller\_}	& \texttt{int}		&Variabel der indeholder portnummeret til den TCP socket der har med overførelse til og fra controller\_ array'et.\\\hline
 
+\texttt{running\_}				& \texttt{bool}		&Variabel der indeholder den ønskede socket tilstand. Ved true skal klassen blive ved med at prøve at oprette forbindelse i tilfælde af at en socket connection tabes. I tilfælde af false skal den nedlægge begge connections.\\\hline
+
 \texttt{dataClassPtr\_}			& \texttt{Data*}	&En pointer til det objekt af typen Data der ønskes læst og skrevet data til.\\\hline
 
 \texttt{settings- ClassPtr\_}	& \texttt{Settings*}&En pointer til det objekt af typen Settings der ønskes skrevet data til.\\\hline
 
 \texttt{UserInput\_}			& \texttt{UserInput}&En struct af typen UserInput der har fire chars, hhv. frem, tilbage, drej og stop.\\\hline
+
+\texttt{dataStreamTh}			& \texttt{thread}	&Den thread der skal køre TCP connection til data streaming.\\\hline
+
+\texttt{Controller- StreamTh}		& \texttt{thread}	&Den thread der skal køre TCP connection til bruger input streaming.\\\hline
 \end{tabularx}
 \caption{Attributter for klassen PcCom}
 \label{table:attr_pccom}
@@ -54,9 +62,9 @@ Beskrivelse	& Constructor til klassen PcCom. Skal initialisere threads til funkt
 Prototype 	& \texttt{void $\sim$PcCom()} \\\hline
 Parametre 	& \texttt{void}				\newline \\\hline
 Returværdi	& \texttt{void} 			\newline \\\hline
-Beskrivelse	& Destructor til klassen PcCom. \newline \\\hline
+Beskrivelse	& Destructor til klassen PcCom. Skal sørge for at begge threads er klar til at blive lukket ned før den lukker resten af klassen. \\\hline
 \end{tabularx}
-\caption{Metodebeskrivelse for destructoren af \texttt{PcCom} klassen}
+\caption{Metodebeskrivelse for destructoren af \texttt{PcCom} klassen.}
 \label{table:met_pccom_de}
 \end{table}
 
