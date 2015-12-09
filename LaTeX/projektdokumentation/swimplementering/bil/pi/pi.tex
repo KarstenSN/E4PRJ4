@@ -1,3 +1,12 @@
 \subsection{Pi} \label{sec:pi_impl}
 
-\lipsum[1-3]{}
+Pi klassen er implementeret som et "main" program på Raspberry Pi og fungerer altså som den igangsættende proces for hele bilen.
+Programstrukturen er udfærdet således at \texttt{Pi} opretter de nødvendige objekter og initialiserer disse med pointere til hhv. \texttt{Data}, \texttt{Settings} og \texttt{Log} for at underliggende objekter har de nødvendige associationer. Herefter igangsættes en tråd for funktionen \texttt{acquireData()}, og selve main-tråden fortsætter herefter med at eksekvere \texttt{Aks::activate()}, som står i en uendelige while()-løkke og udfører Aks's arbejde.
+Hele main() ses i listing \ref{lst:Pi_main}.
+
+\lstinputlisting[linerange=main0-main1, label=lst:Pi_main, caption=Raspberry Pi's main funktion]{../../src/bil/pi.cpp}
+
+Det er ydermere implementeret således at alle pointers samles i en samlet datastruktur inden de sendes videre til \texttt{acquireData()}, som igangsætter indsamlingen af data fra sensorer og videresender disse til Data klassen.
+Hele \texttt{acquireData()} ses i listing \ref{lst:Pi_acqDat}.
+
+\lstinputlisting[linerange=acqDat0-acqDat1, label=lst:Pi_acqDat, caption=Raspberry Pi's acquireData funktion]{../../src/bil/pi.cpp}

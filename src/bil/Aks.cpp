@@ -20,6 +20,7 @@ Aks::Aks(Data* Dataptr, Settings* NewSettings, Log* NewLog): MySteering(Dataptr,
 	MyLog->writeEvent(__PRETTY_FUNCTION__, "Initialized.");
 }
 
+//----------activate0----------
 void Aks::activate(){
 	while(1){
 		latestUserInput = this->MyData->getUserInput();
@@ -90,6 +91,7 @@ void Aks::activate(){
 		}
     }
 }
+//----------activate1----------
 
 bool Aks::analyzeData(void){
 #ifdef DEBUGGING 
