@@ -1,5 +1,7 @@
 #include <PcCom.hpp>
 
+#define DEBUG_PCCOM //Uncomment to enable debugging in PcCom class only
+
 PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr)
 {
     int i;
@@ -67,6 +69,11 @@ void PcCom::controllerStream()
              * controller[2] = Turn         (-128 - 127)
              * controller[3] = Break        (0 - 1) */
             n = read(newsockfd,this->controller_,4);
+            
+#ifdef DEBUG_PCCOM
+            std::cout << "userInput()" << "speedReqFor_ " << static_cast<int>(this->controller_[0]) << " speedReqBack_ " << static_cast<int>(this->controller_[1]) << this->settingsClassPtr_->getAKS()<<"            \r" << std::flush;
+            
+#endif
 
             if (n < 0)
                 this->error("ERROR reading from socket");
