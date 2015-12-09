@@ -4,49 +4,20 @@ PcCom er en klasse, som styrer kommunikation mellem PC software og bil, fra bile
 Herunder vil koden blive forklaret i detaljer.
 
 
-\paragraph{PcCom Constructor} er klassens constructor. Koden er vist i vist i Listing \ref{lst:pccom}. Ud over at initialisere, sker der en linkning til et Log, et Data og et Settings object (linje 10, 11 og 12), via association. Denne association sørger for at det er de samme objekter, der bliver bearbejdet af de andre klasser i systemet. På linje 18 og 19 igangsættes de førnævnte threads med hver deres funktionskald, hhv. dataStream og controllerStream. På linje 21 skriver den til Log objektet at den er færdig med initiaisering.
+\paragraph{PcCom Constructor} er klassens constructor. Koden er vist i vist i Listing \ref{lst:pccom_con}. Ud over at initialisere, sker der en linkning til et Log, et Data og et Settings object (linje 15, 16 og 17), via association. Denne association sørger for at det er de samme objekter, der bliver bearbejdet af de andre klasser i systemet. På linje 24 og 25 igangsættes de førnævnte threads med hver deres funktionskald, hhv. dataStream og controllerStream. På linje 27 skriver den til Log objektet at den er færdig med initiaisering.
 
-\begin{lstlisting}[caption={PcCom Constructor},label=lst:pccom, language=c++]
-PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr)
-{
-    int i;
-    for(i = 0; i < 4; i++)
-        this->controller_[i] = 0;
-    for(i = 0; i < 6; i++)
-        this->data_[i] = 0;
-    this->portnoData_ = 1234;
-    this->portnoController_ = 1235;
-    this->dataClassPtr_ = dataClassPtr;
-    this->settingsClassPtr_ = settingsClassPtr;
-    this->logClassPtr_ = logClassPtr;
-    this->UserInput_.forward = 0;
-    this->UserInput_.reverse = 0;
-    this->UserInput_.stop = 0;
-    this->UserInput_.turn = 0;
-    
-    std::thread dataStreamTh(&PcCom::dataStream , this);
-    std::thread controllerStreamTh(&PcCom::controllerStream , this);
-    
-    this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"PcCom initialized");
-}
-\end{lstlisting}
+\lstinputlisting[linerange=PcCom::PcCom1-PcCom::PcCom2, label=lst:pccom_con, caption=Constructor for PcCom klassen.]{../../src/bil/pccom.cpp}
 
+\paragraph{PcCom Destructor} er klassens destructor. Denne skal sørge for at vente med at lukke klassen ned til at de to threads er klar til dette. Koden er vist i vist i Listing \ref{lst:pccom_de}
 
-\paragraph{PcCom Destructor} er klassens destructor. Denne vil ikke blive gennemgået i detaljer da den ikke har nogen særlig funktionalitet, ud over en basal destructor.
+\lstinputlisting[linerange=PcCom::PcCom3-PcCom::PcCom4, label=lst:pccom_de, caption=Destructor for PcCom klassen.]{../../src/bil/pccom.cpp}
 
+\clearpage
 
+\paragraph{controllerStream} er en funktion der igangsættes af tråden \texttt{controllerStreamTh}. Formålet med denne funktion er at oprette en TCP connection til streaming af brugerinput.\\
+I Listing \ref{lst:pccom_controllerstream} vises initieringen af den ønskede socket. 
 
-
-%\paragraph{setMaxSpeed} er en funktion til at skrive til klassens attribut, der indeholder den indstillede maksimale hastighed. Koden er vist i Listing \ref{lst:setmaxspeed}. Ud over at skrive tallet, der er givet med som parameter, til klassens attribut, låses klassens attribut så det ikke er muligt for andre funktionskald at skrive eller læse attributen til at den er færdig med at skrive til den. 
-%
-%\begin{lstlisting}[caption={Funktionen setMaxSpeed},label=lst:setmaxspeed, language=c++]
-%void Settings::setMaxSpeed(int maxVelocity)
-%{
-%  std::lock_guard<std::mutex> lock(this->maxVelocityMut);
-%  this->maxVelocity_ = maxVelocity;
-%  return;
-%}
-%\end{lstlisting}
+\lstinputlisting[linerange=PcCom::controllerStream1-PcCom::controllerStream2, label=lst:pccom_controllerstream, caption=Del 1 af funktionen \texttt{controllerStream}: Initieringen.]{../../src/bil/pccom.cpp}
 %
 %
 %
@@ -61,7 +32,6 @@ PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr)
 %}
 %\end{lstlisting}
 %
-%\clearpage
 %
 %\paragraph{calibrateSteering} er en funktion til at skrive til klassens attribut, der indeholder kalibrering af styrtøj. Koden er vist i Listing \ref{lst:calibratesteering}. Denne funktion er implementeret på samme måde som setMaxSpeed og setAKS, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
 %
