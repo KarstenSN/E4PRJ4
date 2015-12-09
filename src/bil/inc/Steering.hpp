@@ -42,7 +42,6 @@ public:
 
 private:
 	void PWMUpdate();
-	void getPWMvar(int &PWMforward, int &PWMBackward, bool &PWMdirection);
 	int brake();
 	int softbrake();
 	int turn(signed char value);
