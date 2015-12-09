@@ -1,11 +1,13 @@
 
 \subsubsection{Boundary-klasse: Steering}
+Denne klasse har til formål at styre bilens retning venstre/højre, hastighed frem/tilbage og bremse bilen. Den får input ind med hastighed frem, hastighed tilbage, retning og brems. Derudover henter klassen den ønskede maksimum hastighed for bilen og den aktuelle hastighed på bilen. Derefter udregner og regulerer den outputtet til PWM for motor. Ligeledes udregner den et PWM output til styretøjs servoen udfra retnings værdien og min/max for duty cycle på servoen 
+
 
 \begin{figure}[h]
 \centering
 \includegraphics[]{../fig/diagrammer/bil/cd_steering.pdf}
-\caption{Klassebeskrivelse af boundary-klassen Sterering}
-\label{fig:cd_Sterering}
+\caption{Klassebeskrivelse af boundary-klassen Steering}
+\label{fig:cd_Steering}
 \end{figure}
 
 \textbf{Attributter}
@@ -67,7 +69,7 @@ Beskrivelse & Metoden sørger for at opdaterer retning og hastighed på bilen. \
 		Parametre &   
 		\\\hline
 		Returværdi &  \texttt{int} \newline 1 hvis alle operationer er gået okay ellers -1. \\\hline
-		Beskrivelse & Metoden sørger for at opdaterer PWM til hastighed på bilen. \\\hline
+		Beskrivelse & Metoden sørger for at opdaterer PWM output til hastighed på bilen. \\\hline
 	\end{tabularx}
 	\caption{Metodebeskrivelse for \texttt{PWMUpdate}}
 	\label{table:met_PWMUpdate}
@@ -79,7 +81,7 @@ Beskrivelse & Metoden sørger for at opdaterer retning og hastighed på bilen. \
 		Parametre & 
 		\\\hline
 		Returværdi &  \texttt{int} \newline 1 hvis alle operationer er gået okay ellers -1. \\\hline
-		Beskrivelse & Metoden sørger for at opdaterer retning og hastighed på bilen. \\\hline
+		Beskrivelse & Metoden sørger for bremse på bilen ned i hastighed. \\\hline
 	\end{tabularx}
 	\caption{Metodebeskrivelse for \texttt{brake}}
 	\label{table:met_brake}
@@ -91,7 +93,7 @@ Beskrivelse & Metoden sørger for at opdaterer retning og hastighed på bilen. \
 		Parametre & 
 		\\\hline
 		Returværdi &  \texttt{int} \newline 1 hvis alle operationer er gået okay ellers -1. \\\hline
-		Beskrivelse & Metoden sørger for at opdaterer retning og hastighed på bilen. \\\hline
+		Beskrivelse & Metoden sørger for at bilen løber hastighed af med 0 PWM output. \\\hline
 	\end{tabularx}
 	\caption{Metodebeskrivelse for \texttt{softbrake}}
 	\label{table:met_softbrake}
@@ -101,12 +103,13 @@ Beskrivelse & Metoden sørger for at opdaterer retning og hastighed på bilen. \
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 		Prototype & \texttt{int turn(signed char value)} \\\hline
 		Parametre & \texttt{value} \newline
+		Værdien for retning af bilen
 		\\\hline
 		Returværdi &  \texttt{int} \newline 1 hvis alle operationer er gået okay ellers -1. \\\hline
-		Beskrivelse & Metoden sørger for at opdaterer retning og hastighed på bilen. \\\hline
+		Beskrivelse & Metoden sørger for at udregne retningen på bilens forhjul og sende værdien til software PWM output. \\\hline
 	\end{tabularx}
-	\caption{Metodebeskrivelse for \texttt{userInput}}
-	\label{table:met_userInput}
+	\caption{Metodebeskrivelse for \texttt{turn}}
+	\label{table:met_turn}
 \end{table}
 
 \begin{table}[H]
@@ -116,9 +119,9 @@ Beskrivelse & Metoden sørger for at opdaterer retning og hastighed på bilen. \
 		\texttt{speedBackward} \newline Den ønskede hastighed bagud. 0..255
 		\\\hline
 		Returværdi &  \texttt{int} \newline 1 hvis alle operationer er gået okay ellers -1. \\\hline
-		Beskrivelse & Metoden sørger for at opdaterer retning og hastighed på bilen. \\\hline
+		Beskrivelse & Metoden sørger for at opdaterer retning frem/tilbage på bilen og bremse hvis bilen kører for stærkt til at vende retningen med det samme. \\\hline
 	\end{tabularx}
-	\caption{Metodebeskrivelse for \texttt{userInput}}
-	\label{table:met_userInput}
+	\caption{Metodebeskrivelse for \texttt{motorSetPWM}}
+	\label{table:met_motorSetPWM}
 \end{table}
 
