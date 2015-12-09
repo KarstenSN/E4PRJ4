@@ -18,10 +18,10 @@ public:
         ~DistanceSensor();
         int getDistance(std::string name);
 private:
-        int distanceFL_;
-        int distanceFR_;
-        int distanceRL_;
-        int distanceRR_;
+        int distanceFL_ = 0;
+        int distanceFR_ = 0 ;
+        int distanceRL_ = 0 ;
+        int distanceRR_ = 0;
         Log* logPtr;
 };
 //----------DS::DS2----------

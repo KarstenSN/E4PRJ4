@@ -61,15 +61,6 @@ reverse: bool
 		Høj =  5V +/- 0.2V  ’tilbage’
 	\\ \hline
 	
-tachoSpeed: freq
-	& Digitalt signal med varierende frekvens afhængig af baghjulenes 					omdrejningshastighed.
-	& ~
-	& Vejledende: \newline
-		64Hz = 10Km/t \newline
-		Logisk signal: \newline
-		Lav = 0V +/- 0.2V \newline
-		Høj = 5V +/- 0.2V	\\ \hline
-	
 Inout SDA: bool
 	& \IIC dataline til sensorer herunder accelerometer og afstandssensorer. 
 	& 0-5V $\pm$ 0.5V
@@ -167,6 +158,13 @@ styrtøj: 7.2V DC
 	& 7.2V DC $\pm$ 0,5V max 400 mA
  	& Fundet i databladet for servoen \cite{lib:servo}.
 	\\ \hline
+	
+Psoc: 5V DC
+	& Forsyningsspænding til Psoc. 
+	& 5V DC $\pm$ 0,5V max 500 mA
+ 	& Worst case vurdering på baggrund af USB forsyning fra PC.
+	\\ \hline
+	
 	
 accelerometer: 3.3V DC
 	& Forsyningsspænding til accelerometeret.

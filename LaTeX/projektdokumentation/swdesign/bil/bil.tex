@@ -31,16 +31,16 @@ Boundary-klassen PcCom håndterer kommunikationen imellem PC og Bil. Denne kommu
 \subsubsection{Boundary-klasse: Steering}
 I denne klasse styres bilens aktautorer. Dette er altså en driver til både motoren der skaber fremdrift og servo-motoren der styrer forhjulene. Klassen tager ligeledes højde for brugers indstillinger.
 
-\subsubsection{Boundary-klasse: Tachometer}
+%\subsubsection{Boundary-klasse: Tachometer}
 Denne klasse håndterer kommunikationen til bilens tachometer og konverterer sensordata til brugbar hastighedsmåling.
 
-\subsubsection{Boundary-klasse: DistanceSensor}
+%\subsubsection{Boundary-klasse: DistanceSensor}
 Denne klasse håndterer kommunikationen til bilens afstandssensorer og konverterer sensordata til brugbar distancemålinger. Klassen håndterer alle fire sensorer.
 
 \subsubsection{Boundary-klasse: Accelerometer}
 Denne klasse håndterer kommunikationen til bilens accelerometer og konverterer sensordata til brugbar g-måling.
 
-\subsubsection{Boundary-klasse: Psoc}
+\subsubsection{Boundary-klasse: Psoc (Pi)}
 Denne klasse håndterer kommunikationen til PSoC'en hvor afstandssensorer og tachometer er monteret, og konverterer sensordata til brugbar distance- og hastighedsmålinger. Klassen håndterer alle fire sensorer samt tachometeret.
 
 \clearpage
@@ -144,7 +144,7 @@ Herunder er udarbejdet sekvensdiagrammer for den funktionalitet som Pi blokken p
 \clearpage
 \input{swdesign/bil/steering/steering}
 \clearpage
-\input{swdesign/bil/distanceSensor/distanceSensor}
+\input{swdesign/bil/psoc/psoc}
 \clearpage
-%\input{swdesign/bil/psoc/psoc}
+%\input{swdesign/bil/distanceSensor/distanceSensor}
 %\clearpage

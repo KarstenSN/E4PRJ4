@@ -149,7 +149,7 @@ int Steering::turn(signed char value)
 	//this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
 	
 	
-#ifdef DEBUG
+#ifdef DEBUG_STEERING
 			fflush(stdout);
 			std::cout << "Steering::turn" << msg  << "            " << "\r";
 #endif
