@@ -24,7 +24,7 @@ beskrives blokke og kommunikationsveje mere detaljeret. Under figur \ref{fig:sys
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{../fig/diagrammer/systemoversigt.pdf}
+\includegraphics[width=0.9\textwidth]{../fig/diagrammer/systemoversigt.pdf}
 \caption{Overordnet systemoversigt}
 \label{fig:systemoversigt}
 \end{figure}
@@ -39,6 +39,9 @@ Servomotor har til opgave at omsætte signal fra Pi'en til mekanisk styring af b
 
 \subsubsection{Afstandssensor}
 Bilens 2 fremadrettet og 2 bagudrettet afstandssensorer har til formål at indsamle data om eventuelle forhindringer i bilen kørebane. 
+
+\subsubsection{PSoC}
+PSoC'en har påmonteret de 4 afstandssensorer, samt tachometeret, og kommunikerer med Pi'en via I2C.
 
 \subsubsection{Accelerometer}
 Der er påmonteret et accelerometer der anvendes til regulering af hastighed.
