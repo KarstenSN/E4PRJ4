@@ -1,4 +1,5 @@
-﻿#include <Steering.hpp>
+﻿
+#include <Steering.hpp>
 
 
 
@@ -15,7 +16,7 @@ Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 	if (wiringPiSetupGpio() == -1)// Initialize wiringPi -- using Broadcom pin numbers
 	{
 		this->logPtr_->writeError(__PRETTY_FUNCTION__, "Failed to init wiringPiSetupGpio()");
-		exit(1);
+		
 	}
 	pinMode(PWM_MOTOR_PIN, PWM_OUTPUT);// PWM_OUTPUT  /  OUTPUT
 	pwmSetRange(PWM_SET_RANGE_VALUE); //The default is 1024.
@@ -34,7 +35,7 @@ Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 	maxServoPWM_ = maxServoPWM;
 
 	//***** Software PWM *****
-	err = softPwmCreate(PWM_SERVO_PIN, 0, 60);
+	err = softPwmCreate(PWM_SERVO_PIN, 0, 200);
 	if (err != 0)
 		this->logPtr_->writeError(__PRETTY_FUNCTION__, "Failed to init softPwmCreate()");
 
@@ -92,12 +93,12 @@ int Steering::userInput(UserInput* UsrInput_)
 			.append(" speedReqBack_ ").append(std::to_string(speedReqBack_));
 			this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
 			*/
-/*			
-#ifdef DEBUG
+			
+#ifdef DEBUG_STEERING
 			fflush(stdout);
 			std::cout << "userInput()" << "speedReqFor_ " << static_cast<int>(UsrInput_->forward) << " speedReqBack_ " << static_cast<int>(UsrInput_->reverse) << "            " << "\r";
 #endif
-*/		}
+		}
 
 		this->motorSetPWM(UsrInput_->forward, UsrInput_->reverse);
 

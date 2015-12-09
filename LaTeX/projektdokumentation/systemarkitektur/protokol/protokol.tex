@@ -76,10 +76,11 @@ bilen sender ''dwnnow'' tilbage som ACK. Alt andet tolkes som NACK \\ \hline
 \textbf{DB5}	\\ \hline
 
 \textbf{Datatype} & Makshastig hed & Hastighed & Afstand & Acceleration & AKS-status & Styretøj \\ \hline
-\textbf{Enhed} & km/h & (km/h)$\times$10 & m$\times$10 & G$\times$10 & 0..1 & -50..50 \\ \hline
+\textbf{Enhed} & char & char & char & char & char &  char \\ \hline
+\textbf{Værdi} & km/h & (km/h)$\times$10 & m$\times$10 & G$\times$10 & 0..1 & -50..50 \\ \hline
 
 \end{tabularx}
-\caption{GUI byte protokol}
+\caption{GUI data protokol}
 \label{tbl:prt_gui_byte}
 \end{table}
 
@@ -95,7 +96,8 @@ bilen sender ''dwnnow'' tilbage som ACK. Alt andet tolkes som NACK \\ \hline
 \textbf{DB5}	\\ \hline
 
 \textbf{Datatype} & Shutdown & Shutdown & Shutdown & Shutdown & Shutdown & Shutdown \\ \hline
-\textbf{Enhed} & 'd' & 'w' & 'n' & 'n' & 'o' & 'w' \\ \hline
+\textbf{Enhed} & char & char & char & char & char &  char \\ \hline
+\textbf{Data} & 'd' & 'w' & 'n' & 'n' & 'o' & 'w' \\ \hline
 
 \end{tabularx}
 \caption{GUI shutdown protokol}
@@ -168,9 +170,10 @@ Char værdi 1 \\ \hline
 \textbf{DB3}	\\ \hline
 
 \textbf{Datatype} & Frem & Tilbage & Drej & Stop \\ \hline
-\textbf{Enhed} & 0..255 unsigned char & 0..255 unsigned char & (-127)..127 char & 0..1 char\\ \hline
+\textbf{Enhed} & unsigned char & unsigned char & char & char\\ \hline
+\textbf{Range} & 0..255 & 0..255 & (-127)..127  & 0..1 \\ \hline
 
 \end{tabularx}
-\caption{Xbox360-controller Protokol byte mønster}
+\caption{Xbox360-controller data Protokol}
 \label{tbl:prt_controller_byte}
 \end{table}
