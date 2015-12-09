@@ -2,6 +2,7 @@
 
 #define DEBUG_PCCOM //Uncomment to enable debugging in PcCom class only
 
+//----------PcCom::PcCom1----------
 PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr)
 {
     int i;
@@ -25,13 +26,17 @@ PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr)
     
     this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"PcCom initialized");    
 }
+//----------PcCom::PcCom2----------
 
+//----------PcCom::PcCom3----------
 PcCom::~PcCom()
 {
     this->dataStreamTh.join();
     this->controllerStreamTh.join();
 }
+//----------PcCom::PcCom4----------
 
+//----------PcCom::controllerStream1----------
 void PcCom::controllerStream()
 {
     this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Initializing TCP connection for user input stream");
@@ -53,6 +58,7 @@ void PcCom::controllerStream()
     listen(sockfd,5);
     clilen = sizeof(cli_addr);
 
+//----------PcCom::controllerStream2----------
     // Infinite wait for connection
     while(1)
     {
@@ -107,6 +113,8 @@ void PcCom::controllerStream()
 	this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Closing the controller connection");
     return;
 }
+//----------PcCom::controllerStream3----------
+
 
 void PcCom::dataStream()
 {
