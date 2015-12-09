@@ -1,78 +1,32 @@
-\subsubsection{PcCom} \label{sec:pccom_impl}
+\subsection{PcComklassen} \label{sec:pccom_impl}
 
-PcCom er en klasse, som styrer kommunikation mellem PC software og bil, fra bilens side. Klassens primære opgave er, at igangsætte to threads der hver især styrer en TCP kommunikation mellem PIen og softwaren på computeren. Den ene thread modtager og vidersender brugerinput fra brugeren til AKS og Steering objekter. Den anden thread modtager indstillinger og sætter disse i et Settings objekt, samt henter data fra et Data objekt og sender disse tilbage til softwaren på computeren.
+PcCom er en klasse, som styrer kommunikation mellem PC software og bil, fra bilens side. Klassens primære opgave er, at igangsætte to tråde der hver især styrer en TCP kommunikation mellem PIen og softwaren på computeren. Den ene tråd modtager og vidersender brugerinput fra brugeren til AKS og Steering objekter. Den anden tråd modtager indstillinger og sætter disse i et Settings objekt, samt henter data fra et Data objekt og sender disse tilbage til softwaren på computeren.
 Herunder vil koden blive forklaret i detaljer.
 
 
-\paragraph{PcCom Constructor} er klassens constructor. Koden er vist i vist i Listing \ref{lst:pccom_con}. Ud over at initialisere, sker der en linkning til et Log, et Data og et Settings object (linje 15, 16 og 17), via association. Denne association sørger for at det er de samme objekter, der bliver bearbejdet af de andre klasser i systemet. På linje 24 og 25 igangsættes de førnævnte threads med hver deres funktionskald, hhv. dataStream og controllerStream. På linje 27 skriver den til Log objektet at den er færdig med initiaisering.
+\paragraph{PcCom Constructor} er klassens constructor. Koden er vist i Listing \ref{lst:pccom_con}. Ud over at initialisere, sker der en linkning til et Log, et Data og et Settings object (linje 15, 16 og 17), via association. Denne association sørger for at det er de samme objekter, der bliver bearbejdet af de andre klasser i systemet. På linje 24 og 25 igangsættes de førnævnte tråde med hver deres funktionskald, hhv. dataStream og controllerStream. På linje 27 skriver den til Log objektet at den er færdig med initiaisering.
 
 \lstinputlisting[linerange=PcCom::PcCom1-PcCom::PcCom2, label=lst:pccom_con, caption=Constructor for PcCom klassen.]{../../src/bil/pccom.cpp}
 
-\paragraph{PcCom Destructor} er klassens destructor. Denne skal sørge for at vente med at lukke klassen ned til at de to threads er klar til dette. Koden er vist i vist i Listing \ref{lst:pccom_de}
+\paragraph{PcCom Destructor} er klassens destructor. Denne skal sørge for at vente med at lukke klassen ned til at de to tråde er klar til dette. Koden er vist i vist i Listing \ref{lst:pccom_de}
 
 \lstinputlisting[linerange=PcCom::PcCom3-PcCom::PcCom4, label=lst:pccom_de, caption=Destructor for PcCom klassen.]{../../src/bil/pccom.cpp}
 
 \clearpage
 
-\paragraph{controllerStream} er en funktion der igangsættes af tråden \texttt{controllerStreamTh}. Formålet med denne funktion er at oprette en TCP connection til streaming af brugerinput.\\
-I Listing \ref{lst:pccom_controllerstream} vises initieringen af den ønskede socket. 
+\paragraph{controllerStream} er en funktion der igangsættes af tråden \texttt{controllerStreamTh}. Formålet med denne funktion er at oprette en TCP kommunikation til streaming af brugerinput.\\\\
+I Listing \ref{lst:pccom_controllerstream1} vises initieringen af den ønskede socket. Der startes med at skrive til logen at denne funktion er blevet kaldt (linje 42), herefter initieres de variable der også skal nedlægges i tilfælde af at denne funktion afsluttes (linje 45-47). Nogle af disse variable er structs der er deffineret i ''\texttt{netinet/in.h}'' bibilioteket og vil ikke blive gennemgået i detaljer her.
 
-\lstinputlisting[linerange=PcCom::controllerStream1-PcCom::controllerStream2, label=lst:pccom_controllerstream, caption=Del 1 af funktionen \texttt{controllerStream}: Initieringen.]{../../src/bil/pccom.cpp}
-%
-%
-%
-%\paragraph{setAKS} er en funktion til at skrive til klassens attribut, der indeholder AKS status. Koden er vist i Listing \ref{lst:setaks}. Denne funktion er implementeret på samme måde som setMaxSpeed, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
-%
-%\begin{lstlisting}[caption={Funktionen setAKS},label=lst:setaks, language=c++]
-%void Settings::setAKS(bool AKSStatus)
-%{
-%  std::lock_guard<std::mutex> lock(this->AKSStatusMut);
-%  this->AKSStatus_ = AKSStatus;
-%  return;
-%}
-%\end{lstlisting}
-%
-%
-%\paragraph{calibrateSteering} er en funktion til at skrive til klassens attribut, der indeholder kalibrering af styrtøj. Koden er vist i Listing \ref{lst:calibratesteering}. Denne funktion er implementeret på samme måde som setMaxSpeed og setAKS, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
-%
-%\begin{lstlisting}[caption={Funktionen calibrateSteering},label=lst:calibratesteering, language=c++]
-%void Settings::calibrateSteering(char calibration)
-%{
-%  std::lock_guard<std::mutex> lock(this->calibrationMut);
-%  this->calibration_ = calibration;
-%  return;
-%}
-%\end{lstlisting}
-%
-%
-%\paragraph{getMaxSpeed}  er en funktion til at læse og returnere klassens attribut, der indeholder den indstillede maksimale hastighed. Koden er vist i Listing \ref{lst:getmaxspeed}. Ud over at læse attributen låses klassens attribut, så det ikke er muligt for andre funktionskald at skrive eller læse attributen, indtil at funktionen er færdig med at læse fra og returnere den.
-%
-%\begin{lstlisting}[caption={Funktionen getMaxSpeed},label=lst:getmaxspeed, language=c++]
-%int Settings::getMaxSpeed()
-%{
-%  std::lock_guard<std::mutex> lock(this->maxVelocityMut);
-%  return this->maxVelocity_;
-%}
-%\end{lstlisting}
-%
-%
-%\paragraph{getAKS}  er en funktion til at læse og returnere klassens attribut, der indeholder AKS status. Koden er vist i Listing \ref{lst:getaks}. Denne funktion er implementeret på samme måde som getMaxSpeed, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
-%
-%\begin{lstlisting}[caption={Funktionen getAKS},label=lst:getaks, language=c++]
-%bool Settings::getAKS()
-%{
-%  std::lock_guard<std::mutex> lock(this->AKSStatusMut);
-%  return this->AKSStatus_;
-%}
-%\end{lstlisting}
-%
-%
-%\paragraph{getCalibration}  er en funktion til at læse og returnere klassens attribut, der indeholder kalibrering af styrtøj. Koden er vist i Listing \ref{lst:getcalibration}. Denne funktion er implementeret på samme måde som getMaxSpeed og getAKS, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
-%
-%\begin{lstlisting}[caption={Funktionen getCalibration},label=lst:getcalibration, language=c++]
-%char Settings::getCalibration()
-%{
-%  std::lock_guard<std::mutex> lock(this->calibrationMut);
-%  return this->calibration_;
-%}
-%\end{lstlisting}
+\lstinputlisting[linerange=PcCom::controllerStream1-PcCom::controllerStream2, label=lst:pccom_controllerstream1, caption=Del 1 af funktionen \texttt{controllerStream}: Initieringen.]{../../src/bil/pccom.cpp}
+
+\texttt{socket} kaldet (linje 50) er et systemkald der konstruerer en ny socket. Kaldet tager imod 3 argumenter. Det første argument er addressen på domænet. I dette tilfælde er der brugt \texttt{AF\_INET} som indeholder en konstant til at fortælle at det ønskede domæne er et internet domæne. Det andet argument er socket typen. Der er valgt at bruge \texttt{SOCK\_STREAM} som initialiserer socket til at være en streaming socket. Det tredje argument er protokolen der ønskes taget i brug. Som standard er det smart at sætte dette argument til 0 da kaldet selv tager den bedst mulige protokol til den angivede socket type, i dette tilfælde vil den vælge TCP da dette er den bedste protokol til datastreaming. Systemkaldet vil returnere en indgang til fildescripterens tabel (et lille heltal). Returværdien er brugt til at kunne referere til denne socket. I tilfælde af fejl vil der blive skrevet til logen gennem error funktionen i klassen.\\
+Herefter indskrives de data der skal bruges for at binde den skabte socket, til den ønskede adresse, i \texttt{serv\_addr} (linje 53-55). Disse data bliver brugt i system kaldet \texttt{bind} (linje 56). Efter kaldet, \texttt{listen}, er serveren nu klar til at blive talt til fra en klient.\\\\
+\texttt{accept} (linje 64) er kaldet der giver en klient, der har anmodet om at snakke med serveren, mulighed for dette. I tilfælde af at der ikke er nogen klient der sender en anmodning vil den blot ligge tråden til at sove, indtil at den bliver vækket af en anmodning.
+
+\lstinputlisting[linerange=PcCom::controllerStream2-PcCom::controllerStream3, label=lst:pccom_controllerstream2, caption=Del 2 af funktionen \texttt{controllerStream}: Streaming.]{../../src/bil/pccom.cpp}
+
+Koden i Listing \ref{lst:pccom_controllerstream2} er streaming og datahåndtering. Først læses der fra den TCP socket der er oprettet, via \texttt{read} (linje 77). Denne data skrives til arrayet \texttt{controller\_}. Herefter bliver disse data skrevet ind i en struct (linje 88-91) der sendes videre til Dataklassen via funktionskaldet \texttt{writeUserInput()} (linje 94). Efter dette sendes den modtagede data tilbage til klienten for at kunne sikre at det var de korrekte data serveren modtog, samt for at eftervise at serveren er klar til at modtage nye data.\\
+I tilfælde af at klassen er sat til debug-mode, vil der udskrives dele af den modtagede data (linje 80)\\
+Ved tilfælde af at \texttt{running\_} er sat til \texttt{FALSE}, vil den opsatte socket lukkes ned, og skrive dette til logen (linje 102-114).
+
+\paragraph{dataStream}

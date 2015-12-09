@@ -58,7 +58,6 @@ void PcCom::controllerStream()
     listen(sockfd,5);
     clilen = sizeof(cli_addr);
 
-//----------PcCom::controllerStream2----------
     // Infinite wait for connection
     while(1)
     {
@@ -67,6 +66,7 @@ void PcCom::controllerStream()
             break;
 
         this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__, "Controller TCP-Connection aquired");
+		//----------PcCom::controllerStream2----------
         while(1)
         {
             /* Acquire controller data from computer
@@ -84,7 +84,7 @@ void PcCom::controllerStream()
             if (n < 0)
                 this->error("ERROR reading from socket");
 
-            // Add controller data to the
+            // Add controller data to the struct
             this->UserInput_.forward = this->controller_[0];
             this->UserInput_.reverse = this->controller_[1];
             this->UserInput_.turn = this->controller_[2];
