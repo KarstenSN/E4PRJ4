@@ -10,6 +10,8 @@ Psoc'ens formål, hardware- såvel som softwaremæssgt, er at simplificere \IIC 
 \label{fig:cd_main_psoc}
 \end{figure}
 
+\clearpage
+
 \textbf{Attributter}
 
 \begin{table}[h]
@@ -82,6 +84,8 @@ Beskrivelse	& Kommunikerer via \IIC til distance sensorerne hver især.  \\\hlin
 \label{table:psoc_getdistance}
 \end{table}
 
+\clearpage
+
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype 	& \texttt{void getVelocity(void)} \\\hline
@@ -102,5 +106,14 @@ Beskrivelse	& Fungerer som interrupt service routine for PSoC'en, hver gang en m
 \caption{Metodebeskrivelse for \texttt{CY\_ISR(my\_ISR)}}
 \label{table:psoc_my_isr}
 \end{table}
+
+PSoC'ens program fungerer i store træk som vist på figur \ref{fig:sd_main_psoc}. Sekvensdiagrammet skal forstås som en forklaring af funktionalitet, som på højere abstraktionsniveau end selve koden giver en forståelse af hvad der sker inde i PSoC'en. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[]{../fig/diagrammer/psoc/sd_psoc.pdf}
+\caption{Sekvensdiagram af PSoC'ens funktionalitet}
+\label{fig:sd_main_psoc}
+\end{figure}
 
 \clearpage
