@@ -1,4 +1,4 @@
-﻿#define DEBUG
+﻿
 #include <Steering.hpp>
 
 
@@ -93,12 +93,12 @@ int Steering::userInput(UserInput* UsrInput_)
 			.append(" speedReqBack_ ").append(std::to_string(speedReqBack_));
 			this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
 			*/
-/*			
-#ifdef DEBUG
+			
+#ifdef DEBUG_STEERING
 			fflush(stdout);
 			std::cout << "userInput()" << "speedReqFor_ " << static_cast<int>(UsrInput_->forward) << " speedReqBack_ " << static_cast<int>(UsrInput_->reverse) << "            " << "\r";
 #endif
-*/		}
+		}
 
 		this->motorSetPWM(UsrInput_->forward, UsrInput_->reverse);
 
