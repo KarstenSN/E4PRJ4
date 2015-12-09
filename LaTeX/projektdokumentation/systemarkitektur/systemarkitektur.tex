@@ -1,0 +1,34 @@
+\chapter{Systemarkitektur}
+
+\section*{Version}
+\begin{table}[h]
+	\centering
+	\begin{tabularx}{\textwidth - 2cm}{|l|l|l|X|}
+	\hline
+	Dato			& Version			& Initialer 		& Ændring										\\ \hline
+	26. Oktober		& 2 				& Alle				& Første udkast				\\ \hline
+	29. Oktober		& 3 				& Alle 				& Rettelser fra vejleder 	\\ \hline
+	09. December	& 4 				& LS/KE 			& Update af diagrammer m.m	\\ \hline
+	\end{tabularx}
+\end{table}
+
+\section{Indledning}
+Følgende afsnit beskriver arkitekturen for hardware- og software delene af projektet. BDD og IBD er lavet mhp. forståelse og indblik i systemet, således alle grænseflader og interne dele af systemet bliver forklaret. Til hvert diagram vil der være en kort forklaring, som beskriver det yderligere.
+
+\clearpage
+
+\section{BDD for AU2}	% bdd_au2.pdf
+
+På figur \ref{fig:bdd_au2} ses det overordnede blokdiagram for AU2. Der vises tilhørsforhold og sammenhæng med det samlede system, som senere bliver uddybet mere.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=1]{../fig/diagrammer/bdd_au2.pdf}
+\caption{Overordnet BDD for AU2}
+\label{fig:bdd_au2}
+\end{figure}
+
+\clearpage
+\input{systemarkitektur/bil/bil} \clearpage
+\input{systemarkitektur/pc/pc} \clearpage
+\input{systemarkitektur/protokol/protokol} \clearpage
