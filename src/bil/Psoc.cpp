@@ -60,12 +60,12 @@ int Psoc::getDistance(std::string name){
 //----------psoc::getVelocity1----------
 int Psoc::getVelocity(){
 	#ifdef DEBUGGING_MODE
-    std::cout << "getVelocity() kører" << std::endl;
+	std::cout << "getVelocity() kører" << std::endl;
 	#endif
   
 	std::lock_guard<std::mutex> lock(psocMut);
 	
-    return Tacho_;
+	return Tacho_;
 }
 //----------psoc::getVelocity2----------
 
