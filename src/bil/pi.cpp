@@ -18,6 +18,7 @@ struct ObjPts{
 	Log* LogPtr;
 };
 
+//----------acqDat0----------
 void* acquireData(ObjPts* structPtr){
 	Data* myData = static_cast<ObjPts*>(structPtr)->dataPtr;
 	Psoc* PsocSens = static_cast<ObjPts*>(structPtr)->PsocPtr;
@@ -43,7 +44,8 @@ void* acquireData(ObjPts* structPtr){
 		std::this_thread::sleep_for (std::chrono::seconds(1));
 	}
 }
-
+//----------acqDat1----------
+//----------main0----------
 int main(){
 	Log Log_;
     Settings Settings_(&Log_);
@@ -65,3 +67,4 @@ int main(){
     
     return 0;
 }
+//----------main1----------
