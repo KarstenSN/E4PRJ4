@@ -1,15 +1,15 @@
-\subsection{Sensorer}
+\subsection{PSoC}
 
-På figur \ref{fig:ibd_sensorer} ses de interne signaler for blokken Sensorer.
+På figur \ref{fig:ibd_psoc} ses de interne signaler for blokken PSoC.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=1]{../fig/diagrammer/bil/ibd_sensorer.pdf}
-\caption{IBD for blokken sensorer}
-\label{fig:ibd_sensorer}
+\includegraphics[scale=1]{../fig/diagrammer/bil/ibd_PSoC.pdf}
+\caption{IBD for blokken PSoC}
+\label{fig:ibd_psoc}
 \end{figure}
 
-\subsubsection{signalbeskrivelse for sensorer}
+\subsubsection{Signalbeskrivelse for PSoC}
 
 \begin{table}[h]
 	\centering
@@ -33,18 +33,18 @@ Inout SCL: bool
 
 Pulses: sound
 	& Ultralydsbølger afsendt af sensor. 
-	& Jfv. Datablad (henvisning kommer senere) %TODO henvsining
+	& Ultralydsfrekvens på 42kHz
  	& ~
 	\\ \hline
 	
 reflection: sound
 	& Refleksionsbølge af udsendte ultralydsbølger. 
-	& Jfv. Datablad (henvisning kommer senere) %TODO henvsining
+	& delay'ed Ultralydsfrekvens på 42kHz
  	& ~
 	\\ \hline
 	
 tachoSpeed: freq
-	& Digitalt signal med varierende frekvens afhængig af baghjulenes 					omdrejningshastighed.
+	& Digitalt signal med varierende frekvens afhængig af baghjulenes omdrejningshastighed.
 	& ~
 	& Vejledende: \newline
 		64Hz = 10Km/t \newline

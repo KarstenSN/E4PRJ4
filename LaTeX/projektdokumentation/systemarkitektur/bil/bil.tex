@@ -4,7 +4,7 @@
 
 \subsubsection{BDD for bil} % bdd_bil.pdf
 
-Dette diagram viser blokken bil fra figur \ref{fig:bdd_au2}. Blokken 'bil' skal forstås som alle mekaniske og elektriske som er fastgjort på køretøjet. Således er 
+Dette diagram viser blokken bil fra figur \ref{fig:bdd_au2}. Blokken 'bil' skal forstås som alle mekaniske og elektriske moduler som er fastgjort på køretøjet. Således er 
 
 \begin{figure}[h]
 \centering
@@ -16,7 +16,7 @@ Dette diagram viser blokken bil fra figur \ref{fig:bdd_au2}. Blokken 'bil' skal 
 
 \subsubsection{IBD for signaler i bil}
 
-På figur \ref{fig:ibd_bil} ses de interne forbindelser for figur \ref{fig:bdd_bil}. Diagrammet skaber et overblik over hvilke signaler der sendes og modtages. Bemærk at alle forsyningerne ikke er taget med på diagrammet, men istedet er lavet i et diagram for sig. Forsyningerne kan ses på figur \ref{fig:ibd_bil_forsyning}.
+På figur \ref{fig:ibd_bil} ses de interne forbindelser for figur \ref{fig:bdd_bil}. Diagrammet skaber et overblik over hvilke signaler der sendes og modtages. Bemærk at forsyningerne ikke er medtaget på diagrammet, istedet er disse vist i et selvstændigt diagram. Forsyningerne kan ses på figur \ref{fig:ibd_bil_forsyning}.
 
 \begin{figure}[h]
 \centering
@@ -66,7 +66,7 @@ Inout SDA: bool
 	& 0-5V $\pm$ 0.5V
  	& Logisk signal: \newline
 		Lav = 0V $\pm$ 0.5V \newline
-		Høj = 7.2V $\pm$ 0.5V
+		Høj = 5V $\pm$ 0.5V
 	\\ \hline
 
 Inout SCL: bool
@@ -74,7 +74,7 @@ Inout SCL: bool
 	& 0-5V $\pm$ 0.5V
  	& Logisk signal: \newline
 		Lav = 0V $\pm$ 0.5V \newline
-		Høj = 7.2V $\pm$ 0.5V
+		Høj = 5V $\pm$ 0.5V
 	\\ \hline
 
 Pulses: sound
@@ -153,14 +153,14 @@ GND: GND
  	& ~
 	\\ \hline
 	
-styrtøj: 7.2V DC
+styretøj: 5V DC
 	& Forsyningsspænding til styrtøj herunder servomotor. 
-	& 7.2V DC $\pm$ 0,5V max 400 mA
+	& 5V DC $\pm$ 0,5V max 400 mA
  	& Fundet i databladet for servoen \cite{lib:servo}.
 	\\ \hline
 	
-Psoc: 5V DC
-	& Forsyningsspænding til Psoc. 
+PSoC: 5V DC
+	& Forsyningsspænding til PSoC. 
 	& 5V DC $\pm$ 0,5V max 500 mA
  	& Worst case vurdering på baggrund af USB forsyning fra PC.
 	\\ \hline
@@ -178,13 +178,13 @@ afstandssensor: 5V DC
  	& Fundet i databladet for sensorerne \cite{lib:maxsonar}.
 	\\ \hline
 	
-PI: 5V DC
+Pi: 5V DC
 	& Individuel forsyningsspænding til Pi.
 	& 5V DC $\pm$ 0.5V max 1.8A
  	& Aflæst i FAQ for Pi \cite{lib:PI2PSU}.
 	\\ \hline
 	
-Tacho: 5V DC
+Tachomet: 5V DC
 	& Individuel forsyningsspænding til tachometeret.
 	& 5V DC $\pm$ 0.5V max 8 mA
  	& Aflæst i datablad for sensor \cite{lib:tacho}.
@@ -206,6 +206,6 @@ motor: 7.2V DC
 \clearpage
 \input{systemarkitektur/bil/ibdpi/ibdpi}
 \clearpage
-\input{systemarkitektur/bil/ibdsensorer/ibdsensorer}
+\input{systemarkitektur/bil/ibdPSoC/ibdpsoc}
 \clearpage
 \input{systemarkitektur/bil/mpu6050/mpu6050}
