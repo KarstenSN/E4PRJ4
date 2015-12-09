@@ -1,7 +1,6 @@
-﻿
 #include <Steering.hpp>
 
-
+//#define DEBUG_STEERING //Uncomment to enable debugging in steering class only
 
 Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 {
@@ -142,7 +141,7 @@ int Steering::softbrake()
 
 int Steering::turn(signed char value)
 {
-	int TurnValue_ = ((((value + 127) * (maxServoPWM - minServoPWM)) / 255) + 5);
+	int TurnValue_ = ((((value + 128) * (maxServoPWM - minServoPWM)) / 255) + 5);
 	softPwmWrite(PWM_SERVO_PIN, TurnValue_);
 	
 	std::string msg;			// For testing only
@@ -227,11 +226,11 @@ void Steering::PWMUpdate()
 		// PID regulation
 		if (direction_ == 1)
 		{
-			this->error_ = this->speedReqFor_ - this->speedAct_;
+            this->error_ = this->speedReqFor_; //- this->speedAct_; // There is a problem here
 		}
 		else
 		{
-			this->error_ = this->speedReqBack_ - this->speedAct_;
+            this->error_ = this->speedReqBack_; //- this->speedAct_; // There is a problem here
 		}
 		
 		pTemp_ = pGain_ * error_;		// calculate the proportional temp

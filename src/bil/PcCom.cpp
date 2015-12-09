@@ -1,5 +1,8 @@
 #include <PcCom.hpp>
 
+#define DEBUG_PCCOM //Uncomment to enable debugging in PcCom class only
+
+//----------PcCom::PcCom1----------
 PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr)
 {
     int i;
@@ -23,13 +26,17 @@ PcCom::PcCom(Data* dataClassPtr, Settings* settingsClassPtr, Log* logClassPtr)
     
     this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"PcCom initialized");    
 }
+//----------PcCom::PcCom2----------
 
+//----------PcCom::PcCom3----------
 PcCom::~PcCom()
 {
     this->dataStreamTh.join();
     this->controllerStreamTh.join();
 }
+//----------PcCom::PcCom4----------
 
+//----------PcCom::controllerStream1----------
 void PcCom::controllerStream()
 {
     this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Initializing TCP connection for user input stream");
@@ -51,6 +58,7 @@ void PcCom::controllerStream()
     listen(sockfd,5);
     clilen = sizeof(cli_addr);
 
+//----------PcCom::controllerStream2----------
     // Infinite wait for connection
     while(1)
     {
@@ -67,6 +75,11 @@ void PcCom::controllerStream()
              * controller[2] = Turn         (-128 - 127)
              * controller[3] = Break        (0 - 1) */
             n = read(newsockfd,this->controller_,4);
+            
+#ifdef DEBUG_PCCOM
+            std::cout << "userInput()" << "speedReqFor_ " << static_cast<int>(this->controller_[0]) << " speedReqBack_ " << static_cast<int>(this->controller_[1]) << this->settingsClassPtr_->getAKS()<<"            \r" << std::flush;
+            
+#endif
 
             if (n < 0)
                 this->error("ERROR reading from socket");
@@ -100,6 +113,8 @@ void PcCom::controllerStream()
 	this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Closing the controller connection");
     return;
 }
+//----------PcCom::controllerStream3----------
+
 
 void PcCom::dataStream()
 {
