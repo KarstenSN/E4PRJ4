@@ -1,19 +1,55 @@
-\subsubsection{PSoC} \label{sec:psoc_sw_impl}
+%SW-implementering af Psoc-klassen (pi)
+\subsection{Psocklassen (pi)}
 
-\begin{lstlisting}[caption={ISR for tachometer},label=lst:tachometerISR, language=c++]
-CY_ISR(my_ISR){
-    secondaryTimer = (double)primaryTimer;
-    primaryTimer = (double)Timer_1_ReadCounter();
-    isr_1_ClearPending();
-    Pin_1_ClearInterrupt();
-    
-    if (secondaryTimer < primaryTimer){
-        timeBetween = ((secondaryTimer + timerPeriod) - primaryTimer)/fclk;
-    } else {
-        timeBetween = (secondaryTimer - primaryTimer)/fclk;
-    }
-   
-    rpm = 60 / (timeBetween*5);
-    calcVelocity = ((circumference*rpm) / 60)*3.6;
-}
-\end{lstlisting} 
+Psocklassen håndterer alt kommunikation mellem Pi og PSoC'en på Pi-siden. Som førnævnt er dette implementeret via I2C-kommunikation. Klassen er implementeret med to public metoder: \texttt{getDistance(name)} og \texttt{getVelocity()}. Disse metoder kaldes fra klassen \texttt{Data} når afstandsdata eller hastighedsdata ønskes overført. Disse 2 metoder tilgår de midlertidige variabler i klassen. På denne måde holdes et enkelt interface udadtil. Derudover er klassen bygget op omkring metoderne \texttt{update()} og \texttt{psocRead()}. I listing \ref{lst:Psoc_hpp} ses implementering af headerfil.
+
+\lstinputlisting[linerange=psoc::header1-psoc::header2, 
+	label=lst:Psoc_hpp, 
+	caption=headerfil for Psocklassen.]{../../src/bil/inc/Psoc.hpp} 
+
+\clearpage
+
+Metoden \texttt{getDistance} sørger for først at låse attributter, FL,FR,RL,RR med \texttt{mutex} inden de tilgås. På denne måde sikres der imod at der skrives og læses fra attributterne samtidig hvilket ville medføre uforudsigelige resultater. Herefter returnerer metoden dén sensorværdi hvis navn er sendt med som parameter. Slutteligt sørger \texttt{std::lock\_guard} selv for at frigive låsen igen når metoden går ud af scope. I listing \ref{lst:Psoc_getdistance} ses implementering af \texttt{getDistance()}-metoden. Yderligere ses implementeret debugging feature. 
+
+\lstinputlisting[linerange=psoc::getDistance1-psoc::getDistance2, 
+	label=lst:Psoc_getdistance, 
+	caption=Implementering af \texttt{getDistance()}]{../../src/bil/Psoc.cpp}
+
+\clearpage
+
+Metoden \texttt{getVelocity()} sørger for først at låse attributten \texttt{Tacho\_} inden denne returneres. Ophævelse af låsen sker automatisk når metoden går ud af scope. Implementering af \texttt{getVelocity} ses i listing \ref{lst:Psoc_getvelocity}: 
+
+\lstinputlisting[linerange=psoc::getVelocity1-psoc::getVelocity2, 
+	label=lst:Psoc_getvelocity, 
+	caption=Implementering af \texttt{getVelocity()}]{../../src/bil/Psoc.cpp}
+
+\clearpage
+
+Metoden \texttt{update()} åbner I2C-fobindelsen til PSoC'en ved at åbne $/dev/i2c-1$ som O\_RDWR, så der både kan skrive til, og læses fra forbindelsen.herefter sættes slaveadressen til PSoC'ens værdi på \texttt{0x10}, og nu kan der hentes de seneste målinger fra \texttt{rdbuffer} på PSoC'en. Som det sidste nedlægges forbindelsen med \texttt{close(fd)}. I listing \ref{lst:Psoc_update} ses implementeringen af \texttt{update()}. 
+
+\lstinputlisting[linerange=psoc::update1-psoc::update2, 
+	label=lst:Psoc_update, 
+	caption=Implementering af \texttt{update()}]{../../src/bil/Psoc.cpp}
+
+\clearpage
+
+Metoden \texttt{psocRead()} sørger at opdaterer klassens attributter med det seneste datasæt fra PSoC'en. Først kaldes \texttt{update()} så de seneste målinger lægger i \texttt{rdBuffer}. \texttt{rdBuffer} er det array der samler datasættet fra PSoC'en, således at data til \texttt{distanceFL\_} lægges i \texttt{rdBuffer[0] og rdBuffer[1]}. ligeledes ligger data til \texttt{distanceFR\_} i \texttt{rdBuffer[2] og rdBuffer[3]} osv. Data til \texttt{Tacho\_} ligger i \texttt{rdBuffer[8]}. Herefter låses attributterne således kan der skrives til dem uden at det clasher med en samtidig læsning. Datasættet fra \texttt{rdbuffer} lægges nu over i attributterne som beskrevet ovenfor. tilsidst ventes 200ms, for at give sensorerne den anbefalede tid til at fortage en range-reading. Implementering af \texttt{psocRead()} ses i listing \ref{lst:Psoc_psocread}.
+
+\lstinputlisting[linerange=psoc::read1-psoc::read2, 
+	label=lst:Psoc_psocread, 
+	caption=Implementering af \texttt{psocRead	()}]{../../src/bil/Psoc.cpp}
+
+\clearpage
+
+Constructoren for klassen sørger for at initiere pointer til Log-klassen, og der sendes en event-msg om at klassen er oprettet. Herefter startes den selvstændige tråd. implementering af Constructoren kan ses i listing \ref{lst:Psoc_ctor}:
+
+\lstinputlisting[linerange=psoc::ctor1-psoc::ctor2, 
+	label=lst:Psoc_ctor, 
+	caption=Implementering af \texttt{constructor}]{../../src/bil/Psoc.cpp}
+
+
+klassens destructoren sørger for at sende en event-msg om at klassen er lukkes ned. Herefter joines den selvstændige tråd. dette gøres for at tråden afsluttes korrekt, ellers vil programmet tvinges til exit. Destructoren er implementeret som vist i listing \ref{lst:Psoc_dtor}:
+
+\lstinputlisting[linerange=psoc::dtor1-psoc::dtor2, 
+	label=lst:Psoc_dtor, 
+	caption=Implementering af \texttt{destructor}]{../../src/bil/Psoc.cpp}

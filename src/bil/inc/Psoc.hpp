@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <Log.hpp>
 
+//----------psoc::header1----------
 class Psoc{
 public:
         Psoc(Log* Log);
@@ -31,5 +32,7 @@ private:
         std::mutex psocMut;
         std::thread psocThread_;
 };
+
+//----------psoc::header2----------
 
 #endif

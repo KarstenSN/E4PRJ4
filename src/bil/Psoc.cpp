@@ -5,34 +5,35 @@
 
 char rdBuffer[9] = {0};
 
-// Constructor
+//----------psoc::ctor1----------
 Psoc::Psoc(Log* Log){
-    this->logPtr_ = Log;
-    #ifdef DEBUGGING_MODE
-    std::cout << "Psoc class running.." << std::endl;
-    #endif 
-    this->logPtr_->writeEvent(__PRETTY_FUNCTION__,"Psoc class active");
+	this->logPtr_ = Log;
+	#ifdef DEBUGGING_MODE
+	std::cout << "Psoc class running.." << std::endl;
+	#endif 
+	this->logPtr_->writeEvent(__PRETTY_FUNCTION__,"Psoc class active");
     
-    this->psocThread_ = std::thread(&Psoc::psocRead , this);
+	this->psocThread_ = std::thread(&Psoc::psocRead , this);
 }
+//----------psoc::ctor2----------
 
-
-// Destructor
+//----------psoc::dtor1----------
 Psoc::~Psoc(){
-    #ifdef DEBUGGING_MODE
-    std::cout << "Psoc class shutdown.." << std::endl;
-    #endif 
-    this->logPtr_->writeEvent(__PRETTY_FUNCTION__,"Psoc class shutdown");
-    this->psocThread_.join();
+	#ifdef DEBUGGING_MODE
+	std::cout << "Psoc class shutdown.." << std::endl;
+	#endif 
+	this->logPtr_->writeEvent(__PRETTY_FUNCTION__,"Psoc class shutdown");
+	this->psocThread_.join();
 }
+//----------psoc::dtor2----------
 
 
-// getDistance()
+//----------psoc::getDistance1----------
 int Psoc::getDistance(std::string name){
     
-#ifdef DEBUGGING_MODE
-    std::cout << "getdistance() kører" << std::endl;
-#endif 
+	#ifdef DEBUGGING_MODE
+    std::cout << "getdistance() running" << std::endl;
+	#endif 
     std::lock_guard<std::mutex> lock(psocMut);
     
     if( name == "FL" ){
@@ -53,11 +54,12 @@ int Psoc::getDistance(std::string name){
         return 4;
     }
 }
+//----------psoc::getDistance2----------
 
 
-// getVelocity()
+//----------psoc::getVelocity1----------
 int Psoc::getVelocity(){
-    #ifdef DEBUGGING_MODE
+	#ifdef DEBUGGING_MODE
     std::cout << "getVelocity() kører" << std::endl;
 	#endif
   
@@ -65,71 +67,76 @@ int Psoc::getVelocity(){
 	
     return Tacho_;
 }
+//----------psoc::getVelocity2----------
 
 
-// PsocRead()
+//----------psoc::read1----------
 void Psoc::psocRead(){
-    #ifdef DEBUGGING_MODE    
+	#ifdef DEBUGGING_MODE    
 	std::cout << "test af Thread" << std::endl;
-  #endif     
-  while(1){
-    // get data from PSOC
-    Psoc::update();
-    {
-      std::lock_guard<std::mutex> lock(psocMut);
+	#endif     
+	while(1){
+	// get data from PSOC
+	Psoc::update();
+	{
+		std::lock_guard<std::mutex> lock(psocMut);
 	  
-      // move data to members
-      distanceFL_ = (int)((rdBuffer[0] << 8) + rdBuffer[1]);
-      distanceFR_ = (int)((rdBuffer[2] << 8) + rdBuffer[3]);
-      distanceRL_ = (int)((rdBuffer[4] << 8) + rdBuffer[5]);
-      distanceRR_ = (int)((rdBuffer[6] << 8) + rdBuffer[7]);
-      Tacho_      = (int)(rdBuffer[8]);
-    }
-#ifdef DEBUGGING_MODEs
-    std::cout << "Fl: " << distanceFL_ << std::endl << "FR: " << distanceFR_ << std::endl << "RL: " << distanceRL_ << std::endl << "RR: " << distanceRR_ << std::endl;
-#endif
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
-  }
+		// move data to members
+		distanceFL_ = (int)((rdBuffer[0] << 8) + rdBuffer[1]);
+		distanceFR_ = (int)((rdBuffer[2] << 8) + rdBuffer[3]);
+		distanceRL_ = (int)((rdBuffer[4] << 8) + rdBuffer[5]);
+		distanceRR_ = (int)((rdBuffer[6] << 8) + rdBuffer[7]);
+		Tacho_      = (int)(rdBuffer[8]);
+	}
+	#ifdef DEBUGGING_MODEs
+	std::cout << "Fl: " << distanceFL_ << std::endl;
+	std::cout << "FR: " << distanceFR_ << std::endl;
+	std::cout << "RL: " << distanceRL_ << std::endl;
+	std::cout << "RR: " << distanceRR_ << std::endl;
+	#endif
+	std::this_thread::sleep_for(std::chrono::milliseconds(200));
+	}
 }
+//----------psoc::read2----------
 
-
-// update()
+//----------psoc::update1----------
 int Psoc::update(){
     
-    // open i2c device;
-    int fd;
-    int Psocslave = 0x10;
-    #ifdef DEBUGGING_MODE
-    std::cout << "Update() kører" << std::endl;
-    #endif
+	// open i2c device;
+	int fd;
+	int Psocslave = 0x10;
+	#ifdef DEBUGGING_MODE
+	std::cout << "Update() kører" << std::endl;
+	#endif
 
-    if ((fd = open("/dev/i2c-1", O_RDWR)) < 0){
-        this->logPtr_->writeError(__PRETTY_FUNCTION__,"Error opening I2C-bus (psoc).");
-        #ifdef DEBUGGING_MODE
-        std::cout << "Error in opening I2C-Bus (DistanceSensor)" << std::endl;
-        #endif
-        close(fd);
-        return -1;
-    }
+	if ((fd = open("/dev/i2c-1", O_RDWR)) < 0){
+		this->logPtr_->writeError(__PRETTY_FUNCTION__,"Error opening I2C-bus");
+		#ifdef DEBUGGING_MODE
+		std::cout << "Error in opening I2C-Bus (DistanceSensor)" << std::endl;
+		#endif
+		close(fd);
+		return -1;
+	}
 
-    // Sæt adresse på sensor:
-    if ((ioctl(fd, I2C_SLAVE, Psocslave)) < 0){
-        this->logPtr_->writeError(__PRETTY_FUNCTION__,"Communication error via I2C to psoc.");
-        #ifdef DEBUGGING_MODE
-        std::cout << "Error in setting addr: (DistanceSensor)" << Psocslave << std::endl;
-        #endif
-        close(fd);
-        return -2;
-    }   
-    // Læsning og fejlcheck
-    int check = read(fd,rdBuffer,9);
-    if (check != 9){
-        #ifdef DEBUGGING_MODE
-        std::cout << "Failed to read distancesensor from I2C bus.\n" << std::endl;
-        #endif
-        this->logPtr_->writeError(__PRETTY_FUNCTION__,"Failed to read psoc from I2C bus.");
-        close(fd);
-        return -3;
-    }
-    close(fd);
+	// Sæt adresse på sensor:
+	if ((ioctl(fd, I2C_SLAVE, Psocslave)) < 0){
+		this->logPtr_->writeError(__PRETTY_FUNCTION__,"Comm error via I2C.");
+		#ifdef DEBUGGING_MODE
+		std::cout << "Error in setting addr: (DistanceSensor)" << Psocslave << std::endl;
+		#endif
+		close(fd);
+		return -2;
+	}   
+	// Læsning og fejlcheck
+	int check = read(fd,rdBuffer,9);
+	if (check != 9){
+		#ifdef DEBUGGING_MODE
+		std::cout << "Failed to read distancesensor from I2C bus.\n" << std::endl;
+		#endif
+		this->logPtr_->writeError(__PRETTY_FUNCTION__,"Failed to read psoc from I2C bus.");
+		close(fd);
+		return -3;
+	}
+	close(fd);
 }
+//----------psoc::update2----------
