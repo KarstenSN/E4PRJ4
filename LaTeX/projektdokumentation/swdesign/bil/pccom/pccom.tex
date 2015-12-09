@@ -30,11 +30,13 @@ Navn & Type & Beskrivelse \\\hline
 
 \texttt{settings- ClassPtr\_}	& \texttt{Settings*}&En pointer til det objekt af typen Settings der ønskes skrevet data til.\\\hline
 
+\texttt{logClassPtr\_}			& \texttt{Log*}		&En pointer til det objekt af typen Log der ønskes skrevet til.\\\hline
+
 \texttt{UserInput\_}			& \texttt{UserInput}&En struct af typen UserInput der har fire chars, hhv. frem, tilbage, drej og stop.\\\hline
 
 \texttt{dataStreamTh}			& \texttt{thread}	&Den thread der skal køre TCP connection til data streaming.\\\hline
 
-\texttt{Controller- StreamTh}		& \texttt{thread}	&Den thread der skal køre TCP connection til bruger input streaming.\\\hline
+\texttt{Controller- StreamTh}	& \texttt{thread}	&Den thread der skal køre TCP connection til bruger input streaming.\\\hline
 \end{tabularx}
 \caption{Attributter for klassen PcCom}
 \label{table:attr_pccom}
