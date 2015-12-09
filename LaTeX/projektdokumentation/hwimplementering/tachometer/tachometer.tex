@@ -1,0 +1,19 @@
+\subsection{Tachometer} \label{sub:tachometer_hw_impl}
+
+I forbindelse med måling af tachometerets design på side \pageref{sub:systemarkitektur_tachometer} blev der foretaget nogle målinger af strømmene som løber i kredsløbet. Det viser sig, når kredsløbet forholder sig passivt og der ikke er en magnet tilstede, at der løber ca. $520\mu A$ og at der under tilstedeværelse af magnet løber ca. $1.32mA$, hvilket gør strømforbruget for tachometeret væsentligt under forventet størrelse.
+
+Forhjulet har en diameter på ca. 6.2 cm. Ved at placere i alt 5 magneter, en på hver akse, kan vi få en relativ høj opløsning af hastighed, selv når bilen bevæger sig langsomt. Der anvendes en PSoC, som aktiverer en timer når der detekteres en magnet, og aflæser en timerværdi, når den næste magnet passerer hallswitchen. Derved kan vi beregne bilens hastighed på følgende måde:
+
+\begin{equation}
+rpm = \dfrac{60s}{5\cdot \left(\dfrac{T_{2} - T_{1}}{f_{clk}}\right)}
+\end{equation}
+
+Hvor $T_1$ og $T_2$ er aflæste timerværdier fra PSoC'en, $f_{clk}$ er den clockfrekvens $ f_{clk} = 400kHz$, som timeren anvender.
+
+\begin{equation}
+Km/t = 3.6 \cdot \left(\dfrac{O\cdot rpm}{60s}\right)
+\end{equation}
+
+PSoC'ens opgave ifm. aflæsning af tachometeret er relativt simpel. Princippet er at den aflæser en timer, hver gang der detekteres en magnet, timerne er implementeret således at der sikres mod overflow. Når timeren er aflæst en gang, gemmes værdien i en variabel, som igen gemmes i en anden variabel, før den første overskrives af den nye timerværdi. Efter test af programmet, blev det opdaget at timeren tæller nedadgående, hvilket forklarer at $T_2 > T_1$, når $T_1$ aflæses først. Der anvendes hardwaretimere af præcisionsmæssige årsager, dog bliver der afrundet meget i sidste ende.
+
+Kredsløbet blev realiseret på et hertil udskåret veroboard, som har parsnoede ledninger ud til hallswitchen, som er fastmonteret på forhjulet. Måledistancen for hallswitchen er lige omkring en halv centimeter, hvilket ville kunne give problemer hvis switchen rykker sig for meget. 

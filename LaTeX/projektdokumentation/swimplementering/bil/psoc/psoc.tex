@@ -1,0 +1,19 @@
+\subsubsection{PSoC} \label{sec:psoc_sw_impl}
+
+\begin{lstlisting}[caption={ISR for tachometer},label=lst:tachometerISR, language=c++]
+CY_ISR(my_ISR){
+    secondaryTimer = (double)primaryTimer;
+    primaryTimer = (double)Timer_1_ReadCounter();
+    isr_1_ClearPending();
+    Pin_1_ClearInterrupt();
+    
+    if (secondaryTimer < primaryTimer){
+        timeBetween = ((secondaryTimer + timerPeriod) - primaryTimer)/fclk;
+    } else {
+        timeBetween = (secondaryTimer - primaryTimer)/fclk;
+    }
+   
+    rpm = 60 / (timeBetween*5);
+    calcVelocity = ((circumference*rpm) / 60)*3.6;
+}
+\end{lstlisting} 
