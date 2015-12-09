@@ -1,7 +1,68 @@
+//SW-implementering af Distancesensorklassen
 \subsection{Distancesensorklassen}
 
-Distancesensorklassen håndterer alt kommunikation mellem Pi og de 4 afstandssensorer. Som førnævnt er dette implementeret via I2C-kommunikation. Klassen er implementeret med en enkelt \texttt{getDistance(name)}-metode. på denne måde holdes et enkelt interface udadtil. Denne funktion kan kaldes fra de klasser der har brug for data'en. Metoden tilgår så internt I2C-bussen og henter data fra sensorerne.  
+Distancesensorklassen håndterer alt kommunikation mellem Pi og de 4 afstandssensorer. Som førnævnt er dette implementeret via I2C-kommunikation. Klassen er implementeret med en enkelt \texttt{getDistance(name)}-metode. på denne måde holdes et enkelt interface udadtil. Denne funktion kan kaldes fra dataklassen når der ønskes data hentet. Metoden tilgår internt I2C-bussen og henter data fra sensorerne. Herunder ses implementering af header for distanceSensorklassen.
 
-I listing \ref{lst:REF} ses implementeringen.
+\lstinputlisting[linerange=DS::DS1-DS::DS2, 
+label=lst:Distancesensor_hpp, 
+caption=headerfil for distanceSensorklassen.]{../../src/bil/distancesensor/distancesensor.hpp}
 
-\lstinputlisting[linerange=DS::DS1-DS::DS2, label=lst:Distancesensor_hpp, caption=hpp-fil for distanceSensorklassen.]{../../src/bil/distancesensor/distancesensor.hpp}
+Klassen er primært designet omkring \texttt{getDistance()}-funktion, således at der der i her foretages den egentlige behandling af data, ligeledes er det her der skrives til de midlertidige variabler, herunder ses implementering af metoden: 
+
+\lstinputlisting[linerange=DS::getD1-DS::getD2, 
+label=lst:Distancesensor_hpp, 
+caption=headerfil for distanceSensorklassen.]{../../src/bil/distancesensor/distancesensor.cpp}
+
+Afstandssensorene leveres formonteret på print hvor benene fra IC'en er trukket til harwinpins som let kan tilgås. Til kommunikationen med sensoren benyttes følgende 4 linjer: 
+
+\begin{itemize}
+	\item pin 7: VCC: Forsyning
+	\item pin 6: GND: Reference
+	\item pin 5: SCL: Clock
+	\item pin 4: SDA: Data
+\end{itemize}
+
+Data kommunikeres på SDA-linjen med reference til GND,  SCL styrer clocken.
+Der benyttes de hardcodede default adresser til de 4 sensorer, disser er som følger: 
+
+\begin{table}[h]\centering
+	\begin{tabular}{| l | l |} \hline
+		\textbf{Sensor} 	& \textbf{Adresse}  \\\hline
+		FL 					& \texttt{0x70} 	\\\hline
+		FR 					& \texttt{0x71} 	\\\hline
+		RL 					& \texttt{0x73} 	\\\hline
+		RR 					& \texttt{0x76} 	\\\hline
+	\end{tabular}
+	\caption{Adresser på afstandssensorer}
+	\label{table:adr_afstandssensorer}
+\end{table}
+
+For at kunne benytte sensorerne skal der sendes en række kommandoer til hver enkelt sensor. Disse kommandoer følger fremgangsmåden herunder:
+
+\begin{enumerate}
+  \item \textit{write}-mode-Kommando sendes til den given sensoradresse.
+  \item Der kan skrives til sensoradressen
+  \item \textit{read}-mode-Kommando sendes til den given sensoradresse.
+  \item Der kan skrives fra sensoradressen
+\end{enumerate}
+
+Alle \textit{write}- eller \textit{read}-kommandoer foregår altså som koblinger af 2 kommandoer, én hvor der sætte ''mode'' og til at foretage en given kommando. Derudover kommer databladets anbefalede 100ms til at foretage en Range-reading inden den aflæses.
+
+Følgende kommandoer er benyttet til at skrive og læse fra sensorerne: 
+
+\begin{table}[h]\centering
+	\begin{tabular}{| l | l |} \hline
+		\textbf{Kommando} & \textbf{Adresse}	\\\hline
+		FLwrite 		  & 0xE0				\\\hline
+		FRwrite 		  & 0xE2				\\\hline
+		RLwrite 		  & 0xE6				\\\hline
+		RRwrite 		  & 0xEC				\\\hline
+		FLread  		  & 0xE1				\\\hline
+		FRread  		  & 0xE4				\\\hline
+		RLread  		  & 0xE7				\\\hline
+		RRread  		  & 0xED				\\\hline
+		StartReading	  & 0x51				\\\hline
+	\end{tabular}
+	\caption{\textit{read/write}-kommandoer til afstandssensorer}
+	\label{table:adr_afstandssensorer_kommadoer}
+\end{table}

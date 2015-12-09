@@ -1,18 +1,14 @@
 //DistanceSensor.cpp
 #include <DistanceSensor.hpp>
 
-    int FL = 0;
-    int FR = 0;
-    int RL = 0;
-    int RR = 0;
-    int TACHO = 0;
-
-// Constructor
+//----------DS::CON1----------
 DistanceSensor::DistanceSensor(Log* Log){
     this->Log_ = Log;
     std::cout << "Distance class running.." << std::endl;
     this->Log_->writeEvent(__PRETTY_FUNCTION__,"Distance class active");
+
 }
+//----------DS::CON2----------
 
 // Close Device()
 DistanceSensor::~DistanceSensor(){
@@ -20,7 +16,7 @@ DistanceSensor::~DistanceSensor(){
     this->Log_->writeEvent(__PRETTY_FUNCTION__,"Data class shutdown");
 }
 
-// getDistance()
+//----------DS::getD1----------
 int DistanceSensor::getDistance(std::string name){
     //std::cout << "getDistance() running.." << std::endl;
     this->Log_->writeEvent(__PRETTY_FUNCTION__,"getDistance() running");
@@ -36,7 +32,7 @@ int DistanceSensor::getDistance(std::string name){
         return -1;
     }
 
-    // Sæt adresse på sensor:
+    // Set sensoradresse:
     // FrontLeft
     if ((ioctl(fd, I2C_SLAVE, distanceSlave)) < 0){
         std::cout << "Error in setting addr: (DistanceSensor)" << distanceSlave << std::endl;
@@ -53,37 +49,29 @@ int DistanceSensor::getDistance(std::string name){
     
     close(fd);
     
-    //for (int i = 0; i < 9; i++){
-        //std::cout << "#" << i << ": " << (int)rdBuffer[i] << "\r"<< std::endl;
-    //}
-    
     if( name == "FL" ){
-        FL = (int)((rdBuffer[0] << 8) + rdBuffer[1]);
-        //std::cout << "FL distance returned: " << FL << std::endl;
-        return FL;
+        distanceFL_ = (int)((rdBuffer[0] << 8) + rdBuffer[1]);
+        //std::cout << "FL distance returned: " << distanceFL_ << std::endl;
+        return distanceFL_;
     }
     else if( name == "FR" ){
-        FR = (int)((rdBuffer[2] << 8) + rdBuffer[3]);
-        //std::cout << "FR distance returned: " << FR << std::endl;
-        return FR;
+        distanceFR_ = (int)((rdBuffer[2] << 8) + rdBuffer[3]);
+        //std::cout << "FR distance returned: " << distanceFR_ << std::endl;
+        return distanceFR_;
     }
     else if( name == "RL" ){
-        RL = (int)((rdBuffer[4] << 8) + rdBuffer[5]);
-        //std::cout << "RL distance returned: " << RL << std::endl;
-        return RL;
+        distanceRL_ = (int)((rdBuffer[4] << 8) + rdBuffer[5]);
+        //std::cout << "RL distance returned: " << distanceRL_ << std::endl;
+        return distanceRL_;
     }
     else if( name == "RR" ){
-        RR = (int)((rdBuffer[6] << 8) + rdBuffer[7]);
-        //std::cout << "RR distance returned: " << RR << std::endl;
-        return RR;
-    }
-    else if( name == "TACHO" ){
-        TACHO = (int)(rdBuffer[8]);
-        //std::cout << "RR distance returned: " << RR << std::endl;
-        return RR;
+        distanceRR_ = (int)((rdBuffer[6] << 8) + rdBuffer[7]);
+        //std::cout << "RR distance returned: " << distanceRR_ << std::endl;
+        return distanceRR_;
     }
     else{
         std::cout << "Wrong parameter in getDistance " << std::endl;
         return 4;
     }    
 }
+//----------DS::getD2----------
