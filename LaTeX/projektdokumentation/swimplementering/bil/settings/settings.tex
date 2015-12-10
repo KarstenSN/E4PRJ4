@@ -1,7 +1,7 @@
 \subsection{Settingsklassen} \label{sec:settings_impl}
 
 Settings er en klasse, som holder styr på systemets indstillinger. Klassens primære opgave er, at holde styr på brugerens indstillinger fra PC softwaren, hhv. calibrering af styrtøj, maksimal hastighed og hvorvidt AKS er slået til eller fra.
-Der er flere threads der kan finde på, at kalde funktioner i Settings klassen på samme tid, skal klassen sørge for at der kun er en thread der læser eller skriver til dens data af gangen.
+Der er flere tråde der kan finde på, at kalde funktioner i Settings klassen på samme tid, skal klassen sørge for at der kun er én tråd der læser eller skriver til dens data af gangen.
 Herunder vil koden blive forklaret i detaljer.
 
 
