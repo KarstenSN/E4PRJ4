@@ -55,11 +55,9 @@ private:
 	double dState_ = 0; // Last position input
 	double iState_ = 0; // Integrator state
 	double iMax_ = 0, iMin_ = 0; // Maximum and minimum allowable integrator state
-	double iGain_ = 0; // integral gain
-	double pGain_ = 0; // proportional gain
-	double dGain_ = 0; // derivative gain
-	double error_ = 0;
+	double iGain_ = 0,pGain_ = 0,dGain_ = 0; //integral,proportional,derivative gain
 	double pTemp_ = 0, dTemp_ = 0, iTemp_ = 0;
+	double error_ = 0;
 	std::thread motorPWMThread;
 	bool stop_thread;
 	std::mutex changeVar_Mut;

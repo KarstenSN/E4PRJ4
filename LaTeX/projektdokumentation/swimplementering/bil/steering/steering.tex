@@ -2,11 +2,11 @@
 
 Steering klassen er den klasse der kontrollere PWM signalet til motorens fremdrift og til styretøj servoen. 
 Den modtager nye input fra systemet om ændringer af fremdrift, retning på styretøj og brems. Derudover henter den, hver gang klassen skal opdaterer PWM signalet til motoren, den aktuelle hastighed på bilen fra Dataklassen. 
-Klassen har kun en public metode den kan kaldes. I listing \ref{lst:steering_header} ses implementering af klassens headerfilen.\newline
+Klassen har kun en public metode den kan kaldes. I listing \ref{lst:steering_header} ses implementering af klassens headerfilen.
 
 \lstinputlisting[linerange=Steering::header1-Steering::header2, label=lst:steering_header, caption=\texttt{Header} for Steeringklassen.]{../../src/bil/steering/steering.hpp}
 
-Constructoen sørger primært for at sætte WiringPi op. Se sektion \ref{sec:wiringPi_impl}. 
+Constructoren sørger primært for at sætte WiringPi op. Se sektion \ref{sec:wiringPi_impl}. 
 Der er en HW og SW PWM del der skal initialiseres. 
 Udover opsætning starter den en separat tråd der kører \texttt{PWMUpdate} i et loop indtil systemet lukkes ned. 
 Samt at sætte værdier for PID regulering af motoren 
@@ -14,7 +14,7 @@ Samt at sætte værdier for PID regulering af motoren
 \lstinputlisting[linerange=Steering::Steering1-Steering::Steering2, label=lst:steering_con, caption=\texttt{Constructor} for Steeringklassen.]{../../src/bil/steering/steering.cpp}
 
 
-Deconstructoen sørger for at lukke \texttt{Steering::PWMUpdate} tråden ned og joine med den, slukke for HW og SW PWM og digitale outputs til styring af H-broen.
+Deconstructoren sørger for at lukke \texttt{Steering::PWMUpdate} tråden ned og joine med den, slukke for HW og SW PWM og digitale outputs til styring af H-broen.
 
 \lstinputlisting[linerange=Steering::~Steering1-Steering::~Steering2, label=lst:steering_decon, caption=\texttt{Deconstructor} for Steeringklassen.]{../../src/bil/steering/steering.cpp}
 
@@ -43,7 +43,26 @@ Hvis det er nødvendig at kører den modsatte vej bremses der indtil den er unde
 
 \subsubsection{Test af Steering klassen}
 
+For at test Steering klassen blev det skrevet et lille test program. Det kan ses i listings \ref{lst:steering_main}. Den er lavet til at lave constructoren, ændre den ønskede hastighed både frem og tilbage, aktuel hastighed samt dreje styretøjet
+
 
 \lstinputlisting[linerange=main::main1-main::main2, label=lst:steering_main, caption=Test af \texttt{Steering klassen} Steeringklassen.]{../../src/bil/steering/main.cpp}
 
+\clearpage
+På figur \ref{fig:steering_pwm_motor_test} og \ref{fig:steering_pwm_servo_test} kan PWM signalet fra en af testene ses. Det ses at motor PWM kører med max. frekvensen på H-broen L298N som er 40kHz. Servo PWM ligger på 166 Hz. Begge ligger med en udgangs spænding på 3,3V
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth* 9/10]{../fig/billeder/steering_pwm_motor_test}
+	\caption{Screendump af test af motor PWM}
+	\label{fig:steering_pwm_motor_test}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth* 9/10]{../fig/billeder/steering_pwm_servo_test}
+	\caption{Screendump af test af servo PWM}
+	\label{fig:steering_pwm_servo_test}
+\end{figure}
+
+\clearpage
 \subsubsection*{WiringPi} \label{sec:wiringPi_impl}
