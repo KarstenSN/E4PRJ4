@@ -3,6 +3,7 @@
 //#define DEBUG_STEERING //Uncomment to enable debugging in steering class only
 
 //----------Steering::Steering1----------
+
 Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 {
 	dataClassPtr_ = dataClassPtr;
@@ -47,6 +48,7 @@ Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 
 
 //----------Steering::~Steering1----------
+
 Steering::~Steering()
 {
 	stop_thread = true;
@@ -72,6 +74,7 @@ Steering::~Steering()
 */
 
 //----------Steering::userInput1----------
+
 int Steering::userInput(UserInput* UsrInput_)
 {
 	std::string msg;
@@ -123,6 +126,7 @@ int Steering::userInput(UserInput* UsrInput_)
 
 
 //----------Steering::brake1----------
+
 int Steering::brake()
 {
 	//this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Brake");		// For testing only
@@ -140,6 +144,7 @@ int Steering::brake()
 
 
 //----------Steering::softbrake1----------
+
 int Steering::softbrake()
 {
 	std::lock_guard<std::mutex> lock(changeVar_Mut);
@@ -155,6 +160,7 @@ int Steering::softbrake()
 
 
 //----------Steering::turn1----------
+
 int Steering::turn(signed char value)
 {
 	int TurnValue_ = ((((value + 128) * (maxServoPWM - minServoPWM)) / 255) + 5);
@@ -175,6 +181,7 @@ int Steering::turn(signed char value)
 
 
 //----------Steering::motorSetPWM1----------
+
 int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackward)
 {	
 	std::string msg;
@@ -226,6 +233,7 @@ int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackwar
 
 
 //----------Steering::PWMUpdate1----------
+
 void Steering::PWMUpdate()
 {
 	std::string msg;
