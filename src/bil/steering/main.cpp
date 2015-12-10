@@ -5,43 +5,32 @@
 #include <Settings.hpp>
 #include <Log.hpp>
 #include <string>
-
+//----------main::main1----------
 int main()
 {	
 	Log loginfo;
 	Data data(&loginfo);
-        data.writeVelocity(100);
-	
+    data.writeVelocity(100);
 	std::cout << " Main: Data loaded " << std::endl;
 	Settings set(&loginfo);
-	
 	set.setMaxSpeed(50);
-	
-	
 	std::cout << " Main: making car XXXXX " << std::endl;
-
 	Steering car(&data, &set, &loginfo);
 	std::cout << " Main: made car " << std::endl;
-
 	UserInput testuser;
  	testuser.forward = 0;
  	testuser.reverse = 0;
  	testuser.stop = 0;
  	testuser.turn = 0;
- 	
-	std::this_thread::sleep_for(std::chrono::seconds(5));
-	
+ 	std::this_thread::sleep_for(std::chrono::seconds(5));
 	car.userInput(&testuser);
-
 	std::cout << " Main: Start pwm thread" << std::endl;
 	std::thread motorPWMThread (&Steering::PWMUpdate,&car);
 	std::cout << " Main: Thread started " << std::endl;
 	//std::this_thread::sleep_for(std::chrono::seconds(5));
-	
 	//*****  TEST SEQUENCE *****
 while(1)
 {	
-	
 	std::this_thread::sleep_for(std::chrono::seconds(5));
 	testuser.forward = 0;
 	testuser.turn = -127; 
@@ -94,17 +83,13 @@ while(1)
 }	
 	std::this_thread::sleep_for(std::chrono::seconds(5));
 	
-	
 	car.stop_thread = 1;
 	std::cout << " Main: End of test " << std::endl;
 	motorPWMThread.join();
 	while(1)
 	{
-	  
 	}
-		
 	std::cout << " Main: End of program " << std::endl;	
-	  
-	
+		
 return 0;
 } 
