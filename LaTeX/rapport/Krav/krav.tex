@@ -1,58 +1,67 @@
-\chapter{Krav}
-\label{ch:Krav}
+\chapter{Krav}\label{ch:Krav} %Please start me on a left page :)
 
-%TODO
-OBS: Stjålet fra PRJ3
+I dette afsnit er de opstillede krav for AU2 beskrevet.
+Disse krav er opstillet ud fra opgaveformuleringen og ud fra forestillinger om relevante tests af systemet. Funktionelle krav er opstillet ud fra Use Cases og ikke-funktionelle krav er opstillet ud fra målbare størrelser.
 
-
-I dette afsnit beskrives optillede krav for AutoGreen, som er opstillet ud fra opgaveformuleringen. 
-På Figur \ref{fig:use_case_diagram} ses Use Case diagram over systemet. Dette giver et overblik over de funktionelle krav, der er formuleret i dokumentationen på side \pageref{P-ch:Kravspec}.
-
-her var et uc diagram
+I figur \ref{fig:use_cases} på side \pageref{fig:use_cases} ses Uce Cases for systemet og herunder er disse beskrevet kort. De funktionelle krav for systemet er udledt ud fra disse og beskrevet herunder. For at se den fuldstændige beskrivelse af kravene for systemet henvises til kapitel \ref{P-ch:kravspecifikation} \nameref{P-ch:kravspecifikation} på side \pageref{P-ch:kravspecifikation} i dokumentationen.
 
 Use Cases på billedet er kort beskrevet herunder:
 
-\begin{itemize}
+\begin{packed_item}
 
-\item UC1: Start \\
-Denne UC giver brugeren mulighed for at starte systemet, dvs. monitorering og regulering af drivhusklimaet.
+\item UC1: Aktiver system \\
+Denne UC sørger for at initialisere systemet ved opstart og beskriver brugerens interaktion med systemet ved opstart.
 
-\item UC2: Stop \\
-Denne UC giver brugeren mulighed for at stoppe systemet, dvs. monitorering og regulering af
-drivhusklimaet.
+\item UC2: Stream video \\
+Denne UC initialiserer og vedligeholder streaming af video og beskriver hvad brugeren ser når systemets videostream startes.
 
-\item UC3: Overvåg \\
-Når UC10 Monitorering er startet, vises der på brugerfladens hovedmenu alle de aktuelle måleværdier. Hvis UC11 Regulering er startet, kan værdierne for lufttemperatur og jordfugtighed være røde, hvis de ikke passer med de ønskede værdier.
+\item UC3: Overvåg sensorer \\
+Indsamler data fra bilens sensorer og analyserer om en undvigelsesmanøvre er nødvendig for at bilen ikke kører ind i noget.
 
-\item UC4: Administrer Drivhus \\
-Giver brugeren mulighed for at informere systemet om hvilke planter der er i drivhuset.
+\item UC4: Undvig forhindring \\
+Styrer automatisk bilen udenom en forhindring ved at manipulere bilens styrtøj og motor.
 
-\item UC5: Se Historik \\
-Giver brugeren mulighed for at se en grafisk historik over de fire målte parametre i drivhuset.
+\item UC5: Kør bil frem/tilbage\\
+Denne UC beskriver brugerens interaktion med systemet når vedkommende ønsker at køre fremad eller at bakke. 
+Det beskrives ligeledes hvordan antikollissionssystemet overtager kontrol over bilen for at undvige forhindringer.
 
-\item UC6: Administrer Plantedatabase \\
-Giver brugeren mulighed for at se på planter i databasen, samt tilføje og fjerne egne planter i databasen.
+\item UC6: Drej bil til højre/venstre \\
+Denne UC beskriver brugerens interaktion med systemet når brugeren ønsker at få bilen til at dreje til enten højre eller venstre. Beskriver ydermere antikollisionssystemets overtagelse af brugerkontrollen.
 
-\item UC7: Konfigurer System \\
-Giver brugeren mulighed for at rette i systemindstillinger.
+\item UC7: Brems bil \\
+Beskriver hvordan bilen bremses både af bruger og af antikollissionssystemet.
 
-\item UC8: Se Systemlog \\
-Giver brugeren mulighed for at se en liste over systemhændelser.
+\item UC8: Konfigurer IP-adresse \\
+Denne UC beskriver hvordan brugeren indstiller IP-adressen for bilen i PC softwaren
 
-\item UC9: Rapportering \\
-Rapporterer til brugeren ud fra de indstillinger brugeren har valgt. Dette sker ved afsendelse af e-mail til den eller de adresser som er valgt. 
+\item UC9: Tænd/sluk AKS \\
+Denne UC beskriver hvordan brugeren slår antikollissionssystemet fra eller til.
 
-\item UC10: Konfigurer System \\
-Lagrer målinger af lufttemperatur, jordfugtighed, luftfugtighed og lysintensitet i en
-data log.
+\item UC10: Indstil makshastighed \\
+Denne UC beskriver hvordan brugeren indstiller en ny makshastighed for bilen.
 
-\item UC11: Regulering \\
-Regulerer temperaturen i drivhuset, vha. vinduesåbner, varmelegeme og luftcirkulation, med mindre brugeren har slået varmelegeme og/eller luftcirkulation fra.
+\item UC11: Kalibrer styrtøj \\
+Denne UC beskriver hvordan brugeren kalibrer styrtøjet, så bilen kører ligeud.
 
-\end{itemize}
+\item UC12: Afbryd system \\
+Denne UC beskriver hvad der sker, når systemet afbrydes eller lukkes ned af brugeren.
 
-Systemet skal have en grafisk brugerflade, der giver brugeren mulighed for at konfigurere og monitorere drivhuset. På brugerfladen skal brugeren have mulighed for at overvåge den aktuelle temperatur og bør desuden kunne se jordfugt, luftfugtighed og lysintensitet. Disse data logges og bør kunne aflæses på en graf, der viser historik for samtlige parametre. Systemet skal kunne regulere temperaturen i drivhuset på baggrund af de aktuelle parametre.\\
-Baseret på brugeres præferencer kan systemet advare brugeren via e-mail, hvis systemet fejler eller klimaforholdene bliver kritiske. Til at regulere systemet skal brugeren kunne indstille systemet til at anvende varmelegeme og/eller ventilatorer til at justere klimaet. \\
-AutoGreen bør have en plantedatabase, der indeholder foruddefinerede planter. Planterne kan indsættes i det virtuelle drivhus, og herefter skal systemet kunne regulere klimaet i det fysiske drivhus, så passer bedst til de(n) valgte plante(r). Brugeren skal kunne tilføje, fjerne og redigere planter, som er indsat i det virtuelle drivhus efter behov.
+\end{packed_item}
+
+Bilen skal kunne køre frem og tilbage, dreje og give brugeren mulighed for at begrænse makshastigheden af bilen. 
+Styringen af bilen skal foregå med en Xbox 360 Controller fra en PC via et Wi-Fi netværk til bilens Raspberry Pi, som er ombord.
+Bilen skal selv via afstandssensorere kunne identificere en forhindring forude og hvis antikollissionssystemet er aktiveret skal dette styre bilen udenom forhindringen eller bremse bilen.
+Brugeren skal ydermere via den grafiske brugerflade på PC'en kunne se et live video feed fra et kamera ombord på bilen.
+Brugeren bør kunne aktivere og deaktivere AKS ved hjælp af PC softwaren.
+Bilen bør være udstyret med bremselys, som lyser ved bremsning.
+
+De ikke-funktionelle krav findes i afsnit \ref{P-sec:ikke-funktionelle_krav} \nameref{P-sec:ikke-funktionelle_krav} på side \pageref{P-sec:ikke-funktionelle_krav} i dokumentationen.
 
 \clearpage
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{../fig/diagrammer/uc_au2}
+\caption{Use Cases for AU2.}
+\label{fig:use_cases}
+\end{figure}

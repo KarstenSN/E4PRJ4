@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <pthread.h>
 #include <iostream>
 #include <thread>
@@ -13,7 +13,6 @@
 #include <Settings.hpp>
 #include <Log.hpp>
 //----------Steering::header1----------
-
 #define	pGain	40
 #define	iGain	0.1
 #define	dGain	0.1
@@ -29,7 +28,6 @@
 #define PWM_SET_CLOCK_VALUE  2 // PWM Clock Set Value for HW PWM between 2 to 4095
 #define PWM_SET_RANGE_VALUE  240 //The default is 1024.
 #define PWM_FREQ 40000 
-
 class Steering
 {
 public:
