@@ -27,6 +27,21 @@ Herefter indskrives de data der skal bruges for at binde den skabte socket, til 
 
 Koden i Listing \ref{lst:pccom_controllerstream2} er streaming og datahåndtering. Først læses der fra den TCP socket der er oprettet, via \texttt{read} (linje 77). Denne data skrives til arrayet \texttt{controller\_}. Herefter bliver disse data skrevet ind i en struct (linje 88-91) der sendes videre til Dataklassen via funktionskaldet \texttt{writeUserInput()} (linje 94). Efter dette sendes den modtagede data tilbage til klienten for at kunne sikre at det var de korrekte data serveren modtog, samt for at eftervise at serveren er klar til at modtage nye data.\\
 I tilfælde af at klassen er sat til debug-mode, vil der udskrives dele af den modtagede data (linje 80)\\
-Ved tilfælde af at \texttt{running\_} er sat til \texttt{FALSE}, vil den opsatte socket lukkes ned, og skrive dette til logen (linje 102-114).
+Ved tilfælde af at \texttt{running\_} er sat til \texttt{FALSE}, vil den opsatte socket lukkes ned, og skrive dette til Logklassen (linje 102-114).
 
-\paragraph{dataStream}
+\paragraph{dataStream} er en funkion der igangsættes af tråden \texttt{dataStreamTh}. Formålet med denne funktion er at oprette en TCP kommunikation til streaming af indstillinger fra PC softwaren, hhv. makshastighed, AKS status og styrtøj kalibrering, samt streaming af data til PC softwaren, hhv. nuværende hastighed, afstand til nærmeste forhindring og acceleration. \texttt{dataStream} virker hovedsageligt på samme måde som \texttt{controllerStream}, og der vil derfor kun blive gennemgået enkelte eksempler fra denne funktion hvor den er forskellig \texttt{controllerStream}. Initialiseringen af TCP socketen vil derfor ikke blive gennemgået her, ligeledes vil datahåndteringen heller ikke blive gennemgået i dette stykke.\\\\
+Ud over at datahåndteringen er forskellig fra \texttt{controllerStream} funktionens datahåndtering, da de modtagede/afsendte data er anderledes, er det mest specielle ved denne funktion muligheden for at få at vide at den skal lukke ned fra PC softwaren. 
+
+\lstinputlisting[linerange=PcCom::dataStream3-PcCom::dataStream4, label=lst:pccom_datastream3, caption=\texttt{dataStream} funktionen i tilfælde af shutdown (\texttt{dwnnow}) kommando.]{../../src/bil/pccom.cpp}
+
+Som det kan ses i Listing \ref{lst:pccom_datastream3} vil programmet i tilfælde af kommandoen \texttt{dwnnow} lave et break fra while(1) løkken koden befinder sig i. Herefter vil den fortsætte ud til koden i Listing \ref{lst:pccom_datastream5}.
+
+\lstinputlisting[linerange=PcCom::dataStream5-PcCom::dataStream6, label=lst:pccom_datastream5, caption=\texttt{dataStream} funktionen i tilfælde af shutdown (\texttt{dwnnow}) kommando -fortsat.]{../../src/bil/pccom.cpp}
+
+I Listing \ref{lst:pccom_datastream5} ses det at der først sendes den modtagede data sendes tilbage til PC softwaren (linje 208) for at fortælle koden på PCen at de to sockets nu lukker ned. Herefter løber koden ud af den anden while(1) løkke (linje 214-215) og sørger for at den anden tråd nedlukker dens socket ved at sætte \texttt{running\_} til \texttt{FALSE} (linje 219). Koden skriver ligeledes til Logklassen at den nu lukker ned for dens data socket (linje 218).
+
+\clearpage
+
+\paragraph{error} er en funktion der kaldes i tilfælde af at der sker en fejl i hvilken som helst oprettet socket. Den tager imod en string som argument. Dette argument bliver herefter lagt ind i funktionen \texttt{writeError}, som er en funktion fra Logklassen til at erklære at der er opstået en fejl.
+
+\lstinputlisting[linerange=PcCom::error1-PcCom::error2, label=lst:pccom_error1, caption=Funktionalitet af \texttt{error}.]{../../src/bil/pccom.cpp}
