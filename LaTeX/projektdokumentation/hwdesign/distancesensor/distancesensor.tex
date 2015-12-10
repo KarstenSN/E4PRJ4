@@ -1,5 +1,5 @@
 %HW-design af Distancesensor
-\section{Distancesensor} \label{sub:hw_design_distancesensor}
+\section{Distancesensor} \label{sec:hw_design_distancesensor}
 
 \begin{figure}[ht]
 	\centering
@@ -8,14 +8,15 @@
 	\label{fig:ds_pic}
 \end{figure}
 
+\newpage
 Afstandssensorene leveres formonteret på print hvor benene fra IC'en er trukket til harwinpins som let kan tilgås. Til kommunikationen med sensoren benyttes \IIC via følgende 4 linjer: 
 
-\begin{itemize}
+\begin{packed_item}
 	\item pin 7: VCC: Forsyning
 	\item pin 6: GND: Reference
 	\item pin 5: SCL: Clock
 	\item pin 4: SDA: Data
-\end{itemize}
+\end{packed_item}
 
 \begin{figure}[ht]
 	\centering
