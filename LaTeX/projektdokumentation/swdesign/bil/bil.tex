@@ -13,8 +13,8 @@ I dette afsnit beskrives det overordnede design på den software der kommer til 
 \subsubsection{Controller-klasse: Pi}
 Controller-klassen Pi indeholder main funktionen og har derfor ansvaret for at styre slagets gang. Klassen skal derfor iværksætte initialisering af alle de klasser som den har ejerskab over. En af klassen ansvarsområder er at indsamle data fra sensorerne, og dette gøres ved at starte en særskilt tråd til dette. Denne tråd skal også sørge for at iværksætte Aks-klassen hver gang nye data er indsamlet.
 
-\subsubsection{Domain-klasse: Aks}
-Domain-klassen analyserer indkomne sensordata og i tilfælde at bilen er ved at køre ind i en forhindring, blokeres brugerinput og der styres udenom eller bremses.
+\subsubsection{Controller-klasse: Aks}
+Controller-klassen analyserer indkomne sensordata og i tilfældet at bilen er ved at køre ind i en forhindring, blokeres brugerinput og Aks styrer udenom eller bremser.
 
 \subsubsection{Domain-klasse: Data}
 Denne klasse har til formål at indsamle alle sensordata i en datastruktur. Disse data gemmes i memory kan ikke overstige en defineret størrelse. Brugerinput gemmes ikke i denne klasse.
@@ -65,14 +65,14 @@ Herunder er udarbejdet sekvensdiagrammer for den funktionalitet som Pi blokken p
 \label{fig:sd_uc3_1_bil}
 \end{figure}
 
+\end{landscape}
+
 \begin{figure}[h]
 \centering
 \includegraphics[]{../fig/diagrammer/bil/sd_uc3_2.pdf}
 \caption{Sekvensdiagram over  bilens funktionalitet i UC3: Overvåg sensorer - Del 2}
 \label{fig:sd_uc3_2_bil}
 \end{figure}
-
-\end{landscape}
 
 \begin{figure}[h]
 \centering
@@ -81,12 +81,16 @@ Herunder er udarbejdet sekvensdiagrammer for den funktionalitet som Pi blokken p
 \label{fig:sd_uc4_bil}
 \end{figure}
 
+\begin{landscape}
+
 \begin{figure}[h]
 \centering
 \includegraphics[]{../fig/diagrammer/bil/sd_uc5.pdf}
 \caption{Sekvensdiagram over  bilens funktionalitet i UC5: Kør bil frem/tilbage}
 \label{fig:sd_uc5_bil}
 \end{figure}
+
+\end{landscape}
 
 \begin{figure}[h]
 \centering
