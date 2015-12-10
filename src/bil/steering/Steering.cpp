@@ -21,7 +21,7 @@ Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 	pinMode(PWM_MOTOR_PIN, PWM_OUTPUT);// PWM_OUTPUT  /  OUTPUT
 	pwmSetRange(PWM_SET_RANGE_VALUE); //The default is 1024.
 	pwmSetClock(PWM_CLOCK_FREQ/(PWM_SET_RANGE_VALUE*PWM_FREQ)); //This sets the divisor for the PWM clock
-	pwmSetMode(PWM_MODE_MS); //default mode in the Pi is “balanced” PWM_MODE_BAL PWM_MODE_MS 
+	pwmSetMode(PWM_MODE_MS); //default mode in the Pi is "balanced" PWM_MODE_BAL PWM_MODE_MS 
 	pinMode(PWM_MOTOR_FORWARD, OUTPUT);
 	pinMode(PWM_MOTOR_BACKWARD, OUTPUT);
 
