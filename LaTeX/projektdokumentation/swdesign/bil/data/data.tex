@@ -9,10 +9,12 @@ Denne klasse fungerer som en datastruktur der indeholder den data, der er blevet
 \label{fig:cd_data}
 \end{figure}
 
+\clearpage
+
 \textbf{Attributter}
 
 \begin{table}[h]
-\begin{tabularx}{\textwidth}{| Z | Z | L{10cm} |} \hline
+\begin{tabularx}{\textwidth}{| Z | Z | L{8cm} |} \hline
 Navn & Type & Beskrivelse \\\hline
 
 \texttt{distanceFL} & \texttt{int} &Variabel der indeholder afstanden til en evt. forhindring ved forreste venstre hjørne af bilen i cm.\\\hline
@@ -31,7 +33,11 @@ Navn & Type & Beskrivelse \\\hline
 
 \texttt{myLog} & \texttt{Log*} &En pointer til systemets log.\\\hline
 
-\texttt{sensorDataMut} & \texttt{std::mutex} &En mutex der anvendes som lås til de variable der skal indeholde data fra alle bilens sensorer.\\\hline
+\texttt{sensorDataMut\_vel} & \texttt{std::mutex} &En mutex der anvendes som lås til klassens velocity attribut.\\\hline
+
+\texttt{sensorDataMut\_acc} & \texttt{std::mutex} &En mutex der anvendes som lås til klassens acceleration attribut.\\\hline
+
+\texttt{sensorDataMut\_dist} & \texttt{std::mutex} &En mutex der anvendes som lås til klassens distance attributter.\\\hline
 
 \texttt{userDataMut} & \texttt{std::mutex} &En mutex der anvendes som lås til de variable der skal indeholde data om brugerens input.\\\hline
 
