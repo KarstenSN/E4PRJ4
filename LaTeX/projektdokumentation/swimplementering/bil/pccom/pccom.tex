@@ -45,3 +45,10 @@ I Listing \ref{lst:pccom_datastream5} ses det at der først sendes den modtagede
 \paragraph{error} er en funktion der kaldes i tilfælde af at der sker en fejl i hvilken som helst oprettet socket. Den tager imod en string som argument. Dette argument bliver herefter lagt ind i funktionen \texttt{writeError}, som er en funktion fra Logklassen til at erklære at der er opstået en fejl.
 
 \lstinputlisting[linerange=PcCom::error1-PcCom::error2, label=lst:pccom_error1, caption=Funktionalitet af \texttt{error}.]{../../src/bil/pccom.cpp}
+
+\subsubsection{Test af PcComklassen}
+PcCom klassen er testet med et testprogram der blot sætter gang i dataStream. Et testprogram fra PC softwaren var i forvejen konstrueret. Da denne klasse gik igennem denne test var funktionaliteten mindre i det omfang at den ikke skrev til Logklassen, men istedet skrev direkte ind i linux maskinens error logs. Dataklassen og Settingsklassen var ikke implementeret på dette tidspunkt og der blev derfor lavet drivere for disse, med tilstrækklig funktionalitet til at give mulighed for at se om kommunikationen fungerede korrekt. Testprogrammet kan ses herunder på Listing \ref{lst:pccom_testprogram1}.
+
+\lstinputlisting[linerange=PcCom::testprogram1-PcCom::testprogram2, label=lst:pccom_testprogram1, caption=\texttt{PcCom} Testprogram.]{../../src/bil//pccom/main.cpp}
+
+I dataklassen var følgende data hardcoded ind: velocity = 10, acceleration = 10 og distance = 1. Testprogrammet blev sat igang på en PI og fobundet med et ethernet kabel til en PC. PC softwaren blev herefter startet på computeren og de hardcodede data blev opdateret på PC softwarens UI. Dermed blev testen erklæret godkendt. Programmet blev efterhånden viderudviklet og testet sammen med andre klasser som disse opstod.
