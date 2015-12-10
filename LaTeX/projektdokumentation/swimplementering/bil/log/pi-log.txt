@@ -1,0 +1,13 @@
+[2015-12-10 10:40:58] [Event] [Log::Log(std::string)] Log class active
+[2015-12-10 10:40:58] [Event] [void writers(int)] Thread #0 checking in..
+[2015-12-10 10:40:58] [Event] [void writers(int)] Thread #1 checking in..
+[2015-12-10 10:40:58] [Event] [void writers(int)] Thread #2 checking in..
+[2015-12-10 10:40:58] [Event] [void writers(int)] Thread #4 checking in..
+[2015-12-10 10:40:58] [Event] [void writers(int)] Thread #3 checking in..
+[2015-12-10 10:40:58] [Event] [void writers(int)] Thread #5 checking in..
+[2015-12-10 10:40:58] [Event] [void writers(int)] Thread #6 checking in..
+[2015-12-10 10:40:58] [Event] [void writers(int)] Thread #7 checking in..
+[2015-12-10 10:40:58] [Event] [void writers(int)] Thread #8 checking in..
+[2015-12-10 10:40:58] [Event] [void writers(int)] Thread #9 checking in..
+[2015-12-10 10:40:58] [Event] [Log::~Log()] Log class shutdown
+
