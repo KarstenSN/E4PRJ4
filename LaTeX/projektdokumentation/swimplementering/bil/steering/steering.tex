@@ -1,7 +1,12 @@
 \subsection{Steeringklassen} \label{sec:steering_impl}
-Steering klassen er den klasse der kontrollere PWM signalet
+Steering klassen er den klasse der kontrollere PWM signalet til motorens fremdrift og til styretøj servoen. Den modtager nye input fra systemet om ændringer af fremdrift, retning på styretøj og brems. Derudover henter den, hver gang klassen skal opdaterer PWM signalet til motoren, den aktuelle hastighed på bilen fra Dataklassen. Klassen har kun en public metode den kan kaldes. I listing \ref{lst:steering_header} ses implementering af klassens headerfilen.\newline
 
 
+
+
+\lstinputlisting[linerange=Steering::header1-Steering::header2, label=lst:steering_header, caption=\texttt{Header} for Steeringklassen.]{../../src/bil/steering/steering.hpp}
+
+Constructoen sørger primært for at sætte WiringPi op. Der er en HW PWM og SW PWM del. Udover opsætning starter den en separat tråd der kører \texttt{Steering::PWMUpdate} i et loop indtil systemet lukkes ned 
 \lstinputlisting[linerange=Steering::Steering1-Steering::Steering2, label=lst:steering_con, caption=\texttt{Constructor} for Steeringklassen.]{../../src/bil/steering/steering.cpp}
 
 
