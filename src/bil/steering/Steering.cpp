@@ -2,7 +2,6 @@
 
 //#define DEBUG_STEERING //Uncomment to enable debugging in steering class only
 
-//----------Steering::Steering1----------
 Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 {
 	dataClassPtr_ = dataClassPtr;
@@ -42,11 +41,9 @@ Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 	this->motorPWMThread = std::thread(&Steering::PWMUpdate , this);
 	
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Constructor complete");
+		
 }
-//----------Steering::Steering2----------
 
-
-//----------Steering::~Steering1----------
 Steering::~Steering()
 {
 	stop_thread = true;
@@ -61,8 +58,6 @@ Steering::~Steering()
 	
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "DeConstructor");
 }
-//----------Steering::~Steering2----------
-
 
 /**
 * @param UsrInput_->forward  Den ønskede hastighed fremad  0..255. 255 er max af den indstillede hastighed
@@ -70,8 +65,6 @@ Steering::~Steering()
 * @param UsrInput_->turn Den ønskede dreje retning på forhjul. -127..127. -127 = fuldt udslag til venstre, center = 0, fuldt udslag til højre 127
 * @param UsrInput_->stop Der skal bremses. Brems ikke = 0, Brems = 1.
 */
-
-//----------Steering::userInput1----------
 int Steering::userInput(UserInput* UsrInput_)
 {
 	std::string msg;
@@ -119,10 +112,7 @@ int Steering::userInput(UserInput* UsrInput_)
 
 	return 1;
 }
-//----------Steering::userInput2----------
 
-
-//----------Steering::brake1----------
 int Steering::brake()
 {
 	//this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Brake");		// For testing only
@@ -136,10 +126,7 @@ int Steering::brake()
 	return 1;
 
 }
-//----------Steering::brake2----------
 
-
-//----------Steering::softbrake1----------
 int Steering::softbrake()
 {
 	std::lock_guard<std::mutex> lock(changeVar_Mut);
@@ -151,10 +138,7 @@ int Steering::softbrake()
 	digitalWrite(PWM_MOTOR_BACKWARD, LOW);
 	return 1;
 }
-//----------Steering::softbrake2----------
 
-
-//----------Steering::turn1----------
 int Steering::turn(signed char value)
 {
 	int TurnValue_ = ((((value + 128) * (maxServoPWM - minServoPWM)) / 255) + 5);
@@ -171,10 +155,7 @@ int Steering::turn(signed char value)
 #endif
 	return 1;
 }
-//----------Steering::turn2----------
 
-
-//----------Steering::motorSetPWM1----------
 int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackward)
 {	
 	std::string msg;
@@ -222,10 +203,7 @@ int Steering::motorSetPWM(unsigned char speedForward, unsigned char speedBackwar
 	return 1;
 
 }
-//----------Steering::motorSetPWM2----------
 
-
-//----------Steering::PWMUpdate1----------
 void Steering::PWMUpdate()
 {
 	std::string msg;
@@ -293,6 +271,6 @@ void Steering::PWMUpdate()
 	}
 
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Thread stopping");
+
 				
 }
-//----------Steering::PWMUpdate2----------
