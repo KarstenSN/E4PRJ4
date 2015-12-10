@@ -43,6 +43,7 @@ void Aks::activate(){
 		else{
 			this->state = still;
 		}
+//----------activate1----------
 		for(int i = 0; i < NBR_PROX_SENSORS; i++)
 			old_proxSensors[i] = proxSensors[i];
         switch(this->state){
@@ -75,6 +76,7 @@ void Aks::activate(){
 				MyLog->writeWarning(__PRETTY_FUNCTION__, "Reached 'default' in switch statement");
 				break;
 		}
+//----------activate2----------
 		if(analyzeData()){
 #ifdef DEBUGGING 
 			std::cout << "analyseData returned TRUE. "<< std::endl;
@@ -91,8 +93,9 @@ void Aks::activate(){
 		}
     }
 }
-//----------activate1----------
+//----------activate3----------
 
+//----------analyze0----------
 bool Aks::analyzeData(void){
 #ifdef DEBUGGING 
 	std::cout << __PRETTY_FUNCTION__ << std::endl;
@@ -126,3 +129,4 @@ bool Aks::analyzeData(void){
 	
 	return false;
 }
+//----------analyze1----------

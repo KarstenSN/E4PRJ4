@@ -1,7 +1,69 @@
 \subsection{Aks}\label{sec:aks_impl}
 
+Aks klassen er det mellemled der behandler indsamlet information på bilen og vurderer om der er eventuelle farer og videreformidler input til bilens styreklasse, Steering.
+På det vis styrer Aks alle "smarte" funktioner på bilen.
 
+For lettere at holde styr på hvilke stadier eller "states" bilen kan være i er der implementeret en \texttt{enum} af stadier, som hjælper programmøren med at holde overblikket. Disse stadier afspejler fysiske tilstande, som bilen kan være i mht. sin fremdrift.
+\texttt{Enum}'en kan ses i listing \ref{lst:Aks_states}.
 
+\lstinputlisting[linerange=states0-states1, label=lst:Aks_states, caption=Enum til hjælp ved states i Aks]
+{../../src/bil/inc/Aks.hpp}
 
+Der er ydermere implementeret en hjælp i forhold til at holde styr på hvilket nummer forskellige sensorer har i systemet, når Aks f.eks. skal indlæse alle sensorer vha. en while-løkke. Se listing \ref{lst:Aks_sensorPos}.
 
-\lstinputlisting[linerange=activate0-activate1, label=lst:Aks_activate, caption=activate methoden i AKS]{../../src/bil/Aks.cpp}
+\lstinputlisting[linerange=sensPos0-sensPos1, label=lst:Aks_sensorPos, caption=Enum til hjælp ved sensorpositioner i Aks]
+{../../src/bil/inc/Aks.hpp}
+
+Selve klassedeklarationen for Aks er meget ligetil i henhold til designet af Aks, se side \ref{sec:aks_design}, og er derfor ikke udpenslet yderligere her.
+Derimod er selve implementering af \texttt{analyzeData()} værd at notere, se listing \ref{lst:Aks_analyzeData}.
+
+Som udgangspunkt undersøger den hvilket stadie bilen er i, hvis den fx kører fremad undersøger den om de fremadrettede sensorers indlæste værdier udgører en fare for bilen. 
+I dette tilfælde gælder det at ingen af de to fremadrettede sensorer må have en større forskel i afstand end \texttt{DELTA\_DISTANCE\_FOR\_ERROR}, som i udgangspunktet er sat til 10 (ud af 255 mulige).
+Hvis dette udgør en fare returnerer metoden \texttt{true}, hvilket indebærer at aks skal reagere på faren.
+Er det ikke tilfældet returnerer denne \texttt{false}, hvilket indebærer at der ikke skal reageres.
+
+Metoden fungerer ligeledes for de øvrige stadier, blot at det drejer sig om andre sensorer.
+Er bilen i stadiet \texttt{coasting} ved den ikke om den nødvendigvis bevæger sig fremad eller bagud og kontrollerer derfor alle afstandssensorer. 
+
+\lstinputlisting[
+linerange=analyze0-analyze1, 
+label=lst:Aks_analyzeData, 
+caption=Metoden analyzeData() i aks klassen
+]{../../src/bil/Aks.cpp}
+
+Kernen i Aks' funktionalitet ligger i metoden \texttt{activate()}.
+Metoden fungerer overordnet set ved at være en uendelig while-løkke, som i starten henter input fra brugeren og tjekker om Aks funktionaliteten er slået til via brugerinterfacet på PC softwaren.
+Hvis Aks funktionaliteten ikke er slået til, sættes bilens stadie til \texttt{still}, hvilket betyder at Aks aldrig analyserer på sensorer og sender brugerinput direkte videre til \texttt{Steering}.
+Er denne funktion derimod slået til, kontrolleres den nuværende hastighed af bilen og hvis denne er tilstrækkelig afgøres det om bilen er i fremadgående eller bagudgående retning ud fra brugerinput.
+Dette kan ses i listing \ref{lst:Aks_activate}.
+
+\lstinputlisting[
+linerange=activate0-activate1, 
+label=lst:Aks_activate_1, 
+caption=Indhentning af brugerinput og analyse af stadie i activate metoden i AKS
+]{../../src/bil/Aks.cpp}
+
+Herefter gemmes gamle sensorværdier i \texttt{old\_proxSensors}, så \texttt{analyzeData()} senere kan holde de nye sensorværdier op mod de gamle.
+\texttt{activate} indsamler herefter nyt sensordata afhængig af hvilket stadie den er i.
+Hvis bilen fx kører fremad analyserer udelukkende afstandssensorer der er fremadrettede.
+Skulle bilen antage et ukendt stadige udskrives en fejl i loggen.
+Se listing \ref{lst:Aks_activate_2}.
+
+\lstinputlisting[
+linerange=activate1-activate2, 
+label=lst:Aks_activate_2, 
+caption=Overførsel af gamle og indhentning af nye afstandssensordata.
+]{../../src/bil/Aks.cpp}
+
+Til slut analyseres disse data med \texttt{analyzeData()}, som returnerer \texttt{true} eller \texttt{false} afhængig af om der er behov for at undvige en forhindring.
+Hvis der er behov, kaldes styringen i \texttt{Steering} klassen, med en bremsekommando i stedet for brugerens input.
+Er der derimod ikke behov for undvigelse sendes brugerinput blot videre. Se listing \ref{lst:Aks_activate_3}.
+
+\lstinputlisting[
+linerange=activate2-activate3,
+label=lst:Aks_activate_3, 
+caption=Analysering og handling på baggrund af analyse.
+]{../../src/bil/Aks.cpp}
+
+Som det fremgår af ovenstående beskrivelser er Aks ikke færdigimplementeret i henhold til den funktionalitet der er stillet i Kravspecifikationen og den kode der er vedlagt er derfor i et meget råt stadie.
+Der mangler at blive implementeret en funktionalitet til at bringe bilen helt til standsning ved identifikation af en forhindring og der mangler ligeledes funktionalitet til at dreje bilen, skulle en forhindring ikke være lige foran bilen.
