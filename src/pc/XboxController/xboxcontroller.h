@@ -7,16 +7,21 @@
 class XboxController
 {
 public:
+//----------XboxController::XboxController1----------
     XboxController(int number)
     {
         this->_controllerNum = number - 1;
     }
+//----------XboxController::XboxController2----------
 
+//----------XboxController::getNumber1----------
     int getNumber()
     {
         return this->_controllerNum;
     }
+//----------XboxController::getNumber2----------
 
+//----------XboxController::getState1----------
     XINPUT_STATE getState()
     {
         // Zeroise the state
@@ -27,7 +32,9 @@ public:
 
         return this->_controllerState;
     }
+//----------XboxController::getState2----------
 
+//----------XboxController::connect1----------
     bool connect()
     {
         // Zeroise the state
@@ -45,7 +52,9 @@ public:
             return false;
         }
     }
+//----------XboxController::connect2----------
 
+//----------XboxController::vibrate1----------
     void vibrate(int leftVal = 0, int rightVal = 0)
     {
         // Create a Vibraton State
@@ -63,7 +72,9 @@ public:
 
         return;
     }
+//----------XboxController::vibrate2----------
 
+//----------XboxController::getCtrData1----------
     void getCtrData(char &leftStick, unsigned char &rightTrigger, unsigned char &leftTrigger, bool &buttonX)
     {
         // Zeroise the state
@@ -84,6 +95,7 @@ public:
         // Send the X Button [X] state
         buttonX = this->_controllerState.Gamepad.wButtons & XINPUT_GAMEPAD_X;
     }
+//----------XboxController::getCtrData2----------
 
 private:
     DWORD _dwResult;
