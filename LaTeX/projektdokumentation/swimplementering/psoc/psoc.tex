@@ -1,6 +1,10 @@
-\subsection{Psoc (Psoc)} \label{sub:sw_impl_psoc_psoc}
+\subsection{Psoc (PSoC)} \label{sub:sw_impl_psoc_psoc}
 
-PSoC'ens formål er at simplificere alt \IIC kommunikation, hvilket viste sig meget ubehændigt ift implementering direkte på Raspberry PI. På PI'en er det nødvendigt at betragte \IIC kommunikationen via filer, som skal læses og skrives i, hvilket gav nogle problemer ifm. aflæsning af distancesensorerne. Tachometeret trækker vha. en schmittrigger mod stel, hver gang der detekteres en magnet, hvilket igen bliver detekteret af logisk lav på PSoC, der resulterer i en interrupt. Ifølge distancesensorerne er det nødvendigt at notificere omtalte om en fremtidig læsning/skrivning, hvilket var vanskelligt at implementere på PI. 
+PSoC'ens formål er at simplificere alt \IIC kommunikation, hvilket viste sig meget ubehændigt ift implementering direkte på Raspberry Pi. Da der på Pi'en kører en Linux-distribution foregår \IIC kommunikationen som skrivning og læsning til og fra device-files, og da kommunikationen med distancesensorene følger følgende fremgangsmåde: 
+ 
+
+
+hvilket gav nogle problemer ifm. aflæsning af distancesensorerne. Tachometeret trækker vha. en schmittrigger mod stel, hver gang der detekteres en magnet, hvilket igen bliver detekteret af logisk lav på PSoC, der resulterer i en interrupt. Ifølge distancesensorerne er det nødvendigt at notificere omtalte om en fremtidig læsning/skrivning, hvilket var vanskeligt at implementere på Pi. 
 
 PSoC'en kendes på forhånd af gruppen, hvilket letter arbejdet med implementeringen væsentligt. Principielt kunne PI'en også have været brugt, men grundet tidspres viste PSoC'en sig at være en både hurtigere og smartere løsning, i takt med at PI'en iforvejen er belastet fra anden funktionalitet. Kravet til PSoC'en er, at koden der ligger herpå skal være så hurtig og effektiv som muligt, således at den kan aflæses når PI'en spørger om ny data. På listing \ref{lst:getDistance_FL2}
 
