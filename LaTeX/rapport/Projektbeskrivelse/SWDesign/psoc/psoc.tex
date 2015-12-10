@@ -1,0 +1,7 @@
+\subsection{PSoC} \label{sec:swd_psoc_board}
+
+PSoC'en blev valgt pga. vanskeligheder mht. direkte adgang til timere på Pi og pga. et besværligt interface ifm. \IIC kommunikation. Et positivt resultat af dette er at det PSoC'en håndterer skal ske relativt ofte, og den vil blive afbrudt mange gange i sekundet, hvilket ville langsommeliggøre Pi'en endnu mere. På denne måde løses problemerne med Raspberry Pi's tillukkethed og Pi'en skal kun læse en gang fra PSoC'en for at kunne få den ønskede data. PSoC'en sørger for at holde en buffer klar til at Pi'en,  
+
+%TODO Kenn skriver om distancesensorerne
+
+PSoC'en er sat op så tachometerets output skal tilsluttes til [P1.0], som er sat op til at starte et interrupt hvis der detekteres en nedadgående flanke i spændingen. Selve interrupt routinen gemmer den seneste timerværdi, og aflæser en ny, finder differencen mellem disse og udregner hastigheden som set i afsnittet \ref{P-sec:tachometer_hw_impl}. Når bilen kører maksimalhastighed ca. $10km/t$ betyder dette at der vil være lige under 72 interrupts pr. sekund. 
