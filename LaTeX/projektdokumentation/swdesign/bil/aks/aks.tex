@@ -8,12 +8,15 @@
 \label{fig:cd_aks}
 \end{figure}
 
+Dette afsnit afspejler Aks, som den er implementeret i systemet ved aflevering af denne projektdokumentation og indeholder derved ikke nogle af de funktionaliteten, som er stillet i Kravspecifikationen.
+Dette indebærer eksempelvis hvorvidt AKS er i stand til at dreje forbi en forhindring og ikke blot bremse. Det indebærer også funktionalitet til at bringe bilen helt til standsning ved en forhindring og ikke blot bremse momentant.
+
 \textbf{Attributter}
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| Z | Z | L{9cm} |} \hline
 Navn & Type & Beskrivelse \\\hline
-\texttt{MySteering} & \texttt{Steering} & Styretøjsklassen, bruges når Aks skal påvirke bilens hastighed eller retning.\\\hline
+\texttt{MySteering} & \texttt{Steering} & Styretøjsklassen, bruges når AKS skal påvirke bilens hastighed eller retning.\\\hline
 \texttt{MyData} & \texttt{Data*} & Pointer til bilens datastruktur.\\\hline
 \texttt{MySettings} & \texttt{Settings*} & Pointer til Settingsklassen. \\\hline
 \texttt{MyLog} & \texttt{Log*} & Pointer til loggen. \\\hline
@@ -29,26 +32,27 @@ Navn & Type & Beskrivelse \\\hline
 \textbf{Metoder}
 
 
-%----------------- aksActivate -------------------
+%----------------- activate -------------------
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{void aksActivate(void)} \\\hline
+Prototype & \texttt{void activate(void)} \\\hline
 Parametre & \texttt{void}  \\\hline
-Returværdi &  \texttt{bool} \newline Returnerer \texttt{TRUE} hvis det gik godt og \texttt{FALSE} hvis der skete fejl undervejs. \\\hline
-Beskrivelse & Metoden kaldes når det automatiske anti-kollisionssystem skal aktiveres. Forhindrer samtidigt input fra brugeren kortvarigt. \\\hline
+Returværdi &  \texttt{void} \\\hline
+Beskrivelse & Metoden indhenter data samt brugerinput og kalder analyseData kontinuert. Hvis der er behov for indgreb ifb. en eventuel kollision ignoreres input fra brugeren og activate genererer selv input til \texttt{Steering}, \\\hline
 \end{tabularx}
-\caption{Metodebeskrivelse for \texttt{aksActivate}}
-\label{table:met_aks_aksActivate}
+\caption{Metodebeskrivelse for \texttt{activate}}
+\label{table:met_aks_activate}
 \end{table}
 
 %----------------- analyseData -------------------
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{void analyseData(void)} \\\hline
+Prototype & \texttt{bool analyzeData(void)} \\\hline
 Parametre & \texttt{void}  \\\hline
-Returværdi &  \texttt{void}  \\\hline
-Beskrivelse & Metoden analyserer indhentet data fra Data klassen og vurderer hvilken type af undvigelse der bedst passer. Aktiverer herefter Steering-klassen for at bilen skal undvige forhindringen. \\\hline
+Returværdi &  \texttt{bool} \newline
+Returnerer \texttt{true}, hvis der er behov for indgreb fra AKS, alternativt \texttt{false}, hvis der ikke er. \\\hline
+Beskrivelse & Metoden analyserer indhentet data fra Data klassen og vurderer om der er en umiddelbar fare, som kræver et indgreb fra AKS. \\\hline
 \end{tabularx}
-\caption{Metodebeskrivelse for \texttt{analyseData}}
-\label{table:met_aks_analyseData}
+\caption{Metodebeskrivelse for \texttt{analyzeData}}
+\label{table:met_aks_analyzeData}
 \end{table}

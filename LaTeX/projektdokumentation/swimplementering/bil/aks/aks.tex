@@ -35,7 +35,7 @@ Kernen i Aks' funktionalitet ligger i metoden \texttt{activate()}.
 Metoden fungerer overordnet set ved at være en uendelig while-løkke, som i starten henter input fra brugeren og tjekker om Aks funktionaliteten er slået til via brugerinterfacet på PC softwaren.
 Hvis Aks funktionaliteten ikke er slået til, sættes bilens stadie til \texttt{still}, hvilket betyder at Aks aldrig analyserer på sensorer og sender brugerinput direkte videre til \texttt{Steering}.
 Er denne funktion derimod slået til, kontrolleres den nuværende hastighed af bilen og hvis denne er tilstrækkelig afgøres det om bilen er i fremadgående eller bagudgående retning ud fra brugerinput.
-Dette kan ses i listing \ref{lst:Aks_activate}.
+Dette kan ses i listing \ref{lst:Aks_activate_1}.
 
 \lstinputlisting[
 linerange=activate0-activate1, 
