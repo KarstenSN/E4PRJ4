@@ -1,21 +1,30 @@
 \subsection{Psoc (PSoC)} \label{sub:sw_impl_psoc_psoc}
 
-PSoC'ens formål er at simplificere alt \IIC kommunikation, hvilket viste sig meget ubehændigt ift implementering direkte på Raspberry Pi. Da der på Pi'en kører en Linux-distribution foregår \IIC kommunikationen som skrivning og læsning til og fra device-files, og da kommunikationen med distancesensorene følger følgende fremgangsmåde: 
- 
+PSoC'ens formål er at simplificere alt \IIC kommunikation, hvilket viste sig at være en nødvendighed, da implementeringen på Pi'en gav uforudsete problemer med kommunikationen med distancesensorerne.
+Da der på Pi'en kører en Linux-distribution foregår \IIC kommunikationen som skrivning og læsning til og fra device-files der repræsenterer de respektive pins (SDA \& SCL), og da kommunikationen med distancesensorerne følger følgende protokollen fra Hardwaredesign afsnittet for distancesensoren.
+Ydermere viste det sig at tachometeret, der vha. en schmittrigger trækkes til stel hver gang der detekteres en magnet, dette bliver detekteret som logisk lav på PSoC'en og  kalder den implementerede interrupt service rutine \texttt{ISR}. 
+Det vil optage udnødvendig meget af Pi'ens processor og vil være meget tidskritisk i forhold til de andre opgaver som Pi-programmet varetager. Derfor beslutning om at ændre designretning.
 
+Kravet til PSoC'en er, at koden der ligger herpå skal være så hurtig og effektiv som muligt, således at den kan aflæses når PI'en spørger på ny data. 
+I listing \ref{lst:getDistance_FL2} ses implementeringen af denne kode.
 
-hvilket gav nogle problemer ifm. aflæsning af distancesensorerne. Tachometeret trækker vha. en schmittrigger mod stel, hver gang der detekteres en magnet, hvilket igen bliver detekteret af logisk lav på PSoC, der resulterer i en interrupt. Ifølge distancesensorerne er det nødvendigt at notificere omtalte om en fremtidig læsning/skrivning, hvilket var vanskeligt at implementere på Pi. 
+\lstinputlisting
+	[linerange=getDistance::FL-getDistance::FL1, caption=]
+	{../../src/psoc/psoc_bil_1/psoc_bil.cydsn/main.c}
 
-PSoC'en kendes på forhånd af gruppen, hvilket letter arbejdet med implementeringen væsentligt. Principielt kunne PI'en også have været brugt, men grundet tidspres viste PSoC'en sig at være en både hurtigere og smartere løsning, i takt med at PI'en iforvejen er belastet fra anden funktionalitet. Kravet til PSoC'en er, at koden der ligger herpå skal være så hurtig og effektiv som muligt, således at den kan aflæses når PI'en spørger om ny data. På listing \ref{lst:getDistance_FL2}
+\lstinputlisting
+	[linerange=getDistance::FL2-getDistance::FL3, label=lst:getDistance_FL2, caption=Front Left sensor aflæsningscyklus.]
+	{../../src/psoc/psoc_bil_1/psoc_bil.cydsn/main.c}
+	
+aflæsningscyklus for de enkelte sensorer er identiske blot med ændret navn og index i \texttt{sendBuffer}
 
-\lstinputlisting[linerange=getDistance::FL-getDistance::FL1, caption= ]{../../src/psoc/psoc_bil_1/psoc_bil.cydsn/main.c}
-\lstinputlisting[linerange=getDistance::FL2-getDistance::FL3, label=lst:getDistance_FL2, caption=Front Left sensor aflæsningscyklus.]{../../src/psoc/psoc_bil_1/psoc_bil.cydsn/main.c}
+Tachometeret er simplere at aflæse, da alt dataen i forvejen er placeret på PSoC'en. I listing \ref{lst:sw_impl_psoc_getVelocity} ses interrupt service rutinen som køres hver gang der detekteres en magnet på hallswitchen.
 
-Tachometeret er meget mere simpelt at aflæse, da alt dataen i forvejen er placeret på PSoC'en. I listing \ref{lst:sw_impl_psoc_getVelocity} ses interrupt service routinen som køres hver gang der detekteres en magnet på hallswitchen.
+\lstinputlisting
+	[linerange=getVelocity::1-getVelocity::2, label=lst:sw_impl_psoc_getVelocity, caption=ISR til getVelocity.]
+	{../../src/psoc/psoc_bil_1/psoc_bil.cydsn/main.c}
 
-\lstinputlisting[linerange=getVelocity::1-getVelocity::2, label=lst:sw_impl_psoc_getVelocity, caption=ISR til getVelocity.]{../../src/psoc/psoc_bil_1/psoc_bil.cydsn/main.c}
-
-Til sidst kan programmets main funktion ses i listing \ref{lst:sw_impl_psoc_main}
+Til sidst kan implementeringen af programmets \texttt{main}-funktion ses i listing \ref{lst:sw_impl_psoc_main}
 
 \lstinputlisting[linerange=main::1-main::2, label=lst:sw_impl_psoc_main, caption=Main program på PSoC.]{../../src/psoc/psoc_bil_1/psoc_bil.cydsn/main.c}
 

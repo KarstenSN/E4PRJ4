@@ -1,7 +1,7 @@
 % ++++++++++++ PSoCklasse på Pi ++++++++++++++
 \subsubsection{Boundary-klasse: Psoc (Pi)}
 
-Denne klasse har til formål at styre kommunikationen mellem Pi og Psoc'en, der er valgt at benytte I2C-protokollen til dette. Psoc'en har påmonteret de 4 afstandssensorer, navngivet efter deres respektive placering på bilen, samt tachometEret til at måle hjulene omdrejningshastighed og omsætte dette til $km/t$. Klassen er implementeret med \texttt{getDistance()} og \texttt{get Velocity()}-metoderne som kaldes af dataklassen som dermed kan hente dataen lageret i Psocklassens attributter. Klassen kører sin egen tråd, men tilgås fra dataklassens tråd, derfor er de midlertidige variabler beskyttet ved brug af \texttt{std::mutex}.
+Denne klasse har til formål at styre kommunikationen mellem Pi og Psoc'en, der er valgt at benytte \IIC-protokollen til dette. Psoc'en har påmonteret de 4 afstandssensorer, navngivet efter deres respektive placering på bilen, samt tachometEret til at måle hjulene omdrejningshastighed og omsætte dette til $km/t$. Klassen er implementeret med \texttt{getDistance()} og \texttt{get Velocity()}-metoderne som kaldes af dataklassen som dermed kan hente dataen lageret i Psocklassens attributter. Klassen kører sin egen tråd, men tilgås fra dataklassens tråd, derfor er de midlertidige variabler beskyttet ved brug af \texttt{std::mutex}.
 
 \begin{figure}[h]
 \centering
@@ -58,7 +58,7 @@ Denne klasse har til formål at styre kommunikationen mellem Pi og Psoc'en, der 
 		Prototype 	& \texttt{int update()} \\\hline
 		Parametre 	& \texttt{void} \newline Metoden modtager ingen parametre. \\\hline
 		Returværdi 	& \texttt{int}  \newline Returnerer fejlkode hvis åbning og læsning mislykkes \\\hline
-		Beskrivelse	& Denne metode har til formål at åbne I2C-forbindelsen til PSoC'en og hente det seneste datasæt. \\\hline
+		Beskrivelse	& Denne metode har til formål at åbne \IIC-forbindelsen til PSoC'en og hente det seneste datasæt. \\\hline
 	\end{tabularx}
 	\caption{Metodebeskrivelse for  \texttt{update()}}
 	\label{table:met_update}

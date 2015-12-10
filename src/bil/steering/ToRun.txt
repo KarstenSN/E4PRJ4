@@ -1,5 +1,0 @@
-Steering car(&data, &set,&loginfo);
-
-std::thread motorPWMThread (&Steering::PWMUpdate,&car);
-	
-motorPWMThread.join();

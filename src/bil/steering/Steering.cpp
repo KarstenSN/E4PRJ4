@@ -1,7 +1,8 @@
-﻿#include <Steering.hpp>
+#include <Steering.hpp>
+
+//#define DEBUG_STEERING //Uncomment to enable debugging in steering class only
 
 Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
-//: the_thread()
 {
 	dataClassPtr_ = dataClassPtr;
 	settingsPtr_ = MySettingsPtr;
@@ -14,7 +15,7 @@ Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 	if (wiringPiSetupGpio() == -1)// Initialize wiringPi -- using Broadcom pin numbers
 	{
 		this->logPtr_->writeError(__PRETTY_FUNCTION__, "Failed to init wiringPiSetupGpio()");
-		exit(1);
+		
 	}
 	pinMode(PWM_MOTOR_PIN, PWM_OUTPUT);// PWM_OUTPUT  /  OUTPUT
 	pwmSetRange(PWM_SET_RANGE_VALUE); //The default is 1024.
@@ -37,7 +38,8 @@ Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 	if (err != 0)
 		this->logPtr_->writeError(__PRETTY_FUNCTION__, "Failed to init softPwmCreate()");
 
-	//std::thread motorPWMThread (&Steering::PWMUpdate, this );
+	this->motorPWMThread = std::thread(&Steering::PWMUpdate , this);
+	
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Constructor complete");
 		
 }
@@ -89,13 +91,17 @@ int Steering::userInput(UserInput* UsrInput_)
 			msg.append("userInput ").append(" speedReqFor_ ").append(std::to_string(speedReqFor_))
 			.append(" speedReqBack_ ").append(std::to_string(speedReqBack_));
 			this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
-			//std::cout << "userInput()" << "speedReqFor_ " << speedReqFor_ << " speedReqBack_ " << speedReqBack_ << std::endl;
 			*/
+			
+#ifdef DEBUG_STEERING
+			fflush(stdout);
+			std::cout << "userInput()" << "speedReqFor_ " << static_cast<int>(UsrInput_->forward) << " speedReqBack_ " << static_cast<int>(UsrInput_->reverse) << "            " << "\r";
+#endif
 		}
 
 		this->motorSetPWM(UsrInput_->forward, UsrInput_->reverse);
 
-		if ((int)UsrInput_->forward < 1 && (int)UsrInput_->reverse < 1)
+		if (UsrInput_->forward < 5 && UsrInput_->reverse < 5)
 		{
 			this->softbrake();
 		}
@@ -135,13 +141,18 @@ int Steering::softbrake()
 
 int Steering::turn(signed char value)
 {
-	int TurnValue_ = ((((value + 127) * (maxServoPWM - minServoPWM)) / 255) + 5);
+	int TurnValue_ = ((((value + 128) * (maxServoPWM - minServoPWM)) / 255) + 5);
 	softPwmWrite(PWM_SERVO_PIN, TurnValue_);
-	/*
+	
 	std::string msg;			// For testing only
 	msg.append("Turn value received: ").append(std::to_string(value)).append(" Output value: ").append(std::to_string(TurnValue_));
-	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
-	*/
+	//this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);
+	
+	
+#ifdef DEBUG_STEERING
+			fflush(stdout);
+			std::cout << "Steering::turn" << msg  << "            " << "\r";
+#endif
 	return 1;
 }
 
@@ -202,10 +213,12 @@ void Steering::PWMUpdate()
 	std::this_thread::sleep_for(std::chrono::microseconds(100000));
 
 	while (!this->stop_thread)
-	{	/*
+	{	
+	 /*
 		msg.append("PWMUpdate entry").append(" speedReqFor_: ").append(std::to_string(speedReqFor_)).append("speedAct_: ").append(std::to_string(speedAct_)).append(" Direction: ").append(std::to_string(direction_));
 		this->logPtr_->writeEvent(__PRETTY_FUNCTION__, msg);  	// For testing only
-		*/
+	*/	
+		
 		std::lock_guard<std::mutex> lock(changeVar_Mut);
 
 		this->speedAct_ = this->dataClassPtr_->getLatestVelocity();
@@ -213,16 +226,16 @@ void Steering::PWMUpdate()
 		// PID regulation
 		if (direction_ == 1)
 		{
-			this->error_ = this->speedReqFor_ - this->speedAct_;
+            this->error_ = this->speedReqFor_; //- this->speedAct_; // There is a problem here
 		}
 		else
 		{
-			this->error_ = this->speedReqBack_ - this->speedAct_;
+            this->error_ = this->speedReqBack_; //- this->speedAct_; // There is a problem here
 		}
-		// calculate the proportional temp
-		pTemp_ = pGain_ * error_;
-		// calculate the integral state with appropriate limiting
-		iState_ += error_;
+		
+		pTemp_ = pGain_ * error_;		// calculate the proportional temp
+		iState_ += error_;			// calculate the integral state with appropriate limiting
+		
 		if (iState_ > iMax_)
 		{
 			iState_ = iMax_;
@@ -231,8 +244,9 @@ void Steering::PWMUpdate()
 		{
 			iState_ = iMin_;
 		}
-		iTemp_ = iGain_ * iState_; // calculate the integral temp
-		dTemp_ = dGain_ * (dState_ - speedAct_); // calculate the  derivative temp
+		
+		//iTemp_ = iGain_ * iState_; // calculate the integral temp
+		//dTemp_ = dGain_ * (dState_ - speedAct_); // calculate the  derivative temp
 		dState_ = speedAct_;
 		motorPWMOutValue = pTemp_ + dTemp_ + iTemp_;
 
@@ -250,10 +264,13 @@ void Steering::PWMUpdate()
 		{
 			pwmWrite(PWM_MOTOR_PIN, motorPWMOutValue);
 		}
-
-		std::this_thread::sleep_for(std::chrono::microseconds(5000)); // For testing. Needed ??
+		 
+		
+		//this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Thread prg end - sleeping");
+		std::this_thread::sleep_for(std::chrono::microseconds(2500)); // For testing. Needed ??
 	}
 
 	this->logPtr_->writeEvent(__PRETTY_FUNCTION__, "Thread stopping");
 
+				
 }
