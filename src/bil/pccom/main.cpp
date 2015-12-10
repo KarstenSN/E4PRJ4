@@ -3,6 +3,7 @@
 #include "Data.hpp"
 #include "Settings.hpp"
 
+//----------PcCom::testprogram1----------
 int main(int argc, char *argv[]) {
 
     settingsTest setTest;
@@ -13,3 +14,4 @@ int main(int argc, char *argv[]) {
     pcTest.dataStream();
     return 0;
 }
+//----------PcCom::testprogram2----------

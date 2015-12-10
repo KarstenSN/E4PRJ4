@@ -13,10 +13,10 @@
 #include <Settings.hpp>
 #include <Log.hpp>
 
-#define	pGain	2
+#define	pGain	40
 #define	iGain	0.1
 #define	dGain	0.1
-#define	iMax	10000
+#define	iMax	2300
 #define	iMin	0
 #define minServoPWM 5 // 0,5 ms
 #define	maxServoPWM 25 // 2,5 ms
@@ -36,12 +36,12 @@ public:
 	Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr);
 	~Steering();
 	int userInput(UserInput* UsrInput_);
-	void PWMUpdate();
-	bool stop_thread;
+	//void PWMUpdate();
+	
 
 
 private:
-	void getPWMvar(int &PWMforward, int &PWMBackward, bool &PWMdirection);
+	void PWMUpdate();
 	int brake();
 	int softbrake();
 	int turn(signed char value);
@@ -68,7 +68,7 @@ private:
 	double error_ = 0;
 	double pTemp_ = 0, dTemp_ = 0, iTemp_ = 0;
 	std::thread motorPWMThread;
-
+	bool stop_thread;
 	std::mutex changeVar_Mut;
 
 	int err = 0;

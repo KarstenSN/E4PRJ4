@@ -49,12 +49,12 @@ void PcCom::controllerStream()
     // Initialize socket for controllerStream
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0)
-       this->error("ERROR opening socket");
+       this->error("ERROR opening controller socket");
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
     serv_addr.sin_port = htons(this->portnoController_);
     if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-        this->error("ERROR on binding");
+        this->error("ERROR on controller binding");
     listen(sockfd,5);
     clilen = sizeof(cli_addr);
 
@@ -82,7 +82,7 @@ void PcCom::controllerStream()
 #endif
 
             if (n < 0)
-                this->error("ERROR reading from socket");
+                this->error("ERROR reading from controller socket");
 
             // Add controller data to the struct
             this->UserInput_.forward = this->controller_[0];
@@ -104,7 +104,7 @@ void PcCom::controllerStream()
         }
 		
 		if (n < 0)
-				this->error("ERROR writing to socket");
+				this->error("ERROR writing to controller socket");
         close(newsockfd);
 		if (!this->running_)
 				break;
@@ -115,7 +115,7 @@ void PcCom::controllerStream()
 }
 //----------PcCom::controllerStream3----------
 
-
+//----------PcCom::dataStream1----------
 void PcCom::dataStream()
 {
     this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__, "Initializing TCP connection for data stream");
@@ -128,12 +128,12 @@ void PcCom::dataStream()
     // Initialize socket for dataStream
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0)
-       this->error("ERROR opening socket");
+       this->error("ERROR opening data socket");
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
     serv_addr.sin_port = htons(this->portnoData_);
     if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-        this->error("ERROR on binding");
+        this->error("ERROR on data binding");
     listen(sockfd,5);
     clilen = sizeof(cli_addr);
 
@@ -145,6 +145,7 @@ void PcCom::dataStream()
             break;
 
         this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__, "Data TCP-Connection aquired");
+		//----------PcCom::dataStream2----------
         while(1)
         {
             /*  Acquire data from computer:
@@ -155,14 +156,14 @@ void PcCom::dataStream()
              *  data[4] = AKS-status            (0 - 1)
              *  data[5] = Steering calibration  (-50 - 50) */
             n = read(newsockfd,this->data_,6);
-
+			
+			//----------PcCom::dataStream3----------
             // Shut down if "dwnnow" is send by the PC
             if(this->data_[0] == 'd' && this->data_[1] == 'w' && this->data_[2] == 'n' && this->data_[3] == 'n' && this->data_[4] == 'o' && this->data_[5] == 'w')
 				break;
-	    
-
-           if (n < 0)
-                this->error("ERROR reading from socket");
+			//----------PcCom::dataStream4----------
+			if (n < 0)
+                this->error("ERROR reading from data socket");
 
             // Update the steering calibration in Settings
             this->settingsClassPtr_->calibrateSteering(this->data_[5]);
@@ -203,9 +204,10 @@ void PcCom::dataStream()
             if (n < 0)
                 break;
         }
+		//----------PcCom::dataStream5----------
         n = write(newsockfd,this->data_,6);
         if (n < 0)
-            this->error("ERROR writing to socket");
+            this->error("ERROR writing to data socket");
         close(newsockfd);
 
         // Shut down if "dwnnow" is send by the PC
@@ -217,9 +219,12 @@ void PcCom::dataStream()
 	this->running_ = false;
     return;
 }
+//----------PcCom::dataStream6----------
 
+//----------PcCom::error1----------
 void PcCom::error(std::string msg)
 {
     this->logClassPtr_->writeError(__PRETTY_FUNCTION__,msg);
     return;
 }
+//----------PcCom::error2----------
