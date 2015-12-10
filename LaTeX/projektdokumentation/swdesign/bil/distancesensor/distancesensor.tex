@@ -1,5 +1,5 @@
 % ++++++++++++ Controller PSoC Master klassen ++++++++++++++
-\subsubsection{Boundary-klasse: DistanceSensor}
+\subsubsection{Boundary-klasse: DistanceSensor} \label{sec:sw_design_distancesensor}
 
 Denne klasse har til formål at styre kommunikation mellem Pi og afstandssensorerne, der er valgt at benytte I2C-kommunikation til dette. De 4 afstandssensorer er navngivet efter deres respektive placering på bilen: ''Front Left'' = ''FL'', ''Front Left'' = ''FL'' ''Front Left'' = ''RL'', ''Rear Right'' = ''RR'', herefter funktion  \texttt{getDistance("name")} kaldes udefra med navnet på den ønskede sensor som parameter, og afstanden returneres i cm. Afstandene gemmes i midlertidige variabler. Desuden skrives der til den globale Log ved klasseinitiering og klassenedlæggelse, samt ved eventuelle forekomster af fejl.
 

@@ -1,13 +1,15 @@
-\subsection{Settingsklassen} \label{sec:settings_impl}
+\subsection{XboxControllerklassen} \label{sec:xboxcontroller_impl}
+
+XboxController er en klasse der har til formål at give PC softwaren mulighed for at læse Xbox controllerens tilstand.
 
 Settings er en klasse, som holder styr på systemets indstillinger. Klassens primære opgave er, at holde styr på brugerens indstillinger fra PC softwaren, hhv. calibrering af styrtøj, maksimal hastighed og hvorvidt AKS er slået til eller fra.
 Der er flere tråde der kan finde på, at kalde funktioner i Settings klassen på samme tid, skal klassen sørge for at der kun er én tråd der læser eller skriver til dens data af gangen.
 Herunder vil koden blive forklaret i detaljer.
 
 
-\paragraph{Settings Constructor} er klassens constructor. Ud over at initialisere alle settings data til 0, sker der en linkning til et Log object, via association, da det ønskes at constructoren skriver til text logen når klassen initialiseres, for at kunne fejlfinde. Koden er vist i vist i Listing \ref{lst:settings_con}.
+\paragraph{Settings Constructor} er klassens constructor. Ud over at initialisere alle settings data til 0, sker der en linkning til et Log object, via association, da det ønskes at constructoren skriver til text logen når klassen initialiseres, for at kunne fejlfinde. Koden er vist i vist i Listing \ref{lst:xboxcontroller_con}.
 
-\lstinputlisting[linerange=Settings::Settings1-Settings::Settings2, label=lst:settings_con, caption=\texttt{Settings} Constructor.]{../../src/bil/settings.cpp}
+\lstinputlisting[linerange=XboxController::XboxController1-XboxController::XboxController2, label=lst:xboxcontroller_con, caption=\texttt{XboxController} Constructor.]{../../src/pc/XboxController/xboxcontroller.h}
 
 
 \paragraph{setMaxSpeed} er en funktion til at skrive til klassens attribut, der indeholder den indstillede maksimale hastighed. Koden er vist i Listing \ref{lst:setmaxspeed}. Ud over at skrive tallet, der er givet med som parameter, til klassens attribut, låses klassens attribut så det ikke er muligt for andre funktionskald at skrive eller læse attributen til at den er færdig med at skrive til den. 

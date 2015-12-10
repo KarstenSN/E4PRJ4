@@ -1,0 +1,25 @@
+[2015-12-10 12:0:53] [Event] [Log::Log(std::string)] Log class active
+[2015-12-10 12:0:53] [Event] [Data::Data(Log *)] Data class active
+[2015-12-10 12:0:53] [Event] [void reader(int)] Reader thread #4: velocity=0 acceleration=0 distanceFR=0 userInput=0 0 0 0
+[2015-12-10 12:0:53] [Event] [void reader(int)] Reader thread #2: velocity=0 acceleration=0 distanceFR=0 userInput=0 0 0 0
+[2015-12-10 12:0:53] [Event] [void reader(int)] Reader thread #0: velocity=0 acceleration=0 distanceFR=0 userInput=0 0 0 0
+[2015-12-10 12:0:53] [Event] [void reader(int)] Reader thread #5: velocity=0 acceleration=0 distanceFR=0 userInput=0 0 0 0
+[2015-12-10 12:0:53] [Event] [void reader(int)] Reader thread #3: velocity=0 acceleration=0 distanceFR=0 userInput=0 0 0 0
+[2015-12-10 12:0:53] [Event] [void writers(int)] Writer thread #5: velocity=102 acceleration=6 distanceFR=250 userInput=65 94 118 72
+[2015-12-10 12:0:53] [Event] [void writers(int)] Writer thread #1: velocity=67 acceleration=3 distanceFR=71 userInput=-47 -84 -37 67
+[2015-12-10 12:0:53] [Event] [void writers(int)] Writer thread #3: velocity=98 acceleration=6 distanceFR=53 userInput=112 37 122 6
+[2015-12-10 12:0:53] [Event] [void writers(int)] Writer thread #2: velocity=169 acceleration=27 distanceFR=21 userInput=31 -89 -90 -75
+[2015-12-10 12:0:53] [Event] [void writers(int)] Writer thread #6: velocity=174 acceleration=24 distanceFR=16 userInput=-71 -35 65 -108
+[2015-12-10 12:0:53] [Event] [void reader(int)] Reader thread #6: velocity=174 acceleration=24 distanceFR=16 userInput=-71 -35 65 -108
+[2015-12-10 12:0:53] [Event] [void writers(int)] Writer thread #4: velocity=83 acceleration=27 distanceFR=129 userInput=102 -42 24 -71
+[2015-12-10 12:0:53] [Event] [void reader(int)] Reader thread #7: velocity=83 acceleration=27 distanceFR=129 userInput=102 -42 24 -71
+[2015-12-10 12:0:53] [Event] [void writers(int)] Writer thread #0: velocity=129 acceleration=24 distanceFR=149 userInput=3 14 51 117
+[2015-12-10 12:0:53] [Event] [void reader(int)] Reader thread #1: velocity=83 acceleration=24 distanceFR=149 userInput=3 14 51 117
+[2015-12-10 12:0:53] [Event] [void writers(int)] Writer thread #7: velocity=93 acceleration=15 distanceFR=212 userInput=-31 88 76 8
+[2015-12-10 12:0:53] [Event] [void reader(int)] Reader thread #8: velocity=93 acceleration=15 distanceFR=212 userInput=-31 88 76 8
+[2015-12-10 12:0:53] [Event] [void writers(int)] Writer thread #8: velocity=120 acceleration=50 distanceFR=117 userInput=-117 -36 52 29
+[2015-12-10 12:0:53] [Event] [void reader(int)] Reader thread #9: velocity=120 acceleration=50 distanceFR=117 userInput=-117 -36 52 29
+[2015-12-10 12:0:53] [Event] [void writers(int)] Writer thread #9: velocity=139 acceleration=37 distanceFR=222 userInput=102 22 -121 -99
+[2015-12-10 12:0:53] [Event] [Data::~Data()] Data class shutdown
+[2015-12-10 12:0:53] [Event] [Log::~Log()] Log class shutdown
+

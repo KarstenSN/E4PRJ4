@@ -5,14 +5,13 @@
 #include <Log.hpp>
 #include <utilities.hpp>
 
-
 #define NUM_THREADS 10
 
 Log l;
 Data d(&l);
 
+//----------writers1----------
 void writers(int num){
-	
 	// Seeding random number
 	std::random_device rd;
     std::mt19937 gen(rd());
@@ -49,11 +48,11 @@ void writers(int num){
 		std::to_string(static_cast<int>(Input.turn)) + " " + std::to_string(static_cast<int>(Input.stop));
 
 	l.writeEvent(__PRETTY_FUNCTION__,msg);
-	
 }
+//----------writers2----------
 
+//----------reader1----------
 void reader(int num){
-
 	// Reading sensor attributes
 	std::string vel = std::to_string(d.getLatestVelocity());
     std::string acc = std::to_string(d.getLatestAcceleration());
@@ -70,12 +69,11 @@ void reader(int num){
 	std::string msg = "Reader thread #" + std::to_string(num) + ": velocity=" + vel + " acceleration=" +
 		acc + " distanceFR=" + dist + " userInput=" + forw + " " + reve + " " + turn + " " + stop;
 	l.writeEvent(__PRETTY_FUNCTION__,msg);
-
 }
+//----------reader2----------
 
-
+//----------main1----------
 int main(){
-    
     std::cout << "Main running" << std::endl;
     
     std::thread myWriters[NUM_THREADS];
@@ -96,3 +94,4 @@ int main(){
     std::cout << "Main shutdown" << std::endl;
     return 0;
 }
+//----------main2----------

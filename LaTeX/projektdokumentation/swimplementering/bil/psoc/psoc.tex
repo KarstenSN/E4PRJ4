@@ -1,7 +1,7 @@
 %SW-implementering af Psoc-klassen (pi)
 \subsection{Psocklassen (pi)}
 
-\texttt{Psoc}-klassen håndterer alt kommunikation mellem Pi og PSoC'en på Pi-siden. Som førnævnt er dette implementeret via I2C-kommunikation. Klassen er implementeret med to public metoder: \texttt{getDistance(name)} og \texttt{getVelocity()}. Disse metoder kaldes fra \texttt{Data}-klassen når afstandsdata eller hastighedsdata ønskes overført. Disse 2 metoder tilgår de midlertidige variabler i klassen. På denne måde holdes et enkelt interface udadtil. Derudover er klassen bygget op omkring metoderne \texttt{update()} og \texttt{psocRead()}. I listing \ref{lst:Psoc_hpp} ses implementering af klassens headerfilen.
+\texttt{Psoc}-klassen håndterer alt kommunikation mellem Pi og PSoC'en på Pi-siden. Som førnævnt er dette implementeret via \IIC-kommunikation. Klassen er implementeret med to public metoder: \texttt{getDistance(name)} og \texttt{getVelocity()}. Disse metoder kaldes fra \texttt{Data}-klassen når afstandsdata eller hastighedsdata ønskes overført. Disse 2 metoder tilgår de midlertidige variabler i klassen. På denne måde holdes et enkelt interface udadtil. Derudover er klassen bygget op omkring metoderne \texttt{update()} og \texttt{psocRead()}. I listing \ref{lst:Psoc_hpp} ses implementering af klassens headerfilen.
 
 \lstinputlisting[linerange=psoc::header1-psoc::header2, 
 	label=lst:Psoc_hpp, 
@@ -25,7 +25,7 @@ Metoden \texttt{getVelocity()} sørger for først at låse attributten \texttt{T
 	caption=Implementering af \texttt{getVelocity()}]{../../src/bil/Psoc.cpp}
 
 
-Metoden \texttt{update()} åbner I2C-fobindelsen til PSoC'en ved at åbne $/dev/i2c-1$ som O\_RDWR, så der både kan skrive til, og læses fra forbindelsen.herefter sættes slaveadressen til PSoC'ens værdi på \texttt{0x10}, og nu kan der hentes de seneste målinger fra \texttt{rdbuffer} på PSoC'en. Som det sidste nedlægges forbindelsen med \texttt{close(fd)}. I listing \ref{lst:Psoc_update} ses implementeringen af \texttt{update()}.
+Metoden \texttt{update()} åbner \IIC-fobindelsen til PSoC'en ved at åbne $/dev/i2c-1$ som O\_RDWR, så der både kan skrive til, og læses fra forbindelsen.herefter sættes slaveadressen til PSoC'ens værdi på \texttt{0x10}, og nu kan der hentes de seneste målinger fra \texttt{rdbuffer} på PSoC'en. Som det sidste nedlægges forbindelsen med \texttt{close(fd)}. I listing \ref{lst:Psoc_update} ses implementeringen af \texttt{update()}.
 
 \lstinputlisting[linerange=psoc::update1-psoc::update2, 
 	label=lst:Psoc_update, 

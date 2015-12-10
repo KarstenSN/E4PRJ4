@@ -1,7 +1,7 @@
-% ++++++++++++ PSoCklasse på Pi ++++++++++++++
-\subsubsection{Boundary-klasse: Psoc (Pi)}
+% ++++++++++++ Psocklasse på Pi ++++++++++++++
+\subsubsection{Boundary-klasse: Psoc (Pi)}\label{sec:sw_design_psoc_pi}
 
-Denne klasse har til formål at styre kommunikationen mellem Pi og Psoc'en, der er valgt at benytte I2C-protokollen til dette. Psoc'en har påmonteret de 4 afstandssensorer, navngivet efter deres respektive placering på bilen, samt tachometEret til at måle hjulene omdrejningshastighed og omsætte dette til $km/t$. Klassen er implementeret med \texttt{getDistance()} og \texttt{get Velocity()}-metoderne som kaldes af dataklassen som dermed kan hente dataen lageret i Psocklassens attributter. Klassen kører sin egen tråd, men tilgås fra dataklassens tråd, derfor er de midlertidige variabler beskyttet ved brug af \texttt{std::mutex}.
+Denne klasse har til formål at styre kommunikationen mellem Pi og Psoc'en, der er valgt at benytte \IIC-protokollen til dette. Psoc'en har påmonteret de 4 afstandssensorer, navngivet efter deres respektive placering på bilen, samt tachometEret til at måle hjulene omdrejningshastighed og omsætte dette til $km/t$. Klassen er implementeret med \texttt{getDistance()} og \texttt{get Velocity()}-metoderne som kaldes af dataklassen som dermed kan hente dataen lageret i Psocklassens attributter. Klassen kører sin egen tråd, men tilgås fra dataklassens tråd, derfor er de midlertidige variabler beskyttet ved brug af \texttt{std::mutex}.
 
 \begin{figure}[h]
 \centering
@@ -14,15 +14,33 @@ Denne klasse har til formål at styre kommunikationen mellem Pi og Psoc'en, der 
 
 \begin{table}[h]
 	\begin{tabularx}{\textwidth}{| Z | Z | L{10cm} |} \hline
-		Navn 					& Type 				& Beskrivelse \\\hline
-		\texttt{distanceFL\_} 	& \texttt{int} 		& Midlertidig variabel der indeholder afstanden fra forreste venstre afstandssensor.''FL''	\\\hline
-		\texttt{distanceFR\_} 	& \texttt{int} 		& Midlertidig variabel der indeholder afstanden fra forreste højre afstandssensor.''FR''	\\\hline
-		\texttt{distanceRL\_} 	& \texttt{int} 		& Midlertidig variabel der indeholder afstanden fra bagerste venstre afstandssensor.''RL'' 	\\\hline
-		\texttt{distanceRR\_} 	& \texttt{int} 		& Midlertidig variabel der indeholder afstanden fra bagerste højre afstandssensor.''RR''	\\\hline
-		\texttt{Tacho\_} 	  	& \texttt{int} 		& Midlertidig variabel der indeholder bilens hastighed										\\\hline
-		\texttt{logPtr\_} 	  	& \texttt{log*} 	& Pointer til at skrive i den globale Log													\\\hline
-		\texttt{PsocMut} 	  	& \texttt{mutex} 	& Mutex benyttes til at beskytte klassens attributter										\\\hline
-		\texttt{psocThread\_} 	& \texttt{thread} 	& Thread benyttes til at kører klassen på en separat tråd									\\\hline
+	Navn 
+		& Type  
+		& Beskrivelse \\\hline
+	\texttt{distanceFL\_} 	
+		& \texttt{int} 		
+		& Midlertidig variabel der indeholder afstanden fra forreste venstre afstandssensor.''FL''	\\\hline
+	\texttt{distanceFR\_} 	
+		& \texttt{int} 		
+		& Midlertidig variabel der indeholder afstanden fra forreste højre afstandssensor.''FR''	\\\hline
+	\texttt{distanceRL\_} 	
+		& \texttt{int} 		
+		& Midlertidig variabel der indeholder afstanden fra bagerste venstre afstandssensor.''RL'' 	\\\hline
+	\texttt{distanceRR\_} 	
+		& \texttt{int} 		
+		& Midlertidig variabel der indeholder afstanden fra bagerste højre afstandssensor.''RR''	\\\hline
+	\texttt{Tacho\_} 	  	
+		& \texttt{int} 		
+		& Midlertidig variabel der indeholder bilens hastighed										\\\hline
+	\texttt{logPtr\_} 	  	
+		& \texttt{log*} 	
+		& Pointer til at skrive i den globale Log													\\\hline
+	\texttt{PsocMut} 	  	
+		& \texttt{mutex} 	
+		& Mutex benyttes til at beskytte klassens attributter										\\\hline
+	\texttt{psocThread\_} 	
+		& \texttt{thread} 	
+		& Thread benyttes til at kører klassen på en separat tråd									\\\hline
 	\end{tabularx}
 	\caption{Attributter for klassen Psoc}
 	\label{table:attr_psoc}
@@ -55,10 +73,10 @@ Denne klasse har til formål at styre kommunikationen mellem Pi og Psoc'en, der 
 
 \begin{table}[h]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-		Prototype 	& \texttt{int update()} \\\hline
-		Parametre 	& \texttt{void} \newline Metoden modtager ingen parametre. \\\hline
+		Prototype 	& \texttt{int update()} 		\\\hline
+		Parametre 	& \texttt{void} \newline 		\\\hline
 		Returværdi 	& \texttt{int}  \newline Returnerer fejlkode hvis åbning og læsning mislykkes \\\hline
-		Beskrivelse	& Denne metode har til formål at åbne I2C-forbindelsen til PSoC'en og hente det seneste datasæt. \\\hline
+		Beskrivelse	& Denne metode har til formål at åbne \IIC-forbindelsen til PSoC'en og hente det seneste datasæt. \\\hline
 	\end{tabularx}
 	\caption{Metodebeskrivelse for  \texttt{update()}}
 	\label{table:met_update}
@@ -67,9 +85,9 @@ Denne klasse har til formål at styre kommunikationen mellem Pi og Psoc'en, der 
 
 \begin{table}[h]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-		Prototype 	& \texttt{int psocRead()} \\\hline
-		Parametre 	& \texttt{void} \newline Metoden modtager ingen parametre. 	\\\hline
-		Returværdi 	& \texttt{void} \newline Metoden returnerer ingen værdi. 	\\\hline
+		Prototype 	& \texttt{int psocRead()} 		\\\hline
+		Parametre 	& \texttt{void} \newline 		\\\hline
+		Returværdi 	& \texttt{void} \newline 		\\\hline
 		Beskrivelse	& Denne metode har til formål at kalde \texttt{update(), herefter låses attributterne og datasættet læses over heri.}\\\hline
 	\end{tabularx}
 	\caption{Metodebeskrivelse for  \texttt{psocRead()}}
