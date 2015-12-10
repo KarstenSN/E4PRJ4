@@ -77,7 +77,8 @@ bilen sender ''dwnnow'' tilbage som ACK. Alt andet tolkes som NACK \\ \hline
 
 \textbf{Datatype} & Makshastig hed & Hastighed & Afstand & Acceleration & AKS-status & Styretøj \\ \hline
 \textbf{Enhed} & char & char & char & char & char &  char \\ \hline
-\textbf{Værdi} & km/h & (km/h)$\times$10 & m$\times$10 & G$\times$10 & 0..1 & -50..50 \\ \hline
+\textbf{Værdi} & km/h & (km/h)$\div$10 & m$\div$10 & G$\div$10 & Off/On & Udslag \\ \hline
+\textbf{Range} & 0..255 & 0..255 & 0..255 & 0..255 & 0..1 & -50..50 \\ \hline
 
 \end{tabularx}
 \caption{GUI data protokol}
@@ -171,7 +172,7 @@ Char værdi 1 \\ \hline
 
 \textbf{Datatype} & Frem & Tilbage & Drej & Stop \\ \hline
 \textbf{Enhed} & unsigned char & unsigned char & char & char\\ \hline
-\textbf{Range} & 0..255 & 0..255 & (-127)..127  & 0..1 \\ \hline
+\textbf{Range} & 0..255 & 0..255 & (-128)..127  & 0..1 \\ \hline
 
 \end{tabularx}
 \caption{Xbox360-controller data Protokol}
