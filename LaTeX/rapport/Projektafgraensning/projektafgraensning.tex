@@ -1,8 +1,10 @@
-\chapter{Projektafgrænsning}
-\label{ch:Projektafgraensning}
+\chapter{Projektafgrænsning} \label{ch:Projektafgraensning}
+
+Systemet AU2 er bygget på en skrabet fjernstyret bil, hvor kun chassiset, hjulene og DC-motoren er tilbage. På denne platform er der tilføjet en Raspberry Pi 2 B med kamara og Wi-Fi dongle, et PSoC 4 Pioneer kit, en strømforsyning med batteri, et tachometer-modul, fire afstandssensorer, et accelerometer, et motorstyrings-modul inkl. servomotor. Den anden side af projektet omfatter den software der er på PCen og den tilsluttede Xbox-360 controller. Selv PCen og Wi-Fi netværket er ikke en del af systemet, men skal være tilgængeligt for at systemet kan fungere. En mere detaljeret beskrivelse af bilens opdeling i blokke kan findes i afsnit \ref{P-sec:BDD_for_AU2} \nameref{P-sec:BDD_for_AU2} på side \pageref{P-sec:BDD_for_AU2} i dokumentationen.\\\\
+
 
 %TODO
-OBS: Stjålet fra PRJ3
+\textbf{OBS: Stjålet fra PRJ3}
 
 AutoGreen består af en strømforsyning, en række controllere (tre stk. PSoC 4 Pioneer Kits og et stk. DevKit8000), et varmelegeme (en USB strømspareskinne og en 100W 230V AC glødepære), fire 12V DC ventilatorer og en 12V steppermotor - samt tilhørende mosfet drivere. 
 AutoGreen uindeholder desuden sensorer til måling af lufttemperatur, jordfugt, lysintensitet og luftfugtighed.
