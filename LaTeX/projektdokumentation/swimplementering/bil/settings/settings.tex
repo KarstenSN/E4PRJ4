@@ -1,90 +1,41 @@
-\subsubsection{Settings} \label{sec:settings_impl}
+\subsection{Settingsklassen} \label{sec:settings_impl}
 
 Settings er en klasse, som holder styr på systemets indstillinger. Klassens primære opgave er, at holde styr på brugerens indstillinger fra PC softwaren, hhv. calibrering af styrtøj, maksimal hastighed og hvorvidt AKS er slået til eller fra.
 Der er flere threads der kan finde på, at kalde funktioner i Settings klassen på samme tid, skal klassen sørge for at der kun er en thread der læser eller skriver til dens data af gangen.
 Herunder vil koden blive forklaret i detaljer.
 
 
-\paragraph{Settings Constructor} er klassens constructor. Ud over at initialisere alle settings data til 0, sker der en linkning til et Log object, via association, da det ønskes at constructoren skriver til text logen når klassen initialiseres, for at kunne fejlfinde. Koden er vist i vist i Listing \ref{lst:settings}.
+\paragraph{Settings Constructor} er klassens constructor. Ud over at initialisere alle settings data til 0, sker der en linkning til et Log object, via association, da det ønskes at constructoren skriver til text logen når klassen initialiseres, for at kunne fejlfinde. Koden er vist i vist i Listing \ref{lst:settings_con}.
 
-\begin{lstlisting}[caption={Settings Constructor},label=lst:settings, language=c++]
-Settings::Settings(Log* logClassPtr)
-{
-  this->logClassPtr_ = logClassPtr;
-  this->maxVelocity_ = 0;
-  this->AKSStatus_ = 0;
-  this->calibration_ = 0;
-  this->logClassPtr_->writeEvent(__PRETTY_FUNCTION__,"Initialized Settings")
-}
-\end{lstlisting}
+\lstinputlisting[linerange=Settings::Settings1-Settings::Settings2, label=lst:settings_con, caption=\texttt{Settings} Constructor.]{../../src/bil/settings.cpp}
 
 
 \paragraph{setMaxSpeed} er en funktion til at skrive til klassens attribut, der indeholder den indstillede maksimale hastighed. Koden er vist i Listing \ref{lst:setmaxspeed}. Ud over at skrive tallet, der er givet med som parameter, til klassens attribut, låses klassens attribut så det ikke er muligt for andre funktionskald at skrive eller læse attributen til at den er færdig med at skrive til den. 
 
-\begin{lstlisting}[caption={Funktionen setMaxSpeed},label=lst:setmaxspeed, language=c++]
-void Settings::setMaxSpeed(int maxVelocity)
-{
-  std::lock_guard<std::mutex> lock(this->maxVelocityMut);
-  this->maxVelocity_ = maxVelocity;
-  return;
-}
-\end{lstlisting}
-
+\lstinputlisting[linerange=Settings::setMaxSpeed1-Settings::setMaxSpeed2, label=lst:setmaxspeed, caption=Funktionen \texttt{setMaxSpeed}.]{../../src/bil/settings.cpp}
 
 
 \paragraph{setAKS} er en funktion til at skrive til klassens attribut, der indeholder AKS status. Koden er vist i Listing \ref{lst:setaks}. Denne funktion er implementeret på samme måde som setMaxSpeed, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
 
-\begin{lstlisting}[caption={Funktionen setAKS},label=lst:setaks, language=c++]
-void Settings::setAKS(bool AKSStatus)
-{
-  std::lock_guard<std::mutex> lock(this->AKSStatusMut);
-  this->AKSStatus_ = AKSStatus;
-  return;
-}
-\end{lstlisting}
+\lstinputlisting[linerange=Settings::setAKS1-Settings::setAKS2, label=lst:setaks, caption=Funktionen \texttt{setAKS}.]{../../src/bil/settings.cpp}
 
 \clearpage
 
 \paragraph{calibrateSteering} er en funktion til at skrive til klassens attribut, der indeholder kalibrering af styrtøj. Koden er vist i Listing \ref{lst:calibratesteering}. Denne funktion er implementeret på samme måde som setMaxSpeed og setAKS, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
 
-\begin{lstlisting}[caption={Funktionen calibrateSteering},label=lst:calibratesteering, language=c++]
-void Settings::calibrateSteering(char calibration)
-{
-  std::lock_guard<std::mutex> lock(this->calibrationMut);
-  this->calibration_ = calibration;
-  return;
-}
-\end{lstlisting}
+\lstinputlisting[linerange=Settings::calibrateSteering1-Settings::calibrateSteering2, label=lst:calibratesteering, caption=Funktionen \texttt{calibrateSteering}.]{../../src/bil/settings.cpp}
 
 
 \paragraph{getMaxSpeed}  er en funktion til at læse og returnere klassens attribut, der indeholder den indstillede maksimale hastighed. Koden er vist i Listing \ref{lst:getmaxspeed}. Ud over at læse attributen låses klassens attribut, så det ikke er muligt for andre funktionskald at skrive eller læse attributen, indtil at funktionen er færdig med at læse fra og returnere den.
 
-\begin{lstlisting}[caption={Funktionen getMaxSpeed},label=lst:getmaxspeed, language=c++]
-int Settings::getMaxSpeed()
-{
-  std::lock_guard<std::mutex> lock(this->maxVelocityMut);
-  return this->maxVelocity_;
-}
-\end{lstlisting}
+\lstinputlisting[linerange=Settings::getMaxSpeed1-Settings::getMaxSpeed2, label=lst:getmaxspeed, caption=Funktionen \texttt{getMaxSpeed}.]{../../src/bil/settings.cpp}
 
 
 \paragraph{getAKS}  er en funktion til at læse og returnere klassens attribut, der indeholder AKS status. Koden er vist i Listing \ref{lst:getaks}. Denne funktion er implementeret på samme måde som getMaxSpeed, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
 
-\begin{lstlisting}[caption={Funktionen getAKS},label=lst:getaks, language=c++]
-bool Settings::getAKS()
-{
-  std::lock_guard<std::mutex> lock(this->AKSStatusMut);
-  return this->AKSStatus_;
-}
-\end{lstlisting}
+\lstinputlisting[linerange=Settings::getAKS1-Settings::getAKS2, label=lst:getaks, caption=Funktionen \texttt{getAKS}.]{../../src/bil/settings.cpp}
 
 
 \paragraph{getCalibration}  er en funktion til at læse og returnere klassens attribut, der indeholder kalibrering af styrtøj. Koden er vist i Listing \ref{lst:getcalibration}. Denne funktion er implementeret på samme måde som getMaxSpeed og getAKS, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
 
-\begin{lstlisting}[caption={Funktionen getCalibration},label=lst:getcalibration, language=c++]
-char Settings::getCalibration()
-{
-  std::lock_guard<std::mutex> lock(this->calibrationMut);
-  return this->calibration_;
-}
-\end{lstlisting}
+\lstinputlisting[linerange=Settings::getCalibration1-Settings::getCalibration2, label=lst:getcalibration, caption=Funktionen \texttt{getCalibration}.]{../../src/bil/settings.cpp}
