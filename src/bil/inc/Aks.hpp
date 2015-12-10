@@ -8,20 +8,23 @@
 
 #define NBR_PROX_SENSORS 4
 #define DELTA_DISTANCE_FOR_ERROR 10
-
+//----------states0----------
 enum aksStates{
     fwd,
     bwd,
     coasting,
     still
 };
-
+//----------states1----------
+//----------sensPos0----------
 enum sensorsPos{
 	FR = 0,
 	FL = 1,
 	RR = 2,
 	RL = 3
 };
+//----------sensPos1----------
+
 
 class Aks{
 public:
