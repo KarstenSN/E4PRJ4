@@ -1,43 +1,41 @@
 \subsection{XboxControllerklassen} \label{sec:xboxcontroller_impl}
 
-XboxController er en klasse der har til formål at give PC softwaren mulighed for at læse Xbox controllerens tilstand.
-
-Settings er en klasse, som holder styr på systemets indstillinger. Klassens primære opgave er, at holde styr på brugerens indstillinger fra PC softwaren, hhv. calibrering af styrtøj, maksimal hastighed og hvorvidt AKS er slået til eller fra.
-Der er flere tråde der kan finde på, at kalde funktioner i Settings klassen på samme tid, skal klassen sørge for at der kun er én tråd der læser eller skriver til dens data af gangen.
+XboxController er en klasse der har til formål er at give PC softwaren mulighed for at læse Xbox controllerens tilstand. Klassens primære funktion er altså at agere API for PC softwaren.
 Herunder vil koden blive forklaret i detaljer.
 
 
-\paragraph{Settings Constructor} er klassens constructor. Ud over at initialisere alle settings data til 0, sker der en linkning til et Log object, via association, da det ønskes at constructoren skriver til text logen når klassen initialiseres, for at kunne fejlfinde. Koden er vist i vist i Listing \ref{lst:xboxcontroller_con}.
+\paragraph{XboxController Constructor} er klassens constructor. Den tager imodet argument til at bestemme controllerens ID. Koden er vist i Listing \ref{lst:xboxcontroller_con}.
 
 \lstinputlisting[linerange=XboxController::XboxController1-XboxController::XboxController2, label=lst:xboxcontroller_con, caption=\texttt{XboxController} Constructor.]{../../src/pc/XboxController/xboxcontroller.h}
 
 
-\paragraph{setMaxSpeed} er en funktion til at skrive til klassens attribut, der indeholder den indstillede maksimale hastighed. Koden er vist i Listing \ref{lst:setmaxspeed}. Ud over at skrive tallet, der er givet med som parameter, til klassens attribut, låses klassens attribut så det ikke er muligt for andre funktionskald at skrive eller læse attributen til at den er færdig med at skrive til den. 
+\paragraph{getNumber} er en funktion der returnere det pågældende objects ID. Denne funktion bruges ikke i hovedprogrammet, men udnyttes til testing. Koden er vist i Listing \ref{lst:getnumber}.
 
-\lstinputlisting[linerange=Settings::setMaxSpeed1-Settings::setMaxSpeed2, label=lst:setmaxspeed, caption=Funktionen \texttt{setMaxSpeed}.]{../../src/bil/settings.cpp}
+\lstinputlisting[linerange=XboxController::getNumber1-XboxController::getNumber2, label=lst:getnumber, caption=Funktionen \texttt{getNumber}.]{../../src/pc/XboxController/xboxcontroller.h}
 
 
-\paragraph{setAKS} er en funktion til at skrive til klassens attribut, der indeholder AKS status. Koden er vist i Listing \ref{lst:setaks}. Denne funktion er implementeret på samme måde som setMaxSpeed, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
+\paragraph{getState} er en funktion der sørger for først at fylde \texttt{XINPUT\_STATE} structen \texttt{\_controllerState}, med nuller. Herefter indskrives Xbox Controllerens nuværende tilstand ind i denne struct der har alle plads til alt information om en Xbox Controllers forskellige dele. Til sidst returneres \texttt{\_controllerState}. Koden kan ses på Listing \ref{lst:getstate}.
 
-\lstinputlisting[linerange=Settings::setAKS1-Settings::setAKS2, label=lst:setaks, caption=Funktionen \texttt{setAKS}.]{../../src/bil/settings.cpp}
+\lstinputlisting[linerange=XboxController::getState1-XboxController::getState2, label=lst:getstate, caption=Funktionen \texttt{getState}.]{../../src/pc/XboxController/xboxcontroller.h}
 
 \clearpage
 
-\paragraph{calibrateSteering} er en funktion til at skrive til klassens attribut, der indeholder kalibrering af styrtøj. Koden er vist i Listing \ref{lst:calibratesteering}. Denne funktion er implementeret på samme måde som setMaxSpeed og setAKS, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
+\paragraph{connect} er en funktion til at oprette forbindelse mellem API og controller enheden. Den fungerer på samme måde som \texttt{getState} men returnerer ikke controllerens tilstand, men derimod om hvorvidt der er forindelse mellem controller enheden og klassen. Koden kan ses på Listing \ref{lst:connect}.
 
-\lstinputlisting[linerange=Settings::calibrateSteering1-Settings::calibrateSteering2, label=lst:calibratesteering, caption=Funktionen \texttt{calibrateSteering}.]{../../src/bil/settings.cpp}
-
-
-\paragraph{getMaxSpeed}  er en funktion til at læse og returnere klassens attribut, der indeholder den indstillede maksimale hastighed. Koden er vist i Listing \ref{lst:getmaxspeed}. Ud over at læse attributen låses klassens attribut, så det ikke er muligt for andre funktionskald at skrive eller læse attributen, indtil at funktionen er færdig med at læse fra og returnere den.
-
-\lstinputlisting[linerange=Settings::getMaxSpeed1-Settings::getMaxSpeed2, label=lst:getmaxspeed, caption=Funktionen \texttt{getMaxSpeed}.]{../../src/bil/settings.cpp}
+\lstinputlisting[linerange=XboxController::connect1-XboxController::connect2, label=lst:connect, caption=Funktionen \texttt{connect}.]{../../src/pc/XboxController/xboxcontroller.h}
 
 
-\paragraph{getAKS}  er en funktion til at læse og returnere klassens attribut, der indeholder AKS status. Koden er vist i Listing \ref{lst:getaks}. Denne funktion er implementeret på samme måde som getMaxSpeed, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
+\paragraph{vibrate} er en funktion til at håndterer vibraterne i controlleren. Der er hhv. en venstre og en højre motor i en Xbox Controller som begge kan tage imod en værdi mellem 0 og 255, hvor 0 stopper motoren og 255 sætter motoren i maks hastighed. Denne funktion bliver ikke udnyttet i selve systemet, men er brugt til at kunne teste hvorvidt der er skabt en forbindelse der også giver mulighed for at skrive funktionalitet ud til controlleren.  Koden kan ses på Listing \ref{lst:vibrate}.
 
-\lstinputlisting[linerange=Settings::getAKS1-Settings::getAKS2, label=lst:getaks, caption=Funktionen \texttt{getAKS}.]{../../src/bil/settings.cpp}
+\lstinputlisting[linerange=XboxController::vibrate1-XboxController::vibrate2, label=lst:vibrate, caption=Funktionen \texttt{vibrate}.]{../../src/pc/XboxController/xboxcontroller.h}
 
+\clearpage
 
-\paragraph{getCalibration}  er en funktion til at læse og returnere klassens attribut, der indeholder kalibrering af styrtøj. Koden er vist i Listing \ref{lst:getcalibration}. Denne funktion er implementeret på samme måde som getMaxSpeed og getAKS, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
+\paragraph{getCtrData} er en funktion der er lavet for at simplificere PC softwarens metodekald. Funktionen sender de fire ønskede informationer om controllerens tilstand, hhv. Left Stick, Right Trigger, Left Trigger og X-knappens tilstande. Til dette udnyttes call-by-reference, dvs. at ved funktionskaldet tager funktionen imod fire referencer der ønskes at skreven direkte til. Ud over dette sørger funktionen for at caste alle værdier til den ønskede værdi ifølge protokolen under afsnit \ref{tbl:prt_controller_byte} \nameref{tbl:prt_controller_byte} på side \pageref{tbl:prt_controller_byte}. Koden for funktionene er vist i Listing \ref{lst:getctrdata}.
 
-\lstinputlisting[linerange=Settings::getCalibration1-Settings::getCalibration2, label=lst:getcalibration, caption=Funktionen \texttt{getCalibration}.]{../../src/bil/settings.cpp}
+\lstinputlisting[linerange=XboxController::getCtrData1-XboxController::getCtrData2, label=lst:getctrdata, caption=Funktionen \texttt{getCtrData}.]{../../src/pc/XboxController/xboxcontroller.h}
+
+\subsubsection{Test af XboxControllerklassen}
+Denne klasse er testet med et testprogram, der udskriver de hentede tilstande fra controlleren i et konsolvindue.
+
+\clearpage
