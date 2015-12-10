@@ -3,7 +3,6 @@
 //#define DEBUG_STEERING //Uncomment to enable debugging in steering class only
 
 //----------Steering::Steering1----------
-
 Steering::Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr)
 {
 	dataClassPtr_ = dataClassPtr;

@@ -52,8 +52,7 @@ Prototype & \texttt{int userInput(unsigned char speedForward, unsigned char spee
 Parametre & \texttt{speedForward} \newline Den ønskede hastighed fremad. 0..255\newline
 		\texttt{speedBackward} \newline Den ønskede hastighed bagud. 0..255\newline
 		\texttt{turn} \newline Den ønskede drejning på forhjul. -128..127\newline
-		\texttt{brake} \newline Der skal bremses. 0..1\newline 
- \\\hline
+		\texttt{brake} \newline Der skal bremses. 0..1  \\\hline
 Returværdi &  \texttt{int} \newline 1 hvis alle operationer er gået okay ellers -1. \\\hline
 Beskrivelse & Metoden sørger for at opdaterer retning og hastighed på bilen. \\\hline
 \end{tabularx}
@@ -65,10 +64,10 @@ Beskrivelse & Metoden sørger for at opdaterer retning og hastighed på bilen. \
 
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-		Prototype & \texttt{void PWMUpdate( )} \\\hline
-		Parametre &   
-		\\\hline
-		Returværdi &  \texttt{int} \newline 1 hvis alle operationer er gået okay ellers -1. \\\hline
+		Prototype & \texttt{void PWMUpdate( )}		\\\hline
+		Parametre &  void 							\\\hline
+		Returværdi &  \texttt{int} \newline 
+		1 hvis alle operationer er gået okay ellers -1. \\\hline
 		Beskrivelse & Metoden sørger for at opdaterer PWM output til hastighed på bilen. \\\hline
 	\end{tabularx}
 	\caption{Metodebeskrivelse for \texttt{PWMUpdate}}
@@ -78,7 +77,7 @@ Beskrivelse & Metoden sørger for at opdaterer retning og hastighed på bilen. \
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 		Prototype & \texttt{int brake( )} \\\hline
-		Parametre & 
+		Parametre &  void
 		\\\hline
 		Returværdi &  \texttt{int} \newline 1 hvis alle operationer er gået okay ellers -1. \\\hline
 		Beskrivelse & Metoden sørger for bremse på bilen ned i hastighed. \\\hline
@@ -90,7 +89,7 @@ Beskrivelse & Metoden sørger for at opdaterer retning og hastighed på bilen. \
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 		Prototype & \texttt{int softbrake( )} \\\hline
-		Parametre & 
+		Parametre & void
 		\\\hline
 		Returværdi &  \texttt{int} \newline 1 hvis alle operationer er gået okay ellers -1. \\\hline
 		Beskrivelse & Metoden sørger for at bilen løber hastighed af med 0 PWM output. \\\hline
