@@ -18,25 +18,31 @@ Deconstructoen sørger for at lukke \texttt{Steering::PWMUpdate} tråden ned og 
 
 \lstinputlisting[linerange=Steering::~Steering1-Steering::~Steering2, label=lst:steering_decon, caption=\texttt{Deconstructor} for Steeringklassen.]{../../src/bil/steering/steering.cpp}
 
-Metoden \texttt{userInput} er den eneste metode der kan tilgås udefra. Den håndtere værdier fra Xbox 360 controlleren. Den omregner frem og tilbage værdierne i forhold den max hastighed der er sat for bilen. Max hastigheden hentes fra Settings klassen. Hvis der skal bremses går den direkte til \texttt{brake} metoden. Tilsidst kalder \texttt{turn} metoden
+Metoden \texttt{userInput} er den eneste metode der kan tilgås udefra. Den håndtere værdier fra Xbox 360 kontrolleren. Den omregner frem og tilbage værdierne i forhold den max hastighed der er sat for bilen. Max hastigheden hentes fra Settings klassen. Hvis der skal bremses går den direkte til \texttt{brake} metoden. Tilsidst kalder \texttt{turn} metoden
 
 \lstinputlisting[linerange=Steering::userInput1-Steering::userInput2, label=lst:steering_userInput, caption=Metoden \texttt{userInput} Steeringklassen.]{../../src/bil/steering/steering.cpp} 
 
 \texttt{brake} metoden bremser bilen ved at sætte motor PWM til 100 \% og de 2 retnings digitale outputs lave. Det får H-broen til at bremse motoren aktivt. Mens der bremses bliver PWM i \texttt{PWMUpdate} ikke opdateret.
 \lstinputlisting[linerange=Steering::brake1-Steering::brake2, label=lst:steering_brake, caption=Metoden \texttt{brake} Steeringklassen.]{../../src/bil/steering/steering.cpp}
 
-\texttt{softbrake} metoden sætte motor PWM til 0 \% og de 2 retnings digitale outputs lave. Derved vil bilen begynde at løbe farten af.
+\texttt{softbrake} metoden sætte motor PWM til 0 \% og de 2 retnings digitale outputs lave. 
+Derved vil bilen begynde at løbe farten af.
 \lstinputlisting[linerange=Steering::softbrake1-Steering::softbrake2, label=lst:steering_softbrake, caption=Metoden \texttt{softbrake} Steeringklassen.]{../../src/bil/steering/steering.cpp}
 
-
+\texttt{turn} metoden omregner styre værdierne fra Xbox kontrolleren til en duty cycle for SW PWM mellem 0,5ms og 2.5ms. 
+Som vil give max udslag til begge sider. 
 \lstinputlisting[linerange=Steering::turn1-Steering::turn2, label=lst:steering_turn, caption=Metoden \texttt{turn} Steeringklassen.]{../../src/bil/steering/steering.cpp}
 
-
+\texttt{motorSetPWM} metoden bestemmer om bilen skal sættes til at kører frem eller tilbage ud fra den aktuelle retning og input fra Xbox kontrolleren. 
+Hvis det er nødvendig at kører den modsatte vej bremses der indtil den er under en vis hastighed
+. 
 \lstinputlisting[linerange=Steering::motorSetPWM1-Steering::motorSetPWM2, label=lst:steering_motorSetPWM, caption=Metoden \texttt{motorSetPWM} Steeringklassen.]{../../src/bil/steering/steering.cpp}
 
-
+\texttt{PWMUpdate} metoden kører i sin egen tråd. Den henter hver gang den aktuelle hastighed på bilen fra \texttt{Dataklassen} og udregner fejlen i forhold til den ønskede hastighed. Herefter udregner værdierne for PID reguleringen. Og til sidst sættes den nye PWM værdi på motoren. 
 \lstinputlisting[linerange=Steering::PWMUpdate1-Steering::PWMUpdate2, label=lst:steering_PWMUpdate, caption=Metoden \texttt{PWMUpdate} Steeringklassen.]{../../src/bil/steering/steering.cpp}
 
-\subsubsection{Test}
+\subsubsection{Test af Steering klassen}
+
+\lstinputlisting[linerange=main::main1-main::main2, label=lst:steering_main, caption=Test af \texttt{Steering klassen} Steeringklassen.]{../../src/bil/steering/main.cpp}
 
 \subsubsection*{WiringPi} \label{sec:wiringPi_impl}
