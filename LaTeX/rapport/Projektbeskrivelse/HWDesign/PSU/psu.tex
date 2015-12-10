@@ -1,3 +1,10 @@
 \subsection{Strømforsyning}\label{sec:hwd_psu}
 
-\lipsum[1-3]{}
+Bilen er udstyret med en strømforsyningen, som har til formål at forsyne hele bilen med strøm i hhv. 7.2V, 5V og 3V.
+Bilens strømforsyning er designet ud fra princippet om en buck converter\cite[s. 326] {lib:analogteknik}, men med modifikationer således at der udover en 5V udgang også drives en 3V udgang fra samme converter.
+
+Designfasen for denne blok startede med en simpel håndtegning af et kredsløb der efter tanken skulle kunne drive en PWM til buck converteren.
+Det viste sig dog meget hurtigt at for at kunne opnå relativt kompakte kondensator- og spolestørrelser var det nødvendigt med et højfrekvent (100 kHz+) PWM signal til at drive switchen i strømforsyningen.
+Der blev taget en beslutning om i stedet at anvende en integreret løsning i form af Texas Instruments LM26003\cite{lib:lm26003}. 
+Denne integrerede kreds samler fejlforstærkning, switch samt styring af clocksignal i én kreds.
+
