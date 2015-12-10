@@ -1,0 +1,43 @@
+\subsection{XboxControllerklassen} \label{sec:xboxcontroller_impl}
+
+XboxController er en klasse der har til formål at give PC softwaren mulighed for at læse Xbox controllerens tilstand.
+
+Settings er en klasse, som holder styr på systemets indstillinger. Klassens primære opgave er, at holde styr på brugerens indstillinger fra PC softwaren, hhv. calibrering af styrtøj, maksimal hastighed og hvorvidt AKS er slået til eller fra.
+Der er flere tråde der kan finde på, at kalde funktioner i Settings klassen på samme tid, skal klassen sørge for at der kun er én tråd der læser eller skriver til dens data af gangen.
+Herunder vil koden blive forklaret i detaljer.
+
+
+\paragraph{Settings Constructor} er klassens constructor. Ud over at initialisere alle settings data til 0, sker der en linkning til et Log object, via association, da det ønskes at constructoren skriver til text logen når klassen initialiseres, for at kunne fejlfinde. Koden er vist i vist i Listing \ref{lst:xboxcontroller_con}.
+
+\lstinputlisting[linerange=XboxController::XboxController1-XboxController::XboxController2, label=lst:xboxcontroller_con, caption=\texttt{XboxController} Constructor.]{../../src/pc/XboxController/xboxcontroller.h}
+
+
+\paragraph{setMaxSpeed} er en funktion til at skrive til klassens attribut, der indeholder den indstillede maksimale hastighed. Koden er vist i Listing \ref{lst:setmaxspeed}. Ud over at skrive tallet, der er givet med som parameter, til klassens attribut, låses klassens attribut så det ikke er muligt for andre funktionskald at skrive eller læse attributen til at den er færdig med at skrive til den. 
+
+\lstinputlisting[linerange=Settings::setMaxSpeed1-Settings::setMaxSpeed2, label=lst:setmaxspeed, caption=Funktionen \texttt{setMaxSpeed}.]{../../src/bil/settings.cpp}
+
+
+\paragraph{setAKS} er en funktion til at skrive til klassens attribut, der indeholder AKS status. Koden er vist i Listing \ref{lst:setaks}. Denne funktion er implementeret på samme måde som setMaxSpeed, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
+
+\lstinputlisting[linerange=Settings::setAKS1-Settings::setAKS2, label=lst:setaks, caption=Funktionen \texttt{setAKS}.]{../../src/bil/settings.cpp}
+
+\clearpage
+
+\paragraph{calibrateSteering} er en funktion til at skrive til klassens attribut, der indeholder kalibrering af styrtøj. Koden er vist i Listing \ref{lst:calibratesteering}. Denne funktion er implementeret på samme måde som setMaxSpeed og setAKS, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
+
+\lstinputlisting[linerange=Settings::calibrateSteering1-Settings::calibrateSteering2, label=lst:calibratesteering, caption=Funktionen \texttt{calibrateSteering}.]{../../src/bil/settings.cpp}
+
+
+\paragraph{getMaxSpeed}  er en funktion til at læse og returnere klassens attribut, der indeholder den indstillede maksimale hastighed. Koden er vist i Listing \ref{lst:getmaxspeed}. Ud over at læse attributen låses klassens attribut, så det ikke er muligt for andre funktionskald at skrive eller læse attributen, indtil at funktionen er færdig med at læse fra og returnere den.
+
+\lstinputlisting[linerange=Settings::getMaxSpeed1-Settings::getMaxSpeed2, label=lst:getmaxspeed, caption=Funktionen \texttt{getMaxSpeed}.]{../../src/bil/settings.cpp}
+
+
+\paragraph{getAKS}  er en funktion til at læse og returnere klassens attribut, der indeholder AKS status. Koden er vist i Listing \ref{lst:getaks}. Denne funktion er implementeret på samme måde som getMaxSpeed, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
+
+\lstinputlisting[linerange=Settings::getAKS1-Settings::getAKS2, label=lst:getaks, caption=Funktionen \texttt{getAKS}.]{../../src/bil/settings.cpp}
+
+
+\paragraph{getCalibration}  er en funktion til at læse og returnere klassens attribut, der indeholder kalibrering af styrtøj. Koden er vist i Listing \ref{lst:getcalibration}. Denne funktion er implementeret på samme måde som getMaxSpeed og getAKS, beskrevet tidligere, og vil derfor ikke blive gennemgået i detaljer her.
+
+\lstinputlisting[linerange=Settings::getCalibration1-Settings::getCalibration2, label=lst:getcalibration, caption=Funktionen \texttt{getCalibration}.]{../../src/bil/settings.cpp}

@@ -12,6 +12,7 @@
 #include <utilities.hpp>
 #include <Settings.hpp>
 #include <Log.hpp>
+//----------Steering::header1----------
 
 #define	pGain	40
 #define	iGain	0.1
@@ -20,13 +21,12 @@
 #define	iMin	0
 #define minServoPWM 5 // 0,5 ms
 #define	maxServoPWM 25 // 2,5 ms
-
 #define PWM_CLOCK_FREQ 19200000
 #define PWM_MOTOR_PIN  18 // PWM Motor - Broadcom pin 18, P1 pin 12
 #define PWM_SERVO_PIN  23 // PWM Servo - Broadcom pin 19, P1 pin 33
 #define PWM_MOTOR_FORWARD  6 // PWM Servo - Broadcom pin 6, P1 pin 31
 #define PWM_MOTOR_BACKWARD  12 // PWM Servo - Broadcom pin 12, P1 pin 32
-#define PWM_SET_CLOCK_VALUE  2 // PWM Clock Set Value for hardware PWM between 2 to 4095
+#define PWM_SET_CLOCK_VALUE  2 // PWM Clock Set Value for HW PWM between 2 to 4095
 #define PWM_SET_RANGE_VALUE  240 //The default is 1024.
 #define PWM_FREQ 40000 
 
@@ -36,10 +36,6 @@ public:
 	Steering(Data* dataClassPtr, Settings* MySettingsPtr, Log* MyLogPtr);
 	~Steering();
 	int userInput(UserInput* UsrInput_);
-	//void PWMUpdate();
-	
-
-
 private:
 	void PWMUpdate();
 	int brake();
@@ -58,7 +54,6 @@ private:
 	Data* dataClassPtr_;
 	Settings* settingsPtr_;
 	Log* logPtr_;
-
 	double dState_ = 0; // Last position input
 	double iState_ = 0; // Integrator state
 	double iMax_ = 0, iMin_ = 0; // Maximum and minimum allowable integrator state
@@ -70,8 +65,6 @@ private:
 	std::thread motorPWMThread;
 	bool stop_thread;
 	std::mutex changeVar_Mut;
-
 	int err = 0;
-
-
 };
+//----------Steering::header2----------
