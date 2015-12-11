@@ -1,23 +1,18 @@
 \section{Specifikation og Analyse}
 \label{ch:Specifikation_og_Analyse}
 
-%TODO
-OBS: Stjålet fra PRJ3
+Afsnittet specifikation og analyse dækker over førnævnte for kravene tilhørende projektet, samt forberedelsen, udarbejdelsen og erfaringerne af kravspecifikationen i afsnit \ref{P-ch:kravspecifikation} \nameref{P-ch:kravspecifikation} på side \pageref{P-ch:kravspecifikation} i dokumentationen. \\
 
-Dette afsnit omhandler specifikation og analyse i forbindelse med projektets opstillede krav, samt bearbejdelsen og tankerne bag udarbejdelsen af kravspecifikationen (se \ref{P-ch:Kravspec} \nameref{P-ch:Kravspec} side \pageref{P-ch:Kravspec} i projektdokumentationen).
+Projektet er forholdsvist omfattende og de krav der er stillet til projektet ligger indenfor en grænse, som blev bedømt rimelige af projektgruppen og for hvad kunne forventes at nå i projektperioden.
+Til samling for selve bilen, blev det valgt at bruge en Raspberry Pi, da denne er i stand til alt hvad projektet skal kunne og mere til. 
+Desuden var gruppen interesserede i at undersøge denne platform yderligere og lære om dens begrænsninger og styrker, hvilket gør den ideel til en projektplatform.
+Da en bruger skal kunne se forskellige informationer om bilen, samt et videostream fra et kamera monteret på bilen, er der tilhørende software til en PC. 
+Ud over dette blev der tilknyttet en X-Box Controller til softwaren på PC'en, som bilen kan styres med.
+Et krav til projektet er, at der skal anvendes en form for netværkskommunikation, som for dette projekts tilfælde er alt kommunikation mellem PC og Pi'en på bilen.
+Pi'en har tilknyttet en Wi-Fi Dongle, som tillader bilen at have trådløs internet. Udover PC, Pi og controller, er der nogle sensorer tilsluttet bilen, som kommunikerer via \IIC med Pi'en via en PSoC. 
+\IIC blev valgt pga. tidligere erfaringer med denne som interkomponentbus. 
 
-\mbox{}
-
-Der blev foretaget undersøgelser af de forskellige krav, der blev opstillet til projektet, for at sikre at kravene faktisk kunne opfyldes. Der blev efterfølgende diskuteret hvorvidt forskellige sensorer og aktuatorer skulle implementeres i systemet. Det resulterede i, at systemet skulle indeholde en temperatur-, jordfugt-, luftfugt- og en lysintensitetssensor.
-
-Til styring af systemet blev det valgt at bruge DevKit8000 som embedded system, og PSoC 4 Pioneer Kits til at styre hardwaren med. Det blev bestemt at bruge en PSoC Master, som skulle have forbindelse til DevKit8000 igennem UART. UART blev valgt som kommunikationsvej, da der allerede var kendskab til UART. Valget af UART gjorde fejlfinding nemt, da det var muligt at teste ved brug af en PC. PC'en kunne læse, hvad der blev sendt, og skrive tilbage ved brug af tastaturet på PCen.
-Til kommunikation mellem PSoCs blev det besluttet at bruge \IIC jf. projektoplægget.
-Beslutningen om at buskommunikationen skulle være af typen \IIC blev taget på baggrund af flere forskellige faktorer. Modsat SPI er \IIC i stand til at sende data over relativt lange afstande. \IIC interfacet har desuden indbygget sikkerhed i standarden.
-
-Til regulering af temperatur i drivhuset blev det valgt, at et vindue skulle kunne åbne og lukke, og fire ventilatorer skulle udskifte luften i drivhuset. Formålet med disse er at køle drivhuset ned. Der blev til opvarmning valgt en glødepære, som en simpel måde at opvarme drivhuset på.
-
-Efter de fleste overordnede hardware beslutninger var blevet taget, blev der lavet en overordnet plan for den generelle funktionalitet og hvordan den grafiske brugerflade skulle se ud.
-
-Der kunne efter de generelle beslutninger, skrives use case diagrammer over de ønskede processer og funktionaliteter, og derved give et godt overblik til at opstille endelige krav. Disse krav blev inddelt i funktionelle og ikke-funktionelle krav, således at de valgte arbejdsmodeller blev fulgt, og det var muligt at opstille en endelig kravspecifikation under processen. Dette endte ud i, at en accepttestspecifikation (se afsnit \ref{P-ch:Accepttest} \nameref{P-ch:Accepttest} side \pageref{P-ch:Accepttest} i projektdokumentationen) var mulig at udarbejde, dermed blev V-modellen fulgt.
+Bilen indeholder nogle afstandssensorer, således at den er i stand til at detektere en forhindring og undvige den hvis den vurderes i vejen. Tachometeret som er monteret på bilen er en relevant tilføjelse, for at kunne opfylde målet om en intelligent bil, da bilen er nødt til at kende sin hastighed for at kunne bedømme hvor langt den er fra forhindringen. Til sidst skulle der tilsluttes et accelerometer, så bilen kunne regulere og optimere sin kørsel. 
+Et samlet overblik over bilens dele kan findes i afsnit \myRef{P-sec:sec:systemoversigt} i dokumentationen.
 
 \clearpage

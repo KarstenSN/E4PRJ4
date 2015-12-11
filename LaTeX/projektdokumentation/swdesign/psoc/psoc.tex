@@ -2,7 +2,12 @@
 \subsection{PSoC (PSoC)} \label{sec:sw_design_psoc_psoc}
 
 PSoC'en blev sat ind relativt sent i implementeringsfasen. Hvilket har betydet at designfasen påbegyndte ret sent.
-PSoC'ens formål, hardware- såvel som softwaremæssigt, er at simplificere \IIC kommunikation ved at interagere som en multi-master-slave enhed, som kan kommunikere som \IIC slave og samtidig som \IIC master overfor distancesensorerne. Raspbery Pi er udelukkende i stand til at være master, hvilket fjerner meget funktionalitet, fra hvad formålet med sensorerne er. PSoC'en fjerner en del belastning fra Pi'en, da \IIC kommunikationen er meget højt prioriteret, ville Pi'en konstant være forstyrret i relativt store tidsperioder, tilsvarende den tid som de fire distancesensorer bruger på deres læse/skrive cyklus. I første omgang var det meningen at PSoC'en skulle læses hver gang der var brug for noget specifikt data. Dette viste sig dog ikke at være særligt hensigtsmæssigt, da PSoC'en vil blive læst fem gange hurtigt efter hinanden, hvilket ville forhindre sensorerne i at færdiggøre deres rutine. Derfor blev der sidenhen implementeret et andet program på Pi'en. 
+PSoC'ens formål, hardware- såvel som softwaremæssigt, er at simplificere \IIC kommunikation ved at interagere som en multi-master-slave enhed, som kan kommunikere som \IIC slave og samtidig som \IIC master overfor distancesensorerne. 
+Raspbery Pi er udelukkende i stand til at være master, hvilket fjerner meget funktionalitet fra hvad formålet med sensorerne er. 
+PSoC'en aflaster processoren på Pi'en, da \IIC kommunikationen, som er meget højt prioriteret, ville Pi'en konstant være forstyrret i relativt store tidsintervaller når der sendes og modtages data. 
+Ved at implementere sensorene på PSoC'en kan disse også for den anbefalede på 100ms tid til at foretage deres læse/skrive cyklus. 
+I første omgang var det meningen at PSoC'en skulle læses hver gang der var brug for noget specifikt data fra en individuel sensor eller fra tachometeret. 
+Dette viste sig dog uhensigtsmæssigt, da PSoC'en da ville blive læst fem gange hurtigt efter hinanden, og dette ville forhindre sensorerne i at færdiggøre deres rutine. Derfor blev der sidenhen implementeret et andet program på Pi'en. 
 
 \begin{figure}[h]
 \centering
@@ -61,7 +66,7 @@ PSoC'ens formål, hardware- såvel som softwaremæssigt, er at simplificere \IIC
 \begin{table}[h]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 	Prototype 	& \texttt{void init(void)} 			\\\hline
-	Parametre 	& \texttt{-}  						\\\hline
+	Parametre 	& \texttt{void} 					\newline \\\hline
 	Returværdi	& \texttt{void} 					\newline \\\hline
 	Beskrivelse	& Initierer alle dele af PSoC'en. 	\newline \\\hline
 	\end{tabularx}
@@ -71,9 +76,9 @@ PSoC'ens formål, hardware- såvel som softwaremæssigt, er at simplificere \IIC
 
 \begin{table}[h]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-	Prototype 	& \texttt{void checkWriteComplete(void)} \\\hline
-	Parametre 	& \texttt{-}  \\\hline
-	Returværdi	& \texttt{void} 			\newline \\\hline
+	Prototype 	& \texttt{void checkWriteComplete(void)}\\\hline
+	Parametre 	& \texttt{void}  						\newline \\\hline
+	Returværdi	& \texttt{void} 						\newline \\\hline
 	Beskrivelse	& Ventetid mellem hver write til distance sensorer. \newline \\\hline
 	\end{tabularx}
 	\caption{Metodebeskrivelse for \texttt{checkWriteComplete} i PSoC main}
@@ -83,8 +88,8 @@ PSoC'ens formål, hardware- såvel som softwaremæssigt, er at simplificere \IIC
 \begin{table}[h]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 	Prototype 	& \texttt{void checkReadComplete(void)} \\\hline
-	Parametre 	& \texttt{-}  \\\hline
-	Returværdi	& \texttt{void} 			\newline \\\hline
+	Parametre 	& \texttt{void}  						\newline \\\hline
+	Returværdi	& \texttt{void} 						\newline \\\hline
 	Beskrivelse	& Ventetid mellem hver read til distance sensorer. \newline \\\hline	
 	\end{tabularx}
 	\caption{Metodebeskrivelse for \texttt{checkReadComplete} i PSoC main}
@@ -93,9 +98,9 @@ PSoC'ens formål, hardware- såvel som softwaremæssigt, er at simplificere \IIC
 
 \begin{table}[h]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-	Prototype 	& \texttt{void getDistance(void)} \\\hline
-	Parametre 	& \texttt{-} \\\hline
-	Returværdi	& \texttt{void} 			\newline \\\hline
+	Prototype 	& \texttt{void getDistance(void)} 	\\\hline
+	Parametre 	& \texttt{void} 					\newline \\\hline
+	Returværdi	& \texttt{void} 					\newline \\\hline
 	Beskrivelse	& Kommunikerer via \IIC til distance sensorerne hver især.  \\\hline
 	\end{tabularx}
 	\caption{Metodebeskrivelse for \texttt{getDistance()} i PSoC main}
@@ -106,9 +111,9 @@ PSoC'ens formål, hardware- såvel som softwaremæssigt, er at simplificere \IIC
 
 \begin{table}[h]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-	Prototype 	& \texttt{void getVelocity(void)} \\\hline
-	Parametre 	& \texttt{-}		\\\hline
-	Returværdi	& \texttt{void} 			\newline \\\hline
+	Prototype 	& \texttt{void getVelocity(void)} 	\\\hline
+	Parametre 	& \texttt{void}						\newline \\\hline
+	Returværdi	& \texttt{void} 					\newline \\\hline
 	Beskrivelse	& Funktionen fejltjekker værdien udregnet i my\_ISR, og gemmer den i sendBufferen. \newline \\\hline
 	\end{tabularx}
 	\caption{Metodebeskrivelse for \texttt{getVelocity()}}
@@ -117,8 +122,8 @@ PSoC'ens formål, hardware- såvel som softwaremæssigt, er at simplificere \IIC
 
 \begin{table}[h]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-	Prototype 	& \texttt{CY\_ISR(my\_ISR)} 	\\\hline
-	Parametre 	& \texttt{-}				\\\hline
+	Prototype 	& \texttt{CY\_ISR(my\_ISR)} 		\\\hline
+	Parametre 	& \texttt{void}						\newline \\\hline
 	Beskrivelse	& Fungerer som interrupt service routine for PSoC'en, hver gang en magnet bliver detekteret af tachometeret.\newline \\\hline
 	\end{tabularx}
 	\caption{Metodebeskrivelse for \texttt{CY\_ISR(my\_ISR)}}

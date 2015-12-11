@@ -1,6 +1,8 @@
 %HW-design af Distancesensor
 \section{Distancesensor} \label{sec:hw_design_distancesensor}
 
+Til at måle afstanden fra bilen til en evt. forhindring skulle bruges en form for sensor, valget fladt på MaxSonar1202. Denne sensor benytter ultralyd til at beregne afstande.Sensoren blev primært valgt på baggrund af dens spec der opfyldt de stillede krav om rækkevidde, interface og kommunikationsprotokol. 
+
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=0.4]{../fig/billeder/distancesensor.png}
@@ -8,8 +10,7 @@
 	\label{fig:ds_pic}
 \end{figure}
 
-\newpage
-Afstandssensorene leveres formonteret på print hvor benene fra IC'en er trukket til harwinpins som let kan tilgås. Til kommunikationen med sensoren benyttes \IIC via følgende 4 linjer: 
+Afstandssensorene leveres formonteret på print hvor benene fra IC'en er trukket til harwinpins som let kan tilgås. Til kommunikationen med sensoren benyttes \IIC via følgende 4 linjer: \\
 
 \begin{packed_item}
 	\item pin 7: VCC: Forsyning
@@ -25,8 +26,8 @@ Afstandssensorene leveres formonteret på print hvor benene fra IC'en er trukket
 	\label{fig:ds_multi}
 \end{figure}
 
-Data kommunikeres på SDA-linjen med reference til GND, SCL styrer clocken. Så standard for \IIC kommunikation monteres der pull-up modstande på SDA og SCL linjerne da Bus Masteren ønsker at kunne trække disse lave.
-Værdien for disse 2 modstande er sat til $4.7kHz$ da der arbejde med relative korte afstande. Printet ses på fig \ref{fig:i2c_print}. 
+Data kommunikeres på SDA-linjen med reference til GND, SCL styrer clocken. Som standard for \IIC kommunikation monteres der pull-up modstande på SDA og SCL linjerne da Bus Masteren ønsker at kunne trække disse lave.
+Værdien for disse 2 modstande er sat til $4.7kHz$ da der arbejdes med relative korte afstande. Printet ses på fig \ref{fig:i2c_print}. 
 
 \begin{figure}[ht]
 	\centering
