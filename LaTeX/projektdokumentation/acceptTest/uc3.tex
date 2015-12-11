@@ -12,23 +12,23 @@
 
 	3.1 & Bruger åbner en Linux terminal og indtaster ''ssh pi@'' efterfulgt af Pi'ens IP adresse. 
 		& Visuel test:\\ Terminalen spørger om et password.
-		& Terminalen spørger om password til brugeren pi
+		& Terminalen spørger om password til brugeren pi.
 		& OK\\ \hline
 
-	3.2 & Bruger indtaster 1.
+	3.2 & Bruger indtaster ''1''.
 		& Visuel test:\\ Terminalen viser pi@raspberry \$.
-		& Terminalen godtager passworded og står klar til brug
+		& Terminalen godtager passworded og står klar til brug.
 		& OK\\ \hline
 		
 	3.3 & Bruger indtaster nano pi-log.txt
 		& Visuel test:\\ Log filen viser Accelerometer initialisering.. Done. Tachometer initialisering.. Done. Distancesensors initialisering.. Done.
 		& Logfilen viser initialisering af Log, Tachometer og Distancesensor.
-		& Ikke OK\\ \hline
+		& IKKE OK - Accelerometeret er ikke implementeret.\\ \hline
 		
 	3.4 & Bruger kører en tur med bilen og observerer hovedmenu i softwaren på PC.
 		& Visuel test:\\ Bruger observerer at data for bilens hastighed, afstand til forhindring og acceleration fremgår af brugerfladen.
-		& Softwaren opdaterer hastighed og afstand til forhindring. Accelerometeret er ikke mplementeret og data opdateres derfor ikke.
-		& IKKE OK\\ \hline
+		& Softwaren opdaterer bilens hastighed og afstand til forhindring men accelerationen opdateres ikke.
+		& IKKE OK - Accelerometeret er ikke implementeret.\\ \hline
 
 \caption{Accepttest for UC3: Overvåg sensor}\label{tbl:acceptuc3}
 \end{longtable}
