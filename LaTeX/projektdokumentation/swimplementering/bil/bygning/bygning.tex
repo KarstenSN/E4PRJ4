@@ -6,6 +6,10 @@ Dette drejer sig primært om WiringPi\cite{lib:wiringpi} og en speciel udgave af
 Det er dog kun nødvendigt at installere compileren på den PC, der skal compile koden, da de nødvendige biblioteker allerede er installeret i gruppen repository. 
 Vil man dog afvikle koden på sin egen Rasperry Pi 2 er det dog nødvendigt at installere WiringPi på denne.
 
-For at bygge selve koden når alle nødvendige softwarepakker er installeret skrives der "make ARCH=target" i en terminalen i stien E4PRJ4/src/bil/.
+For at bygge selve koden når alle nødvendige softwarepakker er installeret skrives der ''make ARCH=target'' i en terminalen i stien E4PRJ4/src/bil/.
 Herefter overføres filen ''pi'' til ens Raspberry Pi og denne afvikles herefter på Pi'en med \texttt{sudo ./pi}, såfremt filen ligger i ens nuværende sti.
 
+For at få programmet til at køre automatisk ved Pi'ens opstart er \texttt{/etc/rc.local} modificeret. \texttt{rc.local} kører automatisk efter opstart af Pi'en, dette gør det muligt at køre scripts ved opstart af Pi'en. Linjen \texttt{/home/pi/autostart.sh} er tilføjet, denne linje sørger for at bash scriptet \texttt{autostart.sh} bliver kørt. Programmet der er lavet kræver root privilege, dette er gjort ved at \texttt{autostart.sh} kalder programmet ved kommandoen \texttt{sudo /home/pi/pi \&}.
+For at gøre dette muligt, da et script automatisk ikke har mulighed for at bruge kommandoen \texttt{sudo}, uden indtastning af en kode, er linjen \texttt{pi ALL=(ALL) NOPASSWD: ALL} tilføjet i filen \texttt{etc/sudoers}.
+
+Ud over at kalde main programmet på Pi'en, starter \texttt{autostart.sh} med at kalde et andet script ved navn \texttt{setTimeAndNetwork.sh} som automatisk skaber en connection til et hardcoded Wi-Fi hotspot. Hvis det er mulighed for internet via dette Wi-Fi vil dette script ligeledes opdaterer Pi'ens tid til den nuværende tid.
