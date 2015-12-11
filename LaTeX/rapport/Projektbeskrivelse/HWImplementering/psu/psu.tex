@@ -1,0 +1,22 @@
+\subsection{Strømforsyning}
+
+Under implementation af bilens strømforsyning har der været et par enkelte problemer, bl.a. med at skaffe dele til denne men også i form af en mindre fejl i designet af strømforsyningen.
+Første gang strømforsyningen blev koblet til efter at alle komponenter var loddet på printet var der problemer med at strømforsyningen konstant gav omkring 0.5 V på udgangen og ikke de 5V, som det var ønsket.
+Det viste sig at der i designet, som er beskrevet i afsnit \ref{sec:hwd_psu}, var lavet en mindre fejl ift. LM26003's egen VDD udgang.
+
+I databladet var det specificeret at denne maks måtte belastes med 1 mA, for at kunne holde bootstrap kondensatoren tilstrækkeligt ladet.
+Måden LM26003 er implementeret på internet er ved at switchen, som åbner op for forsyningsspænding til buck converteren med meget høj switchfrekvens, er en N-channel mosfet.
+For disse er det gældende at gaten skal have en hvis positiv spænding i forhold til drain for at transistoren kan lede strøm. 
+Da drain i dette tilfælde er koblet til forsyningen på 7.2V viser det sig at være besværligt at holde en konstant spænding der er højere end dette.
+Det er her at bootstrap kondensatoren kommer ind i billedet.
+Denne er koblet mellem LM26003's BOOT-ben og udgangen på LM26003 (benene SW1-3), hvilket medfører at når transistoren er OFF, lades en spænding op over bootstrap kondensatoren, hvor strømmen forsynes internet fra VDD.
+Når transistoren herefter går ON hæves udgangen til forsyningsspænding og BOOT ligger nu spændingsmæssigt på ca 2 gange forsyning og holder derved transistoren åben.
+
+Problematikken med designet af strømforsyningen lå i at den kondensator, som skal sørge for at VDD kan oplade bootstrap kondensatoren ikke var inkluderet i designet OG at den lysdiode, som skulle lyse når strømforsyningen fungerer som den skal, trak for stor en spænding (ca 5 mA).
+Alt i alt blev VDD altså belastet meget hårdere end den er beregnet til og transistoren kunne derfor ikke åbne tilstrækkeligt for at udgangen opførte sig som forventet.
+Disse to problemer blev udbedret ved at klippe formodstanden til LED'en over og ved at eftermontere en kondensator fra VDD til stel.
+
+Efter disse udbedringer virkede strømforsyningen næsten helt som forventet, der var en smule offset på udgangsspændingerne ift. det ønskede, men det var indenfor de krav, som forbrugerkredsløb stillede.
+
+Under implementering af strømforsyningen blev der dannet erfaringer indenfor lodning af SMD-komponenter, design af og lodning på eget PCB board samt vikling af spoler/transformatorer. 
+Ydermere er værd at notere at der blev opnået en højere forståelse af hvordan buck convertere kan drives med N-channel mosfets.
