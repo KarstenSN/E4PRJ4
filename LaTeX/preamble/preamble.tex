@@ -156,7 +156,10 @@
 }{\end{itemize}}
 
 %Lækker kommando til at skrive I2C flot uden at bruge \textsuperscript hver gang:
-\newcommand*{\IIC}{\texorpdfstring{I\textsuperscript{2}C }{I2C }}
+\newcommand*{\IIC}{\texorpdfstring{I\textsuperscript{2}C }{I2C}}
+
+%Lækker kommando til ref. -> \ref{input} \nameref{input} på side \pageref{input}
+\newcommand*{\myRef}[1] {\ref{#1} \nameref{#1} på side \pageref{#1}}
 
 %Lorem ipsum
 \usepackage{lipsum}
