@@ -19,8 +19,9 @@
 
 
 \section{Systemoversigt} \label{sec:systemoversigt}
-På figur \ref{fig:systemoversigt} ses den overordnede systemoversigt med kommunikationsveje og mekaniske forbindelser. Diagrammet skal give læseren et hurtigt overblik over det samlede system. I afsnittet %TODO henvisning
-beskrives blokke og kommunikationsveje mere detaljeret. Under figur \ref{fig:systemoversigt} er blokkene kort beskrevet. 
+På figur \ref{fig:systemoversigt} ses den overordnede systemoversigt med kommunikationsveje og mekaniske forbindelser. Diagrammet skal give læseren et hurtigt overblik over det samlede system. 
+I afsnit \ref{sec:sysark} på side \pageref{sec:sysark} beskrives blokke og kommunikationsveje mere detaljeret. 
+Under figur \ref{fig:systemoversigt} er blokkene kort beskrevet. 
 
 \begin{figure}[h]
 \centering
@@ -97,14 +98,13 @@ Som figur \ref{fig:aktor_kontekst} viser, er der 2 aktører til systemet.
 \textit{Bruger} og \textit{Forhindring}.
 
 \subsubsection{Bruger - Primær Aktør}
-Brugeren vil typisk være et barn med alder over 8 år, men kan også være en voksen med interesse for fjernstyrede biler.
-\\ %TODO Indsæt linjeskift
+Brugeren vil typisk være et barn med alder over 8 år, men kan også være en voksen med interesse for fjernstyrede biler. \\ \\
 Bruger kan:
-\begin{itemize}
+\begin{packed_item}
 	\item Starte og stoppe systemet 
 	\item Styre bilen over et Wi-Fi netværk.
 	\item Konfigure og kalibrere system.
-\end{itemize}
+\end{packed_item}
 
 \subsubsection{Forhindring - Sekundær Aktør}
 \textit{Forhindring} er objekter i det miljø bilen kører i, og som der dermed er risiko for at bilen kan kollidere med.  
@@ -144,13 +144,13 @@ Systemet\ldots
 
 \section{Ikke-funktionelle krav} \label{sec:ikke-funktionelle_krav}
 \begin{enumerate}\itemsep1pt \parskip0pt \parsep0pt
-	\item Bilens maksimumshastighed uden begrænsning er $10km/t$ $\pm$ $1km/t$ %TODO Passer denne?
-	\item Bilens bremselængde ved maksimumshastighed uden begrænsning må ikke overstige 1 m. %TODO Passer denne?
-	\item Bilen skal kunne accelerere fra $0 km/t$ til maksimumshastighed uden begrænsning på højest 6 s. %TODO Passer denne?
-	\item Forsinkelse fra brugerinput til at bilen reagerer må ikke overstige 50ms. %TODO Passer denne?
-	\item Afstandssensorerne skal kunne identificere en forhindring i form af et kvadrat med en sidelængede på $S = \sqrt{K \times L}$, hvor $K = 0.015m$ og $L$ er afstanden og det gælder at $0.20m<L<6.00m$. Kvadratet skal være vinkelret på bilen, således at fladen på kvadratet vender direkte mod bilen. På afstande over $6 m$ er det ikke et krav at systemet kan detektere forhindringen. %TODO Passer afstand
+	\item Bilens maksimumshastighed uden begrænsning er $10km/t$ $\pm$ $1km/t$
+	\item Bilens bremselængde ved maksimumshastighed uden begrænsning må ikke overstige 1 m.
+	\item Bilen skal kunne accelerere fra $0 km/t$ til maksimumshastighed uden begrænsning på højest 6 s.
+	\item Forsinkelse fra brugerinput til at bilen reagerer må ikke overstige 50ms.
+	\item Afstandssensorerne skal kunne identificere en forhindring i form af et kvadrat med en sidelængede på $S = \sqrt{K \times L}$, hvor $K = 0.015m$ og $L$ er afstanden og det gælder at $0.20m<L<6.00m$. Kvadratet skal være vinkelret på bilen, således at fladen på kvadratet vender direkte mod bilen. På afstande over $6 m$ er det ikke et krav at systemet kan detektere forhindringen.
 	\item Mister bilen forbindelsen med PC i mere end $50ms$, standser bilen automatisk. 
-	\item Kameraet skal minimum have en opdateringshastighed på 15 billeder i sekundet. %TODO undersøg!
+	\item Kameraet skal minimum have en opdateringshastighed på 15 billeder i sekundet.
 	\item Systemet skal vise video-stream med en opløsning på $640 \times 480$ pixels i hovedvinduet.
 	\item PC skal som minimum sende kommandoer til bilen 60 gange i sekundet. 
 	\item HID skal bestå af en Xbox-360 controller, tastatur og mus.

@@ -5,21 +5,20 @@
 Kameraet er påmonteret Pi'en og der er installeret en virtuel driver kaldet uv4l. uv4l er en overbygning på den generelle driver således programmet motion kan finde kamaret i /dev/video0. Motion har den fordel at det kan sætte et IP videostream op hvorved Pi’en kan streame videodata den vej igennem. På PC'en modtages videoen igennem GUI'en ved hjælp af opensource biblioteker fra VLC media player. Herved laves der en socket til at modtage videoen i. Adressen hvor i video stream modtages er Pi'ens Ip-adresse port 8081.
 
 \begin{table}[ht]
-\begin{tabularx}{\textwidth}{| Z | Z | Z | Z |} \hline
+	\begin{tabularx}{\textwidth}{| Z | Z | Z | Z |} \hline
+		\textbf{Kommando} 						&
+		\textbf{Svar}							&
+		\textbf{Beskrivelse}					&
+		\textbf{Bitmønstre}						\\ \hline
 
-\textbf{Kommando} 						&
-\textbf{Svar}							&
-\textbf{Beskrivelse}					&
-\textbf{Bitmønstre}						\\ \hline
+		openPlayer								&
+		Kontinuert stream fra motion			&
+		Motion streamer video data til PC'en	&
+		UDP socket forbindelse					\\ \hline
 
-openPlayer								&
-Kontinuert stream fra motion			&
-Motion streamer video data til PC'en	&
-UDP socket forbindelse					\\ \hline
-
-\end{tabularx}
-\caption{Kamera Protokol}
-\label{tbl:prt_cam}
+		\end{tabularx}
+	\caption{Kamera Protokol}
+	\label{tbl:prt_cam}
 \end{table}
 
 Motion streamer video ligeså snart der er tændt for bilen. Der er derfor ikke nogen direkte kommunikation mellem PC'en og Pi'en igennem Kameraprotokollen.
@@ -31,150 +30,122 @@ PC'en og bilen kommunikerer igennem to TCP forbindelser. Xbox360 Controlleren ha
 I tabel \ref{tbl:prt_gui_byte} ses sekvensen over hver byte i GUI protokollen. Her er beskrevet hvilket bytenummer hver data byte har, samt hvad enheden er. DB1 er fx. Hastighed som sendes i enheden (km/h)$\times$10. Dette gøres for at vi derfor på PC siden kan modtage hastigheden fra 0-25.5 km/h. Når kommandoen shutDown sendes benytter den sig af samme protokol. Indholdet at bytes er i rækkefølgen ''dwnnow''
 
 \begin{table}[ht]
-\begin{tabularx}{\textwidth}{| Z | Z | Z | Z |} \hline
+	\begin{tabularx}{\textwidth}{| Z | Z | Z | Z |} \hline
 
-\textbf{Kommando} 						&
-\textbf{Svar}							&
-\textbf{Beskrivelse}					&
-\textbf{Bitmønstre}						\\ \hline
+		\textbf{Kommando} 						&
+		\textbf{Svar}							&
+		\textbf{Beskrivelse}					&
+		\textbf{Bitmønstre}						\\ \hline
 
-getData &
+		getData 	&
+		sendStatus 	&
+		GUI'en udveksler dens data med bilens 	&
+		Ved getData sendes data som char array i rækkefølgen: makshastighed(km/h), hastighed((km/h)$\times$10), afstand(m$\times$10), acceleration(g$\times$10), AKS-status(1/0) og styretøj(-50..50). \\ \hline
 
-sendStatus &
-
-GUI'en udveksler dens data med bilens &
-
-Ved getData sendes data som char array i rækkefølgen: makshastighed(km/h), hastighed((km/h)$\times$10), afstand(m$\times$10), acceleration(g$\times$10), AKS-status(1/0) og styretøj(-50..50). \\ \hline
-
-
-
-shutDown &
-
-shuttingDown &
-
-GUI'en sender besked til bilen om at den skal lukke dens software ned &
-
-shutDown sendes som en string ''dwnnow'' \
+		shutDown 	&
+		shuttingDown &
+		GUI'en sender besked til bilen om at den skal lukke dens software ned &
+		shutDown sendes som en string ''dwnnow'' \
 bilen sender ''dwnnow'' tilbage som ACK. Alt andet tolkes som NACK \\ \hline
 
-\end{tabularx}
-\caption{GUI Protokol}
-\label{tbl:prt_gui}
+		\end{tabularx}
+	\caption{GUI Protokol}
+	\label{tbl:prt_gui}
 \end{table}
 
 
 
 \begin{table}[ht]
-\begin{tabularx}{\textwidth}{| Z | Z | Z | Z | Z | Z | Z | Z | Z |} \hline
+	\begin{tabularx}{\textwidth}{| Z | Z | Z | Z | Z | Z | Z | Z | Z |} \hline
 
-\textbf{}	&
-\textbf{DB0}	&
-\textbf{DB1}	&
-\textbf{DB2}	&
-\textbf{DB3}	&
-\textbf{DB4}	&
-\textbf{DB5}	\\ \hline
+	\textbf{}	&
+	\textbf{DB0}	&
+	\textbf{DB1}	&
+	\textbf{DB2}	&
+	\textbf{DB3}	&
+	\textbf{DB4}	&
+	\textbf{DB5}	\\ \hline
 
-\textbf{Datatype} & Makshastig hed & Hastighed & Afstand & Acceleration & AKS-status & Styretøj \\ \hline
-\textbf{Enhed} & char & char & char & char & char &  char \\ \hline
-\textbf{Værdi} & km/h & (km/h)$\div$10 & m$\div$10 & G$\div$10 & Off/On & Udslag \\ \hline
-\textbf{Range} & 0..255 & 0..255 & 0..255 & 0..255 & 0..1 & -50..50 \\ \hline
-
-\end{tabularx}
-\caption{GUI data protokol}
-\label{tbl:prt_gui_byte}
+	\textbf{Datatype} & Makshastig hed & Hastighed & Afstand & Acceleration & AKS-status & Styretøj \\ \hline
+	\textbf{Enhed} & char & char & char & char & char &  char \\ \hline
+	\textbf{Værdi} & km/h & (km/h)$\div$10 & m$\div$10 & G$\div$10 & Off/On & Udslag \\ \hline
+	\textbf{Range} & 0..255 & 0..255 & 0..255 & 0..255 & 0..1 & -50..50 \\ \hline
+	
+	\end{tabularx}
+	\caption{GUI data protokol}
+	\label{tbl:prt_gui_byte}
 \end{table}
 
 \begin{table}[ht]
-\begin{tabularx}{\textwidth}{| Z | Z | Z | Z | Z | Z | Z | Z | Z |} \hline
+	\begin{tabularx}{\textwidth}{| Z | Z | Z | Z | Z | Z | Z | Z | Z |} \hline
 
-\textbf{}	&
-\textbf{DB0}	&
-\textbf{DB1}	&
-\textbf{DB2}	&
-\textbf{DB3}	&
-\textbf{DB4}	&
-\textbf{DB5}	\\ \hline
+	\textbf{}	&
+	\textbf{DB0}	&
+	\textbf{DB1}	&
+	\textbf{DB2}	&
+	\textbf{DB3}	&
+	\textbf{DB4}	&
+	\textbf{DB5}	\\ \hline
 
-\textbf{Datatype} & Shutdown & Shutdown & Shutdown & Shutdown & Shutdown & Shutdown \\ \hline
-\textbf{Enhed} & char & char & char & char & char &  char \\ \hline
-\textbf{Data} & 'd' & 'w' & 'n' & 'n' & 'o' & 'w' \\ \hline
+	\textbf{Datatype} & Shutdown & Shutdown & Shutdown & Shutdown & Shutdown & Shutdown \\ \hline
+	\textbf{Enhed} & char & char & char & char & char &  char \\ \hline
+	\textbf{Data} & 'd' & 'w' & 'n' & 'n' & 'o' & 'w' \\ \hline
 
-\end{tabularx}
-\caption{GUI shutdown protokol}
-\label{tbl:prt_gui_shutdown}
+	\end{tabularx}
+	\caption{GUI shutdown protokol}
+	\label{tbl:prt_gui_shutdown}
 \end{table}
 
 På tabel \ref{tbl:prt_controller} ses protokollen over Xbox360-controlleren. 
 
 \begin{table}[ht]
-\begin{tabularx}{\textwidth}{| Z | Z | Z | Z |} \hline
+	\begin{tabularx}{\textwidth}{| Z | Z | Z | Z |} \hline
 
-\textbf{Kommando} 						&
-\textbf{Svar}							&
-\textbf{Beskrivelse}					&
-\textbf{Bitmønstre}						\\ \hline
+	\textbf{Kommando} 						&
+	\textbf{Svar}							&
+	\textbf{Beskrivelse}					&
+	\textbf{Bitmønstre}						\\ \hline
 
+	controllerFrem 							&
+	\textit{Intet svar} 					&	
+	Bruger har trykket på RT på controlleren &
+	Unsigned char fra 0-255 afhængig af hvor hårdt der trykkes på knappen \\ \hline
 
+	controllerTilbage &
+	\textit{Intet svar} &
+	Bruger har trykket på LT på controlleren &
+	Unsigned char fra 0-255 afhængig af hvor hårdt der trykkes på knappen \\ \hline
 
-controllerFrem &
+	controllerDrej &
+	\textit{Intet svar} &
+	Bruger har ændret positionen af venstre styrepind, til højre eller venstre, på controlleren &
+	Char fra -127 til 127 afhængig af positionen af styrepinden \\ \hline
 
-\textit{Intet svar} &
-
-Bruger har trykket på RT på controlleren &
-
-Unsigned char fra 0-255 afhængig af hvor hårdt der trykkes på knappen \\ \hline
-
-
-
-controllerTilbage &
-
-\textit{Intet svar} &
-
-Bruger har trykket på LT på controlleren &
-
-Unsigned char fra 0-255 afhængig af hvor hårdt der trykkes på knappen \\ \hline
-
-
-
-controllerDrej &
-
-\textit{Intet svar} &
-
-Bruger har ændret positionen af venstre styrepind, til højre eller venstre, på controlleren &
-
-Char fra -127 til 127 afhængig af positionen af styrepinden \\ \hline
+	controllerStop &
+	\textit{Intet svar} &
+	Bruger har trykket på X på controlleren &
+	Char værdi 1 \\ \hline
 
 
-
-controllerStop &
-
-\textit{Intet svar} &
-
-Bruger har trykket på X på controlleren &
-
-Char værdi 1 \\ \hline
-
-
-\end{tabularx}
-\caption{Xbox360-controller Protokol}
-\label{tbl:prt_controller}
+	\end{tabularx}
+	\caption{Xbox360-controller Protokol}
+	\label{tbl:prt_controller}
 \end{table}
 
 \begin{table}[ht]
-\begin{tabularx}{\textwidth}{| Z | Z | Z | Z | Z | Z | Z | Z | Z |} \hline
+	\begin{tabularx}{\textwidth}{| Z | Z | Z | Z | Z | Z | Z | Z | Z |} \hline
 
-\textbf{}	&
-\textbf{DB0}	&
-\textbf{DB1}	&
-\textbf{DB2}	&
-\textbf{DB3}	\\ \hline
+	\textbf{}	&
+	\textbf{DB0}	&
+	\textbf{DB1}	&
+	\textbf{DB2}	&
+	\textbf{DB3}	\\ \hline
 
-\textbf{Datatype} & Frem & Tilbage & Drej & Stop \\ \hline
-\textbf{Enhed} & unsigned char & unsigned char & char & char\\ \hline
-\textbf{Range} & 0..255 & 0..255 & (-128)..127  & 0..1 \\ \hline
+	\textbf{Datatype} & Frem & Tilbage & Drej & Stop \\ \hline
+	\textbf{Enhed} & unsigned char & unsigned char & char & char\\ \hline
+	\textbf{Range} & 0..255 & 0..255 & (-128)..127  & 0..1 \\ \hline
 
-\end{tabularx}
-\caption{Xbox360-controller data Protokol}
-\label{tbl:prt_controller_byte}
+	\end{tabularx}
+	\caption{Xbox360-controller data Protokol}
+	\label{tbl:prt_controller_byte}
 \end{table}

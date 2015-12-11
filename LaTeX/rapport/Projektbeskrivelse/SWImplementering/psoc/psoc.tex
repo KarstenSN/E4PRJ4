@@ -1,5 +1,5 @@
 \subsection{PSoC} \label{sec:swi_psoc_board}
 
-Som forventet var PSoC'en mere simpel at implementere, da der allerede er findes foruddefinerede \IIC kommandoer, som gør det væsentligt simplere at kommunikere med sensorerne. 
-%TODO Kenn skriver om distancesensorerne
+Som forventet var PSoC'en mere simpel at implementere, da der allerede er findes foruddefinerede \IIC kommandoer, som gør det væsentligt simplere at kommunikere med sensorerne. Det blev undersøgt på Pi'en hvorledes det var muligt at indføre et kernemodul, som ville tillade at aflæse processorens clockcycles, men det viste sig meget at være meget tidskrævende, og endte ud i spildtid. I første omgang stødte gruppen på et problem ifm. aflæsning af PSoC'en, da tiden som distancesensorerne tager om at aflæses tager en minimumstid, som læsningen af PSoC'en ikke må afbryde, da der ellers kommer korrupte værdier over på Pi'en. 
 
+%TODO Kenn skriver om distancesensorerne

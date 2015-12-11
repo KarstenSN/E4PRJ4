@@ -1,0 +1,6 @@
+\subsection{Motor / Styring}
+Mens motorstyrings printet blev fremstillet igennem værkstedet blev det testet med et af skolens print. Vi har i tidligere projekter arbejdet med H-broer så der var ikke de store problemer eller ændringer i forhold til designet.\newline
+Det var derimod en større udfordring at få servo motoren til at virke korrekt.  
+Data bladet til servo motoren Corona-CS238MG \cite{lib:Corona-CS238MG} er meget mangelfuldt. Og derfor svært at finde den rigtige frekvens på PWM signalet den krævede. 
+Ved 50Hz viste den sig at være meget ustabil og ville ikke reagere rigtigt på PWM signalet. Efter nogle forsøg med en funktionsgenerator fandt vi frem til at den var mest stabil mellem 150 og 200Hz. 
+Signal konverteren til servo motoren viste sig også at give nogle udfordringer og der blev lavet et nyt design af det. Problemet var at alt så fint ud når servoen ikke var koblet til. Men når den var tilkoblet støjede den på PWM signalet så det ikke havde pænt lige flanker. Det betød at servo ikke kørte rigtigt.

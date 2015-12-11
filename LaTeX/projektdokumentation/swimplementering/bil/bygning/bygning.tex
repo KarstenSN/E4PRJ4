@@ -1,0 +1,11 @@
+\subsection{Bygning af software til bil}
+
+Softwaren på bilen bygges med GNU Make\cite{lib:GNU_make}.
+For at kunne bygge denne kræver det altså at man har installeret GNU toolchain på sin PC samt et par andre biblioteker.
+Dette drejer sig primært om WiringPi\cite{lib:wiringpi} og en speciel udgave af GCC compileren, som fungerer til Raspberry Pi\cite{lib:pi_tools}.
+Det er dog kun nødvendigt at installere compileren på den PC, der skal compile koden, da de nødvendige biblioteker allerede er installeret i gruppen repository. 
+Vil man dog afvikle koden på sin egen Rasperry Pi 2 er det dog nødvendigt at installere WiringPi på denne.
+
+For at bygge selve koden når alle nødvendige softwarepakker er installeret skrives der "make ARCH=target" i en terminalen i stien E4PRJ4/src/bil/.
+Herefter overføres filen ''pi'' til ens Raspberry Pi og denne afvikles herefter på Pi'en med \texttt{sudo ./pi}, såfremt filen ligger i ens nuværende sti.
+
