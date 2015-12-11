@@ -1,7 +1,10 @@
 % ++++++++++++ Psocklasse på Pi ++++++++++++++
 \subsubsection{Boundary-klasse: Psoc (Pi)}\label{sec:sw_design_psoc_pi}
 
-Denne klasse har til formål at styre kommunikationen mellem Pi og Psoc'en, der er valgt at benytte \IIC-protokollen til dette. Psoc'en har påmonteret de 4 afstandssensorer, navngivet efter deres respektive placering på bilen, samt tachometEret til at måle hjulene omdrejningshastighed og omsætte dette til $km/t$. Klassen er implementeret med \texttt{getDistance()} og \texttt{get Velocity()}-metoderne som kaldes af dataklassen som dermed kan hente dataen lageret i Psocklassens attributter. Klassen kører sin egen tråd, men tilgås fra dataklassens tråd, derfor er de midlertidige variabler beskyttet ved brug af \texttt{std::mutex}.
+Denne klasse har til formål at styre \IIC kommunikationen mellem Pi og Psoc'en. 
+Psoc'en har påmonteret de 4 afstandssensorer, navngivet efter deres respektive placering på bilen, samt tachometeret til at måle hjulenes omdrejningshastighed og omsætte dette til $km/t$. 
+Klassen er implementeret med \texttt{getDistance()} og \texttt{get Velocity()}-metoderne som kaldes af dataklassen som dermed kan hente dataen lageret i Psocklassens attributter. 
+Klassen kører sin egen tråd, men tilgås fra dataklassens tråd, derfor er de midlertidige variabler beskyttet ved brug af \texttt{std::mutex}.
 
 \begin{figure}[h]
 \centering
@@ -62,8 +65,8 @@ Denne klasse har til formål at styre kommunikationen mellem Pi og Psoc'en, der 
 
 \begin{table}[h]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-		Prototype 	& \texttt{int getVelocity()} \\\hline
-		Parametre 	& \texttt{void} \newline Metoden modtager ingen parametre. \\\hline
+		Prototype 	& \texttt{int getVelocity()} 	\\\hline
+		Parametre 	& \texttt{void} \newline  		\\\hline
 		Returværdi 	& \texttt{int}  \newline Seneste hastighedsmåling for for bilen. Værdien er angivet i $km/t$. \\\hline
 		Beskrivelse	& Denne metode har til formål at låse attributten Tacho\_ og returnere den seneste værdi, herefter låses attributten automatisk op når metoden går ud af scope \\\hline	
 	\end{tabularx}
