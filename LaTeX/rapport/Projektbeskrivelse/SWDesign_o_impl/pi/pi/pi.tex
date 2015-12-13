@@ -1,3 +1,9 @@
-\subsubsection{Controller-klasse: Pi} %TODO lav label
+\subsubsection{Controller-klasse: Pi} \label{sec:pi_class_impl}
 
-%TODO skal skrives
+Udviklingsforløbet for denne klasse bestod primært i at få det samlede software på Pi'en til at bygge og snakke sammen, da de øvrige klasser pånær Aks var mere eller mindre færdigudviklede funktionalitetsmæssigt, da udviklingen og sammenfletningen af programmet påbegyndt.
+Dette medførte nogle udfordringer i forbindelse med at få tråde startet op korrekt og eksekveret start-kommandoer til de forskellige klasser.
+Ydermere lå der en mindre del i at få acquireData funktionen til at fungere korrekt, men dette lykkedes uden større problemer så snart de underliggende klasser der skulle supplere selve dataen var programmeret færdigt.
+
+Under implementeringen af denne klasse lå også en udfordring i at finde en fornuftig struktur af kildekoden til selve bygningen af programmet.
+Da gruppen bruger GNU Make til at bygge al software til Pi med, var det nødvendigt at bruge de samme .hpp filer til både testprogrammer og det færdige program for at sikre kompatibilitet mellem de to.
+Dette krævede en smule finpudsning af den Makefile der blev introduceret i ISU-delen af dette fag, men slutresultatet gav en god platform for udvikling af den endelige software til Pi'en.
