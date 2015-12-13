@@ -10,10 +10,11 @@ PSoC'en er programmeret til altid at ha en buffer med det seneste datasæt klar 
 Det direkte problem i forbindelse med \IIC lå i at, når distancesensorerne skal programmeres til at foretage en scanning, kræver dette en kombineret skrivning/læsning til enheden. 
 Dette viste sig efter lang tids arbejde og ''trail and error'', ikke at være muligt at implementere i den form som projektet krævede. 
 Derfor blev det besluttet af overflytte sensorerne til PSoS'en, og herefter lade denne fungere som kombineret master/slave-enhed på \IIC bussen. 
-Således fungerer den som Master for sensorerne, men som slave for Pi'en. For detaljer om den implementeringen af PSoS'en hensvises til afsnit \ref{P-sub:sw_impl_psoc_psoc} \nameref{P-sub:sw_impl_psoc_psoc} i dokumentationen.
+Således fungerer den som Master for sensorerne, men som slave for Pi'en. For detaljer om den implementeringen af PSoS'en hensvises til afsnit \ref{P-sub:sw_impl_psoc_psoc} \nameref{P-sub:sw_impl_psoc_psoc} på side \pageref{P-sub:sw_impl_psoc_psoc} i dokumentationen.
 
 PSoC'en er sat op så tachometerets output skal tilsluttes til [P1.0], som trigger interrupts hvis der detekteres en nedadgående flanke i spændingen. 
-Selve interrupt routinen gemmer den seneste timerværdi, og aflæser en ny, finder differencen mellem disse og udregner hastigheden som set i afsnittet \ref{P-sec:tachometer_hw_impl} \nameref{P-sec:tachometer_hw_impl}. 
+Selve interrupt routinen gemmer den seneste timerværdi, og aflæser en ny, finder differencen mellem disse og udregner hastigheden som set i afsnittet 
+\ref{P-sec:tachometer_hw_impl} \nameref{P-sec:tachometer_hw_impl} på side \pageref{P-sec:tachometer_hw_impl} i dokumentationen. 
 Når bilen kører med maksimal hastighed ca. $10km/t$ betyder dette at der vil være lige under 72 interrupts pr. sekund. 
 Dette kunne potentielt være et problem på Pi'en, da projektet bygger på en pi, som skal være så nær realtid som muligt, for at systemet kan nå at reagere på objekter der nærmer sig hastigt..
 
