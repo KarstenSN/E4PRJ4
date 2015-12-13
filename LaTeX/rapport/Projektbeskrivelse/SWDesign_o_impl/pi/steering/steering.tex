@@ -1,3 +1,10 @@
 \subsubsection{Boundary-klasse: Steering} %TODO lav label
 
-%TODO skal skrives
+%TODO skal skrives færdig - JP
+
+Steering klassen skal håndterer styringen af bilen. Det være sig frem / tilbage / brems / højre / venstre.
+Det gøres ved at styre motoren til fremdrift ved hjælp af et hardware PWM signal og en H-bro. 
+RC servo mortor til at styre retning styres også med PWM men denne er et software genereret signal. 
+Det eneste interface til klassen er public metoden \texttt{userInput(UserInput)}. 
+Den bliver kaldt hver gang der er nye data fra Brugeren. Derudover henter klassen den aktuelle hastighed fra Data klassen, max hastighed fra Settings klassen. Desuden kan den skrive til Log klassen
+Når klassens bliver constructor bliver kaldt opretter den en separat tråd til opdatering af motor PWM signalet. Det var oprindelig tiltænkt at bilen hastighed skulle reguleres af en PID regulering. Men reguleringen er på nuværende tidspunkt implementeret som en P regulering.
