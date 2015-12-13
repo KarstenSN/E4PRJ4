@@ -5,11 +5,11 @@ Første gang strømforsyningen blev koblet til efter at alle komponenter var lod
 Det viste sig at der i designet, som er beskrevet i afsnit \ref{sec:hwd_psu}, var lavet en mindre fejl ift. LM26003's egen VDD udgang.
 
 I databladet var det specificeret at denne maks måtte belastes med 1 mA, for at kunne holde bootstrap kondensatoren tilstrækkeligt ladet.
-Måden LM26003 er implementeret på internet er ved at switchen, som åbner op for forsyningsspænding til buck converteren med meget høj switchfrekvens, er en N-channel mosfet.
+Måden LM26003 er implementeret på internt er ved at den switch, som åbner op for forsyningsspænding til buck converteren med meget høj switchfrekvens, er en N-channel mosfet.
 For disse er det gældende at gaten skal have en hvis positiv spænding i forhold til drain for at transistoren kan lede strøm. 
 Da drain i dette tilfælde er koblet til forsyningen på 7.2V viser det sig at være besværligt at holde en konstant spænding der er højere end dette.
 Det er her at bootstrap kondensatoren kommer ind i billedet.
-Denne er koblet mellem LM26003's BOOT-ben og udgangen på LM26003 (benene SW1-3), hvilket medfører at når transistoren er OFF, lades en spænding op over bootstrap kondensatoren, hvor strømmen forsynes internet fra VDD.
+Denne er koblet mellem LM26003's BOOT-ben og udgangen på LM26003 (benene SW1-3), hvilket medfører at når transistoren er OFF, lades en spænding op over bootstrap kondensatoren, hvor strømmen forsynes internt fra VDD.
 Når transistoren herefter går ON hæves udgangen til forsyningsspænding og BOOT ligger nu spændingsmæssigt på ca 2 gange forsyning og holder derved transistoren åben.
 
 Problematikken med designet af strømforsyningen lå i at den kondensator, som skal sørge for at VDD kan oplade bootstrap kondensatoren ikke var inkluderet i designet OG at den lysdiode, som skulle lyse når strømforsyningen fungerer som den skal, trak for stor en spænding (ca 5 mA).
