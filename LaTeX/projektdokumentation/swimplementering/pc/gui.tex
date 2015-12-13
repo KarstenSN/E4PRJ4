@@ -84,8 +84,8 @@ void MainWindow::Au2connect()
 }
 \end{lstlisting}
 \subsubsection{void MainWindow::controller()}
-Funktionen \texttt{controller()} sørger for at forbinde controlleren med bilen. Der oprettes først en instance af \texttt{Xboxcontroller} hvorefter der testes om controlleren er forbundet. Er controlleren ikke forbundet oprettes der en messageBox hvori brugeren gives besked herom. Hvis controlleren er forbundet oprettes \texttt{controllerSocket} og dens \texttt{signals and slots} forbindes. Efterfølgende skabes der forbindelse og der testes om det lykkedes. Lykkedes det ikke gives bruger besked herom. Ellers oprettes \texttt{controllerThread} og funktionen returnerer. Se Listing \ref{lst:controller}.
-\begin{lstlisting}[caption={controller},label=lst:controller, language=c++]
+Funktionen \texttt{controller()} sørger for at forbinde controlleren med bilen. Der oprettes først en instance af \texttt{Xboxcontroller} hvorefter der testes om controlleren er forbundet. Er controlleren ikke forbundet oprettes der en messageBox hvori brugeren gives besked herom. Hvis controlleren er forbundet oprettes \texttt{controllerSocket} og dens \texttt{signals and slots} forbindes. Efterfølgende skabes der forbindelse og der testes om det lykkedes. Lykkedes det ikke gives bruger besked herom. Ellers oprettes \texttt{controllerThread} og funktionen returnerer. Se Listing \ref{lst:controller_pc}.
+\begin{lstlisting}[caption={controller},label=lst:controller_pc, language=c++]
 void MainWindow::controller()
 {
 
@@ -130,7 +130,7 @@ void MainWindow::controller()
 \end{lstlisting}
 \subsubsection{void* MainWindow::controllerStream()}
 Funktionen \texttt{controllerStream()} streamer data fra controlleren til bilen således bilen kan reagere på input fra brugeren. Funktionen starter med at oprette et array hvori controller data gemmes. Data fra \texttt{XboxController} hentes og sendes til bilen ved hjælp af \texttt{controllerSocket} i en while-løkke, så længe \texttt{controllerConnected} er \textbf{true}.
-\begin{lstlisting}[caption={controllerStream},label=lst:controller, language=c++]
+\begin{lstlisting}[caption={controllerStream},label=lst:controllerstream, language=c++]
 void* MainWindow::controllerStream(void)
 {
     char controllerData[4]={0};
@@ -155,7 +155,7 @@ void* MainWindow::controllerStream(void)
 \end{lstlisting}
 \subsubsection{void* MainWindow::controllerStreamHelper()}
 Funktionen \texttt{controllerStreamHelper} kaldes når \texttt{controllerThread} oprettes af \texttt{p\_thread\_create}. Da \texttt{p\_thread\_create} kun kan tilgå \texttt{static} funktioner gøres \texttt{controllerStreamHelper} \texttt{static} i \texttt{MainWindow.h}. Funktionen returnerer blot en pointer til \texttt{controllerStream}
-\begin{lstlisting}[caption={controllerStream},label=lst:controller, language=c++]
+\begin{lstlisting}[caption={controllerStream},label=lst:controllerhelper, language=c++]
 void* MainWindow::controllerStreamHelper(void* context)
 {
     return ((MainWindow *)context)->controllerStream();
@@ -164,7 +164,7 @@ void* MainWindow::controllerStreamHelper(void* context)
 
 \subsubsection{void* MainWindow::getData()}
 Funktionen \texttt{getData} kører i en while-løkke så længe variablen \texttt{isConnected} er true. \texttt{isConnected} sættes til \textbf{true} når \texttt{dataSocket} har oprettet forbindelsen til bilen og false når \texttt{dataSocket} mister forbindelsen. I while-løkken gives signalet \texttt{sig\_getData} som gør at \texttt{MainWindow} eksekverer funktionen \texttt{readSocket} som sender og henter nyt data fra bilen. Efterfølgende eksekveres funktionen \texttt{updateData} som opdater variablerne i hovedvinduet.
-\begin{lstlisting}[caption={getData},label=lst:getData, language=c++]
+\begin{lstlisting}[caption={getData},label=lst:getData_pc, language=c++]
 void* MainWindow::getData(void)
 {
     while(isConnected)
@@ -178,7 +178,7 @@ void* MainWindow::getData(void)
 \end{lstlisting}
 \subsubsection{void* MainWindow::getDataHelper()}
 Funktionen \texttt{getDataHelper} kaldes når \texttt{dataThread} oprettes af \texttt{p\_thread\_create}. Da \texttt{p\_thread\_create} kun kan tilgå \texttt{static} funktioner gøres \texttt{getDataHelper} \texttt{static} i \texttt{MainWindow.h}. Funktionen retunerer blot en pointer til \texttt{getData}
-\begin{lstlisting}[caption={getDataHelper},label=lst:getData, language=c++]
+\begin{lstlisting}[caption={getDataHelper},label=lst:getDatahelper, language=c++]
 void* MainWindow::getDataHelper(void* context)
 {
     return ((MainWindow *)context)->getData();
@@ -358,7 +358,7 @@ INCLUDEPATH += C:\Qt\libvlc-qt
 Når projektet er bygget kopieres filerne \textbf{libvlc-qt-widgets.dll} og \textbf{libvlc-qt.dll} fra \textbf{C:/Qt/libvlc-qt/bin} til build folderen. Efterfølgende kopieres filerne \textbf{axvlc.dll, libvlc.dll, libvlccore.dll} og \textbf{npvlc.dll} fra \textbf{C:/Qt/vlc-2.0.7} samt folderen \textbf{plugins} også til buildfolderen. Programmet skulle nu genre kunne køre. Hvis ikke kan der findes mere hjælp her \cite{lib:vlc-using-qt}. Desværre er der nogle fejl i linket, som der gerne skulle være rettet i denne beskrivelse. 
 
 \subsection{Test server}
-Under udviklingsforløbet af GUI'en er der lavet en testserver som genererer tilfældigt data til GUI'en og udskriver på en terminal hvad der bliver modtaget fra GUI'en. Testserveren kan bruges til at teste alle funktioner i GUI'en. I listing \ref{lst:testserver,} ses \texttt{readReady} funktionen som reelt set står for funktionaliteten i serveren. Når der oprettes en testserver i main funktionen gives der i main en string med som parameter, som angiver om det er en data forbindelse eller controller forbindelse.
+Under udviklingsforløbet af GUI'en er der lavet en testserver som genererer tilfældigt data til GUI'en og udskriver på en terminal hvad der bliver modtaget fra GUI'en. Testserveren kan bruges til at teste alle funktioner i GUI'en. I listing \ref{lst:testserver} ses \texttt{readReady} funktionen som reelt set står for funktionaliteten i serveren. Når der oprettes en testserver i main funktionen gives der i main en string med som parameter, som angiver om det er en data forbindelse eller controller forbindelse.
 \begin{lstlisting}[caption={Læse og skrive funktionen i testserveren},label=lst:testserver, language=c++]
 int Au2Thread::readyRead()
 {
@@ -430,7 +430,7 @@ int Au2Thread::readyRead()
     return 0;
 }
 \end{lstlisting} 
-I figur \ref{fig:testserver} ses testserveren under test af GUI'en. 
+I figur \ref{lst:testserver} ses testserveren under test af GUI'en. 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth* 3/4,height=\textwidth* 8/20 ]{../fig/billeder/testserver.png}
