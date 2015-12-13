@@ -1,15 +1,25 @@
 \subsection{PSoC} \label{sec:swd_psoc_board}
 
-PSoC'en blev valgt pga. vanskeligheder mht. direkte adgang til timere på Pi og pga. et besværligt interface ifm. \IIC kommunikation. Et positivt resultat af dette er at det PSoC'en håndterer skal ske relativt ofte, og den vil blive afbrudt mange gange i sekundet, hvilket ville langsommeliggøre Pi'en endnu mere. På denne måde løses problemerne med Raspberry Pi's tillukkethed og Pi'en skal kun læse en gang fra PSoC'en for at kunne få den ønskede data. PSoC'en sørger for at holde en buffer klar til at Pi'en,  
+Det blev valgt at overflytte distancesensorerne og tachometeret til at køre selvstændigt på PSoC'en i stedet for at have direkte bus-kontakt med Pi'en. 
+Dette viste sig at være en fordel, da der opstod problemer med bla. direkte adgang til timere på Pi, samt et problematisk interface i forbindelse med \IIC kommunikation til distancesensorerne.
+Et positivt resultat heraf blev, at de processor PSoC'en håndterer, og som skal ske meget ofte, nu kører selvstændigt på PSoS'en og dermed ikke forstyrre Pi'en.
+Skulle Pi'en afvikle de disse processor ville den kontant blive afbrudt, dette vil påvirke den interne processor der som resultat heref ville afvikles langsommere.
+På denne måde løses problemerne med at Pi'en kan kører sine processer uforstyrret, samt at der kun skal foretage én læsning fra PSoC'en hvorefter der returneres hele det seneste datasættet. 
+PSoC'en er programmeret til altid at ha en buffer med det seneste datasæt klar til at Pi'en. 
 
-%TODO Kenn skriver om distancesensorerne
+Det direkte problem i forbindelse med \IIC lå i at, når distancesensorerne skal programmeres til at foretage en scanning, kræver dette en kombineret skrivning/læsning til enheden. 
+Dette viste sig efter lang tids arbejde og ''trail and error'', ikke at være muligt at implementere i den form som projektet krævede. 
+Derfor blev det besluttet af overflytte sensorerne til PSoS'en, og herefter lade denne fungere som kombineret master/slave-enhed på \IIC bussen. 
+Således fungerer den som Master for sensorerne, men som slave for Pi'en. For detaljer om den implementeringen af PSoS'en hensvises til afsnit \ref{P-sub:sw_impl_psoc_psoc} \nameref{P-sub:sw_impl_psoc_psoc} i dokumentationen.
 
-PSoC'en er sat op så tachometerets output skal tilsluttes til [P1.0], som er sat op til at starte et interrupt hvis der detekteres en nedadgående flanke i spændingen. Selve interrupt routinen gemmer den seneste timerværdi, og aflæser en ny, finder differencen mellem disse og udregner hastigheden som set i afsnittet \ref{P-sec:tachometer_hw_impl}. Når bilen kører maksimalhastighed ca. $10km/t$ betyder dette at der vil være lige under 72 interrupts pr. sekund. Dette kunne potentielt være et problem på Pi'en, da projektet bygger på en pi, som skal være så nær realtid som muligt, for at systemet kan nå at reagere på objekter der nærmer sig hastigt.
+PSoC'en er sat op så tachometerets output skal tilsluttes til [P1.0], som trigger interrupts hvis der detekteres en nedadgående flanke i spændingen. 
+Selve interrupt routinen gemmer den seneste timerværdi, og aflæser en ny, finder differencen mellem disse og udregner hastigheden som set i afsnittet \ref{P-sec:tachometer_hw_impl} \nameref{P-sec:tachometer_hw_impl}. 
+Når bilen kører med maksimal hastighed ca. $10km/t$ betyder dette at der vil være lige under 72 interrupts pr. sekund. 
+Dette kunne potentielt være et problem på Pi'en, da projektet bygger på en pi, som skal være så nær realtid som muligt, for at systemet kan nå at reagere på objekter der nærmer sig hastigt..
 
 
-%TODO Dette blev copy/pasted ind fra impl /KT
-\subsection{PSoC} \label{sec:swi_psoc_board}
-
-Som forventet var PSoC'en mere simpel at implementere, da der allerede er findes foruddefinerede \IIC kommandoer, som gør det væsentligt simplere at kommunikere med sensorerne. Det blev undersøgt på Pi'en hvorledes det var muligt at indføre et kernemodul, som ville tillade at aflæse processorens clockcycles, men det viste sig meget at være meget tidskrævende, og endte ud i spildtid. I første omgang stødte gruppen på et problem ifm. aflæsning af PSoC'en, da tiden som distancesensorerne tager om at aflæses tager en minimumstid, som læsningen af PSoC'en ikke må afbryde, da der ellers kommer korrupte værdier over på Pi'en. 
-
-%TODO Kenn skriver om distancesensorerne
+Ved implementering viste PSoS'en sig, som forventet, simplere og mere effektiv, da der allerede findes et API-set med \IIC kommandoer, som gør det muligt at kommunikere med sensorerne på det ønskede niveau. 
+Det blev undersøgt på Pi'en hvorledes det var muligt at indføre et kernemodul, som ville tillade at aflæse processorens clockcycles, men det viste sig meget at være meget tidskrævende, og endte ud i spildtid. 
+I første omgang stødte gruppen på et problem forbindelse med aflæsning af PSoC'en, da distancesensorerne som minimum tager 100ms om at foretage en valid scanning, i denne tid kan sensoren ikke afbrydes, samtidig med at hvis er foretages en læsning forekomst korrupte værdier ved Pi'ens læsning. 
+Der blev derfor truffet et designvalg at samlede alle sensordata i ét datasæt, som så kan hente af Pi'en vha. én læsning.
+Dette gav markant mere stabile værdier ved aflæsning og test. Hvorfor det også er denne løsning der er valgt at implementere i den færdige prototype.
