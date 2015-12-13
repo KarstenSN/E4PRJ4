@@ -1,26 +1,17 @@
 \chapter{Udviklingsværktøjer} \label{ch:udviklingsvaerktoejer}
-I dette afsnit vil der blive gennemgået de forskellige udviklingsværktøjer, som er blevet anvendt under dette projekts design-, implementerings- og integrationsproces.
+I dette afsnit vil de forskellige udviklingsværktøjer, som er blevet anvendt under dette projekts design-, implementerings- og integrationsproces, blive gennemgået.
 
-\subsection*{PSoC Creator}
+\paragraph{PSoC Creator} er et udviklingsmiljø med et stort bibliotek af klargjorte komponenter og kode hertil, hvilket effektiviserer processen af PSoC programmeringen.
 PSoC Creator er udnyttet til at programmere det PSoC 4 Pioneer Kit som er brugt til implementationen af Tachometer og Afstandssensorer. Ligeledes er programmets debugging interface udnyttet under implementering til fejlfinding og testning af PSoC'ens funktionalitet.
-PSoC Creator er et udviklingsmiljø med et stort bibliotek af klargjorte komponenter og kode hertil, hvilket effektiviserer processen af PSoC programmeringen.
 
-\subsection*{Multisim}
-Der er til design af hardware kredsløb valgt at bruge udviklingsværktøjet Multisim. Styrkerne ved dette udviklingsmiljø er at skabe overblik og muligheden for at simulere hardware moduler, med de ønskede komponenter, fra et rigt indbygget bibliotek. Ud over dette arbejder Multisim godt sammen med programmet Ultiboard.
+\paragraph{Multisim} er brugt til design af hardware kredsløb og simulering af disse. Styrkerne ved dette udviklingsmiljø er at skabe overblik og muligheden for at simulere hardware moduler, med de ønskede komponenter, fra et rigt indbygget bibliotek. Ud over dette arbejder Multisim godt sammen med programmet Ultiboard, hvilket indebærer at med hvis man med nøje omhu sætter sit simuleringsmiljø op kan dette importeres direkte til Ultiboard.
 
-\subsection*{Ultiboard}
-Ultiboard er et udviklingsværktøj der er valgt til konstruktion af PCB's. Ultiboard kan, i forbindelse med Multisim, uddrage de komponenter der findes i designs fra Multisim og bruges til at konstruere printplade layouts med disse komponenter.
+\paragraph{Ultiboard} er et udviklingsværktøj der er valgt til udlæg af print. Ultiboard kan, i forbindelse med Multisim, uddrage de komponenter der findes i designs fra Multisim og bruges til at konstruere printplade layouts med disse komponenter.
 
-\subsection*{QT Creator}
-QT Creator er brugt til designe GUI'en til PC'en. Programmet har en del funktionalitet, der gør det at konstruere en GUI på forskellige platforme simpel via drag and drop funktionalitet. Ud over dette er der en god debugger indbygget i udviklingsværktøjet der har vist sig brugbar under implementeringen af PC softwaren.
+\paragraph{QT Creator} er brugt til designe GUI'en til PC'en. Programmet har en del funktionalitet, der gør det simpelt at konstruere en GUI på forskellige platforme via drag and drop funktionalitet. Ud over dette er der en god debugger indbygget i udviklingsværktøjet der har vist sig brugbar under implementeringen af PC softwaren.
 
-\subsection*{WaveForms}
-Til at teste de forskellige hardwareenheder samt indput/output porte af de forskellige embeddede enheder er udviklingsværktøjet WaveForms udnyttet. WaveForms er et program der virker sammen med en Analog Discovery enhed, der er et muliti-funktions instrument med mulighed for bland andet at agere oscilloskop og waveform generator. 
+\paragraph{WaveForms} er brugt til at teste de forskellige hardwareenheder samt indput/output porte af de forskellige embeddede enheder. WaveForms er et program der virker sammen med Analog Discovery enhed, som begge er produceret af Analog Devices, og er et muliti-funktions instrument med mulighed for bland andet at agere oscilloskop og waveform generator. Fordelen med Analog Discovery er den portabilitet der gives under udviklingen hvis man ikke har brug for høj precision på sine målinger.
 
-\subsection*{KDevelop}
-Til C++ programmering på linux maskiner, er udviklingsmiljøet KDevelop brugt. KDevelop er et stærkt redskab til syntaks highlighting og auto-completion hvilket effektiviserer programmerings-processen. Ud over dette er det muligt at tilføje en \texttt{makefile} hvilket simplificerer compiling af koden. Kdevelop er brugt til implementation og integration af software på PI.
+\paragraph{KDevelop} er et udviklingsmiljø på Linux hvori det meste C++ programmering er foretaget. En anden stor fordel ved brugen af KDevelop er at den syntax highlighting og autocompletion som programmet tilbyder effektiviserer programmerings-processen betydeligt. KDevelop er ydermere stærkt integreret med GNU Make\cite{lib:GNU_make} hvilket simplificerer compiling af koden uden nødvendigvis at gøre hele projektgruppen afhængig af ét bestemt udviklingsmiljø. KDevelop er brugt til implementation og integration af software på PI.
 
-\subsection*{Git}
-Git er et versionstyringsværktøj til vedligeholdelse af kildekode. Som repository host er der valgt Github grundet stabilitet og gruppemedlemmers tidligere arbejde med repository'et.
-
-\clearpage
+\paragraph{Git} er et versionstyringsværktøj til vedligeholdelse af kildekode. Som repository host er der valgt Github grundet stabilitet og gruppemedlemmers tidligere arbejde med dette repository. Projektgruppen har valgt at lægge både kildekode til software, diagrammer af projektet samt kildekoden til bl.a. denne rapport og Projektdokumentationen på Git for netop at opnå en kraftfuld versionsstyring\cite{lib:au2_git}.
