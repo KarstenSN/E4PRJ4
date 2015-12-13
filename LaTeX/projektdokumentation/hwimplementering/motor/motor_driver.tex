@@ -1,13 +1,7 @@
-
-\section{H-bro - Motorstyring}
-
-
-
-
-
+\section{H-bro - Motorstyring} \label{sec:hwi_motor_driver}
 \subsection*{Ultiboard}
 
-Efter at have designet motorstyrings kredsløbet fra figur \ref{fig:MultiSim_HBro} på side \pageref{fig:MultiSim_HBro} i MultiSim bliver det overført til Ultiboard. Her er printet lagt ud med henblik på at reducerer EMC støj fra printet. Printet er delt op i 2 dele. Et med signaler fra PI på 3,3 V ydeste til højre på figur \ref{fig:Ultiboard_Print_H_Bro}. Et til 5V til det logiske kreds på L298N og 7,2V til motor forsyning. De 2 sidste er så vidt muligt holdt væk fra signaler fra PIen. De baner til 7,2V motor forsyning til og fra L298N er gjort så korte som muligt og tæt på returbaner. Så der undgåes store strømloops der kan lave en masse EMC støj. Der er desuden lavet et ground plane der også er med til at reducere EMC støj.
+Efter at have designet motorstyrings kredsløbet fra figur \ref{fig:MultiSim_HBro} på side \pageref{fig:MultiSim_HBro} i MultiSim bliver det overført til Ultiboard. Her er printet lagt ud med henblik på at reducerer EMC støj fra printet. Printet er delt op i 2 dele. Et med signaler fra PI på 3,3 V ydeste til højre på figur \ref{fig:Ultiboard_Print_H_Bro}. Et til 5V til det logiske kreds på L298N og 7,2V til motor forsyning. De 2 sidste er så vidt muligt holdt væk fra signaler fra PIen. De baner til 7,2V motor forsyning til og fra L298N er gjort så korte som muligt og tæt på returbaner. Så der undgås store strømloops der kan lave en masse EMC støj. Der er desuden lavet et ground plane der også er med til at reducere EMC støj.
 
 \begin{figure}[h]
 	\centering
@@ -15,7 +9,6 @@ Efter at have designet motorstyrings kredsløbet fra figur \ref{fig:MultiSim_HBr
 	\label{fig:Ultiboard_H_Bro}
 	\caption{Ultiboard H-Bro}
 \end{figure}
-
 
 \begin{figure}[h]
 	\centering
