@@ -11,7 +11,7 @@ Klassen har en række \texttt{write} metoder, som alle er beskyttet af en mutex,
 
 For at opbevare brugerinput, anvendes der \texttt{write}(listing \ref{lst:data_writeUserInput}) og \texttt{get}(listing \ref{lst:data_getUserInput}) metoder der bruger ''copy by reference'' til at overføre en struct med dataen. Denne struct er defineret i \texttt{utilities.hpp}. Copy by reference, er anvendt da det er vigtigt at overførslen af brugerinput går så hurtigt som muligt.
 
-Data::writeUserInput1-Data::writeUserInput2
+
 \lstinputlisting[linerange=Data::writeUserInput1-Data::writeUserInput2, label=lst:data_writeUserInput, caption=Metoden \texttt{writeUserInput} i dataklassen.]{../../src/bil/data/data.cpp}
 
 \lstinputlisting[linerange=Data::getUserInput1-Data::getUserInput2, label=lst:data_getUserInput, caption=Metoden \texttt{geteUserInput} i dataklassen.]{../../src/bil/data/data.cpp}
