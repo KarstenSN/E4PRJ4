@@ -9,9 +9,9 @@ Systemarkitekturen bruges til at danne et overblik over systemet, hvorved det de
 \caption{Overordnet BDD for AU2}
 \label{fig:bdd_au2}
 \end{figure}
-På figur \ref{fig:bdd_au2} ses et overordnet BDD for AU2. Det ses at systemet AU2 består af en bil og en PC. Bilen består af en \texttt{PSoC} som er et mikroprocessor-modul der styrer afstandssensorerne. Fremdrift er modulet der sikre bilen fremdrift, herunder motor osv. Styretøj er modulet der har med styretøjet at gøre som gør det muligt for brugeren at dreje med bilen. Pi er en Raspberry-Pi som er en computer der kører et linux program som kører hele komminukationen med PC'en. Strømforsynings-blokken er rimelig selvsigende. PC modulet består af et tastatus, mus, skærm og en Xbox-360 controller. På figur \ref{fig:bdd_bil} ses et udviddet BDD for bilen.  
+På figur \ref{fig:bdd_au2} ses et overordnet BDD for AU2. Det ses at systemet AU2 består af en bil og en PC. Bilen består af en \texttt{PSoC} som er et mikroprocessor-modul der styrer afstandssensorerne. Fremdrift er modulet der sikre bilen fremdrift, herunder motor osv. Styretøj er modulet der har med styretøjet at gøre, som gør det muligt for brugeren at dreje bilen. Pi er en Raspberry-Pi som er en computer der kører et linux program der styrer hele komminukationen med PC'en. Strømforsynings-blokken er selve strømforsyningen. PC modulet består af et tastatur, mus, skærm og en Xbox-360 controller. På figur \ref{fig:bdd_bil} ses et udviddet BDD for bilen.  
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{../fig/diagrammer/bil/bdd_bil.pdf}
 \caption{BDD for bil}
@@ -20,11 +20,13 @@ På figur \ref{fig:bdd_au2} ses et overordnet BDD for AU2. Det ses at systemet A
 
 På figur \ref{fig:bdd_bil} ses at \texttt{PSoC} består af et Accelerometer til at måle bilens acceleration, et tachometer til at måle bilens hastighed samt fire afstandssensor. Fremdrift består af en H-bro til at styre motorens omdrejningsvinkel, en DC-motor en gearkasse og baghjul. Her er der dog to baghjul og ikke et som angivet i diagrammet. Styretøj består af en servomotor samt forhjul. Pi er bestående en  Raspberry-Pi som er påmonteret med en Wifi-dongle samt et kamera. Strømforsyningen indeholder et batteri samt en spændingsregulator. Spændingsregulatoren er dog implementeret som en switchmode-powersupply.  
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[scale=1]{../fig/diagrammer/bil/ibd_bil.pdf}
 \caption{IBD for bil}
 \label{fig:ibd_bil}
 \end{figure} 
+
+På figur \ref{fig:ibd_bil} ses ibd'et for bilen. Her er beskrevet hvilke signaler der forbinder blokkende samt hvad de indeholder. Det ses at blokken femdrift er forbundet med motorctrl som er styringssignalet til motoren. Dette ender med at motoren drejer rundt og herved giver et moment til hjulene. PcoC modulet er forbundet til Pi'en via en I2C forbindelse og styretøjet styres med et PWM signal hvor frekvensmodulationen er udtryk for hvor meget forhjulene drejer. Det ses også at Pi'en er koblet på et WiFi-netværk. I flow specifications blokkende ses hvad signalerne indeholder af data. motorctrl indeholder en hastighed samt et signal om det er fremad eller bagud. WiFi indeholder kommunikationen med bilen samt et video-steam. I2C indeholder blor SDA og SCL som er standart I2C. 
 
 \clearpage
