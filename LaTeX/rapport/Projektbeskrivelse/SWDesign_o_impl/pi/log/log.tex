@@ -2,4 +2,6 @@
 
 Log-klassen opretter en logfil der gør det muligt at debugge systemet på en enkel måde. Samtlige klasser på Pi har mulighed for at skrive logbeskeder ved at kalde en simpel kommando. Logfilen indeholder således en hel del logbeskeder med timestamps. Logbeskederne kan være af tre forskellige typer; \textit{Event}, \textit{Warning} og \textit{Error} og det er altid muligt at se hvor den kommer fra takket være den indbyggede variabel \texttt{\_\_PRETTY\_FUNCTION\_\_} \cite{lib:prettyf} som anvendes når en logbesked skrives. Eksempel på logbesked:
 
-\texttt{[2015-12-8 10:56:30] [Event] [Settings::Settings(Log*)] Initialized Settings}\\
+\texttt{[2015-12-8 10:56:30] [Event] [Settings::Settings(Log*)] Initialized Settings}
+
+Desuden er klassen udviklet, så den er beskyttet imod at der er flere forskellige tråde der skriver i den på samme tid. Dette er gjort ved hjælp af \texttt{std::mutex}es.
