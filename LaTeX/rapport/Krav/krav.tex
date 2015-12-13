@@ -3,50 +3,38 @@
 I dette afsnit er de opstillede krav for AU2 beskrevet.
 Disse krav er opstillet ud fra opgaveformuleringen og ud fra forestillinger om relevante tests af systemet. Funktionelle krav er opstillet ud fra Use Cases og ikke-funktionelle krav er opstillet ud fra målbare størrelser.
 
-I figur \ref{fig:use_cases} på side \pageref{fig:use_cases} ses Uce Cases for systemet og herunder er disse beskrevet kort. De funktionelle krav for systemet er udledt ud fra disse og beskrevet herunder. For at se den fuldstændige beskrivelse af kravene for systemet henvises til kapitel \ref{P-ch:kravspecifikation} \nameref{P-ch:kravspecifikation} på side \pageref{P-ch:kravspecifikation} i dokumentationen.
+I figur \ref{fig:use_cases} på side \pageref{fig:use_cases} ses Use Cases for systemet og herunder er disse beskrevet kort. De funktionelle krav for systemet er udledt ud fra disse og beskrevet herunder. For at se den fuldstændige beskrivelse af kravene for systemet henvises til kapitel \ref{P-ch:kravspecifikation} \nameref{P-ch:kravspecifikation} på side \pageref{P-ch:kravspecifikation} i dokumentationen.
 
-Use Cases på billedet er kort beskrevet herunder:
+\begin{itemize}
+%\begin{packed_item}
 
-\begin{packed_item}
+\item \textbf{UC1: Aktiver system} sørger for at initialisere systemet ved opstart og beskriver brugerens interaktion med systemet ved opstart.
 
-\item UC1: Aktiver system \\
-Denne UC sørger for at initialisere systemet ved opstart og beskriver brugerens interaktion med systemet ved opstart.
+\item \textbf{UC2: Stream video} initialiserer og vedligeholder streaming af video og beskriver hvad brugeren ser når systemets videostream startes.
 
-\item UC2: Stream video \\
-Denne UC initialiserer og vedligeholder streaming af video og beskriver hvad brugeren ser når systemets videostream startes.
+\item \textbf{UC3: Overvåg sensorer} indsamler data fra bilens sensorer og analyserer om en undvigelsesmanøvre er nødvendig for at bilen ikke kører ind i noget.
 
-\item UC3: Overvåg sensorer \\
-Indsamler data fra bilens sensorer og analyserer om en undvigelsesmanøvre er nødvendig for at bilen ikke kører ind i noget.
+\item \textbf{UC4: Undvig forhindring} styrer automatisk bilen udenom en forhindring ved at manipulere bilens styrtøj og motor.
 
-\item UC4: Undvig forhindring \\
-Styrer automatisk bilen udenom en forhindring ved at manipulere bilens styrtøj og motor.
-
-\item UC5: Kør bil frem/tilbage\\
-Denne UC beskriver brugerens interaktion med systemet når vedkommende ønsker at køre fremad eller at bakke. 
+\item \textbf{UC5: Kør bil frem/tilbage} beskriver brugerens interaktion med systemet når vedkommende ønsker at køre fremad eller at bakke. 
 Det beskrives ligeledes hvordan antikollissionssystemet overtager kontrol over bilen for at undvige forhindringer.
 
-\item UC6: Drej bil til højre/venstre \\
-Denne UC beskriver brugerens interaktion med systemet når brugeren ønsker at få bilen til at dreje til enten højre eller venstre. Beskriver ydermere antikollisionssystemets overtagelse af brugerkontrollen.
+\item \textbf{UC6: Drej bil til højre/venstre} beskriver brugerens interaktion med systemet når brugeren ønsker at få bilen til at dreje til enten højre eller venstre. Beskriver ydermere antikollisionssystemets overtagelse af brugerkontrollen.
 
-\item UC7: Brems bil \\
-Beskriver hvordan bilen bremses både af bruger og af antikollissionssystemet.
+\item \textbf{UC7: Brems bil} beskriver hvordan bilen bremses både af bruger og af antikollissionssystemet.
 
-\item UC8: Konfigurer IP-adresse \\
-Denne UC beskriver hvordan brugeren indstiller IP-adressen for bilen i PC softwaren
+\item \textbf{UC8: Konfigurer IP-adresse} beskriver hvordan brugeren indstiller IP-adressen for bilen i PC softwaren
 
-\item UC9: Tænd/sluk AKS \\
-Denne UC beskriver hvordan brugeren slår antikollissionssystemet fra eller til.
+\item \textbf{UC9: Tænd/sluk AKS} beskriver hvordan brugeren slår antikollissionssystemet fra eller til.
 
-\item UC10: Indstil makshastighed \\
-Denne UC beskriver hvordan brugeren indstiller en ny makshastighed for bilen.
+\item \textbf{UC10: Indstil makshastighed} beskriver hvordan brugeren indstiller en ny makshastighed for bilen.
 
-\item UC11: Kalibrer styrtøj \\
-Denne UC beskriver hvordan brugeren kalibrer styrtøjet, så bilen kører ligeud.
+\item \textbf{UC11: Kalibrer styrtøj} beskriver hvordan brugeren kalibrer styrtøjet, så bilen kører ligeud.
 
-\item UC12: Afbryd system \\
-Denne UC beskriver hvad der sker, når systemet afbrydes eller lukkes ned af brugeren.
+\item \textbf{UC12: Afbryd system} beskriver hvad der sker, når systemet afbrydes eller lukkes ned af brugeren.
 
-\end{packed_item}
+%\end{packed_item}
+\end{itemize}
 
 Bilen skal kunne køre frem og tilbage, dreje og give brugeren mulighed for at begrænse makshastigheden af bilen. 
 Styringen af bilen skal foregå med en Xbox 360 Controller fra en PC via et Wi-Fi netværk til bilens Raspberry Pi, som er ombord.

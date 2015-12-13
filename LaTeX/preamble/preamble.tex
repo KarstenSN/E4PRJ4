@@ -4,6 +4,11 @@
 \setlrmarginsandblock{*}{2.5cm}{0.75} % højre og venstre 
 \setulmarginsandblock{3cm}{*}{1.2} % top og bund 
 \checkandfixthelayout[nearest] % specifikt valg af højde algoritme
+
+%Styrer hvordan nye afsnit håndteres
+%https://www.sharelatex.com/learn/Paragraph_formatting#Reference_guide
+\parindent=1em %Start på nyt afsnit rykkes ind
+\parskip=0.5em %Mellemrum mellem afsnit
  
 % Danske udtryk (fx figur og tabel) samt dansk orddeling og fonte med
 % danske tegn. Hvis LaTeX brokker sig over æ, ø og å skal du udskifte
@@ -29,7 +34,6 @@
 \usepackage{bm}
 \usepackage{amsthm}
 \usepackage{mathtools}
-\parindent=10pt 
 
 % Fancy ting med enheder og datatabeller. Læs manualen til pakken
 % Manual: http://www.ctan.org/tex-archive/macros/latex/contrib/siunitx/siunitx.pdf
