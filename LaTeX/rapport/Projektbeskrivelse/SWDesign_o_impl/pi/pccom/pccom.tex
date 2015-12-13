@@ -1,3 +1,5 @@
-\subsubsection{Boundary-klasse: PcCom} %TODO lav label
+\subsubsection{Boundary-klasse: PcCom} \label{sec:pccom}
+PcCom klassens formål er at give mulighed for PC softwaren at skabe kontakt mellem Bil og PC. Den blev som udgangspunkt designet med en UDP protokol, men efter implementering af PC software blev dette skiftet til en TCP protokol, da softwaren var blevet implementeret således. PcCom klassen er designet og implementeret som to tråde der her især åbner en server med TCP sockets til at styre to forskellige former for datastreams mellem Bil og PC. Der er under dsign og implementering draget meget nytte af ''Sockets Tutorial'' \cite{lib:socket_tutorial}, en instruktion i at implemntere TCP scokets på en linux maskine.
+
 
 %TODO skal skrives
