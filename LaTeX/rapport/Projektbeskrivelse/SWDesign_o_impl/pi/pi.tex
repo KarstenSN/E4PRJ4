@@ -1,3 +1,24 @@
 \subsection{Pi}
 
-Bilens styreenhed er valgt til at være en Raspberry Pi, da denne er et oplagt valg da imlementeringen både skal indeholde videostreaming og socketbaseret netværkskommunikation. Der er altså tale om en højniveau controller. Pi'en er ligeledes forsynet med et kamara\cite{lib:cam} og en Wi-Fi dongle\cite{lib:wifi}. Funktionaliteten udvikles i et program der er bestående er flere klasser der kan ses på figur \ref{} og som herefter vil beskrives meget kort. Foruden det program som er udviklet af projektgruppen selv, anvendes et tredjepartsprogram, kaldet Motion\cite{lib:motion-on-raspberry} til at streame videoen. For flere detaljer end nedenstående henvises til \ref{P-sec:bil} \nameref{P-sec:bil} pi side \pageref{P-sec:bil} og \ref{P-sec:swimpl_bil} \nameref{P-sec:swimpl_bil} pi side \pageref{P-sec:swimpl_bil}
+Bilens styreenhed er valgt til at være en Raspberry Pi, da denne er et oplagt valg da imlementeringen både skal indeholde videostreaming og socketbaseret netværkskommunikation. Der er altså tale om en højniveau controller. Pi'en er ligeledes forsynet med et kamara\cite{lib:cam} og en Wi-Fi dongle\cite{lib:wifi}. Funktionaliteten udvikles i et program der er bestående er flere klasser, der kan ses på figur \ref{fig:cd_pi}, som herefter vil beskrives meget kort. Foruden det program som er udviklet af projektgruppen selv, anvendes et tredjepartsprogram, kaldet Motion\cite{lib:motion-on-raspberry} til at streame videoen. For flere detaljer end nedenstående henvises til \ref{P-ch:softwaredesign} \nameref{P-ch:softwaredesign} pi side \pageref{P-ch:softwaredesign} og \ref{P-ch:sw_impl} \nameref{P-ch:sw_impl} på side \pageref{P-ch:sw_impl}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth* 9/10]{../fig/diagrammer/bil/cd_pi.pdf}
+\caption{Klassediagram over Pi}
+\label{fig:cd_pi}
+\end{figure}
+
+Der gøres opmærksom på at samtlige klaser i klassediagrammet på figur \ref{fig:cd_pi} har en association til Log-klassen. Det er undladt at tegne alle disse pile, da dette vil uoverskueliggøre diagrammet.
+
+\clearpage
+
+\input{Projektbeskrivelse/SWDesign_o_impl/pi/pi/pi.tex}
+\input{Projektbeskrivelse/SWDesign_o_impl/pi/aks/aks}
+\input{Projektbeskrivelse/SWDesign_o_impl/pi/pccom/pccom}
+\input{Projektbeskrivelse/SWDesign_o_impl/pi/settings/settings}
+\input{Projektbeskrivelse/SWDesign_o_impl/pi/log/log}
+\input{Projektbeskrivelse/SWDesign_o_impl/pi/data/data}
+\input{Projektbeskrivelse/SWDesign_o_impl/pi/acc/acc}
+\input{Projektbeskrivelse/SWDesign_o_impl/pi/steering/steering}
+\input{Projektbeskrivelse/SWDesign_o_impl/pi/psoc/psoc}
