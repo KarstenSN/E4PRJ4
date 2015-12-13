@@ -8,3 +8,4 @@ RC servo mortor til at styre retning styres også med PWM men denne er et softwa
 Det eneste interface til klassen er public metoden \texttt{userInput(UserInput)}. 
 Den bliver kaldt hver gang der er nye data fra Brugeren. Derudover henter klassen den aktuelle hastighed fra Data klassen, max hastighed fra Settings klassen. Desuden kan den skrive til Log klassen
 Når klassens bliver constructor bliver kaldt opretter den en separat tråd til opdatering af motor PWM signalet. Det var oprindelig tiltænkt at bilen hastighed skulle reguleres af en PID regulering. Men reguleringen er på nuværende tidspunkt implementeret som en P regulering.
+For at forenkle grænsefladen til Pi'ens GPIOer (General-purpose input/output) er der bruge et bibliotek som hedder WiringPi \cite{lib:wiringpi} til at kontrollere PWM signaler både HW/SW og digitale udgange. 
