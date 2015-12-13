@@ -31,11 +31,8 @@ Boundary-klassen PcCom håndterer kommunikationen imellem PC og Bil. Denne kommu
 \subsubsection{Boundary-klasse: Steering}
 I denne klasse styres bilens aktuatorer. Dette er altså en driver til både motoren der skaber fremdrift og servo-motoren der styrer forhjulene. Klassen tager ligeledes højde for brugers indstillinger.
 
-\subsubsection{Boundary-klasse: Accelerometer}
-Denne klasse håndterer kommunikationen til bilens accelerometer og konverterer sensordata til brugbar g-måling.
-
 \subsubsection{Boundary-klasse: Psoc (Pi)}
-Denne klasse håndterer kommunikationen til PSoC'en hvor afstandssensorer og tachometer er monteret, og konverterer sensordata til brugbar distance- og hastighedsmålinger. Klassen håndterer alle fire sensorer samt tachometeret.
+Denne klasse håndterer kommunikationen til PSoC'en hvor afstandssensorer og tachometer er monteret, og konverterer sensordata til brugbar distance- og hastighedsmålinger. Klassen håndterer alle fire sensorer samt tachometeret. Desuden skulle den have håndteret kommunikation med MPU6050, hvis denne var blevet yderligere implementeret.
 
 \clearpage
 
