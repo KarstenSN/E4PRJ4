@@ -4,3 +4,5 @@ Psoc-klassen håndterer al \IIC-kommunikation imellem Pi og PSoC. Herunder, dist
 Klassen er implementeret med public-metoderne \texttt{getDistance()} og \texttt{getVelocity} hvor der returneres hhv. afstandensværdien fra den ønskede sensor i cm, samt hastigheden fra tachometereti $km/t$. 
 Internt i klassen kaldes \texttt{update()} og \texttt{psocRead()} for at holde klassen attributter optdateret med det seneste datasæt til når Pi'ën kan en get-kommando. 
 Derudover indeholder klassen en pointer til Log-klassen, her logges når klassen opretteres eller nedlægges, samt hvis der forekommer fejl under afviklingen. For flere detaljer om psoc-klassen på Pi'en henvises til \myRef{P-sec:sw_design_psoc_pi} i dokumentationer.
+Klassen er desuden udviklet således at den er beskyttet imod at der er flere forskellige tråde der skriver
+i den på samme tid. Dette er gjort ved hjælp af \texttt{std::mutexes}.
