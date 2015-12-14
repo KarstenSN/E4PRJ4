@@ -1,16 +1,10 @@
 \chapter{Indledning}
 \label{ch:Indledning}
+Rapporten er en opsummeringen af projektdokumentationen og dækker hovedsageligt over udviklingsmæssige overvejelser og beslutninger som gruppen har foretaget undervejs i projektarbejdet. 
+Rapporten indeholder beskrivelsen af udviklingen og designet af prototypen til en legetøjsbil kaldet AU2.
 
-Denne rapport indeholder beskrivelsen af udvikling og design for 4. semesterprojektet, AU2, samt opbygningen af en prototype. 
-Rapporten er opsummeringen af projektdokumentationen, og dækker hovedsageligt over udviklingsmæssige overvejelser/beslutninger som gruppen har foretaget undervejs i projektperioden. 
-Bilen gør det muligt for børn og voksne at underholdes uden risiko for at ødelægge bilen, eftersom den selv forhindrer en forestående kollision.
+AU2 er en intelligent legetøjsbil som via et antikollisionssystem (forkortet til AKS) kan undvige en mulig forhindring og derved sikre at brugeren ikke ødelægger hverken bil eller andre genstande. Bilen er tænkte at være et stykke legetøj som kan bruges af både voksne og børn. Bilen styres med en XBox360-controller forbundet til en PC som er tilsluttet et netværk hvorved brugeren også kan modtage et video-stream fra bilen.
 
-AU2 er en intelligent bil, som vha. et anti-kollisionssystem (AKS) kan undvige en detekteret forhindring, og desuden styres med en X-Box Controller over et trådløst Wi-Fi netværk. Bilen kan bremse, dreje, køre frem og tilbage.
-I forbindelse med en nærtstående kollision, vil AKS overtage styringen fra brugeren, og dreje bilen i en anden mindre farlig retning. 
-Projektet består af en PC med tilhørende X-Box Controller, en Raspberry Pi med tilhørende Wi-Fi Dongle og en PSoC. 
-
-Brugeren kan se hvor bilen kører vha. det påmonterede kamera, hvorfor det er muligt at styre bilen fra et punkt hvor bilen ikke er synlig.
-GUI på PC er lavet i QT og brugeren ser data om bilen i sammnhæng med videoen, der streames fra bilen.
 
 \section{Læsevejledning}
 Projektdokumentationen til denne rapport er skrevet kronologisk i forhold til de givne faser i ASE Modellen\cite{lib:vejledning}, pånær accepttesten, som er udarbejdet i forlængelse af kravspecifikationen, men selve testen er udført i slutningen af forløbet, deraf placeringen sidst i dokumentet.

@@ -1,10 +1,12 @@
-\subsubsection{Boundary-klasse: Steering} %TODO lav label
+\subsubsection{Boundary-klasse: Steering} 
 
-
-Steering klassen skal håndterer styringen af bilen. Det være sig frem / tilbage / brems / højre / venstre.
+Steering klassen skal håndtere styringen af bilen. 
+Bilen har mulighed for at gøre følgende: køre frem, bakke, bremse, dreje mod højre og dreje mod venstre.
 Det gøres ved at styre motoren til fremdrift ved hjælp af et hardware PWM signal og en H-bro. 
-RC servo mortor til at styre retning styres også med PWM men denne er et software genereret signal. 
+Udover dette anvendes en RC servo motor til at styre retning, som også kontrolleres med PWM, men dette er et software genereret signal. 
 Det eneste interface til klassen er public metoden \texttt{userInput(UserInput)}. 
-Den bliver kaldt hver gang der er nye data fra Brugeren. Derudover henter klassen den aktuelle hastighed fra Data klassen, max hastighed fra Settings klassen. Desuden kan den skrive til Log klassen
-Når klassens bliver constructor bliver kaldt opretter den en separat tråd til opdatering af motor PWM signalet. Det var oprindelig tiltænkt at bilen hastighed skulle reguleres af en PID regulering. Men reguleringen er på nuværende tidspunkt implementeret som en P regulering.
-For at forenkle grænsefladen til Pi'ens GPIOer (General-purpose input/output) er der bruge et bibliotek som hedder WiringPi \cite{lib:wiringpi} til at kontrollere PWM signaler både HW/SW og digitale udgange. 
+Metoden bliver kaldt hver gang der er nye data fra Brugeren. 
+Klassen henter udover ny data fra brugeren også den aktuelle hastighed fra Data klassen, makshastighed fra Settings klassen og den kan anvende et Log objekt til at skrive i loggen.
+Når klassens constructor bliver kaldt, opretter den en separat tråd til opdatering af motor PWM signalet. 
+Det var oprindelig tiltænkt at bilens hastighed skulle reguleres af en PID regulering, men reguleringen er på nuværende tidspunkt implementeret som en P regulering.
+For at forenkle grænsefladen til Pi'ens pins, er der brugt et bibliotek som hedder WiringPi \cite{lib:wiringpi} til at kontrollere PWM signaler både HW/SWmæssigt og til at kontrollere de digitale udgange. 
