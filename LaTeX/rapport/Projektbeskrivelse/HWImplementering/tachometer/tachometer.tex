@@ -3,7 +3,7 @@
 Ifølge designet skal tachometeret bestå af 5 små magneter, disse monteres på forhjulets 5 akser, nogenlunde ligeligt fordelt. 
 Grunden til at placere 5 magneter er, at det er nødvendig for bilen at kende sin hastighed, selv ved langsom kørsel og ved at benytte et højere antal fås mere præcis måling.
 Ved efterfølgende at udmåle tiden imellem hver magnet med en timer på en PSoC, kan hastigheden af bilen udregnes.
-Eftersom tachometeret monteres på forhjulet og hjulet desuden fortsat skulle kunne dreje, blev der i implementeringen benyttet en hallswitch \cite{lib:TLE4905L}. 
+Eftersom tachometeret monteres på forhjulet og hjulet desuden fortsat skulle kunne dreje, blev der i implementeringen benyttet en hallswitch \cite{lib:tacho}. 
 Denne blev sat på indersiden af hjulet, på en måde så den konstant sidder en fast afstand fra magneterne. 
 Det viste sig at magneternes afstand til hallswitchen skulle være særdeles præcis for at fungere optimalt. 
 Samtidig endte tachometeret samlet set med at forbruge ca. 520 $\mu$A, uden tilstedeværelse af magnet, hvilket er ca. faktor 10 mindre end forventet og ca. 1.3mA under tilstedeværelse af magnet. 

@@ -6,8 +6,12 @@ Databladet til servomotoren Corona-CS238MG \cite{lib:Corona-CS238MG} er meget ma
 Ved 50Hz viste den sig meget ustabil og reagerede ikke korrekt på PWM-signalet. 
 Ved laboratoriesimuleringer fandtes at motoren reagere mest stabil i intervallet 150-200Hz. 
 Alle tests med signalkonverteren til servomotoren så korrekt ud på oscilloskopet når servoen ikke var tilkoblet. 
-Men når den var tilkoblet overlejrede den PWM-signalet med så meget støj at det ikke længere havde de højharmoniske flanker. Dette betød at servoen blev ustabilt og ikke reagerede som forventet. Hvilket resulterede i redesign af signalkonverteren. Hvorefter den blev mere stabil.
-Ved en samlet test af hele bilen, så det ud til at servoen blev lidt ustabil igen. 
-Det kan muligvis skyldes at PWM signalet, der styrer servo, er styret i ren software. 
-Det giver nogle udfordringer i forhold til load af Pi'ens cpu. Da kamera softwaren \texttt{Motion} blev installeret på Pi'en blev det konstateret at den brugte op til 80\% af cpu kraften. Det kan have indvirkning på hvor nøjagtigt pulsbredden er. Og det vil bevirke at servoen opfatter det som om at den skal flytte sig og derved bliver ustabil
+Men når den var tilkoblet overlejrede den PWM-signalet med så meget støj at det ikke længere havde de højharmoniske flanker. 
+Dette betød at servoen blev ustabilt og ikke reagerede som forventet. 
+Hvilket resulterede i redesign af signalkonverteren. 
+hvilket stabiliserede resultatet.
+Ved en samlet test af hele bilen, så det ud til at servoen igen blev ustabil, hvilket muligvis kan skyldes at det PWM-signalet der styrer servoen er rent softwaregenereret. 
+Dette giver nogle udfordringer i forhold til Pi'ens CPU-load. 
+Da kamerasoftwaren \texttt{Motion} blev installeret på Pi'en blev det konstateret at den brugte op til 80\% af CPU-kraften. 
+Det kan have indvirkning på nøjagtigheden på pulsbredden, der igen vil bevirke at servoen opfatter det som som et validt signal og derved bliver ustabil.
 
