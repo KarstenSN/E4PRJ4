@@ -1,12 +1,16 @@
-\subsection{Motor / Styring} \label{sec:hwi_motor_styring}
-Mens motorstyrings printet blev fremstillet igennem værkstedet blev software delen af motorstyringen testet med et af skolens print. Vi har i tidligere projekter arbejdet med H-broer så der var ikke de store problemer eller ændringer i forhold til designet motorstyrings printet.\newline
-Det var derimod en større udfordring at få servo motoren til at virke korrekt.  
-Data bladet til servo motoren Corona-CS238MG \cite{lib:Corona-CS238MG} er meget mangelfuldt. Og derfor svært at finde den rigtige frekvens af PWM signalet den kræver. 
-Ved 50Hz viste den sig at være meget ustabil og ville ikke reagere rigtigt på PWM signalet. 
-Efter nogle forsøg med en funktionsgenerator fandt vi frem til at den var mest stabil mellem 150 og 200Hz. 
-Signal konverteren til servo motoren viste sig også at give nogle udfordringer og der blev lavet et nyt design af det.
-Problemet var at alt så fint ud på oscilloskopet når servoen ikke var koblet til. 
-Men når den var tilkoblet støjede den på PWM signalet så det ikke havde pæne lige flanker vi så. 
-Det betød at servo ikke reagerede rigtigt og blev ustabil.
-Da hele bilen med alle dele blev samlet så det ud til at servoen blev lidt ustabil igen. Det kan muligvis skyldes at PWM signalet, der styrer servo, er styret i ren software. 
+\subsection{Motor/Styring} \label{sec:hwi_motor_styring}
+Under fremstilling af motorstyringsprintet blev softwaredelen af motorstyringen testet med et af skolens print. 
+Vi har i tidligere projekter arbejdet med H-broer så der var ikke de store problemer eller ændringer fra dette testprint ift. det designede motorstyringsprint.
+Derimod var det en større udfordring at få servomotoren til at virke korrekt.  
+Databladet til servomotoren Corona-CS238MG \cite{lib:Corona-CS238MG} er meget mangelfuldt, hvorfor det har været vanskeligt at finde den korrekt krævede PWM-frekvens. 
+Ved 50Hz viste den sig meget ustabil og reagerede ikke korrekt på PWM-signalet. 
+Ved laboratoriesimuleringer fandtes at motoren reagere mest stabil i intervallet 150-200Hz. 
+Signalkonverteren til servomotoren viste sig ligeledes at give udfordringer, hvilket resulterede i redesign heraf.
+Problemet var at alle tests så korrekt ud på oscilloskopet når servoen ikke var tilkoblet. 
+Men når den var tilkoblet overlejrede den PWM-signalet med så meget støj at det ikke længere havde de højharmoniske flanker. 
+Dette betød at servoen blev ustabilt og ikke reagerede som forventet.
+
+
+Dette gav sig også gældende ved en samlet test af hele bilen, blev samlet så det ud til at servoen blev lidt ustabil igen. 
+Det kan muligvis skyldes at PWM signalet, der styrer servo, er styret i ren software. 
 Det giver nogle udfordringer i forhold til load af Pi'ens cpu. Da kamera softwaren \texttt{Motion} blev installeret på Pi'en blev det konstateret at den brugte op til 80\% af cpu kraften. Det kan have indvirkning på hvor nøjagtigt duty cyclen er. Og det vil bevirke at servoen opfatter det som om at den skal flytte sig og derved bliver ustabil
