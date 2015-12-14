@@ -9,7 +9,7 @@ Alle tests med signalkonverteren til servomotoren så korrekt ud på oscilloskop
 Men når den var tilkoblet overlejrede den PWM-signalet med så meget støj at det ikke længere havde de højharmoniske flanker. 
 Dette betød at servoen blev ustabilt og ikke reagerede som forventet. 
 Hvilket resulterede i redesign af signalkonverteren. 
-hvilket stabiliserede resultatet.
+Hvilket stabiliserede resultatet.
 Ved en samlet test af hele bilen, så det ud til at servoen igen blev ustabil, hvilket muligvis kan skyldes at det PWM-signalet der styrer servoen er rent softwaregenereret. 
 Dette giver nogle udfordringer i forhold til Pi'ens CPU-load. 
 Da kamerasoftwaren \texttt{Motion} blev installeret på Pi'en blev det konstateret at den brugte op til 80\% af CPU-kraften. 
