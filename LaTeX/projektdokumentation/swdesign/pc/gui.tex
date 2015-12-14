@@ -1,9 +1,8 @@
-\clearpage
 \section{PC} \label{sec:PC}
 
-\begin{figure}[H]
+\begin{figure}[h!]
 \centering
-\includegraphics[width=\textwidth* 3/4,height=\textwidth* 9/20 ]{../fig/billeder/gui_start.png}
+\includegraphics[width=\textwidth* 3/4]{../fig/billeder/gui_start.png}
 \caption{GUI hovedvindue}
 \label{fig:GUI_hovedvindue}
 \end{figure}
@@ -15,74 +14,110 @@ I denne sektion beskrives sekvensdiagrammer over usecasene for GUI'en. Der er va
 
 \subsubsection{UC1 Succes}
 
-\begin{figure}[H]
+\begin{figure}[ht]
 \centering
-\includegraphics[width=\textwidth* 1,height=\textwidth* 7/10 ]{../fig/diagrammer/pc/sd_uc1_succes.pdf}
+\includegraphics[width=\textwidth* 1,]{../fig/diagrammer/pc/sd_uc1_succes.pdf}
 \caption{Sekvensdiagram over UC1 senarie:succes}
 \label{fig:cd_uc1_succes_gui}
 \end{figure}
 
-Når usecasen startes klikker brugeren på \texttt{''Opret forbindelse''} på GUI'en. Herefter vil \texttt{MainWindow} starte Xbox360ControllerThread, som vil oprette en socketforbindelse mellem bilen og PC til at sende controllerdata. Efterfølgende vil \texttt{MainWindow} indlæse data, som blev gemt i logfilen sidste gang programmet lukkede ned og derefter opdatere vinduet. Derefter vil \texttt{MainWindow} oprette en socket mere til at sende og modtage data fra og til bilen. Når socketforbindelsen er oprettet vil \texttt{dataSocket} sende et signal til \texttt{MainWindow}, som derved vil promte brugeren at forbindelsen er oprettet. Se figur \ref{fig:GUI_uc1_success}. Når brugeren lukker vinduet ved at klikke på \texttt{''Ok''} venter \texttt{MainWindow} på at der er forbindelse for at derefter oprette \texttt{dataThread} som efterfølgende vil stå for at opdatere vinduet med hastig, afstand, acceleration osv. Når brugeren trykker på ''Ok'' sættes en variabel til 1. Hvis forbindelsen senere mistes sættes denne variabel til 0, således \texttt{dataThread} ikke skriver til en socketforbindelse som ikke længere er aktiv. Ventetiden er for at sikre at signalet kommer inden for en given tid. Defor: Kommer signalet om at forbindelsen ikke er oprettet inden for en given tid, vil programmet lave en fejl som det ses i figur \ref{fig:GUI_uc1_error_1}. Når \texttt{dataThread} har opdateret dataen, vil den give et signal til \texttt{MainWindow} om at der skal hentes nye data fra bilen. Det er derfor \texttt{MainWindow} som henter og sender data, men \texttt{dataThread} som opdatere selve dataen på GUI'en. Dette skyldes at \texttt{QTcpsocket} ikke kan køres i en separat tråd som det gøres med \texttt{Xbox360ControllerThread} hvis der skal gives signaler. Der sker derfor en fejl i programmet når Xbox360 controlleren er forbundet og TCP forbindelsen mistes. Der har desværre ikke været tid til at finde en løsning på dette problem.  
+Når usecasen startes klikker brugeren på \texttt{''Opret forbindelse''} på GUI'en.
+Herefter vil \texttt{MainWindow} starte Xbox360ControllerThread, som vil oprette en socketforbindelse mellem bilen og PC til at sende controllerdata.\linebreak[2]
+Efterfølgende vil \texttt{MainWindow} indlæse data, som blev gemt i logfilen sidste gang programmet lukkede ned og derefter opdatere vinduet. \linebreak[2]
+Derefter vil \texttt{MainWindow} oprette en socket mere til at sende og modtage data fra og til bilen. \linebreak[2]
+Når socketforbindelsen er oprettet vil \texttt{dataSocket} sende et signal til \texttt{MainWindow}, som derved vil promte brugeren at forbindelsen er oprettet. 
+Se figur \ref{fig:GUI_uc1_success}. \linebreak[2]
+Når brugeren lukker vinduet ved at klikke på \texttt{''Ok''} venter \texttt{MainWindow} på at der er forbindelse for at derefter oprette \texttt{dataThread} som efterfølgende vil stå for at opdatere vinduet med hastig, afstand, acceleration osv.  \linebreak[2]
+Når brugeren trykker på ''Ok'' sættes en variabel til 1. \linebreak[2]
+Hvis forbindelsen senere mistes sættes denne variabel til 0, således \texttt{dataThread} ikke skriver til en socketforbindelse som ikke længere er aktiv. 
+Ventetiden er for at sikre at signalet kommer inden for en given tid.  \linebreak[2]
+Defor: Kommer signalet om at forbindelsen ikke er oprettet inden for en given tid, vil programmet lave en fejl som det ses i figur \ref{fig:GUI_uc1_error_1}. \linebreak[2]
+Når \texttt{dataThread} har opdateret dataen, vil den give et signal til \texttt{MainWindow} om at der skal hentes nye data fra bilen. \linebreak[2]
+Det er derfor \texttt{MainWindow} som henter og sender data, men \texttt{dataThread} som opdatere selve dataen på GUI'en. \linebreak[2]
+Dette skyldes at \texttt{QTcpsocket} ikke kan køres i en separat tråd som det gøres med \texttt{Xbox360ControllerThread} hvis der skal gives signaler. \linebreak[2]
+Der sker derfor en fejl i programmet når Xbox360 controlleren er forbundet og TCP forbindelsen mistes. \linebreak[2]
+Der har desværre ikke været tid til at finde en løsning på dette problem.  
 
-\begin{figure}[H]
+
+\begin{figure}[ht!]
 \centering
-\includegraphics[width=\textwidth* 3/4,height=\textwidth* 9/20 ]{../fig/billeder/gui_uc1_success.png}
+\includegraphics[width=\textwidth* 3/4]{../fig/billeder/gui_uc1_success.png}
 \caption{GUI UC1 succes}
 \label{fig:GUI_uc1_success}
 \end{figure}
 
+\clearpage
 
+%=============== UC1 Error 1 =============
 \subsubsection{UC1 Error 1: Forbindelse kunne ikke oprettes}
 I denne sektion beskrives fejlen, at der ikke kan oprettes forbindelse til bilen når brugeren trykker på \texttt{''Opret forbindelse''}. Funktionen \texttt{waitForConnected} venter i maks et sekund, er der ikke oprettet forbindelse derefter promtes brugeren med at forbindelsen ikke kunne oprettes. Se sekvensdiagrammet i figur \ref{fig:cd_uc1_error_1} og advarselsskiltet i figur \ref{fig:GUI_uc1_error_1}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth* 1,height=\textwidth* 7/10 ]{../fig/diagrammer/pc/sd_uc1_Error_1.pdf}
-\caption{Sekvensdiagram over UC1 senarie:Error 1}
-\label{fig:cd_uc1_error_1}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth* 3/4,height=\textwidth* 9/20 ]{../fig/billeder/gui_uc1_error_1.png}
+\includegraphics[width=\textwidth* 3/4]{../fig/billeder/gui_uc1_error_1.png}
 \caption{GUI UC1 Error 1}
 \label{fig:GUI_uc1_error_1}
 \end{figure}
 
-\subsubsection{UC1 Error 2: Controller er ikke forbundet}
-I denne sektion beskrives fejlen, at Xbox360-controlleren ikke er forbundet til PC'en. Når \texttt{Xbox360controllerThread} oprettes, vil den spørge om controlleren er tilsluttet. Hvis ikke promtes brugeren herom. Se sekvensdiagrammet i figur \ref{fig:cd_uc1_error_2} og advarselsskiltet i figur \ref{fig:GUI_uc1_error_2}
-
+\begin{landscape}
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth* 1,height=\textwidth* 7/10 ]{../fig/diagrammer/pc/sd_uc1_Error_2.pdf}
+\includegraphics[width=\linewidth]{../fig/diagrammer/pc/sd_uc1_Error_1.pdf}
+\caption{Sekvensdiagram over UC1 senarie:Error 1}
+\label{fig:cd_uc1_error_1}
+\end{figure}
+\end{landscape}
+
+\clearpage
+%=============== UC1 Error 2 =============
+\subsubsection{UC1 Error 2: Controller er ikke forbundet}
+I denne sektion beskrives fejlen, at Xbox360-controlleren ikke er forbundet til PC'en. \linebreak[3] 
+PC softwaren vil spørge om controlleren er tilsluttet når \texttt{Xbox360controllerThread} oprettes. 
+Hvis ikke, vises fejlen i figur \ref{fig:GUI_uc1_error_2}. 
+Se sekvensdiagrammet i figur \ref{fig:cd_uc1_error_2}.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth* 1]{../fig/diagrammer/pc/sd_uc1_Error_2.pdf}
 \caption{Sekvensdiagram over UC1 senarie:Error 2}
 \label{fig:cd_uc1_error_2}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[h!]
 \centering
-\includegraphics[width=\textwidth* 3/4,height=\textwidth* 9/20 ]{../fig/billeder/gui_uc1_error_2.png}
-\caption{GUI UC1 Error 1}
+\includegraphics[width=\textwidth* 6/9]{../fig/billeder/gui_uc1_error_2.png}
+\caption{GUI UC1 Error 2}
 \label{fig:GUI_uc1_error_2}
 \end{figure}
 
+\clearpage
+
+%=============== UC1 Error 3 =============
 \subsubsection{UC1 Error 3: Forbindelsen bliver afbrudt}
-I denne sektion beskrives fejlen, at forbindelsen mellem bil og PC pludselig bliver afbrudt. \texttt{dataSocket} giver signal til \texttt{MainWindow} om at forbindelsen er afbrudt, som herefter giver besked til brugeren. Herefter stopper \texttt{dataSocket} med at opdatere data. Er controlleren forbundet og bliver denne forbindelse også afbrudt crasher programmet desværre. Denne fejl er beskrevet tidligere. Se sekvensdiagrammet i figur \ref{fig:cd_uc1_error_3} og advarselsskiltet i figur \ref{fig:GUI_uc1_error_3} 
+I denne sektion beskrives fejlen, at forbindelsen mellem bil og PC pludselig bliver afbrudt. Dette sker ved at \texttt{dataSocket} giver signal til \texttt{MainWindow} om at forbindelsen er afbrudt, som herefter giver besked til brugeren. Herefter stopper \texttt{dataSocket} med at opdatere data. Er controlleren forbundet og bliver denne forbindelse også afbrudt crasher programmet desværre. Denne fejl er beskrevet tidligere. Se sekvensdiagrammet i figur \ref{fig:cd_uc1_error_3} og advarselsskiltet i figur \ref{fig:GUI_uc1_error_3} 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth* 1,height=\textwidth* 7/10 ]{../fig/diagrammer/pc/sd_uc1_Error_3.pdf}
-\caption{Sekvensdiagram over UC1 senarie:Error 3}
-\label{fig:cd_uc1_error_3}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth* 3/4,height=\textwidth* 9/20 ]{../fig/billeder/gui_uc1_error_3.png}
+\includegraphics[width=\textwidth* 3/4]{../fig/billeder/gui_uc1_error_3.png}
 \caption{GUI UC1 Error 3}
 \label{fig:GUI_uc1_error_3}
 \end{figure}
+\vfill
+\clearpage
 
+\begin{landscape}
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../fig/diagrammer/pc/sd_uc1_Error_3.pdf}
+\caption{Sekvensdiagram over UC1 senarie:Error 3}
+\label{fig:cd_uc1_error_3}
+\end{figure}
+\vfill
+\end{landscape}
+
+\clearpage
+
+%=============== UC8 Konf IP =============
 \subsubsection{UC8: Konfigurer IP-adresse}
 For at aktivere usecase 8 klikker bruger på \texttt{''Konfigurer IP''}. Herefter åbner \texttt{MainWindow} en inputdialog som bruger indtaster IP-adressen i og efterfølgende trykker \texttt{''Ok''}. Se sekvensdiagrammet i figur \ref{fig:cd_uc8} og indputdialogen i figur \ref{fig:GUI_uc8} 
 
@@ -99,6 +134,8 @@ For at aktivere usecase 8 klikker bruger på \texttt{''Konfigurer IP''}. Herefte
 \caption{GUI UC8}
 \label{fig:GUI_uc8}
 \end{figure}
+
+\clearpage
 
 \subsubsection{UC9: Tænd/sluk AKS}
 For at aktivere usecase 9 klikker bruger på \texttt{''AKS-On''}.
@@ -118,6 +155,8 @@ Når bruger trykker på denne ændres teksten til \texttt{''AKS-Off''}. Er tekst
 \label{fig:GUI_uc9}
 \end{figure}
 
+\clearpage
+
 \subsubsection{UC10: Indstil makshastighed}
 For at aktivere usecase 10 klikker bruger på \texttt{''Indstil makshastighed''}.
 \texttt{MainWindow} åbner en inputdialog hvor i bruger indtaster et tal mellem 0 og 10. Inputdialogen accepterer ikke indtastninger uden for dette interval. Se sekvensdiagrammet i figur \ref{fig:cd_uc10} og indputdialogen i figur \ref{fig:GUI_uc10}
@@ -135,6 +174,8 @@ For at aktivere usecase 10 klikker bruger på \texttt{''Indstil makshastighed''}
 \caption{GUI UC10}
 \label{fig:GUI_uc10}
 \end{figure}
+
+\clearpage
 
 \subsubsection{UC11: Kalibrer styretøj}
 For at aktivere usecase 11 klikker bruger på \texttt{''Kalibrer styretøj''}.
@@ -154,6 +195,8 @@ For at aktivere usecase 11 klikker bruger på \texttt{''Kalibrer styretøj''}.
 \label{fig:GUI_uc11}
 \end{figure}
 
+\clearpage
+
 \subsubsection{UC12: Afbryd system}
 For at aktivere usecase 11 klikker bruger på \texttt{''Luk ned''}.
 \texttt{dataSocket} beder bilen om at lukke ned og bilen svarer med et ACK. Modtages der ikke et ACK giver \texttt{MainWindow} bruger besked om at bilen ikke kan lukke ned. Se sekvensdiagrammet i figur \ref{fig:cd_uc11} og advarslen i figur \ref{fig:GUI_uc11}
@@ -172,6 +215,7 @@ For at aktivere usecase 11 klikker bruger på \texttt{''Luk ned''}.
 \label{fig:GUI_uc12}
 \end{figure}
 
+\clearpage
 
 \subsection{Klassebeskrivelse}
 I denne sektion vil der blive beskrevet klassen \texttt{MainWindow}. \texttt{MainWindow} er GUI'ens hoved klasse hvor i alt styres fra. \texttt{XboxController} er controllerens klasse som \texttt{MainWindow} bruger til at streame controllerdata fra.
@@ -182,11 +226,11 @@ I denne sektion vil der blive beskrevet klassen \texttt{MainWindow}. \texttt{Mai
 \caption{Klasse diagram over GUI}
 \label{fig:cd_gui}
 \end{figure}
-
+\clearpage
 \textbf{Attributter for MainWindow}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| Z | Z | L{10cm} |} \hline
+\begin{tabularx}{\textwidth}{| L{2.5cm} | l | Z |} \hline
 Navn & Type & Beskrivelse \\\hline
 \texttt{isConnected}         & \texttt{bool}           &Bliver brugt til at angive om socket har forbindelse til bilen eller ej \\\hline
 \texttt{data}                & \texttt{char[6]}        &Char array som indeholder: Hastighed, Makshastighed, AKS-status, Styretøj, Acceleration og Afstand\\\hline
@@ -213,7 +257,7 @@ Navn & Type & Beskrivelse \\\hline
 \textbf{Metoder for MainWindow}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{explicit void MainWindow()} \\\hline
 Parametre &  QWidget \\\hline
 Returværdi &  \\\hline
@@ -223,20 +267,23 @@ Beskrivelse & Er \texttt{MainWindows} constructor. Bruges til at indlæse data f
 \label{table:met_MainWindow}
 \end{table}
 
+
+\clearpage
+
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype & \texttt{void \~MainWindow()} \\\hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
+Prototype & \texttt{void $\sim$MainWindow()} \\\hline
 Parametre &  \\\hline
 Returværdi &  \\\hline
 Beskrivelse & Er \texttt{MainWindows} destructor. Bruges til at slette oprettede instanser. \\\hline
 \end{tabularx}
-\caption{Metodebeskrivelse for \texttt{\~MainWindow}}
+\caption{Metodebeskrivelse for \texttt{$\sim$MainWindow}}
 \label{table:met_sMainWindow}
 \end{table}
 
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{slot void Au2connect()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
@@ -247,7 +294,7 @@ Beskrivelse & Kaldes når bruger trykker på \texttt{''Opret forbindelse''}. Bru
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{slot void konfigurerIp()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
@@ -258,7 +305,7 @@ Beskrivelse & Kaldes når bruger trykker på \texttt{''Konfigurer IP''}. Bruges 
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{slot void AKSstatus()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
@@ -268,8 +315,9 @@ Beskrivelse & Kaldes når bruger klikker på \texttt{''AKS-On''} eller \texttt{'
 \label{table:met_AKSstatus}
 \end{table}
 
+\clearpage
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{slot void maksHastighed} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
@@ -280,7 +328,7 @@ Beskrivelse & Kaldes når bruger klikker på \texttt{''Indstil makshastighed''}.
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{slot void readSocket()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
@@ -291,7 +339,7 @@ Beskrivelse & \texttt{dataThread} giver signalet \texttt{sig\_getData} som modta
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{slot void connectionLost()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
@@ -302,7 +350,7 @@ Beskrivelse & Når \texttt{dataSocket} mister forbindelse gives signalet \texttt
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{slot void connected()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
@@ -314,7 +362,7 @@ Beskrivelse & Når \texttt{dataSocket} har oprettet forbindelse gives signalet \
 
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{slot void kalibrerStyretoj()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
@@ -325,7 +373,7 @@ Beskrivelse & Kaldes når bruger klikker på \texttt{''Kalibrer styretøj''}. Br
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{slot void shutDown()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
@@ -336,7 +384,7 @@ Beskrivelse & Kaldes når bruger klikker på \texttt{''Luk ned''} eller klikker 
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{slot void controllerIsConnected()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
@@ -347,7 +395,7 @@ Beskrivelse & Eksekveres når controlleren er forbundet til bilen. \texttt{contr
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{slot void controllerLostConnection()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
@@ -358,7 +406,7 @@ Beskrivelse & Eksekveres når controlleren mister forbundet til bilen. \texttt{c
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{void controller()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
@@ -368,8 +416,10 @@ Beskrivelse & Kaldes af \texttt{Au2Connect} når \texttt{dataSocket} er forbunde
 \label{table:met_controller}
 \end{table}
 
+\clearpage
+
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{void* controllerStream()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
@@ -380,7 +430,7 @@ Beskrivelse & Funktionen kører i en while-løkke sålænge variablen \texttt{co
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{static void* controllerStreamHelper()} \\\hline
 Parametre & void* context  \\\hline
 Returværdi & Funktionspointer tilcontrollerStream  \\\hline
@@ -391,7 +441,7 @@ Beskrivelse & Kaldes af \texttt{pthread\_create} og retunerer funktionspointeren
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{void* getData()} \\\hline
 Parametre &   \\\hline
 Returværdi &  \\\hline
@@ -402,7 +452,7 @@ Beskrivelse & Funktionen kører i en while-løkke sålænge variablen \texttt{is
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{static void* getDataHelper()} \\\hline
 Parametre & void* context  \\\hline
 Returværdi & Funktionspointer getData  \\\hline
@@ -412,8 +462,10 @@ Beskrivelse & Kaldes af \texttt{pthread\_create} og retunerer funktionspointeren
 \label{table:met_getDataHelper}
 \end{table}
 
+\clearpage
+
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{void openPlayer()} \\\hline
 Parametre &  \\\hline
 Returværdi &  \\\hline
@@ -424,7 +476,7 @@ Beskrivelse & Åbner instansen af VLC-player i hovedvinduet. Kaldes når \texttt
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{void writeDataToFile()} \\\hline
 Parametre &  \\\hline
 Returværdi &  \\\hline
@@ -435,7 +487,7 @@ Beskrivelse & Skriver data-arrayet til log filen når GUI'en lukkes ned. Filen \
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{void readDataFromFile()} \\\hline
 Parametre &  \\\hline
 Returværdi &  \\\hline
@@ -446,7 +498,7 @@ Beskrivelse & Læser data-arrayet fra log filen når \texttt{contructoren} kalde
 \end{table}
 
 \begin{table}[H]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+\begin{tabularx}{\textwidth}{| l | Z |} \hline
 Prototype & \texttt{void updateData()} \\\hline
 Parametre &  \\\hline
 Returværdi &  \\\hline

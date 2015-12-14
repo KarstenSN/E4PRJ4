@@ -24,6 +24,7 @@ void Au2Thread::run()
    exec();
 }
 
+//----------readyRead0----------
 int Au2Thread::readyRead()
 {
     COORD coord;
@@ -93,6 +94,7 @@ int Au2Thread::readyRead()
     }
     return 0;
 }
+//----------readyRead1----------
 
 void Au2Thread::disconnect()
 {

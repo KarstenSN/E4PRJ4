@@ -6,18 +6,22 @@ Constructoren anvnvender \texttt{<fstream>} biblioteket til at åbne en fil med 
 
 \lstinputlisting[linerange=Log::Log1-Log::Log2, label=lst:log_con, caption=Constructor for Logklassen.]{../../src/bil/log/log.cpp}
 
-Klassens interface er bestående af de tre metoder: \texttt{writeError}, \texttt{writeWarning} og \texttt{writeEvent}. \\
+Klassens interface er bestående af de tre metoder: \texttt{writeError}, \texttt{writeWarning} og \texttt{writeEvent}. 
 Disse ligner hinanden rigtig meget og har kun logbeskedens kategori til forskel. 
-Kategoriindelingen skal gøre det nemt at debugge på systemet. Et eksempel på en log besked kan for eksempel være:\\
+Kategoriindelingen skal gøre det nemt at debugge på systemet. Et eksempel på en log besked kan for eksempel være:
 
-\texttt{[2015-12-8 10:56:30] [Event] [Settings::Settings(Log*)] Initialized Settings}\\
+\begin{lstlisting}[language=]
+[2015-12-8 10:56:30] [Event] [Settings::Settings(Log*)] Initialized Settings}
+\end{lstlisting}
 
-I dette ovenstående eksempel på en logbesked, er der tale om en initialisering af Settingsklassen.\\
+I dette ovenstående eksempel på en logbesked, er der tale om en initialisering af Settingsklassen.
 I alle metoderne der skriver til logfilen, er der implementeret en \texttt{std::lock\_guard}, som er en del af \texttt{<mutex>} biblioteket. 
 Dette forhindrer at flere tråde skriver i logfilen på samme tid, da \texttt{std::lock\_guard} tager ejerskab af den mutex der er oprettet som attribut i \texttt{Log.hpp}. 
 Når det scope som denne guard er defineret i forlades, destrueres låsen og mutex'en frigives igen. Implementeringen af \texttt{writeEvent} er vist i listing \ref{lst:log_writeEvent}.
 
 \lstinputlisting[linerange=Log::writeEvent1-Log::writeEvent2, label=lst:log_writeEvent, caption=Metoden \texttt{writeEvent} i logklassen.]{../../src/bil/log/log.cpp}
+
+\clearpage
 
 I klassen er der anvendt en private variabel der fremstiller det timestamp, som logfilen anvender. Denne metode er meget passende kaldet \texttt{getTimestamp}, og returnerer en string med det nuværende tidspunkt i et format der er passende at anvende i logfilen. Helt basalt set, så anvender denne metode nogle indbyggede systemkald til at finde den lokale tid på den respektive host, som koden afvikles på, hvorefter denne omdannes til noget læseligt. Koden er vist i listing \ref{lst:log_getTimestamp}.
 
@@ -26,6 +30,8 @@ I klassen er der anvendt en private variabel der fremstiller det timestamp, som 
 Der er udarbejdet en destructor som sørger for at lukke filen, klassen nedlægges. Før dette sker, bliver der lavet et linjeskift, så det er nem at skelne imellem de enkelte sessioner af programmet. Dette er vist i listing \ref{lst:log_destructor}.
 
 \lstinputlisting[linerange=Log::Log::~Log1-Log::Log::~Log2, label=lst:log_destructor, caption=Destructor for logklassen.]{../../src/bil/log/log.cpp}
+
+\clearpage
 
 \subsubsection{Test}
 Til at kontrollere funktionaliteten i klassen, er der udarbejdet et testprogram (\texttt{main.cpp}), som opretter en række tråde der alle forsøger at skrive logbeskeder på samme tid. Under implementeringsfasen, er programmet løbende bygget til ''host''(den computer der udvikles på) og ''target''(crosscompilet til pi) og efterfølgende eksekveret. Testprogrammet er vist i listing \ref{lst:log_main}.

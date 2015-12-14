@@ -40,7 +40,7 @@ Navn & Type & Beskrivelse \\\hline
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype 	& \texttt{void Settings(Log* logClassPtr)} \\\hline
 Parametre 	& \texttt{logClassPtr} 		\newline En pointer til objektet af typen Log der bruges til at lave en association til objektet. \\\hline
-Beskrivelse	& Constructor til klassen Settings. \newline \\\hline
+Beskrivelse	& Constructor til klassen Settings.  \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for constructoren af \texttt{Settings} klassen}
 \label{table:met_settings}
@@ -50,8 +50,8 @@ Beskrivelse	& Constructor til klassen Settings. \newline \\\hline
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype 	& \texttt{void setMaxSpeed(int maxVelocity)} \\\hline
 Parametre 	& \texttt{maxVelocity}		\newline Den hastighed der ønskes sættet til maksimal hastighed for bil.\\\hline
-Returværdi	& \texttt{void} 			\newline \\\hline
-Beskrivelse	& Denne funktion har til formål at skrive til variablen maxVelocity\_. \newline \\\hline
+Returværdi	& \texttt{void} 			 \\\hline
+Beskrivelse	& Denne funktion har til formål at skrive til variablen maxVelocity\_.  \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{setMaxSpeed()}}
 \label{table:met_setmaxspeed}
@@ -61,43 +61,43 @@ Beskrivelse	& Denne funktion har til formål at skrive til variablen maxVelocity
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype 	& \texttt{void setAKS(bool AKSStatus)} \\\hline
 Parametre 	& \texttt{AKSStatus}		\newline Den ønskede tilstand af AKS status for bil.\\\hline
-Returværdi	& \texttt{void} 			\newline \\\hline
-Beskrivelse	& Denne funktion har til formål at skrive til variablen AKSStatus\_.\newline \\\hline
+Returværdi	& \texttt{void} 			 \\\hline
+Beskrivelse	& Denne funktion har til formål at skrive til variablen AKSStatus\_. \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{setAKS()}}
 \label{table:met_setaks}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[h!]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype 	& \texttt{void calibrateSteering(char calibration)} \\\hline
 Parametre 	& \texttt{calibration}		\newline Den ønskede kalibrering af bilens styrtøj.\\\hline
-Returværdi	& \texttt{void} 			\newline \\\hline
-Beskrivelse	& Denne funktion har til formål at skrive til variablen calibration\_.\newline \\\hline
+Returværdi	& \texttt{void} 			 \\\hline
+Beskrivelse	& Denne funktion har til formål at skrive til variablen calibration\_. \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{calibratesteering()}}
 \label{table:met_calibratesteering}
+\end{table}
+
+\begin{table}[h!]
+\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
+Prototype 	& \texttt{int getMaxSpeed()} \\\hline
+Parametre 	& \texttt{void}			 \\\hline
+Returværdi	& \texttt{int} 			\newline Returnerer variablen maxVelocity\_\\\hline
+Beskrivelse	& Denne funktion har til formål at give muligheden for at læse variablen maxVelocity\_. \\\hline
+\end{tabularx}
+\caption{Metodebeskrivelse for \texttt{getMaxSpeed()}}
+\label{table:met_getmaxspeed}
 \end{table}
 
 \clearpage
 
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
-Prototype 	& \texttt{int getMaxSpeed()} \\\hline
-Parametre 	& \texttt{void}			\newline \\\hline
-Returværdi	& \texttt{int} 			\newline Returnerer variablen maxVelocity\_\\\hline
-Beskrivelse	& Denne funktion har til formål at give muligheden for at læse variablen maxVelocity\_.\newline \\\hline
-\end{tabularx}
-\caption{Metodebeskrivelse for \texttt{getMaxSpeed()}}
-\label{table:met_getmaxspeed}
-\end{table}
-
-\begin{table}[h]
-\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype 	& \texttt{bool getAKS()} \\\hline
-Parametre 	& \texttt{void}			\newline \\\hline
+Parametre 	& \texttt{void}			 \\\hline
 Returværdi	& \texttt{bool}			\newline Returnerer variablen AKSStatus\_\\\hline
-Beskrivelse	& Denne funktion har til formål at give muligheden for at læse variablen AKSStatus\_.\newline \\\hline
+Beskrivelse	& Denne funktion har til formål at give muligheden for at læse variablen AKSStatus\_. \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{getAKS()}}
 \label{table:met_getaks}
@@ -106,9 +106,9 @@ Beskrivelse	& Denne funktion har til formål at give muligheden for at læse var
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype 	& \texttt{char getCalibration()} \\\hline
-Parametre 	& \texttt{void}			\newline \\\hline
+Parametre 	& \texttt{void}			 \\\hline
 Returværdi	& \texttt{char} 		\newline Returnerer variablen calibration\_\\\hline
-Beskrivelse	& Denne funktion har til formål at give muligheden for at læse variablen calibration\_.\newline \\\hline
+Beskrivelse	& Denne funktion har til formål at give muligheden for at læse variablen calibration\_. \\\hline
 \end{tabularx}
 \caption{Metodebeskrivelse for \texttt{getCalibration()}}
 \label{table:met_getcalibration}
