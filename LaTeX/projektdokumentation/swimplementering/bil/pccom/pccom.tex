@@ -14,13 +14,16 @@ Herunder vil koden blive forklaret i detaljer.
 
 \clearpage
 
-\paragraph{controllerStream} er en funktion der igangsættes af tråden \texttt{controllerStreamTh}. Formålet med denne funktion er at oprette en TCP kommunikation til streaming af brugerinput.\\\\
+\paragraph{controllerStream} er en funktion der igangsættes af tråden \texttt{controllerStreamTh}. Formålet med denne funktion er at oprette en TCP kommunikation til streaming af brugerinput.
+
 I Listing \ref{lst:pccom_controllerstream1} vises initieringen af den ønskede socket. Der startes med at skrive til logen at denne funktion er blevet kaldt (linje 42), herefter initieres de variable der også skal nedlægges i tilfælde af at denne funktion afsluttes (linje 45-47). Nogle af disse variable er structs der er deffineret i ''\texttt{netinet/in.h}'' bibilioteket og vil ikke blive gennemgået i detaljer her.
 
 \lstinputlisting[linerange=PcCom::controllerStream1-PcCom::controllerStream2, label=lst:pccom_controllerstream1, caption=Del 1 af funktionen \texttt{controllerStream}: Initieringen.]{../../src/bil/pccom.cpp}
 
-\texttt{socket} kaldet (linje 50) er et systemkald der konstruerer en ny socket. Kaldet tager imod 3 argumenter. Det første argument er addressen på domænet. I dette tilfælde er der brugt \texttt{AF\_INET} som indeholder en konstant til at fortælle at det ønskede domæne er et internet domæne. Det andet argument er socket typen. Der er valgt at bruge \texttt{SOCK\_STREAM} som initialiserer socket til at være en streaming socket. Det tredje argument er protokolen der ønskes taget i brug. Som standard er det smart at sætte dette argument til 0 da kaldet selv tager den bedst mulige protokol til den angivede socket type, i dette tilfælde vil den vælge TCP da dette er den bedste protokol til datastreaming. Systemkaldet vil returnere en indgang til fildescripterens tabel (et lille heltal). Returværdien er brugt til at kunne referere til denne socket. I tilfælde af fejl vil der blive skrevet til logen gennem error funktionen i klassen.\\
-Herefter indskrives de data der skal bruges for at binde den skabte socket, til den ønskede adresse, i \texttt{serv\_addr} (linje 53-55). Disse data bliver brugt i system kaldet \texttt{bind} (linje 56). Efter kaldet, \texttt{listen}, er serveren nu klar til at blive talt til fra en klient.\\\\
+\texttt{socket} kaldet (linje 50) er et systemkald der konstruerer en ny socket. Kaldet tager imod 3 argumenter. Det første argument er addressen på domænet. I dette tilfælde er der brugt \texttt{AF\_INET} som indeholder en konstant til at fortælle at det ønskede domæne er et internet domæne. Det andet argument er socket typen. Der er valgt at bruge \texttt{SOCK\_STREAM} som initialiserer socket til at være en streaming socket. Det tredje argument er protokolen der ønskes taget i brug. Som standard er det smart at sætte dette argument til 0 da kaldet selv tager den bedst mulige protokol til den angivede socket type, i dette tilfælde vil den vælge TCP da dette er den bedste protokol til datastreaming. Systemkaldet vil returnere en indgang til fildescripterens tabel (et lille heltal). Returværdien er brugt til at kunne referere til denne socket. I tilfælde af fejl vil der blive skrevet til logen gennem error funktionen i klassen.
+
+Herefter indskrives de data der skal bruges for at binde den skabte socket, til den ønskede adresse, i \texttt{serv\_addr} (linje 53-55). Disse data bliver brugt i system kaldet \texttt{bind} (linje 56). Efter kaldet, \texttt{listen}, er serveren nu klar til at blive talt til fra en klient.
+
 \texttt{accept} (linje 64) er kaldet der giver en klient, der har anmodet om at snakke med serveren, mulighed for dette. I tilfælde af at der ikke er nogen klient der sender en anmodning vil den blot ligge tråden til at sove, indtil at den bliver vækket af en anmodning.
 
 \lstinputlisting[linerange=PcCom::controllerStream2-PcCom::controllerStream3, label=lst:pccom_controllerstream2, caption=Del 2 af funktionen \texttt{controllerStream}: Streaming.]{../../src/bil/pccom.cpp}
@@ -29,7 +32,12 @@ Koden i Listing \ref{lst:pccom_controllerstream2} er streaming og datahåndterin
 I tilfælde af at klassen er sat til debug-mode, vil der udskrives dele af den modtagede data (linje 80)\\
 Ved tilfælde af at \texttt{running\_} er sat til \texttt{FALSE}, vil den opsatte socket lukkes ned, og skrive dette til Logklassen (linje 102-114).
 
-\paragraph{dataStream} er en funkion der igangsættes af tråden \texttt{dataStreamTh}. Formålet med denne funktion er at oprette en TCP kommunikation til streaming af indstillinger fra PC softwaren, hhv. makshastighed, AKS status og styrtøj kalibrering, samt streaming af data til PC softwaren, hhv. nuværende hastighed, afstand til nærmeste forhindring og acceleration. \texttt{dataStream} virker hovedsageligt på samme måde som \texttt{controllerStream}, og der vil derfor kun blive gennemgået enkelte eksempler fra denne funktion hvor den er forskellig \texttt{controllerStream}. Initialiseringen af TCP socketen vil derfor ikke blive gennemgået her, ligeledes vil datahåndteringen heller ikke blive gennemgået i dette stykke.\\\\
+\paragraph{dataStream} er en funkion der igangsættes af tråden \texttt{dataStreamTh}. 
+Formålet med denne funktion er at oprette en TCP kommunikation til streaming af indstillinger fra PC softwaren, 
+hhv. makshastighed, AKS status og styrtøj kalibrering, samt streaming af data til PC softwaren, hhv. nuværende hastighed, afstand til nærmeste forhindring og acceleration. 
+\texttt{dataStream} virker hovedsageligt på samme måde som \texttt{controllerStream}, og der vil derfor kun blive gennemgået enkelte eksempler fra denne funktion hvor den er forskellig \texttt{controllerStream}. 
+Initialiseringen af TCP socketen vil derfor ikke blive gennemgået her, ligeledes vil datahåndteringen heller ikke blive gennemgået i dette stykke.
+
 Ud over at datahåndteringen er forskellig fra \texttt{controllerStream} funktionens datahåndtering, da de modtagede/afsendte data er anderledes, er det mest specielle ved denne funktion muligheden for at få at vide at den skal lukke ned fra PC softwaren. 
 
 \lstinputlisting[linerange=PcCom::dataStream3-PcCom::dataStream4, label=lst:pccom_datastream3, caption=\texttt{dataStream} funktionen i tilfælde af shutdown (\texttt{dwnnow}) kommando.]{../../src/bil/pccom.cpp}
