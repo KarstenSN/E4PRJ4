@@ -37,7 +37,7 @@ Tilsvarende er der selvfølgelig udarbejdet en trådtype der læser fra dataklas
 
 Ovenstående gør det muligt at se om der skulle være opstået nogle korrupte data iblandt de udlæste data. Korrupt data kunne fremkomme hvis mutex-låsene i dataklassen ikke fungerer efter hensigten og at der udlæses data samtidig med at der er ved at blive skrevet i dem. Dette vil medføre at der skrives en værdi i logfilen fra en \texttt{reader}-tråd som ikke tidligere er blevet indlæst i dataklassen af en \texttt{writer}-tråd. I listing \ref{lst:data_logfile} ses en logfil der er resultatet af at køre testprogrammet.
 
-\lstinputlisting[language=,label=lst:data_logfile, caption=Den resulterede logfil når testprogrammet køres.]{swimplementering/bil/data/pi-log.txt}
+\lstinputlisting[language=,label=lst:data_logfile, caption=Den resulterede logfil når testprogrammet køres.]{swimplementering/pi/data/pi-log.txt}
 
 I logfilen ses det at der ikke er sket nogle fejl af den art som er beskrevet. For at få et mere pålideligt testresultat, er det en fordel at køre programmet flere gange elle med flere tråde, hvilket selvfølgelig også er gjort. Testprogrammets \texttt{main}-funktion er vist i listing \ref{lst:data_test_main}.
 
