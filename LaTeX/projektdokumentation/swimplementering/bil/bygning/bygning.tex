@@ -1,10 +1,10 @@
-\subsection{Bygning af software til bil}
+\subsection{Bygning af software til Pi}
 
 Softwaren på bilen bygges med GNU Make\cite{lib:GNU_make}.
-For at kunne bygge denne kræver det altså at man har installeret GNU toolchain på sin PC samt et par andre biblioteker.
+For at kunne bygge denne kræver det at man har installeret GNU toolchain på sin PC samt et par andre biblioteker.
 Dette drejer sig primært om WiringPi\cite{lib:wiringpi} og en speciel udgave af GCC compileren, som fungerer til Raspberry Pi\cite{lib:pi_tools}.
 Det er dog kun nødvendigt at installere compileren på den PC, der skal compile koden, da de nødvendige biblioteker allerede er installeret i gruppen repository. 
-Vil man dog afvikle koden på sin egen Rasperry Pi 2 er det dog nødvendigt at installere WiringPi på denne.
+Vil man afvikle koden på sin egen Rasperry Pi 2 er det dog nødvendigt at installere WiringPi \cite{lib:wiringpi_projekt} på denne. %TODO virker henvisning til WiringPi? /PKP
 
 For at bygge selve koden når alle nødvendige softwarepakker er installeret skrives der ''make ARCH=target'' i en terminalen i stien E4PRJ4/src/bil/.
 Herefter overføres filen ''pi'' til ens Raspberry Pi og denne afvikles herefter på Pi'en med \texttt{sudo ./pi}, såfremt filen ligger i ens nuværende sti.
@@ -13,3 +13,6 @@ For at få programmet til at køre automatisk ved Pi'ens opstart er \texttt{/etc
 For at gøre dette muligt, da et script automatisk ikke har mulighed for at bruge kommandoen \texttt{sudo}, uden indtastning af en kode, er linjen \texttt{pi ALL=(ALL) NOPASSWD: ALL} tilføjet i filen \texttt{etc/sudoers}.
 
 Ud over at kalde main programmet på Pi'en, starter \texttt{autostart.sh} med at kalde et andet script ved navn \texttt{setTimeAndNetwork.sh} som automatisk skaber en connection til et hardcoded Wi-Fi hotspot. Hvis det er mulighed for internet via dette Wi-Fi vil dette script ligeledes opdaterer Pi'ens tid til den nuværende tid.
+
+Den distribution der er valgt til at køre på Pi, er PREEMPT\_RT \cite{lib:PREEMPT_RT}, som udmærker sig ved at minde rigtig meget om den normale Raspbian distribution \cite{lib:raspbian}, men har en modificeret kernel som håndterer tiden mere stringent og giver mulighed for ''real time'' regulering. Grundet den endelige implementering er der dog ikke tale om at det samlede system er real time baseret. For at installere distributionen er der anvendt en guide til at flashe SD kortet \cite{lib:rpi_sd} og oprette ssh forbindelse \cite{lib:ssh} ligesom \IIC baudrate er sat til $100kHz$ i \texttt{etc/modprobe.d/i2c.conf}.
+
