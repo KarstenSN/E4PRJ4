@@ -1,16 +1,16 @@
 \chapter{Abstract}
 \label{ch:Abstract}
 
-This report describes the development of 4. semester project of bachelor of engineering students, in electronic engineering, from Aarhus University of Engineering (ASE).
-The project address an intelligent car - named AU2 - a remote controlled car, able to be controlled with a Xbox-360 controller\cite{lib:xbox-360} from a common Windows PC.
-The intelligent part is based on the car being able to detect a future collision with an obstacle and evade it.
-The user is able to monitor the car with a car-mounted camera\cite{lib:cam}.
-The video stream, along with current speed, G-force and distance to nearest obstacle, is shown on a program installed on the PC.
-A Raspberry Pi 2 B and PSoC 4 Pioneer Kit\cite{lib:psoc4_guide} have been applied as controller of the car. The PSoC 4 Pioneer Kit utilizes \IIC communication to gather data from the car sensors. The car sensors consist of four proximity sensors\cite{lib:maxsonar}, a homemade tachometer and an accelerometer\cite{lib:accel}.
+This report describes the development of the 4. semester project of engineering bachelor students, in electronic engineering, from Aarhus University of Engineering (ASE).
+The project addresses an intelligent car - named AU2 - a remote controlled car, able to be controlled with an Xbox-360 controller\cite{lib:xbox-360} from a common Windows PC.
+The intelligent part is based on the car being able to detect a future collision with an obstacle and evading it.
+The user is able to monitor the car with a camera\cite{lib:cam} mounted on the car.
+The video stream, along with current speed, G-force and distance to nearest obstacle is shown on a program installed on the PC.
+A Raspberry Pi 2 B has been applied as controller of the car with a PSoC 4 Pioneer Kit\cite{lib:psoc4_guide} as addon. The PSoC 4 Pioneer Kit utilizes \IIC communication to gather data from the sensors on the car. Amongst the sensors are four proximity sensors\cite{lib:maxsonar}, a homemade tachometer and an accelerometer\cite{lib:accel}.
 The software on the Pi has been developed using C++11 threads and a external \IIC library named WiringPi\cite{lib:wiringpi}.
 Communication between PC and car is done with Wi-Fi and is implemented through socket based TCP network communication.
-The car is driven by a DC-motor, turn with a servomotor and is supplied from a DC-DC buck converter.
+The car is driven by a DC-motor, turns with a servomotor and is supplied from a DC-DC buck converter.
 
-The realized system is able to make the car drive forward and backward. The user decides the speed through the Xbox-360 controller. The car is able to measure the distance to the nearest obstacle and the current speed. It is able to present the user with the data and video stream on the user interface. The anti-collision system has not been completely implemented. The car is not able to turn because the servomotor have not been installed. Occasional errors have, in addition, been occurring in the communication between the car and the PC.
+The realized system is able to drive the car forward and backward. The user decides the speed through the Xbox-360 controller. The car is able to measure the distance to the nearest obstacle and the current speed. It is able to present the user with the data and video stream on the user interface. The anti-collision system has not been completely implemented. The car is not able to turn because the servomotor have not been installed. Occasional errors have, in addition, been occurring in the communication between the car and the PC.
 
 \clearpage
