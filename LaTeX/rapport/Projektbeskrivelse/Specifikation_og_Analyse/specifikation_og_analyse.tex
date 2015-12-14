@@ -6,15 +6,15 @@ Afsnittet specifikation og analyse dækker over førnævnte for kravene tilhøre
 Projektet er forholdsvist omfattende og de krav der er stillet til projektet ligger indenfor en grænse, som blev bedømt rimelige af projektgruppen og for hvad kunne forventes at nå i projektperioden. 
 Gruppen har før kravene blev endeligt opstillet undersøgt disse, for at gøre opgaven så løslig og overkommelig som muligt.
 Generelt for projektet er der blevet overvejet meget, hvilke alternativer der er ifm. at finde den bedste vej til en færdig prototype.
-Til samling for selve bilen, blev det valgt at bruge en Raspberry Pi, da denne er i stand til alt hvad projektet skal kunne og mere til. 
+Til kontrollere af selve bilen, blev det valgt at bruge en Raspberry Pi 2 B, da denne er i stand til alt hvad projektet skal kunne og mere til. 
 Desuden var gruppen interesserede i at undersøge denne platform yderligere og lære om dens begrænsninger og styrker, hvilket gør den ideel til en projektplatform.
 Da en bruger skal kunne se forskellige informationer om bilen, samt et videostream fra et kamera monteret på bilen, er der tilhørende software til en PC. 
 Ud over dette blev der tilknyttet en X-Box Controller til softwaren på PC'en, som bilen kan styres med.
-En forudsætning for at projektet kan bestå er, at der skal anvendes en form for netværkskommunikation, som for dette projekts tilfælde er alt kommunikation der sendes mellem PC og Pi'en på bilen. Dvs. alle brugerinputs fra controlleren, samt alt data omkring bilen fra Pi'en.
-Pi'en har tilknyttet en Wi-Fi Dongle, som tillader bilen at have trådløs internet. Udover PC, Pi og controller, er der nogle sensorer tilsluttet bilen, som kommunikerer via \IIC med Pi'en via en PSoC. 
+En forudsætning for at projektet kan bestås er, at der skal anvendes en form for netværkskommunikation, som for dette projekts tilfælde er alt kommunikation der sendes mellem PC og Pi'en på bilen. Dvs. alle brugerinputs fra controlleren, samt alt data omkring bilen fra Pi'en.
+Pi'en har tilsluttet en Wi-Fi dongle, som tillader bilen at have trådløs forbindelse. Udover PC, Pi og controller, er der nogle sensorer tilsluttet bilen, som kommunikerer via \IIC med Pi'en via en PSoC. 
 \IIC blev valgt pga. tidligere erfaringer med denne som interkomponentbus. 
 
-Bilen indeholder nogle afstandssensorer, således at den er i stand til at detektere en forhindring og undvige den hvis den vurderes i vejen. Tachometeret som er monteret på bilen er en relevant tilføjelse, for at kunne opfylde målet om en intelligent bil, da bilen er nødt til at kende sin hastighed for at kunne bedømme hvor langt den er fra forhindringen. Til sidst skulle der tilsluttes et accelerometer, så bilen kunne regulere og optimere sin kørsel. 
+Bilen indeholder nogle afstandssensorer, således at den er i stand til at detektere en forhindring og undvige den eller bremse hvis den vurderes i vejen. Tachometeret som er monteret på bilen er en relevant tilføjelse: For at kunne opfylde målet om en intelligent bil, da bilen er nødt til at kende sin hastighed for at kunne bedømme hvor hurtigt den nærmer sig en forhindringen. Til sidst skulle der tilsluttes et accelerometer, så bilen kunne regulere og optimere sin kørsel. 
 Et samlet overblik over bilens dele kan findes i afsnit \myRef{P-sec:systemoversigt} i dokumentationen.
 
 \clearpage
