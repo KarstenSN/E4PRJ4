@@ -29,8 +29,8 @@ Motion streamer video ligeså snart der er tændt for bilen. Der er derfor ikke 
 PC'en og bilen kommunikerer igennem to TCP forbindelser. Xbox360 Controlleren har en TCP forbindelse hvor controller data bliver sendt kontinuert. GUI'en har en anden TCP forbindelse hvor data også udveksles kontinuert. Data består af makshastighed, afstand til forhindring, AKS-status,  styretøj, acceleration og hastighed på bilen. TCP forbindelse til GUI'en sker på Pi'ens Ip-adresse port 1234 og controlleren har port 1235.
 I tabel \ref{tbl:prt_gui_byte} ses sekvensen over hver byte i GUI protokollen. Her er beskrevet hvilket bytenummer hver data byte har, samt hvad enheden er. DB1 er fx. Hastighed som sendes i enheden (km/h)$\times$10. Dette gøres for at vi derfor på PC siden kan modtage hastigheden fra 0-25.5 km/h. Når kommandoen shutDown sendes benytter den sig af samme protokol. Indholdet at bytes er i rækkefølgen ''dwnnow''
 
-\begin{table}[ht]
-	\begin{tabularx}{\textwidth}{| Z | Z | Z | Z |} \hline
+\begin{table}[h]
+	\begin{tabularx}{\textwidth}{| l | l | Z | Z |} \hline
 
 		\textbf{Kommando} 						&
 		\textbf{Svar}							&
@@ -53,10 +53,10 @@ bilen sender ''dwnnow'' tilbage som ACK. Alt andet tolkes som NACK \\ \hline
 	\label{tbl:prt_gui}
 \end{table}
 
-
+\clearpage
 
 \begin{table}[ht]
-	\begin{tabularx}{\textwidth}{| Z | Z | Z | Z | Z | Z | Z | Z | Z |} \hline
+	\begin{tabularx}{\textwidth}{| l | l | l | Z | l | l | Z |} \hline
 
 	\textbf{}	&
 	\textbf{DB0}	&
@@ -66,7 +66,7 @@ bilen sender ''dwnnow'' tilbage som ACK. Alt andet tolkes som NACK \\ \hline
 	\textbf{DB4}	&
 	\textbf{DB5}	\\ \hline
 
-	\textbf{Datatype} & Makshastig hed & Hastighed & Afstand & Acceleration & AKS-status & Styretøj \\ \hline
+	\textbf{Datatype} & Makshastighed & Hastighed & Afstand & Acceleration & AKS-status & Styretøj \\ \hline
 	\textbf{Enhed} & char & char & char & char & char &  char \\ \hline
 	\textbf{Værdi} & km/h & (km/h)$\div$10 & m$\div$10 & G$\div$10 & Off/On & Udslag \\ \hline
 	\textbf{Range} & 0..255 & 0..255 & 0..255 & 0..255 & 0..1 & -50..50 \\ \hline

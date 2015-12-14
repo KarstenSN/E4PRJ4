@@ -1,18 +1,18 @@
 \subsection{Steeringklassen} \label{sec:steering_impl}
 
-Steering klassen er den klasse der kontrollere PWM signalet til motorens fremdrift og til styretøj servoen. 
-Den modtager nye input fra systemet om ændringer af fremdrift, brems og retning på styretøj. Derudover henter den, hver gang klassen skal opdaterer PWM signalet til motoren, den aktuelle hastighed på bilen fra Dataklassen. 
-Klassen har kun en public metode som kan kaldes, \texttt{userInput()}. I listing \ref{lst:steering_header} ses implementering af klassens headerfilen.
+Steering klassen kontrollerer PWM signalet til motorens fremdrift og til servoen på styretøjet
+Den modtager nye input fra systemet om ændringer af fremdrift, brems og retning. 
+Derudover henter den, hver gang klassen skal opdaterer PWM signalet til motoren, den aktuelle hastighed på bilen fra Dataklassen.
+Klassen har kun én public metode som kan kaldes, \texttt{userInput()}. I listing \ref{lst:steering_header} ses implementering af klassens headerfilen.
 
-\lstinputlisting[linerange=Steering::header1-Steering::header2, label=lst:steering_header, caption=\texttt{Header} for Steeringklassen.]{../../src/bil/steering/steering.hpp}
+\lstinputlisting[basicstyle=\scriptsize, linerange=Steering::header1-Steering::header2, label=lst:steering_header, caption=\texttt{Header} for Steeringklassen.]{../../src/bil/steering/steering.hpp}
 
 Constructoren sørger primært for at sætte WiringPi op. Se sektion \ref{sec:wiringPi_impl}. 
 Der er en HW og SW PWM del der skal initialiseres. 
 Udover opsætning starter den en separat tråd der kører \texttt{PWMUpdate} i et loop indtil systemet lukkes ned. 
 Samt at sætte værdier for PID regulering af motoren 
-
+\clearpage
 \lstinputlisting[linerange=Steering::Steering1-Steering::Steering2, label=lst:steering_con, caption=\texttt{Constructor} for Steeringklassen.]{../../src/bil/steering/steering.cpp}
-
 
 Deconstructoren sørger for at lukke \texttt{Steering::PWMUpdate} tråden ned og joine med den, slukke for HW og SW PWM og digitale outputs til styring af H-broen.
 
@@ -24,6 +24,8 @@ Metoden \texttt{userInput} er den eneste metode der kan tilgås udefra. Den hån
 
 \texttt{brake} metoden bremser bilen ved at sætte motor PWM til 100 \% og de 2 retnings digitale outputs lave. Det får H-broen til at bremse motoren aktivt. Mens der bremses bliver PWM i \texttt{PWMUpdate} ikke opdateret.
 \lstinputlisting[linerange=Steering::brake1-Steering::brake2, label=lst:steering_brake, caption=Metoden \texttt{brake} Steeringklassen.]{../../src/bil/steering/steering.cpp}
+
+\clearpage
 
 \texttt{softbrake} metoden sætte motor PWM til 0 \% og de 2 retnings digitale outputs lave. 
 Derved vil bilen begynde at løbe farten af.

@@ -45,7 +45,7 @@ Navn & Type & Beskrivelse \\\hline
 \caption{Attributter for klassen Data}
 \label{table:attr_data}
 \end{table}
-%TODO Kontroller at enheder passer i ovestående
+%TODO Kontroller at enheder passer i ovenstående
 
 \textbf{Metoder}
 %------------------------------------- writeVelocity -------------------------------------
@@ -60,8 +60,10 @@ Beskrivelse & Metoden indlæser den nyeste værdi af hastigheden i datastrukture
 \label{table:met_writeVelocity}
 \end{table}
 
+\clearpage
+
 %------------------------------------- writeAcceleration -------------------------------------
-\begin{table}[h]
+\begin{table}
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype & \texttt{bool writeAcceleration(int acceleration)} \\\hline
 Parametre & \texttt{acceleration} \newline Den acceleration der skal indlæses. \\\hline
@@ -73,7 +75,7 @@ Beskrivelse & Metoden indlæser den nyeste værdi af accelerationen i datastrukt
 \end{table}
 
 %------------------------------------- writeDistance -------------------------------------
-\begin{table}[h]
+\begin{table}
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype & \texttt{bool  writeDistance(string name, int distance)} \\\hline
 Parametre & \texttt{name} \newline Navnet på den sensor som der skal indlæses data fra. Kan være FL, FR, RL eller RR. \newline \newline
@@ -87,7 +89,7 @@ Beskrivelse & Metoden indlæser den nyeste værdi af fra en vilkårlig afstandss
 \end{table}
 
 %------------------------------------- writeUserInput -------------------------------------
-\begin{table}[h]
+\begin{table}
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype & \texttt{void writeUserInput(UserInput* Input)} \\\hline
 Parametre & \texttt{Input} \newline En pointer med den data som der skal gemmes i dataklassen. \\\hline
@@ -99,7 +101,7 @@ Beskrivelse & Metoden indlæser den nyeste værdi af brugerens input i datastruk
 \end{table}
 
 %------------------------------------- getLatestVelocity -------------------------------------
-\begin{table}[h]
+\begin{table}
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype & \texttt{int getLatestVelocity()} \\\hline
 Parametre &  ~\newline \\\hline
@@ -110,8 +112,10 @@ Beskrivelse & Metoden returnerer den nyeste hastighedsmåling der er indlæst i 
 \label{table:met_getLatestVelocity}
 \end{table}
 
+\clearpage
+
 %------------------------------------- getLatestAcceleration -------------------------------------
-\begin{table}[h]
+\begin{table}
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype & \texttt{int getLatestAcceleration()} \\\hline
 Parametre &  ~\newline \\\hline
@@ -123,7 +127,7 @@ Beskrivelse & Metoden returnerer den nyeste accelerationsmåling der er indlæst
 \end{table}
 
 %------------------------------------- getLatestDistance -------------------------------------
-\begin{table}[h]
+\begin{table}
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype & \texttt{int getLatestDistance(string name)} \\\hline
 Parametre &  \texttt{name}\newline Navnet på den sensor som der ønskes data fra. Kan være FL, FR, RL eller RR.\\\hline
@@ -135,7 +139,7 @@ Beskrivelse & Metoden returnerer den nyeste afstandsmåling fra den angivne sens
 \end{table}
 
 %------------------------------------- getUserInput -------------------------------------
-\begin{table}[h]
+\begin{table}
 \begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 Prototype & \texttt{UserInput getUserInput()} \\\hline
 Parametre &  ~\newline \\\hline

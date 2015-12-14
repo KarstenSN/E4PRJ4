@@ -1,6 +1,6 @@
 
 \subsubsection{Boundary-klasse: Steering}
-Denne klasse har til formål at styre bilens retning venstre/højre, hastighed frem/tilbage og bremse bilen. Den får input ind med hastighed frem, hastighed tilbage, retning og brems. Derudover henter klassen den ønskede maksimum hastighed for bilen og den aktuelle hastighed på bilen. Derefter udregner og regulerer den outputtet til PWM for motor. Ligeledes udregner den et PWM output til styretøjs servoen udfra retnings værdien og min/max for duty cycle på servoen 
+Denne klasse har til formål at styre bilens retning venstre/højre, hastighed frem/tilbage og bremse bilen. Den får input ind med hastighed frem, hastighed tilbage, retning og brems. Derudover henter klassen den ønskede maksimum hastighed for bilen og den aktuelle hastighed på bilen. Derefter udregner og regulerer den outputtet til PWM for motor. Ligeledes udregner den et PWM output til styretøjs servoen udfra retnings værdien og min/max for duty cycle på servoen.
 
 
 \begin{figure}[h]
@@ -9,6 +9,8 @@ Denne klasse har til formål at styre bilens retning venstre/højre, hastighed f
 \caption{Klassebeskrivelse af boundary-klassen Steering}
 \label{fig:cd_Steering}
 \end{figure}
+
+\clearpage
 
 \textbf{Attributter}
 
@@ -97,6 +99,8 @@ Beskrivelse & Metoden sørger for at opdaterer retning og hastighed på bilen. \
 	\caption{Metodebeskrivelse for \texttt{softbrake}}
 	\label{table:met_softbrake}
 \end{table}
+
+\clearpage
 
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline

@@ -31,13 +31,16 @@ Metoden \texttt{update()} åbner \IIC-fobindelsen til PSoC'en ved at åbne $/dev
 	label=lst:Psoc_update, 
 	caption=Implementering af \texttt{update()}]{../../src/bil/Psoc.cpp}
 
-
-Metoden \texttt{psocRead()} sørger at opdaterer klassens attributter med det seneste datasæt fra PSoC'en. Først kaldes \texttt{update()} så de seneste målinger lægger i \texttt{rdBuffer}. \texttt{rdBuffer} er det array der samler datasættet fra PSoC'en, således at data til \texttt{distanceFL\_} lægges i \texttt{rdBuffer[0] og rdBuffer[1]}. ligeledes ligger data til \texttt{distanceFR\_} i \texttt{rdBuffer[2] og rdBuffer[3]} osv. Data til \texttt{Tacho\_} ligger i \texttt{rdBuffer[8]}. Herefter låses attributterne således kan der skrives til dem uden at det clasher med en samtidig læsning. Datasættet fra \texttt{rdbuffer} lægges nu over i attributterne som beskrevet ovenfor. tilsidst ventes 200ms, for at give sensorerne den anbefalede tid til at fortage en range-reading. Implementering af \texttt{psocRead()} ses i listing \ref{lst:Psoc_psocread}.
+Metoden \texttt{psocRead()} sørger for at opdaterer klassens attributter med det seneste datasæt fra PSoC'en. 
+Først kaldes \texttt{update()} så de seneste målinger lægger i \texttt{rdBuffer}. 
+\texttt{rdBuffer} er det array der samler datasættet fra PSoC'en, således at data til \texttt{distanceFL\_} lægges i \texttt{rdBuffer[0] og rdBuffer[1]}. 
+Ligeledes ligger data til \texttt{distanceFR\_} i \texttt{rdBuffer[2] og rdBuffer[3]} osv. Data til \texttt{Tacho\_} ligger i \texttt{rdBuffer[8]}. Herefter låses attributterne således kan der skrives til dem uden at det clasher med en samtidig læsning. 
+Datasættet fra \texttt{rdbuffer} lægges nu over i attributterne som beskrevet ovenfor. tilsidst ventes 200ms, for at give sensorerne den anbefalede tid til at fortage en range-reading. 
+Implementering af \texttt{psocRead()} ses i listing \ref{lst:Psoc_psocread}.
 
 \lstinputlisting[linerange=psoc::read1-psoc::read2, 
 	label=lst:Psoc_psocread, 
 	caption=Implementering af \texttt{psocRead	()}]{../../src/bil/Psoc.cpp}
-
 
 Constructoren for klassen sørger for at initiere pointer til Log-klassen, og der sendes en event-msg om at klassen er oprettet. Herefter startes den selvstændige tråd. implementering af Constructoren kan ses i listing \ref{lst:Psoc_ctor}:
 
