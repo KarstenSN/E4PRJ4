@@ -52,7 +52,7 @@ Klassen kører sin egen tråd, men tilgås fra dataklassens tråd, derfor er de 
 
 \textbf{Metoder}
 
-\begin{table}[h]
+\begin{table}[h!]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 		Prototype 	& \texttt{int getDistance(string name)} \\\hline
 		Parametre 	& \texttt{name} \newline Navnet på den sensor som der skal læses fra. Kan rumme én af fire muligheder "FL", "FR", "RL" og "RR". \\\hline
@@ -63,10 +63,10 @@ Klassen kører sin egen tråd, men tilgås fra dataklassens tråd, derfor er de 
 	\label{table:met_getdistance}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[h!]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 		Prototype 	& \texttt{int getVelocity()} 	\\\hline
-		Parametre 	& \texttt{void} \newline  		\\\hline
+		Parametre 	& \texttt{void}   		\\\hline
 		Returværdi 	& \texttt{int}  \newline Seneste hastighedsmåling for for bilen. Værdien er angivet i $km/t$. \\\hline
 		Beskrivelse	& Denne metode har til formål at låse attributten Tacho\_ og returnere den seneste værdi, herefter låses attributten automatisk op når metoden går ud af scope \\\hline	
 	\end{tabularx}
@@ -74,26 +74,24 @@ Klassen kører sin egen tråd, men tilgås fra dataklassens tråd, derfor er de 
 	\label{table:met_getvelocity}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[h!]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 		Prototype 	& \texttt{int update()} 		\\\hline
-		Parametre 	& \texttt{void} \newline 		\\\hline
+		Parametre 	& \texttt{void}  		\\\hline
 		Returværdi 	& \texttt{int}  \newline Returnerer fejlkode hvis åbning og læsning mislykkes \\\hline
 		Beskrivelse	& Denne metode har til formål at åbne \IIC-forbindelsen til PSoC'en og hente det seneste datasæt. \\\hline
 	\end{tabularx}
 	\caption{Metodebeskrivelse for  \texttt{update()}}
 	\label{table:met_update}
 \end{table}
-\clearpage
 
-\begin{table}[h]
+\begin{table}[h!]
 	\begin{tabularx}{\textwidth}{| L{2.5 cm} | Z |} \hline
 		Prototype 	& \texttt{int psocRead()} 		\\\hline
-		Parametre 	& \texttt{void} \newline 		\\\hline
-		Returværdi 	& \texttt{void} \newline 		\\\hline
+		Parametre 	& \texttt{void}  		\\\hline
+		Returværdi 	& \texttt{void}  		\\\hline
 		Beskrivelse	& Denne metode har til formål at kalde \texttt{update(), herefter låses attributterne og datasættet læses over heri.}\\\hline
 	\end{tabularx}
 	\caption{Metodebeskrivelse for  \texttt{psocRead()}}
 	\label{table:met_psocRead}
 \end{table}
-\clearpage
