@@ -1,14 +1,14 @@
 \chapter{Fremtidigt Arbejde} \label{ch:Fremtidigt_arbejde}
 
-Da projektet ikke var færdigudviklet ved aflevering, er der en del arbejde at gøre i fremtiden hvis bilen skal blive til et færdigt produkt. 
-De fleste mangler er allerede beskrevet i rapporten. Vil disse mangler undersøges nærmere kan projektdokumentationen læses. 
+Da projektet ikke var helt færdigudviklet ved aflevering, er der en del arbejde at gøre i fremtiden hvis bilen skal blive til et færdigt produkt. 
+De fleste mangler er allerede beskrevet i rapporten. Vil nogle af disse mangler undersøges nærmere kan det enkelte afsnit i projektdokumentationen læses. 
 På GUI'en skal der laves om i den måde hvorpå kommunikationen fungerer. 
-Programmet crasher når netværksforbindelsen mistes hvilket skyldes at måden hvorpå socketforbindelserne oprettes på, er forkerte. 
-Skal denne fejl rettes kan der søges nærmere information i Qt's egen dokumentaion for QTcpSocket\cite{lib:qtcpsocket}. 
-Selve AKS systemet skal implementeret således bilen selv undgår forhindringer, da dette ikke er blevet færdigudviklet.
+Programmet crasher hvis netværksforbindelsen mistes. Dette skyldes at måden hvorpå socketforbindelserne oprettes på, er forkerte implementeret. 
+Skal denne fejl rettes kan der søges nærmere information i Qt's egen dokumentaion for QTcpSocket\cite{lib:qtcpsocket}.
+AKS systemet skal implementeret således bilen selv undgår forhindringer, da dette ikke er blevet færdigudviklet.
 Hastighedsreguleringen skal implementeres som PID regulering således at maksimal acceleration altid opnås. 
-Samt der skal findes en løsning på at brugeren ikke kan styre bilen efter at have kørt baglæns. 
-Servoen til styring skal forbindes til styretøjet.
+Samt fejlen der går at brugeren ikke kan styre bilen efter at have kørt baglæns skal findes og rettes. 
+Servo motoren til styring skal forbindes mekanisk til styretøjet. Servo motoren skal også gøres mere stabil.
 Endvidere skal der findes en løsning på at motion bruger 85\% af Pi'ens CPU-kraft. 
-Der skal implementeres en timer i tachometeret så der kun kan sendes den nuværende hastighed. 
+Der skal implementeres en timer i tachometeret så der kun kan sendes den aktuelle hastighed. 
 Accelerometeret er blevet udeladt i prototypen og der skal derfor også laves en implementering af dette.
