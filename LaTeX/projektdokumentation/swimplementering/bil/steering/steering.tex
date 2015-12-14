@@ -1,8 +1,8 @@
 \subsection{Steeringklassen} \label{sec:steering_impl}
 
 Steering klassen er den klasse der kontrollere PWM signalet til motorens fremdrift og til styretøj servoen. 
-Den modtager nye input fra systemet om ændringer af fremdrift, retning på styretøj og brems. Derudover henter den, hver gang klassen skal opdaterer PWM signalet til motoren, den aktuelle hastighed på bilen fra Dataklassen. 
-Klassen har kun en public metode den kan kaldes. I listing \ref{lst:steering_header} ses implementering af klassens headerfilen.
+Den modtager nye input fra systemet om ændringer af fremdrift, brems og retning på styretøj. Derudover henter den, hver gang klassen skal opdaterer PWM signalet til motoren, den aktuelle hastighed på bilen fra Dataklassen. 
+Klassen har kun en public metode som kan kaldes, \texttt{userInput()}. I listing \ref{lst:steering_header} ses implementering af klassens headerfilen.
 
 \lstinputlisting[linerange=Steering::header1-Steering::header2, label=lst:steering_header, caption=\texttt{Header} for Steeringklassen.]{../../src/bil/steering/steering.hpp}
 
@@ -64,5 +64,7 @@ På figur \ref{fig:steering_pwm_motor_test} og \ref{fig:steering_pwm_servo_test}
 	\label{fig:steering_pwm_servo_test}
 \end{figure}
 
-\clearpage
+
 \subsubsection*{WiringPi} \label{sec:wiringPi_impl}
+%lib:wiringpi
+For at få et forenklet interface til brugen af Pi'ens GPIO pins (General-purpose input/output) er biblioteket WiringPi \cite{lib:wiringpi} blevet brugt i implementeringen af Steering klassen. Den er blevet brugt til at sætte frekvensen på PWM signalerne (HW/SW). Hvilke pins der skal bruges til PWM og digitale outputs. Samt opdatere duty cycle af PWM signalerne.

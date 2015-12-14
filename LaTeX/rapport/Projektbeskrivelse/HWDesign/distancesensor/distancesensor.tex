@@ -1,12 +1,26 @@
-\subsection{Tachometer}
+\subsection{Distancesensor}
 
-Tachometeret på bilen er en nødvendighed, hvis AU2 på nogen måde skal regulere hastigheden. Der blev overvejet flere forskellige muligheder:
-\begin{enumerate}
-	\item Lys-modtager/sender, som, via en skive med et prædefineret antal huller, kan detektere lys sendt fra senderen ind på skiven og detektere lyset, når det kommer igennem et af hullerne. Derved vil der kunne omregnes fra hvert hul detekteres til en konkret hastighed.
-	\item Induktiv føler, som via nogle metalstykker monteret på indersiden af hjulet og en føler skulle detektere en ændring i magnetfelt, når metalstykkerne passerede føleren. På samme måde kunne dette omregnes til en konkret hastighed.
-	\item Hall-switch/Reed rør, der fungerer på tilnærmelsesvist samme måde som den induktive føler, men med små magneter monteret på indersiden af hjulet. 
-\end{enumerate}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=0.4]{../fig/billeder/distancesensor.png}
+	\caption{Distancesensor MaxSonar1202}
+	\label{fig:ds_pic}
+\end{figure}
 
-Af designmæssige overvejelser ligger et forholdsvist minimalt design, forstået på den måde at den må ikke fylde mere end at den kan monteres på indersiden af et hjul med ca. 6 cm diameter. Hallswitchen TLE4905L \cite{lib:tacho} blev valgt, bla. pga. størrelsen, men også på baggrund af tilgængelig materiale. Hallswitchkredsløbet forventedes ikke at bruge en særlig stor strøm, i omegnen fa 5-8 mA, hvilket gør den ideel til anvendelse på en fjernstyret bil der forsynes af et batteri. 
+Distancesensorerne er tilføjet systemet for at kunne videregive data til AKS-klassen så denne kan tage de nødvendige forholdsregler. 
+Det er valgt at benytte ultralydssensorer af type MaxSonar1202-typen \cite{lib:maxsonar} til formålet. 
+Disse levede op til de stillede krav til systemet om rækkevidde, interface og kommunikationsprotokol.
+På sensorprintet var der ydermere mulighed for at tilgå status-pin og alt.-adresse pin. Dette blev dog ikke benytte i projektet og der er derfor ikke gjort brug af disse features.
 
-Der blev desuden overvejet EMC-mæssige problemstillinger, eftersom der er tale om en magnetfeltsdetektor, ville tachometeret potentielt kunne påvirkes af nogle forstyrrelser sendt ud fra et andet sted i kredsløbet.
+De fire sensorer er montering parvis for og bag på bilen, på figur \ref{fig:ds_mont} ses sensorerne ''Front Left'' og ''Front Right''. 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=0.1]{../fig/billeder/distancesensor_montering.jpg}
+	\caption{Distancesensorer monteret på fronten af AU2}
+	\label{fig:ds_mont}
+\end{figure}
+
+De fire sensorer sidder på fælles \IIC bus med pull-up resistor på datalinjen (\texttt{SDA}) og clocken (\texttt{SCL}). Denne del af bussen har PSoC'en som Master og sensorerne som slaver. 
+
+
