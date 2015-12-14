@@ -1,6 +1,6 @@
 \subsection{Pi}
 
-Bilens styreenhed er valgt til at være en Raspberry Pi, da denne er et oplagt valg da imlementeringen både skal indeholde videostreaming og socketbaseret netværkskommunikation. Der er altså tale om en højniveau controller. Pi'en er ligeledes forsynet med et kamara\cite{lib:cam} og en Wi-Fi dongle\cite{lib:wifi}. Funktionaliteten udvikles i et program der er bestående er flere klasser, der kan ses på figur \ref{fig:cd_pi}, som herefter vil beskrives meget kort. Foruden det program som er udviklet af projektgruppen selv, anvendes et tredjepartsprogram, kaldet Motion\cite{lib:motion-on-raspberry} til at streame videoen. For flere detaljer end nedenstående henvises til \ref{P-ch:softwaredesign} \nameref{P-ch:softwaredesign} pi side \pageref{P-ch:softwaredesign} og \ref{P-ch:sw_impl} \nameref{P-ch:sw_impl} på side \pageref{P-ch:sw_impl}.
+Bilens styreenhed er valgt til en Raspberry Pi. Den er et oplagt valg da imlementeringen både skal indeholde videostreaming og socketbaseret netværkskommunikation, hvilket Pi'en bliver brugt meget til og der findes meget forskelligt dokumentation. Pi'en anvender et imbedded linux system, hvilket får den til at lægge sig tættere op af en almen PC, end en microcontroller. Systemet er forsynet med et kamara\cite{lib:cam} og en Wi-Fi dongle\cite{lib:wifi}. Funktionaliteten udvikles i et program der består af flere klasser, der kan ses på figur \ref{fig:cd_pi}, som herefter vil blive beskrevet kort. Foruden programmet, som er udviklet af projektgruppen selv, anvendes et tredjepartsprogram, kaldet Motion\cite{lib:motion-on-raspberry}, til at streame videoen. For flere detaljer henvises til afsnit \ref{P-ch:softwaredesign} \nameref{P-ch:softwaredesign} på side \pageref{P-ch:softwaredesign} og afsnit \ref{P-ch:sw_impl} \nameref{P-ch:sw_impl} på side \pageref{P-ch:sw_impl} i dokumentationen.
 
 \begin{figure}[h]
 \centering
@@ -9,7 +9,7 @@ Bilens styreenhed er valgt til at være en Raspberry Pi, da denne er et oplagt v
 \label{fig:cd_pi}
 \end{figure}
 
-Der gøres opmærksom på at samtlige klaser i klassediagrammet på figur \ref{fig:cd_pi} har en association til Log-klassen. Det er undladt at tegne alle disse pile, da dette vil uoverskueliggøre diagrammet.
+Der gøres opmærksom på, at samtlige klaser i klassediagrammet på figur \ref{fig:cd_pi} har en association til Log-klassen. Det er undladt at tegne alle disse, da det ville uoverskueliggøre diagrammet.
 
 
 \input{Projektbeskrivelse/SWDesign_o_impl/pi/pi/pi.tex}
