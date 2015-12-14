@@ -32,23 +32,25 @@ I starten af hvert kapitel i projektdokumentationen, er der tilknyttet en versio
 \hline
 \textbf{Begreb} & \textbf{Forklaring} \\\hline
 % header ------------------------
-	At lave noget fornuftigt & 
-	Sidde på en stol med en kop kaffe og stirre ud af vinduet. \\\hline
-	Skænderi &
-Når kaffekanden er tom \\\hline
-	Systemlog &
-Systemet er udstyret med en log over hvad systemet foretager sig. Dette kunne f.eks. være et indlæg når systemet foretager en måling, sender en e-mail og regulerer miljøet i drivhuset. \\\hline
-	Virtuelt Drivhus &
-Det virtuelle drivhus er systemets repræsentation af det fysiske drivhus. Brugeren kan tilføje planter fra plantedatabasen i det virtuelle drivhus, og på den måde give systemet indirekte oplysninger om ønskede parametre. Disse informationer lagres i systemets konfigurationsfil. \\\hline
-	Fysisk Drivhus &
-Ved det fysiske drivhus forstås det drivhus, hvori systemet er monteret. \\\hline
-	Konfigurationsfil &
-Dette er en klasse, der er placeret på DevKit8000, som indeholder brugerens konfigurationer om blandt andet notifikationer, e-mailadresser, antallet af fugtsensorer og deres unikke ID mm. \\\hline
-	Notifikations e-mail &
-Dette er en daglig e-mail, som brugeren kan vælge at få tilsendt. Den sendes klokken 12:00, og indeholder informationer om parametrene i det fysiske drivhus. \\\hline
-	Advarsels e-mail &
-Dette er en e-mail, som brugeren kan vælge at få tilsendt. Den sendes, hvis en parameter i det fysiske drivhus kommer uden for tolerancen af den ønskede værdi. \\\hline
+	AKS & 
+	En forkortelse af anti-kollisionssystem. Systemet overtager styringen fra brugeren hvis der er risiko for en kollision. \\\hline
+
+	GUI &
+En forkortelse for ''graphical user interface'' og kan oversættes til grafisk brugerflade. GUI'en i dette system er bestående af det program som brugeren kører på sin PC. \\\hline
+
+	Pi &
+En forkortelse af Raspberry Pi 2 B \cite{lib:rpi}. Dette er ''hjernen'' på bilen, altså den primære styreenhed/controller.  \\\hline
+
+	PSoC &
+En forkortelse for PSoC 4 Pioneer Kit \cite{lib:psoc4_guide}. Er anvendt som controller til bilens \IIC sensorer.\\\hline
+
+	AU2 &
+Navnet på hele det samlede system. Skal udtales ''auto''. \\\hline
+
+	GPIO &
+En forkortelse for ''General-purpose input/output''. Anvendes i forbindelse med tilslutningerne i form af harwin-pins der er at finde på Pi'en eller PSoC'en.  \\\hline
+
 \end{tabularx}
 \end{table}
-%TODO lave ordforklaring
+%TODO Skal der tilføjes flere ting?
 \clearpage
