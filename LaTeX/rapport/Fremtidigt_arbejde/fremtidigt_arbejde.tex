@@ -1,3 +1,13 @@
 \chapter{Fremtidigt Arbejde} \label{ch:Fremtidigt_arbejde}
 
-Da projektet ikke var færdigudviklet ved aflevering, er der en del arbejde at gøre i fremtiden hvis bilen skal blive til et færdigt produkt. De fleste mangler er allerede beskrevet i rapporten. Vil disse mangler undersøges nærmere kan projektdokumentationen læses. På GUI'en skal der laves om i den måde hvorpå kommunikationen fungerer. Programmet crasher når netværksforbindelsen mistes hvilket skyldes at måden hvorpå socketforbindelserne oprettes på, er forkerte. Skal denne fejl rettes kan der søges information i Qt's egen dokumentaion for QTcpSocket\cite{lib:qtcpsocket}. Selve AKS systemet skal implementeret således bilen selv undgår forhindringer, da dette ikke er blevet færdigudviklet og hastighedsreguleringen skal implementeres således maksimal acceleration altid opnås samt der skal findes en løsning på at brugeren ikke kan styre bilen efter at have kørt baglæns. Endvidere skal der findes en løsning på at motion bruger 85\% af Pi'ens CPU-kraft samt der skal implementeres en timer i tachometeret så der kun kan sendes den nuværende hastighed. Accelerometeret er blevet udeladt i prototypen og der skal derfor også laves en implementering af dette.
+Da projektet ikke var færdigudviklet ved aflevering, er der en del arbejde at gøre i fremtiden hvis bilen skal blive til et færdigt produkt. 
+De fleste mangler er allerede beskrevet i rapporten. Vil disse mangler undersøges nærmere kan projektdokumentationen læses. 
+På GUI'en skal der laves om i den måde hvorpå kommunikationen fungerer. 
+Programmet crasher når netværksforbindelsen mistes hvilket skyldes at måden hvorpå socketforbindelserne oprettes på, er forkerte. 
+Skal denne fejl rettes kan der søges nærmere information i Qt's egen dokumentaion for QTcpSocket\cite{lib:qtcpsocket}. 
+Selve AKS systemet skal implementeret således bilen selv undgår forhindringer, da dette ikke er blevet færdigudviklet.
+Hastighedsreguleringen skal implementeres som PID regulering således at maksimal acceleration altid opnås. 
+Samt der skal findes en løsning på at brugeren ikke kan styre bilen efter at have kørt baglæns. 
+Endvidere skal der findes en løsning på at motion bruger 85\% af Pi'ens CPU-kraft. 
+Der skal implementeres en timer i tachometeret så der kun kan sendes den nuværende hastighed. 
+Accelerometeret er blevet udeladt i prototypen og der skal derfor også laves en implementering af dette.
