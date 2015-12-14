@@ -5,13 +5,9 @@ Derimod var det en større udfordring at få servomotoren til at virke korrekt.
 Databladet til servomotoren Corona-CS238MG \cite{lib:Corona-CS238MG} er meget mangelfuldt, hvorfor det har været vanskeligt at finde den korrekt krævede PWM-frekvens. 
 Ved 50Hz viste den sig meget ustabil og reagerede ikke korrekt på PWM-signalet. 
 Ved laboratoriesimuleringer fandtes at motoren reagere mest stabil i intervallet 150-200Hz. 
-Signalkonverteren til servomotoren viste sig ligeledes at give udfordringer, hvilket resulterede i redesign heraf.
-Problemet var at alle tests så korrekt ud på oscilloskopet når servoen ikke var tilkoblet. 
-Men når den var tilkoblet overlejrede den PWM-signalet med så meget støj at det ikke længere havde de højharmoniske flanker. 
-Dette betød at servoen blev ustabilt og ikke reagerede som forventet.
-
-
-Dette gav sig også gældende ved en samlet test af hele bilen, blev samlet så det ud til at servoen blev lidt ustabil igen. 
+Alle tests med signalkonverteren til servomotoren så korrekt ud på oscilloskopet når servoen ikke var tilkoblet. 
+Men når den var tilkoblet overlejrede den PWM-signalet med så meget støj at det ikke længere havde de højharmoniske flanker. Dette betød at servoen blev ustabilt og ikke reagerede som forventet. Hvilket resulterede i redesign af signalkonverteren. Hvorefter den blev mere stabil.
+Ved en samlet test af hele bilen, så det ud til at servoen blev lidt ustabil igen. 
 Det kan muligvis skyldes at PWM signalet, der styrer servo, er styret i ren software. 
-Det giver nogle udfordringer i forhold til load af Pi'ens cpu. Da kamera softwaren \texttt{Motion} blev installeret på Pi'en blev det konstateret at den brugte op til 80\% af cpu kraften. Det kan have indvirkning på hvor nøjagtigt duty cyclen er. Og det vil bevirke at servoen opfatter det som om at den skal flytte sig og derved bliver ustabil
+Det giver nogle udfordringer i forhold til load af Pi'ens cpu. Da kamera softwaren \texttt{Motion} blev installeret på Pi'en blev det konstateret at den brugte op til 80\% af cpu kraften. Det kan have indvirkning på hvor nøjagtigt pulsbredden er. Og det vil bevirke at servoen opfatter det som om at den skal flytte sig og derved bliver ustabil
 
