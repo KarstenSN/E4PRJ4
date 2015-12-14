@@ -24,7 +24,7 @@ Kameraet er påmonteret Pi'en og der er installeret en virtuel driver kaldet uv4
 Motion streamer video ligeså snart der er tændt for bilen. Der er derfor ikke nogen direkte kommunikation mellem PC'en og Pi'en igennem Kameraprotokollen.
 
 
-\subsection{GUI}
+\subsection{Data}
 
 PC'en og bilen kommunikerer igennem to TCP forbindelser. Xbox360 Controlleren har en TCP forbindelse hvor controller data bliver sendt kontinuert. GUI'en har en anden TCP forbindelse hvor data også udveksles kontinuert. Data består af makshastighed, afstand til forhindring, AKS-status,  styretøj, acceleration og hastighed på bilen. TCP forbindelse til GUI'en sker på Pi'ens Ip-adresse port 1234 og controlleren har port 1235.
 I tabel \ref{tbl:prt_gui_byte} ses sekvensen over hver byte i GUI protokollen. Her er beskrevet hvilket bytenummer hver data byte har, samt hvad enheden er. DB1 er fx. Hastighed som sendes i enheden (km/h)$\times$10. Dette gøres for at vi derfor på PC siden kan modtage hastigheden fra 0-25.5 km/h. Når kommandoen shutDown sendes benytter den sig af samme protokol. Indholdet at bytes er i rækkefølgen ''dwnnow''
@@ -95,6 +95,8 @@ bilen sender ''dwnnow'' tilbage som ACK. Alt andet tolkes som NACK \\ \hline
 	\caption{GUI shutdown protokol}
 	\label{tbl:prt_gui_shutdown}
 \end{table}
+
+\subsection{Controller}
 
 På tabel \ref{tbl:prt_controller} ses protokollen over Xbox360-controlleren. 
 
