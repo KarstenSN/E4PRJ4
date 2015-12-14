@@ -1,2 +1,14 @@
 \subsubsection{Video stream fra bilen}
-Sammen med arbejdet på GUI’en blev der arbejdet på Pi’en med at få et kamera installeret samt oprette et video-stream. Først blev der lånt et kamera på skolen som det viste sig der ikke var skrevet en driver til. Derfor blev det valgt at købe et \texttt{Raspberry-pi-rev-2.0 Kamera} som der var skrevet driver til samt det passede i kamera porten på Pi’en. Programmet \texttt{motion} blev installeret på Pi’en men det viste sig nu at \texttt{motion} kun kunne tilgå enheder beliggende i folderen \textbf{\//dev/}. Der skulle derfor findes på en anden løsning. En af dem var at installere en modificeret version af \texttt{motion} \cite{lib:motion-on-raspberry} som godt kunne tilgå kameraet. Desværre var der ingen af disse versioner som der kunne bruges, da flere biblioteker som \texttt{motion} skulle bruge, ikke længere eksisterede eller havde skiftet navn. Selv om at pakkerne godt kunne findes under nogle nye navne, kunne \texttt{motion} stadig ikke finde dem. Der blev fundet frem til at der kunne installeres en virtuel driver \cite{lib:camera-driver} som gør at kameraet nu findes i \textbf{\//dev/}. Den oprindelige verison af \texttt{motion} som downloades fra apt-get kan derfor godt finde kameraet og oprette et video-stream hvis det bliver startet med nogle bestemte system variabler. Der blev derfor lavet et script som starter \texttt{motion} på den korrekte måde og efterfølgende lagt i \texttt{crontab} således \texttt{motion} startes ved opstart. 
+
+Sammen med arbejdet på GUI’et, blev der arbejdet på Pi’en mht. at få et kamera installeret samt at oprette et video-stream til PC'en. 
+Først blev der lånt et kamera på skolen, som det viste sig at der ikke var skrevet en driver til på Pi'en. 
+Derfor blev det valgt at købe et \texttt{Raspberry-pi-rev-2.0 Kamera}, hvor driveren allerede var skrevet til, samt det passede i kamera porten på Pi’en. 
+Programmet \texttt{motion} blev installeret på Pi’en, men det viste sig nu at \texttt{motion} kun kunne tilgå enheder beliggende i folderen \textbf{\//dev/}. 
+Der skulle derfor findes på en anden løsning. 
+En af dem var at installere en modificeret version af \texttt{motion} \cite{lib:motion-on-raspberry}, som stadig kunne tilgå kameraet. 
+Desværre var der ingen af disse versioner, som der kunne bruges, da flere biblioteker som \texttt{motion} skulle bruge, ikke længere eksisterede eller havde skiftet navn. 
+Selvom at pakkerne godt kunne findes under nogle nye navne, kunne \texttt{motion} stadig ikke finde dem. 
+Der blev fundet frem til, at der kunne installeres en virtuel driver \cite{lib:camera-driver}, som gør at kameraet nu findes i \textbf{\//dev/}. 
+Den oprindelige version af \texttt{motion}, som downloades fra apt-get, kan derfor godt finde kameraet og oprette et video-stream, hvis det bliver startet med nogle bestemte system variable. 
+Der blev derfor lavet et script, som starter \texttt{motion} på den korrekte måde. 
+Efterfølgende bliver scriptet lagt i \texttt{crontab}, således \texttt{motion} startes ved opstart. 
