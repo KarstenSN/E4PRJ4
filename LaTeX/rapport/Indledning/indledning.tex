@@ -1,13 +1,16 @@
 \chapter{Indledning}
 \label{ch:Indledning}
 Rapporten er en opsummeringen af projektdokumentationen og dækker hovedsageligt over udviklingsmæssige overvejelser og beslutninger som gruppen har foretaget undervejs i projektarbejdet. 
-Rapporten indeholder beskrivelsen af udviklingen og designet af prototypen til en legetøjsbil kaldet AU2.
+Rapporten indeholder beskrivelse af udviklingen og design af prototypen til en fjernstyret bil, AU2.
 
-AU2 er en intelligent legetøjsbil som via et antikollisionssystem (forkortet til AKS) kan undvige en mulig forhindring og derved sikre at brugeren ikke ødelægger hverken bil eller andre genstande. Bilen er tænkte at være et stykke legetøj som kan bruges af både voksne og børn. Bilen styres med en XBox360-controller forbundet til en PC som er tilsluttet et netværk hvorved brugeren også kan modtage et video-stream fra bilen.
+AU2 kan via et antikollisionssystem (forkortet til AKS) undvige en mulig forhindring og derved sikre at brugeren ikke ødelægger hverken bil eller andre genstande. 
+Bilen er tænkt til at være et stykke legetøj, som kan bruges af både voksne og børn. 
+Bilen styres med en XBox360-controller forbundet til en PC, som er tilsluttet samme netværk som bilen, hvorved brugeren også kan modtage et video-stream fra bilen.
 
 
 \section{Læsevejledning}
-Projektdokumentationen til denne rapport er skrevet kronologisk i forhold til de givne faser i ASE Modellen\cite{lib:vejledning}, pånær accepttesten, som er udarbejdet i forlængelse af kravspecifikationen, men selve testen er udført i slutningen af forløbet, deraf placeringen sidst i dokumentet.
+Projektdokumentationen til denne rapport er skrevet kronologisk i forhold til de givne faser i ASE Modellen\cite{lib:vejledning}, på nær accepttestspecifikationen, som er udarbejdet i forlængelse af kravspecifikationen. 
+Selve accepttesten er dog udført i slutningen af forløbet, deraf placeringen sidst i dokumentet.
 Den samme rækkefølge er ført i denne rapport under kapitel \ref{ch:Projektbeskrivelse} \nameref{ch:Projektbeskrivelse}.
 
 Da projektet er blevet delt op i enkelte ansvarsområder efter fuldendt systemarkitektur, indeholder rapporten samt dokumentationen både afsnit skrevet at den samlede gruppe samt individuelle afsnit.
@@ -26,6 +29,9 @@ I starten af hvert kapitel i projektdokumentationen, er der tilknyttet en versio
 \hline
 \textbf{Begreb} & \textbf{Forklaring} \\\hline
 % header ------------------------
+
+	AU2 &
+Navnet på hele det samlede system. Skal udtales ''auto''. \\\hline
 	AKS & 
 	En forkortelse af anti-kollisionssystem. Systemet overtager styringen fra brugeren hvis der er risiko for en kollision. \\\hline
 
@@ -38,11 +44,8 @@ En forkortelse af Raspberry Pi 2 B \cite{lib:rpi}. Dette er ''hjernen'' på bile
 	PSoC &
 En forkortelse for PSoC 4 Pioneer Kit \cite{lib:psoc4_guide}. Er anvendt som controller til bilens \IIC sensorer.\\\hline
 
-	AU2 &
-Navnet på hele det samlede system. Skal udtales ''auto''. \\\hline
-
 	GPIO &
-En forkortelse for ''General-purpose input/output''. Anvendes i forbindelse med tilslutningerne i form af harwin-pins der er at finde på Pi'en eller PSoC'en.  \\\hline
+En forkortelse for ''General-purpose input/output''. Anvendes i forbindelse med tilslutningerne i form af harwin-pins der er at finde på Pi'en og PSoC'en.  \\\hline
 
 \end{tabularx}
 \end{table}
