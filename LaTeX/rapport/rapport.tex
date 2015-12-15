@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt,twoside,openright,article]{memoir}
+\documentclass[a4paper,11pt,twoside,article]{memoir}
 \input{../preamble/preamble}
 %Debugging
 %\overfullrule=2cm
@@ -35,7 +35,7 @@
 	Henrik Bagger Jensen 		& 201304157 & \\ && 												\\ \hline
 	Kenn Hedegaard Eskildsen 	& 201370904 & \\ && 												\\ \hline
 	Karsten Schou Nielsen 		& 201370045 & \\ && 												\\ \hline
-	Jesper Ellebæk Pedersen 			& 201370530 & \\ && 												\\ \hline
+	Jesper Ellebæk Pedersen 	& 201370530 & \\ && 												\\ \hline
 	\end{tabular}
 \end{table}
 
@@ -52,8 +52,7 @@
 \vfill
 
 \include{Arbejdsopgaver/arbejdsopgaver}
-\clearpage
-%TODO blank side
+
 \mainmatter
 \pagestyle{fancy}
 \fancyhf{} %Clear all header/footers
@@ -63,6 +62,13 @@
 \fancyfoot[CO,CE]{\nouppercase{\rightmark}}
 \fancyfoot[LE,RO]{\thepage}
 
+%No touchy!
+\thispagestyle{empty}
+\mbox{}
+\vfill
+\begin{center}
+Denne side er bevidst blank.
+\end{center}
 
 \include{Forord/forord}
 \include{Indledning/indledning}
@@ -78,6 +84,9 @@
 \include{Litteraturliste/Litteraturliste}
 
 \clearpage
-~ 
+
+\backmatter
+\thispagestyle{empty}
+\mbox{}
 
 \end{document}
