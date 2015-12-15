@@ -1,6 +1,6 @@
 \subsubsection{Video stream fra bilen}
 
-Sammen med arbejdet på GUI’et, blev der arbejdet på Pi’en mht. at få et kamera installeret samt at oprette et video-stream til PC'en. 
+Sammen med arbejdet på GUI’et, blev der arbejdet på Pi’en mht. at få et kamera installeret samt at oprette et videostream til PC'en. 
 Først blev der lånt et kamera på skolen, som det viste sig at der ikke var skrevet en driver til på Pi'en. 
 Derfor blev det valgt at købe et ''Raspberry-pi-rev-2.0 Camera'', hvor driveren allerede var skrevet til, samt det passede i kamera porten på Pi’en. 
 Programmet Motion blev installeret på Pi’en, men det viste sig nu at Motion kun kunne tilgå enheder beliggende i folderen \texttt{\//dev/}. 
@@ -9,6 +9,6 @@ En af dem var at installere en modificeret version af Motion \cite{lib:motion-on
 Desværre var der ingen af disse versioner, som der kunne bruges, da flere biblioteker som Motion skulle bruge, ikke længere eksisterede eller havde skiftet navn. 
 Selvom at pakkerne godt kunne findes under nogle nye navne, kunne Motion stadig ikke finde dem. 
 Der blev fundet frem til, at der kunne installeres en virtuel driver \cite{lib:camera-driver}, som gør at kameraet nu findes i \texttt{\//dev/}. 
-Den oprindelige version af Motion, som downloades fra apt-get, kan derfor godt finde kameraet og oprette et video-stream, hvis det bliver startet med nogle bestemte system variable. 
+Den oprindelige version af Motion, som downloades fra apt-get, kan derfor godt finde kameraet og oprette et videostream, hvis det bliver startet med nogle bestemte system variable. 
 Der blev derfor lavet et script, som starter Motion på den korrekte måde. 
 Efterfølgende bliver scriptet lagt i \texttt{crontab}, således Motion startes ved opstart. 

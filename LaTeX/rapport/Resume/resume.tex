@@ -1,8 +1,8 @@
-\chapter{Resume}
+\chapter{Resumé}
 \label{ch:Resume}
 
 Denne rapport beskriver udviklingsprocessen af 4. semesterprojekt for diplomingeniørstuderende i elektronik på Ingeniørhøjskolen Aarhus Universitetet. 
-Projektet omhandler en intelligent bil - kaldet AU2 - en fjernstyret bil, der kan styres med en Xbox-360 controller\cite{lib:xbox-360} fra en almindelig Windows PC. 
+Projektet omhandler en intelligent bil - kaldet AU2 - en fjernstyret bil, der kan styres med en Xbox 360 controller\cite{lib:xbox-360} fra en almindelig Windows PC. 
 Den intelligente del består i, at bilen selv er i stand til at detektere, hvornår den er på vej til at kollidere med en forhindring og herefter undvige denne. 
 Brugeren er i stand til at se, hvor bilen befinder sig ved hjælp af et kamera\cite{lib:cam}, som er monteret på bilen. 
 Denne videostream vises sammen med bilens aktuelle hastighed, G-påvirkning og  afstand til nærmeste forhindring i et program installeret på brugerens computer.
@@ -11,5 +11,5 @@ Programmet til Pi er udviklet ved brug af C++11 Threads\cite{lib:std::Thread} og
 Kommunikationen mellem computeren og bilen foregår via Wi-Fi, og er implementeret vha. socketbaseret TCP netværkskommunikation. 
 Bilen drives fremad med en DC-motor, drejer med en servomotor og forsynes fra bilens strømforsyning, som er baseret på en DC-DC buck converter.
 
-Det realiserede system er i stand til at få bilen til at køre frem og tilbage, med en hastighed der afhænger af brugerens input på Xbox-360 controlleren. Bilen kan måle afstanden til nærmeste forhindring samt den aktuelle hastighed og præsentere disse værdier sammen med en videostream på brugerfladen. Det er ikke lykkedes at implementere anti-kollisionssystemet fuldt ud, ligesom at bilen ikke kan dreje grundet manglende montering af en servomotor. Derudover er der sporadiske fejl i forbindelse med kommunikationen mellem Windows-computeren'en og bilen.
+Det realiserede system er i stand til at få bilen til at køre frem og tilbage, med en hastighed der afhænger af brugerens input på Xbox 360 controlleren. Bilen kan måle afstanden til nærmeste forhindring samt den aktuelle hastighed og præsentere disse værdier sammen med en videostream på brugerfladen. Det er ikke lykkedes at implementere anti-kollisionssystemet fuldt ud, ligesom at bilen ikke kan dreje grundet manglende montering af en servomotor. Derudover er der sporadiske fejl i forbindelse med kommunikationen mellem Windows-computeren'en og bilen.
 \clearpage

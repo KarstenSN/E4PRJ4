@@ -6,7 +6,7 @@ Bilens strømforsyning er designet ud fra princippet om en buck converter\cite[s
 De 7.2V leveres direkte fra batteriet og bruges udelukkende til at drive motoren på bilen med.
 
 Designfasen for bilens strømforsyning startede med en simpel håndtegning af en buck converter med både 3 og 5V udgang som havde egen indbygget regulering. 
-Grunden til at reguleringen af converteren er så vigtig på denne platform er at batterispændingen nemt kan flytte sige 1-2V eller mere, hvilket overføres direkte til udgangen ved en konstant pulsbredde på styresignalet til switchen. Den oprindelige tegning ses i figur \ref{fig:bil_psu_sketch}.
+Grunden til at reguleringen af converteren er så vigtig på denne platform er at batterispændingen nemt kan flytte sige 1-2V eller mere, hvilket overføres direkte til udgangen ved en konstant pulsbredde på styresignalet til switchen. Den oprindelige tegning ses på figur \ref{fig:bil_psu_sketch}.
 
 \begin{figure}[h]
 \centering
@@ -15,7 +15,7 @@ Grunden til at reguleringen af converteren er så vigtig på denne platform er a
 \label{fig:bil_psu_sketch}
 \end{figure}
 
-Som det kan ses i figur \ref{fig:bil_psu_sketch} var den oprindelige tanke at drive PWM signalet til switche ved hjælp af feedback fra udgangen, sammenlignet med den ønskede spænding, i dette tilfælde 5V, hvilket igen skulle sammenlignes med et trekantssignal for at give et firkantsignal med en pulsbredde på switchens indgang.
+Som det kan ses på figur \ref{fig:bil_psu_sketch} var den oprindelige tanke at drive PWM signalet til switche ved hjælp af feedback fra udgangen, sammenlignet med den ønskede spænding, i dette tilfælde 5V, hvilket igen skulle sammenlignes med et trekantssignal for at give et firkantsignal med en pulsbredde på switchens indgang.
 Det viste sig dog at være for kompliceret at realisere i det tidsomfang der var til rådighed og planen blev derfor skrottet.
 Dog forefindes 3V udgangen, som er vist på højre side af diagrammet, stadig i det aktuelle design.
 
@@ -26,7 +26,7 @@ Dette bringer størrelsen af strømforsyningen en del ned og giver højere effek
 Dette blev vurderet til at være en fordel i designet og det blev også vurderet at en integreret kreds, som producenten garanterer for funktionaliteten af var fordelagtig ift. omfanget af projektet og hvor mange resourcer der kunne lægges i strømforsyningen kontra resten.
 
 Da valget var truffet omkring LM26003'eren gik det næste ud på at finde ud af hvordan denne skulle kobles op optimalt og bruge de i databladet specificerede formler og metoder til at dimensionere det omkringliggende kredsløb.
-Det endelige design kan ses i figur \ref{fig:bil_psu}.
+Det endelige design kan ses på figur \ref{fig:bil_psu}.
 
 \begin{figure}[h]
 \centering
