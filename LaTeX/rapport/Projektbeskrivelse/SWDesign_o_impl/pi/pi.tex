@@ -1,20 +1,22 @@
 \subsection{Pi}
 
 Bilens styreenhed er valgt til en Raspberry Pi. Den er et oplagt valg da imlementeringen både skal indeholde videostreaming og socketbaseret netværkskommunikation, hvilket Pi'en bliver brugt meget til og der findes meget forskelligt dokumentation. 
-Pi'en anvender et embedded linux system, hvilket får den til at lægge sig tættere op af en almen PC, end en microcontroller. 
-Systemet er forsynet med et kamara\cite{lib:cam} og en Wi-Fi dongle\cite{lib:wifi}. 
-Funktionaliteten udvikles i et program der består af flere klasser, der kan ses på figur \ref{fig:cd_pi}, som herefter vil blive beskrevet kort. 
-Foruden programmet, som er udviklet af projektgruppen selv, anvendes et tredjepartsprogram, kaldet Motion\cite{lib:motion-on-raspberry}, til at streame videoen. For flere detaljer henvises til afsnit \ref{P-ch:softwaredesign} \nameref{P-ch:softwaredesign} på side \pageref{P-ch:softwaredesign} og afsnit \ref{P-ch:sw_impl} \nameref{P-ch:sw_impl} på side \pageref{P-ch:sw_impl} i dokumentationen.
+Pi'en anvender et embedded linux system, hvilket får den til at lægge sig tættere op af en almen PC, end en microcontroller.
+
+For at få defineret de nødvendige klasser er fremgangsmåden for udvikling af en applikationsmodel anvendt.
+Dette har resulteret i et klassediagram som er vist på figur \ref{fig:cd_pi}.
+Før de enkelte klasser, til programmet på, Pi er blevet designet, er et overnet overblik over programmets struktur udviklet.
+Dette er gjort ud fra de tidligere definerede use cases og beskrevet ved hjælp af SysML sekvensdiagrammer.
+Diagrammerne, som kan findes i afsnittet \ref{P-sec:swdesign_sekvensdiagrammer} \nameref{P-sec:swdesign_sekvensdiagrammer} på side \pageref{P-sec:swdesign_sekvensdiagrammer} i dokumentationen, beskriver detaljeret forløbet i programmets flow og simplificerer den efterfølgende klassebeskrivelse. Flere detaljer kan ses i afsnit \ref{P-sec:swdesign_pi} \nameref{P-sec:swdesign_pi} på side \pageref{P-sec:swdesign_pi} og afsnit \ref{P-sec:swimpl_pi} \nameref{P-sec:swimpl_pi} på side \pageref{P-sec:swimpl_pi} i dokumentationen.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7\textwidth* 9/10]{../fig/diagrammer/bil/cd_pi.pdf}
+\includegraphics[width=\textwidth* 10/10]{../fig/diagrammer/bil/cd_pi.pdf}
 \caption{Klassediagram over Pi}
 \label{fig:cd_pi}
 \end{figure}
 
-Der gøres opmærksom på, at samtlige klasser i klassediagrammet på figur \ref{fig:cd_pi} har en association til Log-klassen. Det er undladt at tegne alle disse, da det ville uoverskueliggøre diagrammet.
-
+Der gøres opmærksom på, at samtlige klasser i klassediagrammet på figur \ref{fig:cd_pi} på side \pageref{fig:cd_pi} har en association til Log-klassen. Det er undladt at tegne alle disse, da det ville uoverskueliggøre diagrammet.
 
 \input{Projektbeskrivelse/SWDesign_o_impl/pi/pi/pi.tex}
 \input{Projektbeskrivelse/SWDesign_o_impl/pi/aks/aks}
