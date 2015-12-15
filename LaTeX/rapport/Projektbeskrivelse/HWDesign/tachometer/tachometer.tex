@@ -1,12 +1,15 @@
 \subsection{Tachometer}
 
-Tachometeret på bilen er en nødvendighed, hvis AU2 på nogen måde skal regulere hastigheden. Der blev overvejet flere forskellige muligheder:
+Tachometeret, som er yderligere beskrevet i afsnit \ref{P-sub:systemarkitektur_tachometer} \nameref{P-sub:systemarkitektur_tachometer} på side \pageref{P-sub:systemarkitektur_tachometer}, på bilen er en nødvendighed, hvis AU2 på nogen måde skal regulere hastigheden. Der blev overvejet flere forskellige muligheder:
 \begin{enumerate}
-	\item Lys-modtager/sender, som, via en skive med et prædefineret antal huller, kan detektere lys sendt fra senderen ind på skiven og detektere lyset, når det kommer igennem et af hullerne. Derved vil der kunne omregnes fra hvert hul detekteres til en konkret hastighed.
-	\item Induktiv føler, som via nogle metalstykker monteret på indersiden af hjulet og en føler skulle detektere en ændring i magnetfelt, når metalstykkerne passerede føleren. På samme måde kunne dette omregnes til en konkret hastighed.
-	\item Hall-switch/Reed rør, der fungerer på tilnærmelsesvist samme måde som den induktive føler, men med små magneter monteret på indersiden af hjulet. 
+	\item Lys-modtager/sender, som via en skive med et prædefineret antal huller, kan detektere lys sendt fra senderen ind på skiven og detektere lyset, når det kommer igennem et af hullerne. Derved vil tidsforskellen mellem huller kunne omregnes til en frekvens og derefter til en en konkret hastighed ud fra hjuldiameteren.
+	\item Induktiv føler, som via nogle metalstykker monteret på indersiden af hjulet og en føler skulle detektere en ændring i magnetisk modstand, når metalstykkerne passerede føleren. På samme måde kunne dette omregnes til en konkret hastighed.
+	\item Hall-switch/Reed rør, der fungerer på tilnærmelsesvist samme måde som den induktive føler, men med små magneter monteret på indersiden af hjulet, som aktiverer føleren.
 \end{enumerate}
 
-Af designmæssige overvejelser ligger et forholdsvist minimalt design, forstået på den måde at den må ikke fylde mere end, at den kan monteres på indersiden af et hjul med ca. 6 cm diameter. Hallswitchen TLE4905L \cite{lib:tacho} blev valgt, bla. pga. størrelsen, men også på baggrund af tilgængelig materiale. Hallswitchkredsløbet forventedes ikke at bruge en særlig stor strøm, i omegnen fa 5-8 mA, hvilket gør den ideel til anvendelse på en fjernstyret bil, der forsynes af et batteri. 
+Af designmæssige overvejelser har fokus ligget på at udarbejde et forholdsvist fysisk lille design, forstået på den måde at den må ikke fylde mere end, at den kan monteres på indersiden af et hjul med ca. 6 cm diameter.
+Hallswitchen TLE4905L \cite{lib:tacho} blev valgt, bla. pga. størrelsen, men også på baggrund af tilgængelig materiale. Hallswitchkredsløbet forventedes ikke at bruge en særlig stor strøm, i omegnen fa 5-8 mA, hvilket gør den ideel til anvendelse på en fjernstyret bil, der forsynes af et batteri. 
 
-Der blev desuden overvejet EMC-mæssige problemstillinger, eftersom der er tale om en magnetfeltsdetektor, ville tachometeret potentielt kunne påvirkes af nogle forstyrrelser sendt ud fra et andet sted i kredsløbet.
+Der blev desuden overvejet EMC-mæssige problemstillinger, eftersom der er tale om en magnetfeltsdetektor, ville tachometeret potentielt kunne påvirkes af elektromagnetisk støj sendt ud fra et andet sted i kredsløbet.
+
+%TODO Henvis til EMC rapporten
