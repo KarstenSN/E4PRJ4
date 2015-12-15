@@ -13,14 +13,8 @@ De mindre blokke beskriver efterfølgende systemet i nærmere detaljer, således
 
 På figur \ref{fig:bdd_au2} ses et overordnet BDD for AU2. 
 Det ses at systemet AU2 består af en bil og en PC. 
-Bilen består af en \emph{PSoC} som er et mikroprocessor-modul der styrer afstandssensorerne. 
-\emph{Fremdrift} er modulet der sikrer bilens fremdrift, herunder motor osv. 
-\emph{Styretøj} er modulet der har med styretøjet at gøre, som gør det muligt for brugeren at dreje bilen. 
-\emph{Pi} er en Raspberry-Pi, som er udstyret med en Linux distribution.
-Denne blok håndterer kommunikationen med PC'en. 
-\emph{Strømforsyning} er selve strømforsyningen til hele bilen, herunder: Motor, Pi, PSoC. 
-\emph{PC} er en Windows-computer med tilhørende tastatur, mus og skærm, samt en Xbox-360 controller. 
-På figur \ref{fig:bdd_bil} ses et udviddet BDD for bilen.  
+Bilen er her det centrale element i systemet, hvilket kommunikerer med den software der kører på PC'en. 
+Denne tilgang er valgt for at kunne fjernstyre bilen med XBox-360 controlleren igennem PC'en over Wi-Fi. På figur \ref{fig:bdd_bil} på side \pageref{fig:bdd_bil} ses et udvidet BDD for blokken Bil.  
 
 \clearpage
 
@@ -36,12 +30,8 @@ På figur \ref{fig:bdd_bil} ses et udviddet BDD for bilen.
 
 \clearpage
 
-På figur \ref{fig:bdd_bil} ses at \emph{PSoC} består af et Accelerometer til at måle bilens acceleration, et tachometer til at måle bilens hastighed samt fire afstandssensor. 
-\emph{Fremdrift} består af en H-bro til at styre motorens omdrejningshastighed, en DC-motor, en gearkasse og baghjul. 
-Her er der dog to baghjul og ikke et som angivet i diagrammet. 
-\emph{Styretøj} består af en servomotor samt forhjul. 
-\emph{Pi} er bestående en  Raspberry-Pi som er påmonteret en Wifi-dongle samt et kamera. 
-\emph{Strømforsyningen} indeholder et batteri samt en spændingsregulator. Spændingsregulatoren er dog implementeret som en switchmode-powersupply.  
+Formålet med figur \ref{fig:bdd_bil} er at give et logisk overblik over de fysiske dele der er påmonteret bilen. 
+Blokkene er opdelt med henblik på deres respektive ansvarsområde i forhold deres funktionalitet. Derfor ses blokkene med tilhørende parts, som herefter kan nedbrydes i moduler til design og implementering.
 
 \begin{figure}[H]
 \centering
@@ -50,15 +40,10 @@ Her er der dog to baghjul og ikke et som angivet i diagrammet.
 \label{fig:ibd_bil}
 \end{figure} 
 
-På figur \ref{fig:ibd_bil} ses ibd for bilen. 
+På figur \ref{fig:ibd_bil} ses ibd for blokken Bil. 
 Her er beskrevet hvilke signaler der forbinder blokkene samt deres indehold. 
-Det ses at blokken \texttt{Fremdrift} er forbundet med motorctrl som er styringssignalet til motoren. 
-Dette styrer motorens omdrejning og herved giver moment til hjulene. 
-PcoC-modulet er kommunikerer med Pi'en via en \IIC forbindelse. 
-Styretøjet styres med et PWM-signal hvor frekvensmodulationen er udtryk for hvor meget forhjulene drejer. 
-Det ses også at Pi'en er koblet på et WiFi-netværk. 
-I flow-specifications blokkene ses hvad signalerne indeholder af data. 
-\texttt{motorctrl} indeholder, hastighed samt et signal om det er fremad eller bagud. 
-WiFi indeholder kommunikationen med bilen samt et video-steam. \IIC indeholder blot \texttt{SDA} og \texttt{SCL} som er standart \IIC. 
+Det ses at blokken \emph{Fremdrift} er forbundet med \emph{motorctrl} som er styringssignalet til motoren.  
+I flow-specifications udspecificeres signalernes indehold. 
+Diagrammet skal læses i forbindelse med figur \ref{fig:bdd_bil} på side \pageref{fig:bdd_bil}. 
 
 \clearpage
