@@ -6,9 +6,8 @@ På GUI'en skal der laves om i den måde hvorpå kommunikationen fungerer.
 Programmet crasher hvis netværksforbindelsen mistes. Dette skyldes at måden hvorpå socketforbindelserne oprettes på, er forkerte implementeret. 
 Skal denne fejl rettes kan der søges nærmere information i Qt's egen dokumentaion for QTcpSocket\cite{lib:qtcpsocket}.
 AKS systemet skal implementeret således bilen selv undgår forhindringer, da dette ikke er blevet færdigudviklet.
-Hastighedsreguleringen skal implementeres som PID regulering således at maksimal acceleration altid opnås. 
-Samt fejlen der går at brugeren ikke kan styre bilen efter at have kørt baglæns skal findes og rettes. 
-Servo motoren til styring skal forbindes mekanisk til styretøjet. Servo motoren skal også gøres mere stabil.
+Hastighedsreguleringen skal implementeres som PID regulering således at maksimal acceleration altid opnås og fejlen der gør at brugeren ikke kan styre bilen efter at have kørt baglæns skal findes og rettes. 
+Servomotoren skal forbindes mekanisk til styretøjet. Servomotoren skal også gøres mere stabil.
 Endvidere skal der findes en løsning på at motion bruger 85\% af Pi'ens CPU-kraft. 
-Der skal implementeres en timer i tachometeret så der kun kan sendes den aktuelle hastighed. 
+Der skal implementeres en timer i tachometeret så det også registreres at bilen holder stille.
 Accelerometeret er blevet udeladt i prototypen og der skal derfor også laves en implementering af dette.

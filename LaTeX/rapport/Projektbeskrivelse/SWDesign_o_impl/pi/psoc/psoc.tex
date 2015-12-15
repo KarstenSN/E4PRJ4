@@ -1,5 +1,9 @@
 \subsubsection{Boundary-klasse: Psoc} \label{sec:psoc_klasse}
 
+Oprindeligt var det tiltænkt at Pi skulle have en klasse til alle afstandssensorer og en klasse til tachometeret.
+I forbindelse med at PSoC blokken blev introduceret, viste det sig mere effektivt at samle grænsefladen for de to blokke i én klasse.
+Dette er gjort ud fra en optimering af læsehastighed fra de forskellige sensorer internt i Pi.
+
 Psoc-klassen håndterer al \IIC-kommunikation imellem Pi og PSoC. Herunder, distancesensorerne og tachometeret. 
 Klassen er implementeret med public-metoderne \texttt{getDistance()} og \texttt{getVelocity} hvor der returneres hhv. afstandensværdien fra den ønskede sensor i cm, samt hastigheden fra tachometeret i $km/t$. 
 Internt i klassen kaldes \texttt{update()} og \texttt{psocRead()}, for at holde klassens attributter opdateret med det seneste datasæt til når Pi'en kalder en get-kommando. 

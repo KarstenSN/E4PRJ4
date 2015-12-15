@@ -1,12 +1,12 @@
 \chapter{Resultater og Diskussion} \label{ch:Resultater_og_diskussion}
 
-Fokuspunktet for dette projekt har været at lave en prototype der opfylder alle krav under \ref{P-sec:funktionelle_krav} \nameref{P-sec:funktionelle_krav} og \ref{P-sec:ikke-funktionelle_krav} \nameref{P-sec:ikke-funktionelle_krav} på side \pageref{P-sec:funktionelle_krav} i dokumentationen. 
+Målet for dette projekt har været at lave en prototype der opfylder så mange krav som muligt under afsnit \ref{P-sec:funktionelle_krav} \nameref{P-sec:funktionelle_krav} og \ref{P-sec:ikke-funktionelle_krav} \nameref{P-sec:ikke-funktionelle_krav} på side \pageref{P-sec:funktionelle_krav} i dokumentationen. 
 Ikke alle kravene er blevet opfyldt, hovedsageligt grundet mangel på tid til at realisere alle funktionaliteter.
 
 Følgende funktionelle krav er blevet opfyldt:
 \begin{itemize}
 	\item Bilen kan køre frem og tilbage. 
-	\item Hastigheden af bilen kan reguleres af Brugeren. 
+	\item Hastigheden af bilen kan reguleres af brugeren. 
 	\item Brugeren kan styre bilen fra en PC software med en Xbox-360 controller. 			\item Systemets bil og PC kommunikerer trådløst via et Wi-Fi hotspot.
 	\item Bilen kan identificere forhindringer foran og bag den. 
 	\item Den indeholder et anti-kollisionssystem, som dog ikke er færdigimplementeret. 
@@ -21,34 +21,31 @@ Følgende ikke-funktionelle krav er blevet opfyldt:
 	\item Der sendes 100 kommandoer fra PC til bil i sekundet.
 \end{itemize}
 
-En mere detaljeret gennemgang af test forløbet til disse krav, kan ses i kapitel \ref{P-ch:Accepttest} \nameref{P-ch:Accepttest} på side \pageref{P-ch:Accepttest} i dokumentationen.\\
+En mere detaljeret gennemgang af test forløbet til disse krav, kan ses i kapitel \ref{P-ch:Accepttest} \nameref{P-ch:Accepttest} på side \pageref{P-ch:Accepttest} i dokumentationen.
 
-Det har tidligt i forløbet vist sig at der var problemer med at have tid til at implementere alle funktionaliteter i projektet. Accelerometeret blev udtaget som det første, da det ikke havde nogen funktionalitet, der var nødvendig af andre dele i systemet.
+Det har tidligt i forløbet vist sig at der var problemer med at have tid til at implementere alle funktionaliteter i projektet. Accelerometeret blev udtaget som det første, da det ikke havde nogen funktionalitet, der var nødvendig for andre dele i systemet.
 
 Der er mange ting i forløbet af dette projekt, der har vist sig at give større udfordringer end forventet. 
 Heriblandt har \IIC kommunikationen mellem Pi og \IIC komponenter, samt problemer med udnyttelse af timere til programmering af Tachometer, vist sig at volde problemer. 
 Dette har resulteret i indførelsen af et PSoC 4 Pioneer Kit, til håndtering af \IIC kommunikation og tachometer beregninger. 
-PSoC'en blev indført meget sent i forløbet, da problemerne først blev opdaget under implementeringsfasen, hvorfor meget arbejdskraft er gået til spilde med diverse undersøgelser og generelt med at få kommunikationen til at funktionere som ønsket.
+PSoC'en blev indført meget sent i forløbet, da problemerne først blev opdaget under implementeringsfasen, hvorfor meget arbejdskraft er gået til spilde med diverse undersøgelser og generelt med at få kommunikationen til at funktionere som ønsket. 
+Der har ligeledes vist sig at være problemer med implementeringen af biblioteket WiringPi, som gruppen ligeledes har brugt meget tid på at få til at fungere hensigtsmæssigt.
 
-Der har ligeledes vist sig at være problemer med implementeringen af biblioteket \texttt{WiringPi}, som gruppen ligeledes har brugt meget tid på at få til at fungere hensigtsmæssigt.
-
-Hardwaremæssigt er alle print blevet færdig implementeret ud over motorprintet til styringen af motoren. 
+Hardwaremæssigt er alle print blevet færdig implementeret udover motorprintet til styringen af motoren. 
 Printet mangler at blive testet sammen med resten af systemet.
-Monteringsmæssigt er stort set alt påsat og samlet på bilen, således den er klar til at køre, hvis implementeringen fortsætter efter endt projektperiode.
+Monteringsmæssigt er stort set alt påsat og samlet på bilen, således den er klar til at køre, hvis implementeringen fortsætter efter endt projektperiode. For mere information omkring opmontering af bilen henvises til afsnit \ref{P-sec:mekanisk_montering} \nameref{P-sec:mekanisk_montering} på side \pageref{P-sec:mekanisk_montering} i dokumentationen.
 
 Ud over de kendte udfordringer, der har vist sig igennem forløbet, er der nogle kendte problemer som ikke er optimeret ud. 
 Dette gælder fx programmet Motion, brugt til streaming af kameraet på Pi'en, som har vist sig at bruge op mod 85\% af Pi'ens CPU-kraft, hvilket absolut ikke er ønskeligt
 Dette har givet anledning til spørgsmål omkring programmets effekt på andre processer på Pi'en, og om disse kan køre optimalt under mangel på processorkraft. 
-Programmet ville kunne optimeres ved at give Motion mindre prioritering end andre processer. 
-Dog blev det samlede program testet meget sent i forløbet og denne optimering blev derfor nedprioriteret.
+Programmet ville kunne optimeres ved at give Motion mindre prioritering end andre processer, gå på kompromis med billedkvaliteten eller at bruge en anden løsning end Motion.
 
-Programmet på PC'en har vist sig at crashe ved vilkårlige tilfælde, grunden til dette er ikke fundet endnu, men er helt sikkert et punkt der har stor prioritet til optimering.
+Programmet på PC'en har vist sig at crashe ved vilkårlige tilfælde, grunden til dette er ikke fundet endnu, men er helt sikkert et punkt der har høj prioritet ved fremtidigt arbejde.
 
-Bilen har vist sig at stoppe med at tage imod input fra brugeren, når den er sat til at bakke ved maksimum hastighed. Dette resulterer i, at bilen bliver ved med at køre bagud. Efter mindre tests har det vist sig, at det ikke skyldes kommunikationsvejen mellem PC og Bil, men sandsynligvis ligger gemt et andet sted i Pi'ens kode. Tachometerets kode på PSoC'en er designet på en uønsket måde, således at hvis hjulet hvorpå det er monteret standses pludseligt, PSoC'en ikke opdatere hastigheden og sender derfor en ældre hastighed til Pi'en. Dette kan løses med implementeringen af en timer der tæller hvor lang tid der går mellem inputs fra tachometeret og sætter hastigheden til 0, hvis den når en hvis tærskel.
+Bilen har vist sig at stoppe med at tage imod input fra brugeren, når den er sat til at bakke ved maksimum hastighed. Dette resulterer i, at bilen bliver ved med at køre bagud. Efter mindre tests har det vist sig, at det ikke skyldes kommunikationsvejen mellem PC og Bil, men sandsynligvis ligger gemt et andet sted i Pi'ens kode. Tachometerets kode på PSoC'en er designet på en uønsket måde, således at hvis hjulet hvorpå det er monteret standses pludseligt, vil PSoC'en ikke opdatere hastigheden og sender derfor en ældre hastighed til Pi'en. Dette kan løses med implementeringen af en timer der tæller hvor lang tid der går mellem inputs fra tachometeret og sætter hastigheden til 0, hvis den når en hvis tærskel. 
+Under alle omstændigheder er der flere oplagte udviklings- og debugging områder for systemet.
 
-Under alle omstændigheder er der flere oplagte udviklings- og debugging områder for systemet.\\
-
-Ud over de forskellige fejl og mangler der er fundet, har alt kode overordnet vist sig at snakke sammen som ønsket. Projektgruppen har gået en dybere forståelse for systemet og det har endt ud i at give meget af den ønskede funktionalitet til bilen.
-Ligeledes har buck convereten, der agerer PSU for systemet, vist sig at have den ønskede effektivitet og gør systemet utroligt stabilt.
+Udover de forskellige fejl og mangler der er fundet, har alt kode overordnet vist sig at snakke sammen som forventet. Projektgruppen har fået en dybere forståelse for systemet og det har endt ud i at give meget af den ønskede funktionalitet til bilen.
+Strømforsyningen fungerer som forventet og spændingen der leveres er præcis, både høj og lav belastning.
 
 \clearpage

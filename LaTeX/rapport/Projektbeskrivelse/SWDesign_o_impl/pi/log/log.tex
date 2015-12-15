@@ -1,7 +1,11 @@
 \subsubsection{Domain-klasse: Log} \label{sec:log_klasse}
+Log-klassen er indført fordi at det var smart med en debuggingmetode, som ikke var afhængig af en terminal og kan sladre om fejl selv hvis Pi crasher helt.
+Årsagen til dette er at der ikke er en terminal tilknyttet programmet når dette skal køre automatisk ved opstart.
 
-Log-klassen opretter en logfil der gør det muligt at debugge systemet på en enkel måde. Samtlige klasser på Pi har mulighed for at skrive logbeskeder ved at kalde en simpel kommando. Logfilen indeholder således en hel del logbeskeder med timestamps. Logbeskederne kan være af tre forskellige typer; \textit{Event}, \textit{Warning} og \textit{Error} og det er altid muligt at se hvor den kommer fra takket være den indbyggede variabel \texttt{\_\_PRETTY\_FUNCTION\_\_} \cite{lib:prettyf} som anvendes når en logbesked skrives. Eksempel på logbesked:
+Log-klassen opretter en logfil der gør det muligt at debugge systemet på en simpel måde. Samtlige klasser på Pi har mulighed for at skrive logbeskeder ved at kalde en simpel kommando. Logfilen indeholder således en hel del logbeskeder med timestamps. Logbeskederne kan være af tre forskellige typer; \textit{Event}, \textit{Warning} og \textit{Error} og det er altid muligt at se hvor den kommer fra takket være den indbyggede variabel \texttt{\_\_PRETTY\_FUNCTION\_\_} \cite{lib:prettyf} som anvendes når en logbesked skrives. Eksempel på logbesked:
 
-\texttt{[2015-12-8 10:56:30] [Event] [Settings::Settings(Log*)] Initialized Settings}
+\begin{lstlisting}[language=, numbers=none]
+[2015-12-8 10:56:30] [Event] [Settings::Settings(Log*)] Initialized Settings
+\end{lstlisting}
 
 Desuden er klassen udviklet, så den er beskyttet imod at der er flere forskellige tråde der skriver i den på samme tid. Dette er gjort ved hjælp af \texttt{std::mutex}es.

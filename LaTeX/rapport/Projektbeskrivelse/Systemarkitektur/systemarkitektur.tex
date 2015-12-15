@@ -16,6 +16,9 @@ Det ses at systemet AU2 består af en bil og en PC.
 Bilen er her det centrale element i systemet, hvilket kommunikerer med den software der kører på PC'en. 
 Denne tilgang er valgt for at kunne fjernstyre bilen med XBox-360 controlleren igennem PC'en over Wi-Fi. På figur \ref{fig:bdd_bil} på side \pageref{fig:bdd_bil} ses et udvidet BDD for blokken Bil.  
 
+På figur \ref{fig:bdd_bil} ses et overordnet BDD for bilen, den oprindelig plan var at tachometeret skulle være en del af Fremdrift, dette var for at lave én stor logisk blot omkring baghjulene på bilen.
+Dog blev dette ændret i forbindelse med introduktionen af PSoC blokken, da denne sørger for kommunikation med samtlige af bilens sensorer og derved også erstatter den blok der tidligere var kaldet ''Sensorer''.
+
 \clearpage
 
 \begin{landscape}
@@ -40,10 +43,11 @@ Blokkene er opdelt med henblik på deres respektive ansvarsområde i forhold der
 \label{fig:ibd_bil}
 \end{figure} 
 
-På figur \ref{fig:ibd_bil} ses ibd for blokken Bil. 
+På figur \ref{fig:ibd_bil} ses IBD for blokken Bil. 
 Her er beskrevet hvilke signaler der forbinder blokkene samt deres indehold. 
 Det ses at blokken \emph{Fremdrift} er forbundet med \emph{motorctrl} som er styringssignalet til motoren.  
 I flow-specifications udspecificeres signalernes indehold. 
 Diagrammet skal læses i forbindelse med figur \ref{fig:bdd_bil} på side \pageref{fig:bdd_bil}. 
+Det noteres at Strømforsyningen er forbundet til samtlige blokke i IBD Bil Forsyning, som findes på figur \ref{P-fig:ibd_bil_forsyning} på side \pageref{P-fig:ibd_bil_forsyning} i dokumentationen.
 
 \clearpage

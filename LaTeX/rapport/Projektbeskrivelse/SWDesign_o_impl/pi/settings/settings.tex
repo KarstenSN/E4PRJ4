@@ -1,6 +1,9 @@
 \subsubsection{Domain-klasse: Settings} \label{sec:settings}
-Settings-klassen har til formål at håndtere de indstillinger Brugeren sætter på PC softwaren. 
-Disse indstillinger skrives til klassen fra PcCom-klassen og læses af AKS- og Sterring-klassen. 
+Tanken med Settings-klassen var at bilen skulle kunne gemme indstillinger i en fil til næste gang bilen tændes.
+Selve filfunktionaliteten blev ikke implementeret grundet fokus på andre aspekter af Pi-softwaren, men selve klassen bruges stadig af de øvrige dele af programmet.
+
+Settings-klassen har til formål at håndtere de indstillinger brugeren sætter på PC softwaren. 
+Disse indstillinger skrives til klassen fra PcCom-klassen og læses af Aks- og Steering-klassen. 
 For at sikre at den indeholdte data ikke bliver korrupt, sørges der for at der ikke er flere tråde der kan læse og skrive til de samme data samtidigt. 
-Dette gøres vha. \texttt{std::mutex} der er implementeret gennem biblioteket \texttt{mutex}. 
+Dette gøres vha. \texttt{std::mutex} der er implementeret gennem C++11 standardbiblioteket \texttt{mutex}. 
 Denne klasse er efter implementering testet med de andre klasser.

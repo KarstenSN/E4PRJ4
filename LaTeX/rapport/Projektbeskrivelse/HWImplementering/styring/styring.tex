@@ -1,17 +1,16 @@
-\subsection{Motor/Styring} \label{sec:hwi_motor_styring}
+\subsection{Fremdrift og Styrtøj} \label{sec:hwi_motor_styring}
 Under fremstilling af motorstyringsprintet blev softwaredelen af motorstyringen testet med et af skolens print. 
 Vi har i tidligere projekter arbejdet med H-broer så der var ikke de store problemer eller ændringer fra dette testprint ift. det designede motorstyringsprint.
 Derimod var det en større udfordring at få servomotoren til at virke korrekt.  
-Databladet til servomotoren Corona-CS238MG \cite{lib:Corona-CS238MG} er meget mangelfuldt, hvorfor det har været vanskeligt at finde den korrekt krævede PWM-frekvens. 
+Databladet til servomotoren Corona-CS238MG \cite{lib:Corona-CS238MG} er meget mangelfuldt, derfor har det været vanskeligt at finde den korrekt krævede PWM-frekvens. 
 Ved 50Hz viste den sig meget ustabil og reagerede ikke korrekt på PWM-signalet. 
 Ved laboratoriesimuleringer fandtes at motoren reagere mest stabil i intervallet 150-200Hz. 
 Alle tests med signalkonverteren til servomotoren så korrekt ud på oscilloskopet når servoen ikke var tilkoblet. 
-Men når den var tilkoblet overlejrede den PWM-signalet med så meget støj at det ikke længere havde de højharmoniske flanker. 
-Dette betød at servoen blev ustabilt og ikke reagerede som forventet. 
-Hvilket resulterede i redesign af signalkonverteren. 
-Hvilket stabiliserede resultatet.
+Men selv når denne var tilkoblet blev PWM signalet til servoen belastet så hårdt at firkantsignalet ikke længere fra tilstrækkeligt veldefineret, hvilket gjorde servoen ustabil og denne reagerede ikke længere som forventet. 
+Dette betød at det var nødvendigt at redesigne signalkonverteren. 
+Resultatet blev en converter i klasse B til at drive udgangssignalet med tilstrækkeligt stor strøm.
 Ved en samlet test af hele bilen, så det ud til at servoen igen blev ustabil, hvilket muligvis kan skyldes at det PWM-signalet der styrer servoen er rent softwaregenereret. 
 Dette giver nogle udfordringer i forhold til Pi'ens CPU-load. 
-Da kamerasoftwaren \texttt{Motion} blev installeret på Pi'en blev det konstateret at den brugte op til 80\% af CPU-kraften. 
+Da kamerasoftwaren \texttt{Motion} blev installeret på Pi'en blev det konstateret at den brugte op til 85\% af CPU-kraften. 
 Det kan have indvirkning på nøjagtigheden på pulsbredden, der igen vil bevirke at servoen opfatter det som som et validt signal og derved bliver ustabil.
 

@@ -1,17 +1,17 @@
 \chapter{Projektafgrænsning} \label{ch:Projektafgraensning}
 
-Systemet AU2 er på den ene side bygget på en skrabet fjernstyret bil, hvor kun chassiset, hjulene og DC-motoren til fremdrift er tilbage. 
+Systemet AU2 er på den ene side bygget på en kommercielt købt fjernstyret bil, hvor kun chassiset, hjulene og DC-motoren til fremdrift er brugt. 
 På denne platform er der tilføjet en Raspberry Pi 2 B med kamara og Wi-Fi dongle, et PSoC 4 Pioneer kit, en strømforsyning med batteri, et tachometer-modul, fire afstandssensorer, et accelerometer og et motorstyrings-modul inkl. servomotor til at styre bilens forhjul.
 
-Den anden side af projektet omfatter den software der er på PCen og den tilsluttede Xbox 360 controller. 
-Selve PCen og Wi-Fi netværket er ikke en del af systemet, men skal være tilgængeligt for at systemet kan fungere.
+Den anden side af projektet omfatter den software der er på PC'en og den tilsluttede Xbox 360 controller. 
+Selve PC'en og Wi-Fi netværket er ikke en del af systemet, men skal være tilgængeligt for at systemet kan fungere.
 En mere detaljeret beskrivelse af bilens opdeling i blokke kan findes i afsnit \ref{P-sec:BDD_for_AU2} \nameref{P-sec:BDD_for_AU2} på side \pageref{P-sec:BDD_for_AU2} i dokumentationen. 
 
 Projektet er med fuldt overlæg valgt til at være ret omfattende, da der således vil være mulighed for at skære ned på områder, hvis tiden eller andre faktorer vil kræve dette. 
 Dette er i modsætning til de komplikationer der kan opstå ved at udvide et projekt og tilføje ny funktionalitet langt henne i forløbet, som ikke var tiltænkt fra starten. 
-På baggrund af dette har det som forventet har det været nødvendigt at skære i omfanget af projektet. Frem til implementeringsfasen er samtlige blokke beskrevet i \ref{P-sec:BDD_for_AU2} \nameref{P-sec:BDD_for_AU2} på side \pageref{P-sec:BDD_for_AU2} i dokumentationen medtaget.
-Herefter er enkelte funktionaliteter/blokke helt eller delvist udeladt grundet tidsmangel under design- og implementeringsfasen og testfasen.
+På baggrund af dette har det som forventet været nødvendigt at skære i omfanget af projektet. Frem til implementeringsfasen er samtlige blokke beskrevet i \ref{P-sec:BDD_for_AU2} \nameref{P-sec:BDD_for_AU2} på side \pageref{P-sec:BDD_for_AU2} i dokumentationen medtaget.
+Herefter er enkelte funktionaliteter/blokke helt eller delvist udeladt grundet tidsmangel under design- og implementeringsfasen.
 I kapitel \ref{P-ch:Accepttest} \nameref{P-ch:Accepttest} på side \pageref{P-ch:Accepttest} i dokumentationen fremgår det hvilke krav der er bestået og dermed også hvilke blokke der ikke er blevet implementeret. 
 Der henvises til at læse kommentarerne i testen grundigt for at få et fyldestgørende overblik. 
-Kort sagt, så er de ting der ikke- eller kun delvist implementeret; accelerometeret, servomotoren, samt test og debugging af AKS, afstandssensorer og regulering i motorstyrings-softwaren. 
-Der er ligeledes sporadiske problemer når forbindelsen mellem bilen og PC skal nedlægges og under drift.
+De ting der ikke- eller kun delvist er implementeret er: Accelerometeret, servomotoren, samt test og debugging af AKS, afstandssensorer og regulering i motorstyrings-softwaren. 
+Der er også sporadiske problemer når forbindelsen mellem bilen og PC skal nedlægges og ligeledes under drift.
