@@ -18,3 +18,17 @@ Derfor bliver motorens PWM, der er 40kHz, styret af hardwaren.
 Mens servoens PWM, der er ca. 50Hz, styret af en software PWM. 
 Det er valgt for at belaste Pi'ens cpu mindst muligt.
 For at de logiske signaler fra Pi'en til servo passer sammen er der designet et lille converter print der hæver signalet fra 3.3V til 5V.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth* 9/10]{../fig/billeder/MultiSim_H_Bro}
+	\label{fig:MultiSim_HBro}
+	\caption{MultiSim H-Bro}
+\end{figure}
+\clearpage
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth* 6/10]{../fig/billeder/servo_stepup}
+	\caption{Diagram af signal converter}
+	\label{fig:signal_converter}
+\end{figure}
